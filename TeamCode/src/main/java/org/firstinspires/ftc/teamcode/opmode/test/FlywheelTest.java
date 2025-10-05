@@ -19,5 +19,12 @@ public class FlywheelTest extends OpMode {
     public void loop() {
         final double power = gamepad1.left_stick_y;
         flywheel.setPower(power);
+
+        if (gamepad1.a) {
+            flywheel.engageKicker();
+        }
+        else {
+            flywheel.disengageKicker();
+        }
     }
 }
