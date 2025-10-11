@@ -3,16 +3,16 @@ package org.firstinspires.ftc.teamcode.opmode.test;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.module.Flywheel;
+import org.firstinspires.ftc.teamcode.module.Shooter;
 
 @TeleOp(group = "Test")
 public class FlywheelTest extends OpMode {
 
-    private Flywheel flywheel;
+    private Shooter flywheel;
 
     @Override
     public void init() {
-        flywheel = new Flywheel(hardwareMap);
+        flywheel = new Shooter(hardwareMap, telemetry);
     }
 
     @Override

@@ -15,18 +15,12 @@ public class Transfer{
     // public static final String SERVO_TWO = "Servo2";
 
     //adjust the servo power as needed for the transfer.
-    public static double POWER_VALUE = 1.0;
+    public static double POWER_VALUE = -1.0;
 
 
     public Transfer(HardwareMap hwMap){
         servo1= hwMap.get(CRServo.class, SERVO_ONE);
         // servo2= hwMap.get(CRServo.class, SERVO_TWO);
-
-    }
-
-    public void setPower(double power){
-        servo1.setPower(power);
-        // servo2.setPower(power);
 
     }
 

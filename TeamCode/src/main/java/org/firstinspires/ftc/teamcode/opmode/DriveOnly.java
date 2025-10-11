@@ -11,7 +11,7 @@ public class DriveOnly extends OpMode {
 
     @Override
     public void init() {
-        driveTrain = new DriveTrain(hardwareMap);
+        driveTrain = new DriveTrain(hardwareMap, telemetry);
     }
 
     @Override

@@ -8,7 +8,7 @@ public class Intake{
     public static final String INTAKE_MOTOR_NAME = "Intake";
 
     //change speed accordingly in auto or teleop classes
-    public static double engagePower=0.5;
+    public static double engagePower = 0.5;
 
     private final DcMotor intakeMotor;
 
