@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -16,19 +17,26 @@ public class AprilTagOdometry {
     private final AprilTagProcessor processor;
     private final VisionPortal visionPortal;
 
-    public AprilTagOdometry(HardwareMap hardwareMap) {
+    private final Telemetry telemetry;
+
+    public AprilTagOdometry(HardwareMap hardwareMap, Telemetry telemetry) {
         processor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, WEBCAM_NAME))
                 .addProcessor(processor)
                 .build();
+        this.telemetry = telemetry;
     }
 
     @Nullable
     public Position getTagPosition(int tagID) {
+        telemetry.addData("Tag ID: ", tagID);
         for (AprilTagDetection detection : processor.getDetections()) {
             if (detection.id == tagID) {
+                telemetry.addData("Tag Status: " , "found");
                 return detection.robotPose.getPosition();
+            } else {
+                telemetry.addData("Tag Status: ", "not found");
             }
         }
         return null;
