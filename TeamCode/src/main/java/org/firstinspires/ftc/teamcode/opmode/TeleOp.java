@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.module.AprilTagOdometry;
 import org.firstinspires.ftc.teamcode.module.DriveTrain;
 import org.firstinspires.ftc.teamcode.module.Intake;
 import org.firstinspires.ftc.teamcode.module.Shooter;
@@ -17,6 +18,8 @@ public class TeleOp extends OpMode {
 
     private Transfer transfer;
 
+    private AprilTagOdometry aprilTagOdometry;
+
     private double shooterPower = 0.75;
 
     @Override
@@ -24,6 +27,7 @@ public class TeleOp extends OpMode {
         driveTrain = new DriveTrain(hardwareMap, telemetry);
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap, telemetry);
+        aprilTagOdometry = new AprilTagOdometry(hardwareMap, telemetry);
     }
 
     @Override
@@ -53,7 +57,6 @@ public class TeleOp extends OpMode {
         }
 
         shooter.setPower(shooterPower);
-
         telemetry.update();
     }
 }
