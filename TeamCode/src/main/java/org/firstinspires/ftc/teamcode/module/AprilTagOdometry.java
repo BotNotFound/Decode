@@ -33,10 +33,10 @@ public class AprilTagOdometry {
         telemetry.addData("Tag ID: ", tagID);
         for (AprilTagDetection detection : processor.getDetections()) {
             if (detection.id == tagID) {
-                telemetry.addData("Tag Status: " , "found");
+                telemetry.addData("Tag Status: " , tagID + "found");
                 return detection.robotPose.getPosition();
             } else {
-                telemetry.addData("Tag Status: ", "not found");
+                telemetry.addData("Tag Status: ", tagID + "not found");
             }
         }
         return null;
