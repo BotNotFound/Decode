@@ -23,9 +23,9 @@ public class Intake{
     }
 
     public void stopIntake(){
-        intakeMotor.setPower(0);
+        intakeMotor.setPower(0.0);
 
-        telemetry.addData("Intake: ", "stopped");
+        telemetry.addData("Intake: ", 0.0);
     }
 
 }
