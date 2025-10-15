@@ -110,8 +110,10 @@ public class TeleOp extends OpMode {
 
                 if(target != null){telemetry.addData("Range", target.range);}
 
-                intake.startIntake();
-                transfer.startTransfer();
+                if(shooter.isReady()){
+                    intake.startIntake();
+                    transfer.startTransfer();
+                }
 
                 break;
 

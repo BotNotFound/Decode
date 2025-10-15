@@ -55,6 +55,7 @@ public class Shooter {
         kickerServo.setPosition(KICKER_IDLE_POSITION);
 
         velocityPID = new PIDFController(kP, 0, kD, kF);
+        velocityPID.setTolerance(250);
 
         this.telemetry = telemetry;
 
@@ -116,5 +117,9 @@ public class Shooter {
         kickerServo.setPosition(KICKER_IDLE_POSITION);
 
         telemetry.addData("Kicker Position", "disengaged");
+    }
+
+    public boolean isReady(){
+        return velocityPID.atSetPoint();
     }
 }
