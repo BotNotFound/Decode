@@ -86,7 +86,7 @@ public class FieldCentricDriveTrain{
         double curRotation = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         telemetry.addData("bot angle", curRotation);
 
-        double rotDrive = drive * Math.cos(curRotation) + strafe * Math.sin(curRotation);
+        double rotDrive = drive * Math.cos(curRotation) - strafe * Math.sin(curRotation);
         double rotStrafe = drive * Math.sin(curRotation) + strafe * Math.cos(curRotation);
 
         telemetry.addData("Rotated Drive", rotDrive);

@@ -64,7 +64,7 @@ public class Shooter {
         interpLUT.add(29.0, 2800);
         interpLUT.add(31.0, 3000);
         interpLUT.add(34.0, 3025);
-        interpLUT.add(44.5, 3125);
+        interpLUT.add(44.5, 3050);
         interpLUT.add(61.8, 3375);
         interpLUT.add(68.5, 3475);
         interpLUT.add(72.7, 3800);

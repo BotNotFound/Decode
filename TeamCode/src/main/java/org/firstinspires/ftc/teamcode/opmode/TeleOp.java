@@ -39,6 +39,8 @@ public class TeleOp extends OpMode {
     @Override
     public void init() {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
+        driveTrain.resetIMU();
+
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap, telemetry);
         transfer = new Transfer(hardwareMap, telemetry);

@@ -25,10 +25,10 @@ public class DriveTrain {
         backRightDriveMotor = hardwareMap.get(DcMotor.class, BACK_RIGHT_DRIVE_MOTOR_NAME);
         backLeftDriveMotor = hardwareMap.get(DcMotor.class, BACK_LEFT_DRIVE_MOTOR_NAME);
 
-        frontRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftDriveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftDriveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightDriveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeftDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightDriveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.telemetry = telemetry;
     }

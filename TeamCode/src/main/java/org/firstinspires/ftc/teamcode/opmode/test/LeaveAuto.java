@@ -33,7 +33,7 @@ public class LeaveAuto extends LinearOpMode{
 
 
         sleep(1500);
-        driveTrain.setPower(0.1, 0.0, 0.0);
+        driveTrain.setPower(0.67, 0.0, 0.0);
         sleep(2000);
 
         //then we just stop the robot
