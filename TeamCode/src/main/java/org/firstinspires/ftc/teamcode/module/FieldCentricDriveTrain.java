@@ -74,7 +74,9 @@ public class FieldCentricDriveTrain{
     }
 
     public void setPower(double drive, double strafe, double turn, AprilTagPoseFtc targetTag) {
+
         if(targetTag != null){
+
             turn = getAimRotationPower(targetTag.bearing);
             telemetry.addData("turn power", turn);
         }
@@ -83,6 +85,9 @@ public class FieldCentricDriveTrain{
     }
 
     public void setPower(double drive, double strafe, double turn) {
+        drive = Math.pow(drive, 3);
+        strafe = Math.pow(strafe, 3);
+
         double curRotation = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         telemetry.addData("bot angle", curRotation);
 
