@@ -57,12 +57,10 @@ public class FieldCentricDriveTrain{
 
         this.telemetry = telemetry;
 
-        // why are there two calls to setOffsets?
         imu = hardwareMap.get(GoBildaPinpointDriver.class, IMU_NAME);
         imu.setOffsets(168.0,96.0, DistanceUnit.MM);
         imu.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         imu.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        imu.setOffsets(8, 32, DistanceUnit.MM);
         imu.resetPosAndIMU();
 
         turnController = new PIDController(turnP, 0, turnD, 0, 0);
