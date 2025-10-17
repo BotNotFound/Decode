@@ -32,16 +32,12 @@ public class FieldCentricDriveTrain{
 
     private final GoBildaPinpointDriver imu;
 
-    private AprilTagDetector detector;
+    // private AprilTagDetector detector;
 
     private final PIDController turnController;
     public static double turnP = 0.025;
     public static double turnD = 0.005;
 
-    public static RevHubOrientationOnRobot.LogoFacingDirection LOGO_FACING_DIRECTION =
-            RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
-    public static RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
-            RevHubOrientationOnRobot.UsbFacingDirection.DOWN;
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
         frontRightDriveMotor = hardwareMap.get(DcMotor.class, FRONT_RIGHT_DRIVE_MOTOR_NAME);
@@ -61,6 +57,7 @@ public class FieldCentricDriveTrain{
 
         this.telemetry = telemetry;
 
+        // why are there two calls to setOffsets?
         imu = hardwareMap.get(GoBildaPinpointDriver.class, IMU_NAME);
         imu.setOffsets(168.0,96.0, DistanceUnit.MM);
         imu.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
