@@ -55,7 +55,7 @@ public class Shooter {
         kickerServo.setPosition(KICKER_IDLE_POSITION);
 
         velocityPID = new PIDFController(kP, 0, kD, kF);
-        velocityPID.setTolerance(250);
+        velocityPID.setTolerance(75);
 
         this.telemetry = telemetry;
 
@@ -67,7 +67,7 @@ public class Shooter {
         interpLUT.add(44.5, 3050);
         interpLUT.add(61.8, 3375);
         interpLUT.add(68.5, 3475);
-        interpLUT.add(72.7, 3800);
+        interpLUT.add(71.5, 3700);
         interpLUT.add(110,4050);
         interpLUT.add(130, 4300);
         interpLUT.createLUT();

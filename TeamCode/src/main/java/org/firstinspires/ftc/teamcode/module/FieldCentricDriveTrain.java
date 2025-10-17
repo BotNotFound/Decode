@@ -35,8 +35,8 @@ public class FieldCentricDriveTrain{
     private AprilTagDetector detector;
 
     private final PIDController turnController;
-    public static double turnP = 0.04;
-    public static double turnD = 0.001;
+    public static double turnP = 0.025;
+    public static double turnD = 0.005;
 
     public static RevHubOrientationOnRobot.LogoFacingDirection LOGO_FACING_DIRECTION =
             RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
@@ -86,6 +86,8 @@ public class FieldCentricDriveTrain{
     }
 
     public void setPower(double drive, double strafe, double turn) {
+        imu.update();
+
         drive = Math.pow(drive, 3);
         strafe = Math.pow(strafe, 3);
 
