@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.PIDController;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -27,9 +28,9 @@ public class FieldCentricDriveTrain{
 
     private final Telemetry telemetry;
 
-    public static final String IMU_NAME = "imu";
+    public static final String IMU_NAME = "Pinpoint";
 
-    private final IMU imu;
+    private final GoBildaPinpointDriver imu;
 
     private AprilTagDetector detector;
 
@@ -60,23 +61,23 @@ public class FieldCentricDriveTrain{
 
         this.telemetry = telemetry;
 
-        imu = hardwareMap.get(IMU.class, IMU_NAME);
-        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(
-                LOGO_FACING_DIRECTION,
-                usbFacingDirection
-        )));
+        imu = hardwareMap.get(GoBildaPinpointDriver.class, IMU_NAME);
+        imu.setOffsets(168.0,96.0, DistanceUnit.MM);
+        imu.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        imu.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        imu.setOffsets(8, 32, DistanceUnit.MM);
+        imu.resetPosAndIMU();
 
         turnController = new PIDController(turnP, 0, turnD, 0, 0);
     }
 
     public void resetIMU() {
-        imu.resetYaw();
+        imu.recalibrateIMU();
     }
 
     public void setPower(double drive, double strafe, double turn, AprilTagPoseFtc targetTag) {
 
         if(targetTag != null){
-
             turn = getAimRotationPower(targetTag.bearing);
             telemetry.addData("turn power", turn);
         }
@@ -88,7 +89,7 @@ public class FieldCentricDriveTrain{
         drive = Math.pow(drive, 3);
         strafe = Math.pow(strafe, 3);
 
-        double curRotation = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        double curRotation = imu.getHeading(AngleUnit.RADIANS);
         telemetry.addData("bot angle", curRotation);
 
         double rotDrive = drive * Math.cos(curRotation) - strafe * Math.sin(curRotation);
