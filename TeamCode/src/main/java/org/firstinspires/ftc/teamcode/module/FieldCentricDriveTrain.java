@@ -67,7 +67,7 @@ public class FieldCentricDriveTrain{
     }
 
     public void resetIMU() {
-        imu.recalibrateIMU();
+        imu.resetPosAndIMU();
     }
 
     public void setPower(double drive, double strafe, double turn, AprilTagPoseFtc targetTag) {

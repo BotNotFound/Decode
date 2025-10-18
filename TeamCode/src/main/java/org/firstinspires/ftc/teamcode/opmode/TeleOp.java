@@ -99,7 +99,7 @@ public class TeleOp extends OpMode {
 //            intakeToggle = false;
 //            intakeHold = false;
 //        }
-        else if(currentState == RobotStates.SHOOT){
+        else if(currentState == RobotStates.SHOOT || gamepad1.left_trigger > 0){
             currentState = RobotStates.NONE;
             intakeToggle = false;
             intakeHold = false;
