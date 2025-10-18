@@ -45,7 +45,10 @@ public class AprilTagDetector {
     public AprilTagPoseFtc getTagPose(int tagID){
         for (AprilTagDetection detection : processor.getDetections()) {
             if (detection.id == tagID) {
+                telemetry.addData("AprilTag ", "detected");
                 return detection.ftcPose;
+            } else {
+                telemetry.addData("AprilTag ", "not detected");
             }
         }
         return null;
