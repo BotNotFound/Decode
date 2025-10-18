@@ -58,7 +58,7 @@ public class FieldCentricDriveTrain{
         this.telemetry = telemetry;
 
         imu = hardwareMap.get(GoBildaPinpointDriver.class, IMU_NAME);
-        imu.setOffsets(168.0,96.0, DistanceUnit.MM);
+        imu.setOffsets(8, 32, DistanceUnit.MM);
         imu.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         imu.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         imu.resetPosAndIMU();

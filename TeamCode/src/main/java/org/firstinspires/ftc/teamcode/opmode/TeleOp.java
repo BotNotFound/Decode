@@ -32,7 +32,7 @@ public class TeleOp extends OpMode {
     private int aprilTagID = 20;
 
     private enum RobotStates {
-        INTAKE, SHOOT, NONE
+        INTAKE, REVERSE_INTAKE, SHOOT, NONE
     }
     private RobotStates currentState= RobotStates.NONE;
 
@@ -86,6 +86,9 @@ public class TeleOp extends OpMode {
                 telemetry.addData("LBumper", "Enter. Intake");
             }
         }
+        else if(gamepad1.left_trigger > 0.5){
+            currentState = RobotStates.REVERSE_INTAKE;
+        }
 //        else if(gamepad1.left_bumper){
 //            currentState = RobotStates.INTAKE;
 //            intakeToggle = true;
@@ -124,6 +127,13 @@ public class TeleOp extends OpMode {
                 shooter.disengageKicker();
                 intake.startIntake();
                 transfer.startTransfer();
+                break;
+
+            case REVERSE_INTAKE:
+                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
+                shooter.disengageKicker();
+                intake.setPower(-1);
+                transfer.reverseTransfer();
                 break;
 
             default:
