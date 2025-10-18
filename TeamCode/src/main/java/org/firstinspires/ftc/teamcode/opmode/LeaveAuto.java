@@ -1,16 +1,11 @@
-package org.firstinspires.ftc.teamcode.opmode.test;
+package org.firstinspires.ftc.teamcode.opmode;
 
 //imports
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.module.DriveTrain;
-import org.firstinspires.ftc.teamcode.module.Intake;
-import org.firstinspires.ftc.teamcode.module.Shooter;
-import org.firstinspires.ftc.teamcode.module.Transfer;
 
 //I'm not sure what to put for the group here
 @Autonomous(name="Leaving the Launch Zone Only")
@@ -33,7 +28,7 @@ public class LeaveAuto extends LinearOpMode{
 
 
         sleep(1500);
-        driveTrain.setPower(0.67, 0.0, 0.0);
+        driveTrain.setPower(-0.67, 0.0, 0.0);
         sleep(2000);
 
         //then we just stop the robot
