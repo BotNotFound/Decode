@@ -54,6 +54,7 @@ public class FarPreloadAndLeaveRed extends LinearOpMode {
             shooter.engageKicker();
             intake.startIntake();
             transfer.startTransfer();
+            telemetry.addData("Time: ", runtime.time(TimeUnit.SECONDS));
         }
 
         shooter.setRPM(0);
