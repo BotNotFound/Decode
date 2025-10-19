@@ -43,14 +43,20 @@ public class FarPreloadAndLeaveRed extends LinearOpMode {
             return;
         }
 
+        int subRPM = 4100;
 
 
         runtime.reset();
 
         while (runtime.time(TimeUnit.SECONDS) < 10 && opModeIsActive()){
             AprilTagPoseFtc tagPose = detector.getTagPose(24);
-            driveTrain.setPower(0, 0, 0, tagPose);
-            shooter.setRPM(tagPose);
+            if(tagPose != null) {
+                driveTrain.setPower(0, 0, 0, tagPose);
+                shooter.setRPM(tagPose);
+            }else{
+                shooter.setRPM(subRPM);
+            }
+            shooter.setRPM(subRPM);
             shooter.engageKicker();
             intake.startIntake();
             transfer.startTransfer();
@@ -66,7 +72,7 @@ public class FarPreloadAndLeaveRed extends LinearOpMode {
 
         sleep(1500);
         driveTrain.setPower(0.3, 1, 0.0);
-        sleep(500);
+        sleep(420);
 
         //then we just stop the robot
         driveTrain.setPower(0.0, 0.0, 0.0);

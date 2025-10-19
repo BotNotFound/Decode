@@ -23,6 +23,8 @@ public class FarPreloadAndLeaveBlue extends LinearOpMode {
 
     private AprilTagDetector detector;
 
+    int subRPM = 4100;
+
     @Override
     public void runOpMode(){
         ElapsedTime runtime = new ElapsedTime();
@@ -48,12 +50,19 @@ public class FarPreloadAndLeaveBlue extends LinearOpMode {
         runtime.reset();
 
         while (runtime.time(TimeUnit.SECONDS) < 10 && opModeIsActive()){
+
             AprilTagPoseFtc tagPose = detector.getTagPose(20);
-            driveTrain.setPower(0, 0, 0, tagPose);
-            shooter.setRPM(tagPose);
+            if(tagPose != null){
+                driveTrain.setPower(0, 0, 0, tagPose);
+                shooter.setRPM(tagPose);
+            }else {
+                shooter.setRPM(subRPM);
+            }
             shooter.engageKicker();
             intake.startIntake();
             transfer.startTransfer();
+            telemetry.addData("Time: ", runtime.time(TimeUnit.SECONDS));
+            telemetry.update();
         }
 
         shooter.setRPM(0);
@@ -63,8 +72,8 @@ public class FarPreloadAndLeaveBlue extends LinearOpMode {
         shooter.disengageKicker();
 
         sleep(1500);
-        driveTrain.setPower(0.3, 1, 0.0);
-        sleep(500);
+        driveTrain.setPower(0.3, -1, 0.0);
+        sleep(420);
 
         //then we just stop the robot
         driveTrain.setPower(0.0, 0.0, 0.0);
