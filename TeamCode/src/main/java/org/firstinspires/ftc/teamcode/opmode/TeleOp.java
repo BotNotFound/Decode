@@ -114,7 +114,9 @@ public class TeleOp extends OpMode {
                 driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
                 shooter.disengageKicker();
                 intake.startIntake();
-                transfer.startTransfer();
+                if (intake.hasBall()) {
+                    transfer.startTransfer();
+                }
                 break;
 
             case REVERSE_INTAKE:
