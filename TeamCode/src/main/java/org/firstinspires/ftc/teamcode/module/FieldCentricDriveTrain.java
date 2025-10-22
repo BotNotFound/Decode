@@ -3,19 +3,16 @@ package org.firstinspires.ftc.teamcode.module;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.ImuOrientationOnRobot;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.*;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
-public class FieldCentricDriveTrain{
+public class FieldCentricDriveTrain {
     public static final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "Front Right";
     public static final String FRONT_LEFT_DRIVE_MOTOR_NAME = "Front Left";
     public static final String BACK_RIGHT_DRIVE_MOTOR_NAME = "Back Right";
@@ -28,11 +25,9 @@ public class FieldCentricDriveTrain{
 
     private final Telemetry telemetry;
 
-    public static final String IMU_NAME = "Pinpoint";
+    public static final String PINPOINT_DRIVER_NAME = "Pinpoint";
 
-    private final GoBildaPinpointDriver imu;
-
-    // private AprilTagDetector detector;
+    private final GoBildaPinpointDriver pinpointDriver;
 
     private final PIDController turnController;
     public static double turnP = 0.025;
@@ -57,43 +52,43 @@ public class FieldCentricDriveTrain{
 
         this.telemetry = telemetry;
 
-        imu = hardwareMap.get(GoBildaPinpointDriver.class, IMU_NAME);
-        imu.setOffsets(8, 32, DistanceUnit.MM);
-        imu.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        imu.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        imu.resetPosAndIMU();
+        pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class, PINPOINT_DRIVER_NAME);
+        pinpointDriver.setOffsets(8, 32, DistanceUnit.MM);
+        pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        pinpointDriver.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        pinpointDriver.resetPosAndIMU();
 
         turnController = new PIDController(turnP, 0, turnD, 0, 0);
     }
 
-    public void resetIMU() {
-        imu.resetPosAndIMU();
+    public void resetOdometry() {
+        pinpointDriver.resetPosAndIMU();
     }
 
-    public void setPower(double drive, double strafe, double turn, AprilTagPoseFtc targetTag) {
+    public void setPowerFacingAprilTag(double drive, double strafe, double turn, AprilTagPoseFtc targetTag) {
 
         if(targetTag != null){
             turn = getAimRotationPower(targetTag.bearing);
             telemetry.addData("turn power", turn);
         }
 
-        setPower(drive, strafe, turn);
+        setPowerFacingAprilTag(drive, strafe, turn);
     }
 
-    public void setPower(double drive, double strafe, double turn) {
-        imu.update();
+    public void setPowerFacingAprilTag(double drive, double strafe, double turn) {
+        pinpointDriver.update();
 
         drive = Math.pow(drive, 3);
         strafe = Math.pow(strafe, 3);
 
-        double curRotation = imu.getHeading(AngleUnit.RADIANS);
-        telemetry.addData("bot angle", curRotation);
+        double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS);
+        telemetry.addData("Current Angle", curRotation);
 
         double rotDrive = drive * Math.cos(curRotation) - strafe * Math.sin(curRotation);
         double rotStrafe = drive * Math.sin(curRotation) + strafe * Math.cos(curRotation);
 
         telemetry.addData("Rotated Drive", rotDrive);
-        telemetry.addData("RotatedStrafe", rotDrive);
+        telemetry.addData("Rotated Strafe", rotDrive);
 
         double leftFrontPower = rotDrive + rotStrafe + turn;
         double leftBackPower = rotDrive - rotStrafe + turn;

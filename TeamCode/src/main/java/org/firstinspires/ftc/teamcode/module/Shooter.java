@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
@@ -26,7 +25,7 @@ public class Shooter {
     private final DcMotorEx upperFlywheelMotor;
     private final Servo kickerServo;
 
-    private PIDFController velocityPID;
+    private final PIDFController velocityPID;
     public static double kP = 0.001;
     public static double kD = 0.0002;
     public static double kF = 0.00026;
@@ -37,7 +36,7 @@ public class Shooter {
 
     private final Telemetry telemetry;
 
-    private InterpLUT interpLUT;
+    private final InterpLUT flywheelSpeeds;
 
 
 
@@ -59,18 +58,18 @@ public class Shooter {
 
         this.telemetry = telemetry;
 
-        interpLUT = new InterpLUT();
+        flywheelSpeeds = new InterpLUT();
         // the control points have to be in increasing order
-        interpLUT.add(29.0, 2800);
-        interpLUT.add(31.0, 3000);
-        interpLUT.add(34.0, 3025);
-        interpLUT.add(44.5, 3050);
-        interpLUT.add(61.8, 3375);
-        interpLUT.add(68.5, 3475);
-        interpLUT.add(71.5, 3700);
-        interpLUT.add(110,4050);
-        interpLUT.add(130, 4300);
-        interpLUT.createLUT();
+        flywheelSpeeds.add(29.0, 2800);
+        flywheelSpeeds.add(31.0, 3000);
+        flywheelSpeeds.add(34.0, 3025);
+        flywheelSpeeds.add(44.5, 3050);
+        flywheelSpeeds.add(61.8, 3375);
+        flywheelSpeeds.add(68.5, 3475);
+        flywheelSpeeds.add(71.5, 3700);
+        flywheelSpeeds.add(110,4050);
+        flywheelSpeeds.add(130, 4300);
+        flywheelSpeeds.createLUT();
     }
 
     public void setRPM(double rpm) {
@@ -88,22 +87,22 @@ public class Shooter {
             upperFlywheelMotor.setPower(0);
         }
 
-        telemetry.addData("target RPM", rpm);
-        telemetry.addData("real RPM", actualRPM);
-        telemetry.addData("default RPM", defaultRPM);
+        telemetry.addData("Target RPM", rpm);
+        telemetry.addData("Real RPM", actualRPM);
+        telemetry.addData("Default RPM", defaultRPM);
 
     }
 
-    public void setRPM(AprilTagPoseFtc tagPose){
+    public void setRPM(AprilTagPoseFtc tagPose) {
         if(tagPose != null){
-            setRPM(interpLUT.get(tagPose.range));
+            setRPM(flywheelSpeeds.get(tagPose.range));
         }
         else{
             setRPM(defaultRPM);
         }
     }
 
-    public void editDefaultRPM(boolean increase){
+    public void editDefaultRPM(boolean increase) {
         if(increase){
             defaultRPM += 50;
         }
@@ -124,7 +123,7 @@ public class Shooter {
         telemetry.addData("Kicker Position", "disengaged");
     }
 
-    public boolean isReady(){
+    public boolean isReady() {
         return velocityPID.atSetPoint();
     }
 }

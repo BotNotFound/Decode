@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.module;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,7 +9,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class Intake{
+@Config
+public class Intake {
     public static final String INTAKE_MOTOR_NAME = "Intake";
     public static final String COLOR_SENSOR_NAME = "IntakeColor";
 
@@ -18,9 +20,9 @@ public class Intake{
     private final DcMotor intakeMotor;
     private final RevColorSensorV3 colorSensor;
 
-    private Telemetry telemetry;
+    private final Telemetry telemetry;
 
-    public Intake(HardwareMap hwMap, Telemetry tele){
+    public Intake(HardwareMap hwMap, Telemetry tele) {
         intakeMotor = hwMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -28,20 +30,20 @@ public class Intake{
 
         telemetry = tele;
     }
-    public void setPower(double power){
+    public void setPower(double power) {
         intakeMotor.setPower(power);
     }
 
-    public boolean hasBall(){
+    public boolean hasBall() {
         return colorSensor.getDistance(DistanceUnit.CM) <= 5;
     }
 
-    public void startIntake(){
+    public void startIntake() {
         intakeMotor.setPower(engagePower);
         telemetry.addData("CS Distance" ,colorSensor.getDistance(DistanceUnit.CM));
     }
 
-    public void stopIntake(){
+    public void stopIntake() {
         intakeMotor.setPower(0);
     }
 }

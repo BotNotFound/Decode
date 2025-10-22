@@ -100,7 +100,7 @@ public class ShooterTuningTeleOp extends OpMode {
         switch (currentState){
             case SHOOT:
                 AprilTagPoseFtc target = aprilDetector.getTagPose(aprilTagID);
-                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
+                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
 
                 shooter.engageKicker();
                 shooter.setRPM(shooter.defaultRPM);
@@ -113,14 +113,14 @@ public class ShooterTuningTeleOp extends OpMode {
                 break;
 
             case INTAKE:
-                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
+                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
                 shooter.disengageKicker();
                 intake.startIntake();
                 transfer.startTransfer();
                 break;
 
             default:
-                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
+                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
                 shooter.disengageKicker();
                 shooter.setRPM(0);
                 intake.stopIntake();
@@ -138,7 +138,7 @@ public class ShooterTuningTeleOp extends OpMode {
         telemetry.addData("target shooter rpm", targetRPM);
 
         if(gamepad1.startWasPressed()){
-            driveTrain.resetIMU();
+            driveTrain.resetOdometry();
         }
 
         telemetry.update();

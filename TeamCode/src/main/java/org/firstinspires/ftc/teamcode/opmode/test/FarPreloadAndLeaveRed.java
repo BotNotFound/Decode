@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
-import org.firstinspires.ftc.teamcode.module.DriveTrain;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.teamcode.module.Intake;
 import org.firstinspires.ftc.teamcode.module.Shooter;
@@ -51,7 +50,7 @@ public class FarPreloadAndLeaveRed extends LinearOpMode {
         while (runtime.time(TimeUnit.SECONDS) < 10 && opModeIsActive()){
             AprilTagPoseFtc tagPose = detector.getTagPose(24);
             if(tagPose != null) {
-                driveTrain.setPower(0, 0, 0, tagPose);
+                driveTrain.setPowerFacingAprilTag(0, 0, 0, tagPose);
                 shooter.setRPM(tagPose);
             }else{
                 shooter.setRPM(subRPM);
@@ -65,17 +64,17 @@ public class FarPreloadAndLeaveRed extends LinearOpMode {
         }
 
         shooter.setRPM(0);
-        driveTrain.setPower(0, 0, 0);
+        driveTrain.setPowerFacingAprilTag(0, 0, 0);
         intake.stopIntake();
         transfer.stopTransfer();
         shooter.disengageKicker();
 
         sleep(1500);
-        driveTrain.setPower(0.3, 1, 0.0);
+        driveTrain.setPowerFacingAprilTag(0.3, 1, 0.0);
         sleep(420);
 
         //then we just stop the robot
-        driveTrain.setPower(0.0, 0.0, 0.0);
+        driveTrain.setPowerFacingAprilTag(0.0, 0.0, 0.0);
 
     }
 }
