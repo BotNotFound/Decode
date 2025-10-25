@@ -30,17 +30,19 @@ public class Intake {
 
         telemetry = tele;
     }
-    public void setPower(double power) {
+    public void setIntakePower(double power) {
         intakeMotor.setPower(power);
     }
 
     public boolean hasBall() {
+        telemetry.addData("Artifact ","Present");
+        telemetry.update();
         return colorSensor.getDistance(DistanceUnit.CM) <= 5;
     }
-
     public void startIntake() {
         intakeMotor.setPower(engagePower);
         telemetry.addData("CS Distance" ,colorSensor.getDistance(DistanceUnit.CM));
+        telemetry.update();
     }
 
     public void stopIntake() {
