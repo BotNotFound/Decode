@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.TeleOpRobot;
 
 @Config
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(group = "1driver")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "1-Driver Teleop", group = "1driver")
 public class TeleOp extends OpMode {
     public static double targetRPM = 3000;
 

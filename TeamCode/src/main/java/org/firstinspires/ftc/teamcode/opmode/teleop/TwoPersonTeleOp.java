@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.TeleOpRobot;
 
 @Config
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(group = "2driver")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "2-Driver Teleop", group = "2driver")
 public class TwoPersonTeleOp extends OpMode {    
     protected TeleOpRobot robot;
 
