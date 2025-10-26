@@ -3,16 +3,27 @@ package org.firstinspires.ftc.teamcode.opmode.test;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.module.PeterGriffin;
+import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
+import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
+import org.firstinspires.ftc.teamcode.module.Intake;
+import org.firstinspires.ftc.teamcode.module.Shooter;
+import org.firstinspires.ftc.teamcode.module.Transfer;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class ShooterTuningTeleOp extends OpMode {
-    private PeterGriffin peter;
+    private FieldCentricDriveTrain driveTrain;
 
+    private Shooter shooter;
+    public static double targetRPM = 3000;
+
+    private Intake intake;
+    private Transfer transfer;
     private boolean intakeToggle = false;
     private boolean intakeHold = false;
+    private AprilTagDetector aprilDetector;
+
     // true is RED, false is BLUE
     private boolean allianceColor = true;
     private int aprilTagID = 20;
@@ -24,7 +35,11 @@ public class ShooterTuningTeleOp extends OpMode {
 
     @Override
     public void init() {
-        peter= new PeterGriffin(hardwareMap, telemetry);
+        driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
+        shooter = new Shooter(hardwareMap, telemetry);
+        intake = new Intake(hardwareMap, telemetry);
+        transfer = new Transfer(hardwareMap, telemetry);
+        aprilDetector = new AprilTagDetector(hardwareMap, telemetry);
     }
 
     @Override
@@ -84,46 +99,46 @@ public class ShooterTuningTeleOp extends OpMode {
 
         switch (currentState){
             case SHOOT:
-                AprilTagPoseFtc target = peter.getTagPose(aprilTagID);
-                peter.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
+                AprilTagPoseFtc target = aprilDetector.getTagPose(aprilTagID);
+                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
 
-                peter.engageKicker();
-                peter.setRPM(PeterGriffin.targetRPM);
+                shooter.engageKicker();
+                shooter.setRPM(shooter.defaultRPM);
 
                 if(target != null){telemetry.addData("Range", target.range);}
 
-                peter.startIntake();
-                peter.startTransfer();
+                intake.startIntake();
+                transfer.startTransfer();
 
                 break;
 
             case INTAKE:
-                peter.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
-                peter.disengageKicker();
-                peter.startIntake();
-                peter.startTransfer();
+                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
+                shooter.disengageKicker();
+                intake.startIntake();
+                transfer.startTransfer();
                 break;
 
             default:
-                peter.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
-                peter.disengageKicker();
-                peter.setRPM(0);
-                peter.stopIntake();
-                peter.stopTransfer();
+                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
+                shooter.disengageKicker();
+                shooter.setRPM(0);
+                intake.stopIntake();
+                transfer.stopTransfer();
                 break;
         }
 
         if(gamepad1.dpadUpWasPressed()){
-            peter.editDefaultRPM(true);
+            shooter.editDefaultRPM(true);
         }
         else if(gamepad1.dpadDownWasPressed()){
-            peter.editDefaultRPM(false);
+            shooter.editDefaultRPM(false);
         }
 
-        telemetry.addData("target shooter rpm", PeterGriffin.targetRPM);
+        telemetry.addData("target shooter rpm", targetRPM);
 
         if(gamepad1.startWasPressed()){
-            peter.resetOdometry();
+            driveTrain.resetOdometry();
         }
 
         telemetry.update();

@@ -3,25 +3,27 @@ package org.firstinspires.ftc.teamcode.opmode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.module.PeterGriffin;
+import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
+import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @TeleOp
 public class DriveOnly extends OpMode {
-    private PeterGriffin peter;
+    private FieldCentricDriveTrain driveTrain;
 
-    public static final double STRAFE_SCALE = Math.sqrt(2);
+    private AprilTagDetector aprilDetector;
 
     @Override
     public void init() {
-        peter = new PeterGriffin(hardwareMap, telemetry);
+        driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
+        aprilDetector = new AprilTagDetector(hardwareMap, telemetry);
     }
 
     @Override
     public void loop() {
-        peter.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x*STRAFE_SCALE, gamepad1.right_stick_x);
+        driveTrain.setPowerFacingAprilTag(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
-        AprilTagPoseFtc temp = peter.getTagPose(24);
+        AprilTagPoseFtc temp = aprilDetector.getTagPose(24);
 
         if(temp != null){
             telemetry.addData("Bearing", temp.bearing);
