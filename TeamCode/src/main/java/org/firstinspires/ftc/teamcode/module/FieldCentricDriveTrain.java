@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -9,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.*;
+import org.firstinspires.ftc.teamcode.SquIDController;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
@@ -29,9 +29,8 @@ public class FieldCentricDriveTrain {
 
     private final GoBildaPinpointDriver pinpointDriver;
 
-    private final PIDController turnController;
+    private final SquIDController turnController;
     public static double turnP = 0.025;
-    public static double turnD = 0.005;
 
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -58,7 +57,7 @@ public class FieldCentricDriveTrain {
         pinpointDriver.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpointDriver.resetPosAndIMU();
 
-        turnController = new PIDController(turnP, 0, turnD, 0, 0);
+        turnController = new SquIDController(turnP);
     }
 
     public void resetOdometry() {
