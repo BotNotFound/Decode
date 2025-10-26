@@ -32,6 +32,6 @@ public class SquIDController {
             return 0.0;
         }
 
-        return kP * Math.sqrt(curError);
+        return Math.copySign(kP * Math.sqrt(Math.abs(curError)), curError);
     }
 }
