@@ -113,14 +113,14 @@ public class ShooterTuningTeleOp extends OpMode {
                 break;
 
             case INTAKE:
-                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
+                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
                 shooter.disengageKicker();
                 intake.startIntake();
                 transfer.startTransfer();
                 break;
 
             default:
-                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
+                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
                 shooter.disengageKicker();
                 shooter.setRPM(0);
                 intake.stopIntake();

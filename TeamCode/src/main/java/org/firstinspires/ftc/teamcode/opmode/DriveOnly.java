@@ -21,7 +21,7 @@ public class DriveOnly extends OpMode {
 
     @Override
     public void loop() {
-        driveTrain.setPowerFacingAprilTag(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        driveTrain.setPower(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         AprilTagPoseFtc temp = aprilDetector.getTagPose(24);
 

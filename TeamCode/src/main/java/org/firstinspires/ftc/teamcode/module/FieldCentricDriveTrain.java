@@ -72,10 +72,10 @@ public class FieldCentricDriveTrain {
             telemetry.addData("turn power", turn);
         }
 
-        setPowerFacingAprilTag(drive, strafe, turn);
+        setPower(drive, strafe, turn);
     }
 
-    public void setPowerFacingAprilTag(double drive, double strafe, double turn) {
+    public void setPower(double drive, double strafe, double turn) {
         pinpointDriver.update();
 
         drive = Math.pow(drive, 3);

@@ -65,17 +65,17 @@ public class FarPreloadAndLeaveBlue extends LinearOpMode {
         }
 
         shooter.setRPM(0);
-        driveTrain.setPowerFacingAprilTag(0, 0, 0);
+        driveTrain.setPower(0, 0, 0);
         intake.stopIntake();
         transfer.stopTransfer();
         shooter.disengageKicker();
 
         sleep(1500);
-        driveTrain.setPowerFacingAprilTag(0.3, -1, 0.0);
+        driveTrain.setPower(0.3, -1, 0.0);
         sleep(420);
 
         //then we just stop the robot
-        driveTrain.setPowerFacingAprilTag(0.0, 0.0, 0.0);
+        driveTrain.setPower(0.0, 0.0, 0.0);
 
     }
 }
