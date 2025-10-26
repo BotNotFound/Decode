@@ -107,11 +107,10 @@ public class TeleOp extends OpMode {
                     intake.startIntake();
                     transfer.startTransfer();
                 }
-
                 break;
 
             case INTAKE:
-                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
+                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
                 shooter.disengageKicker();
                 intake.startIntake();
                 if (intake.hasBall()) {
@@ -120,14 +119,14 @@ public class TeleOp extends OpMode {
                 break;
 
             case REVERSE_INTAKE:
-                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
+                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
                 shooter.disengageKicker();
                 intake.setPower(-1);
                 transfer.reverseTransfer();
                 break;
 
             default:
-                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
+                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
                 shooter.disengageKicker();
                 shooter.setRPM(0);
                 intake.stopIntake();
