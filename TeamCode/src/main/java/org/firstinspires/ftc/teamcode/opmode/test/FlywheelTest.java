@@ -18,7 +18,7 @@ public class FlywheelTest extends OpMode {
     @Override
     public void loop() {
         final double power = gamepad1.left_stick_y;
-        flywheel.setRPM(power);
+        flywheel.setRPMForAprilTag(power);
 
         if (gamepad1.a) {
             flywheel.engageKicker();

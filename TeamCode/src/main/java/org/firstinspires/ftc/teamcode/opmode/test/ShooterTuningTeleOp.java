@@ -103,7 +103,7 @@ public class ShooterTuningTeleOp extends OpMode {
                 driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
 
                 shooter.engageKicker();
-                shooter.setRPM(shooter.defaultRPM);
+                shooter.setRPMForAprilTag(shooter.defaultRPM);
 
                 if(target != null){telemetry.addData("Range", target.range);}
 
@@ -122,17 +122,17 @@ public class ShooterTuningTeleOp extends OpMode {
             default:
                 driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x);
                 shooter.disengageKicker();
-                shooter.setRPM(0);
+                shooter.setRPMForAprilTag(0);
                 intake.stopIntake();
                 transfer.stopTransfer();
                 break;
         }
 
         if(gamepad1.dpadUpWasPressed()){
-            shooter.editDefaultRPM(true);
+            shooter.increaseDefaultRPM();
         }
         else if(gamepad1.dpadDownWasPressed()){
-            shooter.editDefaultRPM(false);
+            shooter.decreaseDefaultRPM();
         }
 
         telemetry.addData("target shooter rpm", targetRPM);

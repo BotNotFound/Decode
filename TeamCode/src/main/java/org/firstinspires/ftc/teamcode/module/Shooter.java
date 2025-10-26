@@ -72,7 +72,7 @@ public class Shooter {
         flywheelSpeeds.createLUT();
     }
 
-    public void setRPM(double rpm) {
+    public void setRPMForAprilTag(double rpm) {
         double actualRPM = upperFlywheelMotor.getVelocity() / motorCPS * 60;
 
         if(rpm > 0){
@@ -93,22 +93,21 @@ public class Shooter {
 
     }
 
-    public void setRPM(AprilTagPoseFtc tagPose) {
+    public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
         if(tagPose != null){
-            setRPM(flywheelSpeeds.get(tagPose.range));
+            setRPMForAprilTag(flywheelSpeeds.get(tagPose.range));
         }
         else{
-            setRPM(defaultRPM);
+            setRPMForAprilTag(defaultRPM);
         }
     }
 
-    public void editDefaultRPM(boolean increase) {
-        if(increase){
-            defaultRPM += 50;
-        }
-        else{
-            defaultRPM -= 50;
-        }
+    public void increaseDefaultRPM() {
+        defaultRPM += 50;
+    }
+
+    public void decreaseDefaultRPM() {
+        defaultRPM -= 50;
     }
 
     public void engageKicker() {
