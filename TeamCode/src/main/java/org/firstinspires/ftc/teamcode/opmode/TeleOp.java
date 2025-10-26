@@ -31,10 +31,10 @@ public class TeleOp extends OpMode {
     private boolean isRedAlliance = true;
     private int aprilTagID = RED_APRIL_TAG_ID;
 
-    private enum RobotStates {
+    private enum RobotState {
         INTAKE, REVERSE_INTAKE, SHOOT, NONE
     }
-    private RobotStates currentState= RobotStates.NONE;
+    private RobotState currentState = RobotState.NONE;
 
     @Override
     public void init() {
@@ -71,25 +71,25 @@ public class TeleOp extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.right_bumper) {
-            currentState = RobotStates.SHOOT;
+            currentState = RobotState.SHOOT;
         }
         else if (gamepad1.leftBumperWasReleased()){
             if (!isIntakeActive) {
-                currentState = RobotStates.INTAKE;
+                currentState = RobotState.INTAKE;
                 isIntakeActive = true;
                 telemetry.addData("LBumper", "Enter. !Intake");
             }
             else {
-                currentState = RobotStates.NONE;
+                currentState = RobotState.NONE;
                 isIntakeActive = false;
                 telemetry.addData("LBumper", "Enter. Intake");
             }
         }
         else if (gamepad1.left_trigger > 0.5) {
-            currentState = RobotStates.REVERSE_INTAKE;
+            currentState = RobotState.REVERSE_INTAKE;
         }
-        else if (currentState == RobotStates.SHOOT || gamepad1.left_trigger > 0) {
-            currentState = RobotStates.NONE;
+        else if (currentState == RobotState.SHOOT || gamepad1.left_trigger > 0) {
+            currentState = RobotState.NONE;
             isIntakeActive = false;
         }
 
@@ -149,5 +149,9 @@ public class TeleOp extends OpMode {
         }
 
         telemetry.update();
+    }
+
+    private void switchState() {
+
     }
 }
