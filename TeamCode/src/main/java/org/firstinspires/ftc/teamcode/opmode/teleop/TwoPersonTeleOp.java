@@ -1,20 +1,14 @@
-package org.firstinspires.ftc.teamcode.opmode;
+package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.TeleOpRobot;
-import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
-import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
-import org.firstinspires.ftc.teamcode.module.Intake;
-import org.firstinspires.ftc.teamcode.module.Shooter;
-import org.firstinspires.ftc.teamcode.module.Transfer;
-import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(group = "2driver")
 public class TwoPersonTeleOp extends OpMode {    
-    private TeleOpRobot robot;
+    protected TeleOpRobot robot;
 
     private boolean intakeToggle = false;
 

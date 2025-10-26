@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode;
+package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -6,13 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.TeleOpRobot;
 
 @Config
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(group = "1driver")
 public class TeleOp extends OpMode {
     public static double targetRPM = 3000;
 
     private boolean isIntakeActive = false;
 
-    private TeleOpRobot robot;
+    protected TeleOpRobot robot;
 
     @Override
     public void init() {
