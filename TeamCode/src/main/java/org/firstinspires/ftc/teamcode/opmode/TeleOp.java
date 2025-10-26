@@ -150,8 +150,4 @@ public class TeleOp extends OpMode {
 
         telemetry.update();
     }
-
-    private void switchState() {
-
-    }
 }
