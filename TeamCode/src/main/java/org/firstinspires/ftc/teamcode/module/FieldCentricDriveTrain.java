@@ -117,6 +117,7 @@ public class FieldCentricDriveTrain {
 
     public double getAimRotationPower(double bearing){
         telemetry.addData("Bearing", bearing);
+        turnController.setP(turnP);
         return turnController.calculate(bearing);
     }
 
