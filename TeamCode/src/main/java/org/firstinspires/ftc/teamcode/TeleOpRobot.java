@@ -129,16 +129,15 @@ public class TeleOpRobot {
         switch (currentState) {
             case SHOOT:
                 AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
+                if (target == null) {
+                    break;
+                }
                 driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x, target);
 
                 shooter.engageKicker();
                 shooter.setRPMForAprilTag(target);
 
-                if(target != null) {
-                    telemetry.addData("Range", target.range);
-                }
-
-                if(shooter.isReady()){
+                if(shooter.isReady()) {
                     intake.startIntake();
                     transfer.startTransfer();
                 }
