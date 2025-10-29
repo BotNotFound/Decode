@@ -17,6 +17,16 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 public class AprilTagDetector {
+    /**
+     * Configuration constants obtained through camera calibration
+     */
+    private static class CameraConfig {
+        public static final double fx = 813.148;
+        public static final double fy = 813.148;
+        public static final double cx = 972.7;
+        public static final double cy = 434.194;
+    }
+
     public static final String WEBCAM_NAME = "Webcam 1";
 
     private static final Position CAMERA_POSITION = new Position(DistanceUnit.INCH,
@@ -32,7 +42,7 @@ public class AprilTagDetector {
     public AprilTagDetector(HardwareMap hardwareMap, Telemetry telemetry) {
         processor = new AprilTagProcessor.Builder()
                 .setCameraPose(CAMERA_POSITION, CAMERA_ORIENTATION)
-                .setLensIntrinsics(813.148, 813.148, 972.7, 434.194)
+                .setLensIntrinsics(CameraConfig.fx, CameraConfig.fy, CameraConfig.cx, CameraConfig.cy)
                 .build();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, WEBCAM_NAME))
