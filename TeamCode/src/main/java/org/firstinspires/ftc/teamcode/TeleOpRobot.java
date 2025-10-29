@@ -126,10 +126,14 @@ public class TeleOpRobot {
     }
 
     public void loop(Gamepad gamepad1) {
+        loop(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
+    }
+
+    public void loop(double drivePower, double strafePower, double turnPower) {
         switch (currentState) {
             case SHOOT:
                 AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
-                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x, target);
+                driveTrain.setPowerFacingAprilTag(drivePower, strafePower, turnPower, target);
 
                 shooter.engageKicker();
                 shooter.setRPMForAprilTag(target);
@@ -138,14 +142,14 @@ public class TeleOpRobot {
                     telemetry.addData("Range", target.range);
                 }
 
-                if(shooter.isReady()){
+                if(shooter.isReady()) {
                     intake.startIntake();
                     transfer.startTransfer();
                 }
                 break;
 
             case INTAKE:
-                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
+                driveTrain.setPower(drivePower, strafePower, turnPower);
                 if (intake.hasBall()) {
                     transfer.startTransfer();
                 }
@@ -153,7 +157,7 @@ public class TeleOpRobot {
 
             case REVERSE_INTAKE:
             case NONE:
-                driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x * STRAFE_SCALE, gamepad1.right_stick_x);
+                driveTrain.setPower(drivePower, strafePower, turnPower);
                 break;
         }
     }
