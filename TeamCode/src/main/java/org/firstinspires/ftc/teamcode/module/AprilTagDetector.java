@@ -30,9 +30,10 @@ public class AprilTagDetector {
     private final Telemetry telemetry;
 
     public AprilTagDetector(HardwareMap hardwareMap, Telemetry telemetry) {
-        processor = new AprilTagProcessor.Builder().
-                setCameraPose(CAMERA_POSITION, CAMERA_ORIENTATION).
-                build();
+        processor = new AprilTagProcessor.Builder()
+                .setCameraPose(CAMERA_POSITION, CAMERA_ORIENTATION)
+                .setLensIntrinsics(813.148, 813.148, 972.7, 434.194)
+                .build();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, WEBCAM_NAME))
                 .addProcessor(processor)
