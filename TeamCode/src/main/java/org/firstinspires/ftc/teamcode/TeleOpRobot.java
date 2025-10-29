@@ -125,7 +125,7 @@ public class TeleOpRobot {
         return currentState;
     }
 
-    public void loop(Gamepad gamepad1, Gamepad gamepad2) {
+    public void loop(Gamepad gamepad1) {
         switch (currentState) {
             case SHOOT:
                 AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);

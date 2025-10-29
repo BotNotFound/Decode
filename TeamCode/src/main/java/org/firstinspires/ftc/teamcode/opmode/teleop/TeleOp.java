@@ -53,7 +53,7 @@ public class TeleOp extends OpMode {
             isIntakeActive = false;
         }
 
-        robot.loop(gamepad1, gamepad2);
+        robot.loop(gamepad1);
 
         if (gamepad1.dpadUpWasPressed()) {
             robot.increaseDefaultShooterRPM();

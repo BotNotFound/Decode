@@ -51,7 +51,7 @@ public class TwoPersonTeleOp extends OpMode {
             intakeToggle = false;
         }
 
-        robot.loop(gamepad1, gamepad2);
+        robot.loop(gamepad1);
 
         if (gamepad2.dpadUpWasPressed()) {
             robot.increaseDefaultShooterRPM();
