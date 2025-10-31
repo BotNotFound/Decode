@@ -53,9 +53,9 @@ public class FarPreloadAndLeaveRed extends LinearOpMode {
                 driveTrain.setPowerFacingAprilTag(0, 0, 0, tagPose);
                 shooter.setRPMForAprilTag(tagPose);
             }else{
-                shooter.setRPMForAprilTag(subRPM);
+                shooter.setRPM(subRPM);
             }
-            shooter.setRPMForAprilTag(subRPM);
+            shooter.setRPM(subRPM);
             shooter.engageKicker();
             intake.startIntake();
             transfer.startTransfer();
@@ -63,7 +63,7 @@ public class FarPreloadAndLeaveRed extends LinearOpMode {
             telemetry.update();
         }
 
-        shooter.setRPMForAprilTag(0);
+        shooter.setRPM(0);
         driveTrain.setPower(0, 0, 0);
         intake.stopIntake();
         transfer.stopTransfer();

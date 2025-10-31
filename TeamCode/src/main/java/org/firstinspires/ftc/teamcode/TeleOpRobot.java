@@ -110,7 +110,7 @@ public class TeleOpRobot {
 
             case NONE:
                 shooter.disengageKicker();
-                shooter.setRPMForAprilTag(0);
+                shooter.setRPM(0);
                 intake.stopIntake();
                 transfer.stopTransfer();
                 break;
