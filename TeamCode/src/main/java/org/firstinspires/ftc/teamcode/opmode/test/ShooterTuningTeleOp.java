@@ -81,16 +81,6 @@ public class ShooterTuningTeleOp extends OpMode {
                 telemetry.addData("LBumper", "Enter. Intake");
             }
         }
-//        else if(gamepad1.left_bumper){
-//            currentState = RobotStates.INTAKE;
-//            intakeToggle = true;
-//            intakeHold = true;
-//        }
-//        else if(intakeHold){
-//            currentState = RobotStates.NONE;
-//            intakeToggle = false;
-//            intakeHold = false;
-//        }
         else if(currentState == RobotStates.SHOOT){
             currentState = RobotStates.NONE;
             intakeToggle = false;
@@ -103,7 +93,7 @@ public class ShooterTuningTeleOp extends OpMode {
                 driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
 
                 shooter.engageKicker();
-                shooter.setRPM(shooter.defaultRPM);
+                shooter.setRPM(targetRPM);
 
                 if(target != null){telemetry.addData("Range", target.range);}
 
@@ -135,9 +125,11 @@ public class ShooterTuningTeleOp extends OpMode {
 
         if(gamepad1.dpadUpWasPressed()){
             shooter.increaseDefaultRPM();
+            targetRPM = shooter.defaultRPM;
         }
         else if(gamepad1.dpadDownWasPressed()){
             shooter.decreaseDefaultRPM();
+            targetRPM = shooter.defaultRPM;
         }
 
         telemetry.addData("target shooter rpm", targetRPM);
