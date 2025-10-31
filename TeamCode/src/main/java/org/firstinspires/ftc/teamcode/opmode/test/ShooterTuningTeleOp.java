@@ -110,6 +110,11 @@ public class ShooterTuningTeleOp extends OpMode {
                 intake.startIntake();
                 transfer.startTransfer();
 
+                if(shooter.isReady()) {
+                    intake.startIntake();
+                    transfer.startTransfer();
+                }
+
                 break;
 
             case INTAKE:
