@@ -158,4 +158,13 @@
 
     <!-- ======================================================================================= -->
 
+    <Camera vid="Sunplus IT Co" pid="0x2286">
+        <Calibration
+            size="640 480"
+            focalLength="1601.288f, 1601.288f"
+            principalPoint="-118.280f, -106.000f"
+            distortionCoefficients="-0.0155868, -0.421479, -0.025104, -0.013866, 0.469998"
+            />
+    </Camera>
+
 </Calibrations>
