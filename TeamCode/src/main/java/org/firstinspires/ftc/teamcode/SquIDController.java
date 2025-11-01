@@ -27,7 +27,7 @@ public class SquIDController {
     }
 
     public double calculate(double measuredValue) {
-        curError = measuredValue - target;
+        curError = target - measuredValue;
         if (atTarget()) {
             return 0.0;
         }
