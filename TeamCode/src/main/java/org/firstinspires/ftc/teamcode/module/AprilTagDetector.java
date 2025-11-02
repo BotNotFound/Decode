@@ -47,6 +47,7 @@ public class AprilTagDetector {
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, WEBCAM_NAME))
                 .addProcessor(processor)
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .build();
         this.telemetry = telemetry;
     }
