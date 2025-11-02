@@ -131,7 +131,6 @@ public class TeleOpRobot {
             case SHOOT:
                 AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
                 driveTrain.setPowerFacingAprilTag(drivePower, strafePower, turnPower, target);
-                driveTrain.setPowerFacingAprilTag(drivePower, strafePower, turnPower, target);
 
                 shooter.engageKicker();
                 shooter.setRPMForAprilTag(target);
