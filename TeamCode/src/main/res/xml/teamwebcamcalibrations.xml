@@ -161,9 +161,9 @@
     <Camera vid="0x1bcf" pid="0x2286">
         <Calibration
             size="640, 480"
-            focalLength="792.263f, 792.263f"
-            principalPoint="144.439f, 157.414f"
-            distortionCoefficients="-0.333273, 0.197211, 0, 0, -0.0999255, 0, 0, 0"
+            focalLength="446.534f, 446.534f"
+            principalPoint="350.055f, 209.549f"
+            distortionCoefficients="-0.081664, -0.061359, 0, 0, -0.0365506, 0, 0, 0"
             remove="false"
             />
     </Camera>
