@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -62,6 +64,7 @@ public class TeleOpRobot {
     private RobotState currentState;
 
     public TeleOpRobot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         driveTrain.resetOdometry();
 
@@ -130,7 +133,6 @@ public class TeleOpRobot {
         switch (currentState) {
             case SHOOT:
                 AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
-                driveTrain.setPowerFacingAprilTag(drivePower, strafePower, turnPower, target);
                 driveTrain.setPowerFacingAprilTag(drivePower, strafePower, turnPower, target);
 
                 shooter.engageKicker();
