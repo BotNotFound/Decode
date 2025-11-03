@@ -30,7 +30,7 @@ public class FieldCentricDriveTrain {
     private final GoBildaPinpointDriver pinpointDriver;
 
     private final SquIDController turnController;
-    public static double turnP = 0.025;
+    public static double turnP = 0.05;
 
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
