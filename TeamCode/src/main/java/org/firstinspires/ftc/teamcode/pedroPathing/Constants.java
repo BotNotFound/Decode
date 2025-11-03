@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
+import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.FollowerConstants;
 import com.pedropathing.ftc.FollowerBuilder;
@@ -11,21 +12,22 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 
 public class Constants {
     public static FollowerConstants followerConstants = new FollowerConstants()
         .mass(9.162566)
         .forwardZeroPowerAcceleration(-36.278554120599594)
         .lateralZeroPowerAcceleration(-74.29537018748395)
-        .translationalPIDFCoefficients(new PIDFCoefficeints(0.25, 0, 0.018, 0));
+        .translationalPIDFCoefficients(new PIDFCoefficients(0.25, 0, 0.018, 0));
         
 
     public static MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1)
-            .rightFrontMotorName("Front Right")
-            .rightRearMotorName("Back Right")
-            .leftRearMotorName("Back Left")
-            .leftFrontMotorName("Front Left")
+            .rightFrontMotorName(FieldCentricDriveTrain.FRONT_RIGHT_DRIVE_MOTOR_NAME)
+            .rightRearMotorName(FieldCentricDriveTrain.BACK_RIGHT_DRIVE_MOTOR_NAME)
+            .leftRearMotorName(FieldCentricDriveTrain.BACK_LEFT_DRIVE_MOTOR_NAME)
+            .leftFrontMotorName(FieldCentricDriveTrain.FRONT_LEFT_DRIVE_MOTOR_NAME)
             .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
             .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
@@ -47,11 +49,11 @@ public class Constants {
             .forwardPodY(32)
             .strafePodX(8)
             .distanceUnit(DistanceUnit.MM)
-            .hardwareMapName("pinpoint")
+            .hardwareMapName(FieldCentricDriveTrain.PINPOINT_DRIVER_NAME)
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
             // adjust these in the encoder tests
             .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
-            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSE);
+            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED);
 
             
              
