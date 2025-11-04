@@ -19,8 +19,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 @Config
 public class TeleOpRobot {
     public enum AllianceColor {
-        RED(20),
-        BLUE(24);
+        RED(24),
+        BLUE(20);
 
         public final int targetAprilTagID;
 
