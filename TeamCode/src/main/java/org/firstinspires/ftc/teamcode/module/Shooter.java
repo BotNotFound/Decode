@@ -26,14 +26,15 @@ public class Shooter {
     private final Servo kickerServo;
 
     private final PIDFController velocityPID;
-    public static double kP = 0.001;
-    public static double kD = 0.0002;
-    public static double kF = 0.00026;
-    public static double tolerance = 25;
+    public static double kP = 0.007;
+    public static double kI = 0;
+    public static double kD = 0;
+    public static double kF = 0.00023;
+    public static double tolerance = 100;
 
     public static int motorCPS = 28;
 
-    public double defaultRPM = 3000;
+    public double defaultRPM = 2900;
 
     private final Telemetry telemetry;
 
@@ -54,27 +55,25 @@ public class Shooter {
 
         kickerServo.setPosition(KICKER_IDLE_POSITION);
 
-        velocityPID = new PIDFController(kP, 0, kD, kF);
+        velocityPID = new PIDFController(kP, kI, kD, kF);
         velocityPID.setTolerance(tolerance);
 
         this.telemetry = telemetry;
 
         flywheelSpeeds = new InterpLUT();
         // the control points have to be in increasing order
-        flywheelSpeeds.add(29.0, 2800);
-        flywheelSpeeds.add(31.0, 3000);
-        flywheelSpeeds.add(34.0, 3025);
-        flywheelSpeeds.add(44.5, 3050);
-        flywheelSpeeds.add(61.8, 3375);
-        flywheelSpeeds.add(68.5, 3475);
-        flywheelSpeeds.add(71.5, 3700);
-        flywheelSpeeds.add(110,4050);
-        flywheelSpeeds.add(130, 4300);
+        flywheelSpeeds.add(30.0, 2700); // extrapolated lower bound
+        flywheelSpeeds.add(39.0, 2900);
+        flywheelSpeeds.add(70.0, 3200);
+        flywheelSpeeds.add(82.0, 3400);
+        flywheelSpeeds.add(96.5, 3700);
+        flywheelSpeeds.add(120.0, 3950); // extrapolated upper bound
         flywheelSpeeds.createLUT();
     }
 
     public void setRPM(double rpm) {
         velocityPID.setTolerance(tolerance);
+        velocityPID.setPIDF(kP, kI, kD, kF);
         double actualRPM = upperFlywheelMotor.getVelocity() / motorCPS * 60;
 
         if(rpm > 0){
