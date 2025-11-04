@@ -87,15 +87,17 @@ public class ShooterTuningTeleOp extends OpMode {
             intakeHold = false;
         }
 
+        AprilTagPoseFtc target = aprilDetector.getTagPose(aprilTagID);
+        if (target != null) {
+            telemetry.addData("Distance to April Tag", target.range);
+        }
+
         switch (currentState){
             case SHOOT:
-                AprilTagPoseFtc target = aprilDetector.getTagPose(aprilTagID);
                 driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
 
                 shooter.engageKicker();
                 shooter.setRPM(targetRPM);
-
-                if(target != null){telemetry.addData("Range", target.range);}
 
                 if(shooter.isReady()) {
                     intake.startIntake();
