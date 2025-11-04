@@ -50,8 +50,7 @@ public class TeleOpRobot {
         NONE,
     }
 
-    public static final double STRAFE_SCALE = Math.sqrt(2);
-    public static double MOVE_SCALE = 0.7;
+    public static double MOVE_SCALE = 1;
 
     /* Modules */
     private final FieldCentricDriveTrain driveTrain;
@@ -126,7 +125,7 @@ public class TeleOpRobot {
     }
 
     public void loop(Gamepad gamepad1) {
-        loop(-gamepad1.left_stick_y * MOVE_SCALE, gamepad1.left_stick_x * STRAFE_SCALE * MOVE_SCALE, gamepad1.right_stick_x * MOVE_SCALE);
+        loop(-gamepad1.left_stick_y * MOVE_SCALE, gamepad1.left_stick_x * MOVE_SCALE, gamepad1.right_stick_x * MOVE_SCALE);
     }
 
     public void loop(double drivePower, double strafePower, double turnPower) {
