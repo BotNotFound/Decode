@@ -14,12 +14,24 @@ public class SquIDController {
         this.kP = kP;
     }
 
+    public double getP() {
+        return kP;
+    }
+
     public void setTolerance(double tolerance) {
         this.tolerance = tolerance;
     }
 
+    public double getTolerance() {
+        return tolerance;
+    }
+
     public void setTarget(double targetValue) {
         this.target = targetValue;
+    }
+
+    public double getTarget() {
+        return target;
     }
 
     public boolean atTarget() {

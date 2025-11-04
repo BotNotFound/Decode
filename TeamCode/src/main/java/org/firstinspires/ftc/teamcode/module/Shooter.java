@@ -29,6 +29,7 @@ public class Shooter {
     public static double kP = 0.001;
     public static double kD = 0.0002;
     public static double kF = 0.00026;
+    public static double tolerance = 25;
 
     public static int motorCPS = 28;
 
@@ -54,7 +55,7 @@ public class Shooter {
         kickerServo.setPosition(KICKER_IDLE_POSITION);
 
         velocityPID = new PIDFController(kP, 0, kD, kF);
-        velocityPID.setTolerance(75);
+        velocityPID.setTolerance(tolerance);
 
         this.telemetry = telemetry;
 
@@ -73,6 +74,7 @@ public class Shooter {
     }
 
     public void setRPM(double rpm) {
+        velocityPID.setTolerance(tolerance);
         double actualRPM = upperFlywheelMotor.getVelocity() / motorCPS * 60;
 
         if(rpm > 0){

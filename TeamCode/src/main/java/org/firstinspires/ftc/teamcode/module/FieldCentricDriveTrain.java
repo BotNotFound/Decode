@@ -31,6 +31,8 @@ public class FieldCentricDriveTrain {
 
     private final SquIDController turnController;
     public static double turnP = 0.05;
+    public static double turnTarget = 0;
+    public static double turnTolerance = 0.5;
 
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -58,6 +60,8 @@ public class FieldCentricDriveTrain {
         pinpointDriver.resetPosAndIMU();
 
         turnController = new SquIDController(turnP);
+        turnController.setTolerance(turnTolerance);
+        turnController.setTarget(turnTarget);
     }
 
     public void resetOdometry() {
@@ -65,6 +69,10 @@ public class FieldCentricDriveTrain {
     }
 
     public void setPowerFacingAprilTag(double drive, double strafe, double turn, AprilTagPoseFtc targetTag) {
+        if (turnTarget != turnController.getTolerance()) {
+            turnController.setTarget(turnTarget);
+        }
+        turnController.setTolerance(turnTolerance);
 
         if(targetTag != null){
             turn = getAimRotationPower(targetTag.bearing);
