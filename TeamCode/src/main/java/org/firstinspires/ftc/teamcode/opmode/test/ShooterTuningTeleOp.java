@@ -98,11 +98,10 @@ public class ShooterTuningTeleOp extends OpMode {
         switch (currentState){
             case SHOOT:
                 driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
-
-                shooter.engageKicker();
                 shooter.setRPM(targetRPM);
 
                 if(shooter.isReady()) {
+                    shooter.engageKicker();
                     intake.startIntake();
                     transfer.startTransfer();
                 }
