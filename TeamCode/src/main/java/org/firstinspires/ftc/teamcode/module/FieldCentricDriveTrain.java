@@ -30,7 +30,7 @@ public class FieldCentricDriveTrain {
     private final GoBildaPinpointDriver pinpointDriver;
 
     private final SquIDController turnController;
-    public static double turnP = 0.05;
+    public static double turnP = 0.09;
     public static double turnTarget = 7;
     public static double turnTolerance = 0.5;
 
