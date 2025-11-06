@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.TeleOpRobot;
@@ -17,6 +19,7 @@ public class TeleOp extends OpMode {
     @Override
     public void init() {
         // assume red alliance until driver indicates otherwise
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         robot = new TeleOpRobot(hardwareMap, telemetry, TeleOpRobot.AllianceColor.RED);
     }
 

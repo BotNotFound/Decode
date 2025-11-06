@@ -63,7 +63,6 @@ public class TeleOpRobot {
     private RobotState currentState;
 
     public TeleOpRobot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         driveTrain.resetOdometry();
 
