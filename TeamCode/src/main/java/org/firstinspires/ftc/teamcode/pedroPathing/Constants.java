@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
+import com.pedropathing.control.FilteredPIDFCoefficients;
 import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.FollowerConstants;
@@ -19,8 +20,9 @@ public class Constants {
         .mass(9.162566)
         .forwardZeroPowerAcceleration(-36.278554120599594)
         .lateralZeroPowerAcceleration(-74.29537018748395)
-        .translationalPIDFCoefficients(new PIDFCoefficients(0.25, 0, 0.018, 0));
-        
+        .translationalPIDFCoefficients(new PIDFCoefficients(0.066, 0, 0, 0.02))
+        .headingPIDFCoefficients(new PIDFCoefficients(0.866, 0, 0, 0.03))
+        .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.01, 0, 0, 0, 0.01));
 
     public static MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1)
@@ -36,6 +38,7 @@ public class Constants {
             .yVelocity(50.51176969272884);
 
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
+
 
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
@@ -53,8 +56,5 @@ public class Constants {
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
             // adjust these in the encoder tests
             .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
-            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED);
-
-            
-             
+            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
 }
