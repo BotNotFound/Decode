@@ -5,8 +5,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.TeleOpRobot;
+import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
@@ -16,8 +15,8 @@ public class GetAprilTagInfo extends OpMode {
     private FieldCentricDriveTrain driveTrain;
     private AprilTagDetector detector;
 
-    private static final int RED_TARGET_TAG_ID = TeleOpRobot.AllianceColor.RED.targetAprilTagID;
-    private static final int BLUE_TARGET_TAG_ID = TeleOpRobot.AllianceColor.BLUE.targetAprilTagID;
+    private static final int RED_TARGET_TAG_ID = Robot.AllianceColor.RED.targetAprilTagID;
+    private static final int BLUE_TARGET_TAG_ID = Robot.AllianceColor.BLUE.targetAprilTagID;
 
     @Override
     public void init() {

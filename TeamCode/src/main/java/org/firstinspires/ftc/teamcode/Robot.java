@@ -2,11 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
@@ -17,7 +16,7 @@ import org.firstinspires.ftc.teamcode.module.Transfer;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
-public class TeleOpRobot {
+public class Robot {
     public enum AllianceColor {
         RED(24),
         BLUE(20);
@@ -62,7 +61,7 @@ public class TeleOpRobot {
     private AllianceColor allianceColor;
     private RobotState currentState;
 
-    public TeleOpRobot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
+    public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         driveTrain.resetOdometry();
 
@@ -153,6 +152,10 @@ public class TeleOpRobot {
                 driveTrain.setPower(drivePower, strafePower, turnPower);
                 break;
         }
+    }
+
+    public boolean isShotReady() {
+        return currentState == RobotState.SHOOT && shooter.isReady();
     }
 
     /* Module-specific methods */

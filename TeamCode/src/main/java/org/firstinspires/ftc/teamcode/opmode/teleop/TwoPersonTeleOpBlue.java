@@ -2,14 +2,14 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.TeleOpRobot;
+import org.firstinspires.ftc.teamcode.Robot;
 
 @TeleOp(name = "2-Driver Teleop (Blue)", group = "2driver")
 public class TwoPersonTeleOpBlue extends TwoPersonTeleOp {
     @Override
     public void init() {
         super.init();
-        robot.setAllianceColor(TeleOpRobot.AllianceColor.BLUE);
+        robot.setAllianceColor(Robot.AllianceColor.BLUE);
     }
 
     @Override

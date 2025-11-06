@@ -5,12 +5,12 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.TeleOpRobot;
+import org.firstinspires.ftc.teamcode.Robot;
 
 @Config
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "2-Driver Teleop", group = "2driver")
 public class TwoPersonTeleOp extends OpMode {    
-    protected TeleOpRobot robot;
+    protected Robot robot;
 
     private boolean intakeToggle = false;
 
@@ -18,7 +18,7 @@ public class TwoPersonTeleOp extends OpMode {
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         // assume red alliance until driver indicates otherwise
-        robot = new TeleOpRobot(hardwareMap, telemetry, TeleOpRobot.AllianceColor.RED);
+        robot = new Robot(hardwareMap, telemetry, Robot.AllianceColor.RED);
     }
 
     @Override
@@ -32,25 +32,25 @@ public class TwoPersonTeleOp extends OpMode {
     @Override
     public void loop() {
         if (gamepad2.right_bumper) {
-            robot.setState(TeleOpRobot.RobotState.SHOOT);
+            robot.setState(Robot.RobotState.SHOOT);
         }
         else if (gamepad2.leftBumperWasReleased()) {
             if (!intakeToggle) {
-                robot.setState(TeleOpRobot.RobotState.INTAKE);
+                robot.setState(Robot.RobotState.INTAKE);
                 intakeToggle = true;
                 telemetry.addData("LBumper", "Enter. !Intake");
             }
             else {
-                robot.setState(TeleOpRobot.RobotState.NONE);
+                robot.setState(Robot.RobotState.NONE);
                 intakeToggle = false;
                 telemetry.addData("LBumper", "Enter. Intake");
             }
         }
         else if (gamepad2.left_trigger > 0.5) {
-            robot.setState(TeleOpRobot.RobotState.REVERSE_INTAKE);
+            robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
-        else if (robot.getState() == TeleOpRobot.RobotState.SHOOT || gamepad1.left_trigger > 0) {
-            robot.setState(TeleOpRobot.RobotState.NONE);
+        else if (robot.getState() == Robot.RobotState.SHOOT || gamepad1.left_trigger > 0) {
+            robot.setState(Robot.RobotState.NONE);
             intakeToggle = false;
         }
 
