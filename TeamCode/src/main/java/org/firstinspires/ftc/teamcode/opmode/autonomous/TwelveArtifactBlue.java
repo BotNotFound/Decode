@@ -194,20 +194,20 @@ public class TwelveArtifactBlue extends OpMode {
         // Your path chain definitions...
         Pose start = startPose;
         //adjust these positions accordingly
-        Pose shootPreloadedArtifacts = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose firstControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose firstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose intakeFirstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose shootFirstThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose secondControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose secondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose intakeSecondThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose thirdControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose shootSecondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose fourthControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose thirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose intakeLastThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        Pose shootThirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose shootPreloadedArtifacts = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose firstControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose firstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose intakeFirstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose shootFirstThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose secondControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose secondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose intakeSecondThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose thirdControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose shootSecondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose fourthControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose thirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose intakeLastThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        final Pose shootThirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
 
         // FIRST CYCLE: Shooting the preloaded artifacts
         {
