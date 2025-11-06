@@ -127,10 +127,15 @@ public class Robot {
     }
 
     public void loop(double drivePower, double strafePower, double turnPower) {
+        setDrivePowers(drivePower, strafePower, turnPower);
+        loopWithoutMovement();
+    }
+
+    public void loopWithoutMovement() {
         switch (currentState) {
             case SHOOT:
                 AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
-                driveTrain.setPowerFacingAprilTag(drivePower, strafePower, turnPower, target);
+                driveTrain.aimAtAprilTag(target);
                 shooter.setRPMForAprilTag(target);
 
                 if(shooter.isReady()) {
@@ -141,7 +146,6 @@ public class Robot {
                 break;
 
             case INTAKE:
-                driveTrain.setPower(drivePower, strafePower, turnPower);
                 if (intake.hasBall()) {
                     transfer.startTransfer();
                 }
@@ -149,7 +153,6 @@ public class Robot {
 
             case REVERSE_INTAKE:
             case NONE:
-                driveTrain.setPower(drivePower, strafePower, turnPower);
                 break;
         }
     }
@@ -159,6 +162,10 @@ public class Robot {
     }
 
     /* Module-specific methods */
+
+    public void setDrivePowers(double drive, double strafe, double turn) {
+        driveTrain.setPower(drive, strafe, turn);
+    }
 
     public void resetOdometry() {
         driveTrain.resetOdometry();

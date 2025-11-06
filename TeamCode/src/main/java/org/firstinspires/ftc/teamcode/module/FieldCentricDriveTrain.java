@@ -120,10 +120,55 @@ public class FieldCentricDriveTrain {
         frontLeftDriveMotor.setPower(leftFrontPower);
         backRightDriveMotor.setPower(rightBackPower);
         backLeftDriveMotor.setPower(leftBackPower);
-
     }
 
-    public double getAimRotationPower(double bearing) {
+    /* get current powers using forward kinematics -- see https://www.desmos.com/calculator/je1clj0udl */
+
+    private double getRobotCentricDrivePower() {
+        final double frontLeftPower = frontLeftDriveMotor.getPower();
+        final double frontRightPower = frontRightDriveMotor.getPower();
+        return (frontLeftPower + frontRightPower) / 2;
+    }
+
+    private double getRobotCentricStrafePower() {
+        final double frontLeftPower = frontLeftDriveMotor.getPower();
+        final double backLeftPower = backLeftDriveMotor.getPower();
+        return (frontLeftPower - backLeftPower) / 2;
+    }
+
+    public double getDrivePower() {
+        final double robotCentricDrivePower = getRobotCentricDrivePower();
+        final double robotCentricStrafePower = getRobotCentricStrafePower();
+        final double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS);
+        return robotCentricDrivePower * Math.cos(curRotation) + robotCentricStrafePower * Math.sin(curRotation);
+    }
+
+    public double getStrafePower() {
+        final double robotCentricDrivePower = getRobotCentricDrivePower();
+        final double robotCentricStrafePower = getRobotCentricStrafePower();
+        final double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS);
+        return robotCentricStrafePower * Math.cos(curRotation) - robotCentricDrivePower * Math.sin(curRotation);
+    }
+
+    public double getTurnPower() {
+        final double backLeftPower = backLeftDriveMotor.getPower();
+        final double frontRightPower = frontRightDriveMotor.getPower();
+        return (backLeftPower - frontRightPower) / 2;
+    }
+
+    public void aimAtAprilTag(AprilTagPoseFtc target) {
+        if (target == null) {
+            return; // no tag to aim at
+        }
+
+        final double curDrivePower = getDrivePower();
+        final double curStrafePower = getStrafePower();
+        final double newTurnPower = getAimRotationPower(target.bearing);
+
+        setPower(curDrivePower, curStrafePower, newTurnPower);
+    }
+
+    private double getAimRotationPower(double bearing) {
         telemetry.addData("Bearing", bearing);
         turnController.setP(turnP);
         return turnController.calculate(bearing);
