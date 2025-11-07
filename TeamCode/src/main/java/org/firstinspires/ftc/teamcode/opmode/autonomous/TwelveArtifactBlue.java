@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 
 import org.firstinspires.ftc.teamcode.Robot;
@@ -19,6 +21,14 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+
+/*
+ * Step 1: make all the points public static so they can be configured on dash
+ * Step 2: Use Robot robot
+ * Step 3: set up pathStates using enum
+ * Step 4: change pose values according to visualizer
+ */
+@Config
 @Autonomous(name = "12ArtifactAutoBlue", group = "autonomous")
 public class TwelveArtifactBlue extends OpMode {
     /**
@@ -39,7 +49,13 @@ public class TwelveArtifactBlue extends OpMode {
 
     private Follower follower;
     private AutonomousState pathState = AutonomousState.BEGIN;
-    private final Pose startPose = new Pose(12.0, 12.0, Math.toRadians(0));
+
+    //all the positions
+    public static Pose startPose, shootPreloadedArtifacts, firstControlPoint
+    ,firstThreeArtifactsPose, intakeFirstThreeArtifactsPose, shootFirstThreeArtifactPose, secondControlPoint
+    , secondThreeArtifactPose, intakeSecondThreeArtifactsPose, thirdControlPoint, shootSecondThreeArtifactPose
+    , fourthControlPoint, thirdThreeArtifactPose, intakeLastThreeArtifactsPose, shootThirdThreeArtifactPose;
+
 
 
     private PathChain firstCycleChain;
@@ -52,22 +68,14 @@ public class TwelveArtifactBlue extends OpMode {
 
 
 // Mechanism subsystem references
-    private FieldCentricDriveTrain driveTrain;
-    private Shooter shooter;
-    private Intake intake;
-    private Transfer transfer;
-    private AprilTagDetector aprilTagDetector;
+
+    private Robot robot;
 
     @Override
     public void init() {
+        telemetry= new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         follower = Constants.createFollower(hardwareMap);
-        driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
-        driveTrain.resetOdometry();
-
-        shooter = new Shooter(hardwareMap, telemetry);
-        intake = new Intake(hardwareMap, telemetry);
-        transfer = new Transfer(hardwareMap, telemetry);
-        aprilTagDetector = new AprilTagDetector(hardwareMap, telemetry);
+        robot=new Robot(hardwareMap, telemetry, Robot.AllianceColor.RED);
         
         follower.setStartingPose(startPose);
 
@@ -192,22 +200,22 @@ public class TwelveArtifactBlue extends OpMode {
 
     private void buildPaths() {
         // Your path chain definitions...
-        Pose start = startPose;
+        startPose = new Pose(24.0, 12.0, Math.toRadians(0));
         //adjust these positions accordingly
-        final Pose shootPreloadedArtifacts = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose firstControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose firstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose intakeFirstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose shootFirstThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose secondControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose secondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose intakeSecondThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose thirdControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose shootSecondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose fourthControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose thirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose intakeLastThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        final Pose shootThirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        shootPreloadedArtifacts = new Pose(24.0, 12.0, Math.toRadians(0));
+        firstControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
+        firstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        intakeFirstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        shootFirstThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        secondControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
+        secondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        intakeSecondThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        thirdControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
+        shootSecondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        fourthControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
+        thirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        intakeLastThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        shootThirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
 
         // FIRST CYCLE: Shooting the preloaded artifacts
         {

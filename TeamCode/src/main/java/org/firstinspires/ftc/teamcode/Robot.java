@@ -99,11 +99,13 @@ public class Robot {
         switch (newState) {
             case INTAKE:
                 shooter.disengageKicker();
+                shooter.setRPM(0);
                 intake.startIntake();
                 break;
 
             case REVERSE_INTAKE:
                 shooter.disengageKicker();
+                shooter.setRPM(0);
                 intake.setPower(-1);
                 transfer.reverseTransfer();
                 break;

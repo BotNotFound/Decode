@@ -36,12 +36,14 @@ public class Shooter {
 
     public double defaultRPM = 2900;
 
+    private boolean stickyRPM = false;
+    private double stickyTargetRPM;
+
     private final Telemetry telemetry;
 
     private final InterpLUT flywheelSpeeds;
 
-
-
+    
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
         lowerFlywheelMotor = hardwareMap.get(DcMotorEx.class, LOWER_FLYWHEEL_MOTOR_NAME);
         upperFlywheelMotor = hardwareMap.get(DcMotorEx.class, UPPER_FLYWHEEL_MOTOR_NAME);
@@ -86,6 +88,8 @@ public class Shooter {
         else{
             lowerFlywheelMotor.setPower(0);
             upperFlywheelMotor.setPower(0);
+
+            stickyRPM = false;
         }
 
         telemetry.addData("Target RPM", rpm);
@@ -96,7 +100,13 @@ public class Shooter {
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
         if(tagPose != null){
-            setRPM(flywheelSpeeds.get(tagPose.range));
+            stickyRPM = true;
+            stickyTargetRPM = flywheelSpeeds.get(tagPose.range);
+
+            setRPM(stickyTargetRPM);
+        }
+        else if(stickyRPM){
+            setRPM(stickyTargetRPM);
         }
         else{
             setRPM(defaultRPM);
