@@ -31,40 +31,13 @@ public class TwelveArtifactBlue extends OpMode {
      * The various states of the robot autonomous
      */
     enum AutonomousState {
-        /**
-         * case 0: goes to the shooting position for preload
-         */
         BEGIN,
-
-        /**
-         * case 1: shoots the preloads, spits out the remaining balls if there are any
-         * then it goes to the position where its ready to pick up the next three artifacts
-         */
         SHOOT_PRELOADS,
-        /**
-         * case 2: intakes the first three artifacts, goes to the shooting position for the first three artifacts
-         */
-        INTAKE_ROW_1,
-
-        /**
-         * case 3: at the shooting position of the robot, it shoots the first row of three artifacts
-         * collected, then goes to the next position ready to collect the next second row of three artifacts
-         */
-        SHOOT,
-
-        /**
-         * case 4: Here, the robot picks up that second row of artifacts and then shoots
-         */
-        INTAKE_AND_SHOOT_ROW_2,
-
-        /**
-         * case 5: go to the next position ready to pick up that third and last row of artifacts
-         */
-        INTAKE_AND_SHOOT_ROW_3,
-
-        /**
-         * Final case: idle the robot until auto completes
-         */
+        INTAKE_ROW_1_AND_SHOOT,
+        INTAKE_SECOND_ROW,
+        SHOOT_ROW_2,
+        INTAKE_ROW_3,
+        SHOOT_ROW_3,
         COMPLETE
     }
 
@@ -125,114 +98,102 @@ public class TwelveArtifactBlue extends OpMode {
         }
 
         switch (pathState) {
-            // case 0, goes to the shooting position for preload
+            // goes to the shooting position for preload
+            //this is good
             case BEGIN:
 
                 follower.followPath(firstCycleChain, true);
                 pathState = AutonomousState.SHOOT_PRELOADS;
                 break;
-        /*case 1, shoots the preloads, spits out the remaining balls if there are any
+        /*shoots the preloads, spits out the remaining balls if there are any
         then it goes to the position where its ready to pick up the next three artifacts
         */
+        //this is good
             case SHOOT_PRELOADS:
-                AprilTagPoseFtc target = aprilTagDetector.getTagPose(20); //20 for blue
-                driveTrain.setPowerFacingAprilTag(0, 0, 0, target); //not sure what to do 
-                shooter.setRPMForAprilTag(target);
-
-                if (shooter.isReady()) {
-                    shooter.engageKicker();
-                    transfer.startTransfer();
-                    intake.startIntake();
-                }
-                //if balls are stuck then reverse the transfer so we don't pick up more than 3
-                shooter.disengageKicker();
-                intake.setPower(-1);
-                transfer.reverseTransfer();
+                robot.setState(Robot.RobotState.SHOOT);
+                robot.setState(Robot.RobotState.NONE);
                 follower.followPath(secondCycleChain, true);
                 pathState = AutonomousState.INTAKE_ROW_1;
                 break;
-            /* case 2, intakes the first three artifacts, goes to the shooting position for the first three artifacts
+            /* intakes the first three artifacts, goes to the shooting position for the first three artifacts
              *
              */
-            case INTAKE_ROW_1:
-                intake.startIntake();
-                transfer.startTransfer();
+            //this is good
+            case INTAKE_ROW_1_AND_SHOOT:
+                robot.setState(Robot.RobotState.INTAKE);
                 follower.followPath(thirdCycleChain, true);
+                robot.setState(Robot.RobotState.SHOOT);
                 pathState = AutonomousState.SHOOT;
                 break;
-            /*case 3
+            /*
              * at the shooting position of the robot, it shoots the first row of three atifacts collected
              * goes to the next position ready to collect the next second row of three artifacts
              */
-            case SHOOT:
-                AprilTagPoseFtc target1 = aprilTagDetector.getTagPose(20); //20 for blue
-                driveTrain.setPowerFacingAprilTag(0, 0, 0, target1); //not sure what to do
-                shooter.setRPMForAprilTag(target1);
-
-                if (shooter.isReady()) {
-                    shooter.engageKicker();
-                    transfer.startTransfer();
-                    intake.startIntake();
-                }
+            // this is good
+            case INTAKE_SECOND_ROW:
+                robot.setState(Robot.RobotState.NONE);
                 //if balls are stuck then reverse the transfer so we don't pick up more than 3
-                shooter.disengageKicker();
-                intake.setPower(-1);
-                transfer.reverseTransfer();
+                robot.setState(Robot.RobotState.REVERSE_INTAKE);
                 follower.followPath(fourthCycleChain, true);
                 pathState = AutonomousState.INTAKE_AND_SHOOT_ROW_2;
                 break;
-        /* case 4
+        /* 
         Here, the robot picks up that second row of artifacts and then shoots
          */
-            case INTAKE_AND_SHOOT_ROW_2:
-                intake.startIntake();
-                transfer.startTransfer();
+        // this is good
+            case SHOOT_ROW_2:
+                robot.setState(Robot.RobotState.INTAKE); 
                 follower.followPath(fifthCycleChain, true);
                 //now at a good shooting position
-                AprilTagPoseFtc target2 = aprilTagDetector.getTagPose(20); //20 for blue
-                driveTrain.setPowerFacingAprilTag(0, 0, 0, target2); //not sure what to do
-                shooter.setRPMForAprilTag(target2);
-
-                if (shooter.isReady()) {
-                    shooter.engageKicker();
-                    transfer.startTransfer();
-                    intake.startIntake();
-                }
+                robot.setState(Robot.RobotState.SHOOT);
                 //if balls are stuck then reverse the transfer so we don't pick up more than 3
-                shooter.disengageKicker();
-                intake.setPower(-1);
-                transfer.reverseTransfer();
+                robot.setState(Robot.RobotState.REVERSE_INTAKE);
                 pathState = AutonomousState.INTAKE_AND_SHOOT_ROW_3;
-                /* case 5
+                /* 
                  * go to the next position ready to pick up that third and last row of artifacts
                  */
-            case INTAKE_AND_SHOOT_ROW_3:
-                intake.startIntake();
-                transfer.startTransfer();
+            //this is good
+            case INTAKE_ROW_3:
+                robot.setState(Robot.RobotState.NONE);
+                robot.setState(Robot.RobotState.INTAKE);
                 follower.followPath(sixthCycleChain, true);
+                pathState = AutonomousState.SHOOT_ROW_3;
+                break;
+            /*
+             * shoo the third and last row of artifacts
+             */
+            case SHOOT_ROW_3:
+                follower.followPath(seventhCycleChain, true);
+                robot.setState(Robot.RobotState.SHOOT);
                 pathState = AutonomousState.COMPLETE;
                 break;
+            
+            case COMPLETE:
+              break; // we are done yay
+
         }
     }
 
     private void buildPaths() {
         // Your path chain definitions...
-        startPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        startPose = new Pose(119.3, 124.2, Math.toRadians(90));
         //adjust these positions accordingly
-        shootPreloadedArtifacts = new Pose(24.0, 12.0, Math.toRadians(0));
-        firstControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        firstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        intakeFirstThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        shootFirstThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        secondControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        secondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        intakeSecondThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        thirdControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        shootSecondThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        fourthControlPoint = new Pose(24.0, 12.0, Math.toRadians(0));
-        thirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        intakeLastThreeArtifactsPose = new Pose(24.0, 12.0, Math.toRadians(0));
-        shootThirdThreeArtifactPose = new Pose(24.0, 12.0, Math.toRadians(0));
+        //these position values for Blue are incorrect, during the meeting use visualizer to get poistion
+        //values
+        shootPreloadedArtifacts = new Pose(95, 95, Math.toRadians(51));
+        firstControlPoint = new Pose(92.6, 96.2, Math.toRadians(0));
+        firstThreeArtifactsPose = new Pose(101.9, 84, Math.toRadians(-1));
+        intakeFirstThreeArtifactsPose = new Pose(127.7, 84, Math.toRadians(-1));
+        shootFirstThreeArtifactPose = new Pose(100, 106, Math.toRadians(48));
+        secondControlPoint = new Pose(100, 84, Math.toRadians(0));
+        secondThreeArtifactPose = new Pose(100.9, 59.2, Math.toRadians(-1));
+        intakeSecondThreeArtifactsPose = new Pose(129.8, 59.5, Math.toRadians(-1));
+        thirdControlPoint = new Pose(83.2, 58.3, Math.toRadians(0));
+        shootSecondThreeArtifactPose = new Pose(92.1, 100.7, Math.toRadians(43));
+        fourthControlPoint = new Pose(98, 71, Math.toRadians(0));
+        thirdThreeArtifactPose = new Pose(103.8, 35.3, Math.toRadians(0));
+        intakeLastThreeArtifactsPose = new Pose(134.4, 35.3, Math.toRadians(0));
+        shootThirdThreeArtifactPose = new Pose(86.7, 89.5, Math.toRadians(47));
 
         // FIRST CYCLE: Shooting the preloaded artifacts
         {
@@ -251,7 +212,7 @@ public class TwelveArtifactBlue extends OpMode {
             secondCycleChain = builder.build();
         }
 
-        // CYCLE: Shooting the next first three artifacts
+        // THIRD CYCLE: Shooting the next first three artifacts
         {
             PathBuilder builder = follower.pathBuilder();
             builder
@@ -264,7 +225,7 @@ public class TwelveArtifactBlue extends OpMode {
         }
 
 
-        // CYCLE: Picking up the next second three artifacts
+        // FORUTH CYCLE: Picking up the next second three artifacts
         {
             PathBuilder builder = follower.pathBuilder();
             builder
@@ -273,7 +234,7 @@ public class TwelveArtifactBlue extends OpMode {
             fourthCycleChain = builder.build();
         }
 
-        //CYCLE: Shooting the next second three artifacts
+        // FIFTH CYCLE: Shooting the next second three artifacts
 
         {
             PathBuilder builder = follower.pathBuilder();
@@ -287,7 +248,7 @@ public class TwelveArtifactBlue extends OpMode {
 
         }
 
-        // CYCLE : Picking up the last three artifacts
+        // SIXTH CYCLE : Picking up the last three artifacts
         {
             PathBuilder builder = follower.pathBuilder();
             builder
@@ -297,7 +258,7 @@ public class TwelveArtifactBlue extends OpMode {
             sixthCycleChain = builder.build();
         }
 
-        //CYCLE: Shooting the last three artifacts
+        //SEVENTH CYCLE: Shooting the last three artifacts
         {
             PathBuilder builder = follower.pathBuilder();
             builder
