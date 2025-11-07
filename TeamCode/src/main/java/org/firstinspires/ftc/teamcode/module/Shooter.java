@@ -100,8 +100,13 @@ public class Shooter {
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
         if(tagPose != null){
+            // clamps the range to the min/max for the interpLUT to avoid bound errors
+            double measuredDistance = tagPose.range;
+            measuredDistance = Math.min(120.0, Math.max(30.0, measuredDistance));
+
+            // sets stickyRPM
             stickyRPM = true;
-            stickyTargetRPM = flywheelSpeeds.get(tagPose.range);
+            stickyTargetRPM = flywheelSpeeds.get(measuredDistance);
 
             setRPM(stickyTargetRPM);
         }
