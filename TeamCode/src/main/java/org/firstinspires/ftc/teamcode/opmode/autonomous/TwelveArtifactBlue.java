@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 
@@ -51,11 +52,7 @@ public class TwelveArtifactBlue extends OpMode {
     private AutonomousState pathState = AutonomousState.BEGIN;
 
     //all the positions
-    public static Pose startPose, shootPreloadedArtifacts, firstControlPoint
-    ,firstThreeArtifactsPose, intakeFirstThreeArtifactsPose, shootFirstThreeArtifactPose, secondControlPoint
-    , secondThreeArtifactPose, intakeSecondThreeArtifactsPose, thirdControlPoint, shootSecondThreeArtifactPose
-    , fourthControlPoint, thirdThreeArtifactPose, intakeLastThreeArtifactsPose, shootThirdThreeArtifactPose;
-
+    public static Pose startPose, shootPreloadedArtifacts, firstControlPoint, firstThreeArtifactsPose, intakeFirstThreeArtifactsPose, shootFirstThreeArtifactPose, secondControlPoint, secondThreeArtifactPose, intakeSecondThreeArtifactsPose, thirdControlPoint, shootSecondThreeArtifactPose, fourthControlPoint, thirdThreeArtifactPose, intakeLastThreeArtifactsPose, shootThirdThreeArtifactPose;
 
 
     private PathChain firstCycleChain;
@@ -73,10 +70,10 @@ public class TwelveArtifactBlue extends OpMode {
 
     @Override
     public void init() {
-        telemetry= new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         follower = Constants.createFollower(hardwareMap);
-        robot=new Robot(hardwareMap, telemetry, Robot.AllianceColor.RED);
-        
+        robot = new Robot(hardwareMap, telemetry, Robot.AllianceColor.RED);
+
         follower.setStartingPose(startPose);
 
         buildPaths();
@@ -122,7 +119,7 @@ public class TwelveArtifactBlue extends OpMode {
                 driveTrain.setPowerFacingAprilTag(0, 0, 0, target); //not sure what to do 
                 shooter.setRPMForAprilTag(target);
 
-                if(shooter.isReady()) {
+                if (shooter.isReady()) {
                     shooter.engageKicker();
                     transfer.startTransfer();
                     intake.startIntake();

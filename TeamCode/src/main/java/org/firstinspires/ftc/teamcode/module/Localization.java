@@ -20,11 +20,11 @@ public class Localization {
     private static GoBildaPinpointDriver pinpoint;
 
     private static AprilTagProcessor aprilTagProcessor;
-    private static Position cameraPosition = new Position(DistanceUnit.MM, 0, 0, 0, 0);
-    private static YawPitchRollAngles cameraAngle = new YawPitchRollAngles(AngleUnit.DEGREES, 0, -90, 0, 0);
+    private static final Position cameraPosition = new Position(DistanceUnit.MM, 0, 0, 0, 0);
+    private static final YawPitchRollAngles cameraAngle = new YawPitchRollAngles(AngleUnit.DEGREES, 0, -90, 0, 0);
 
 
-    public static void setUpLocalization(HardwareMap hardware, Telemetry tele){
+    public static void setUpLocalization(HardwareMap hardware, Telemetry tele) {
         hardwareMap = hardware;
         telemetry = tele;
 
@@ -34,11 +34,11 @@ public class Localization {
                 .build();
     }
 
-    public static void setPose(Pose2D newPose){
+    public static void setPose(Pose2D newPose) {
         robotPose = newPose;
     }
 
-    public static Pose2D getPose(){
+    public static Pose2D getPose() {
         return robotPose;
     }
 
