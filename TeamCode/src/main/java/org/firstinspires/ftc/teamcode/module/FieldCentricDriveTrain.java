@@ -158,7 +158,7 @@ public class FieldCentricDriveTrain {
 
     public void aimAtAprilTag(AprilTagPoseFtc target) {
         if (target == null) {
-            return; // no tag to aim at
+            turnToAprilTag(target); // no tag to aim at
         }
 
         final double curDrivePower = getDrivePower();
@@ -174,4 +174,27 @@ public class FieldCentricDriveTrain {
         return turnController.calculate(bearing);
     }
 
+    //suppose the robot faces the opposite direction, we can just rotate the robot so its almost aligned
+    // then use auto aim to shooting and for shooting
+    public void turnToAprilTag(AprilTagPoseFTC target) { 
+        double robotHeading =pinpointDriver.getHeading(AngleUnit.RADIANS);
+        if (target == null) {
+        if(getAllianceColor() == allianceColor.RED){
+            if(robotHeading< 3*(Math.PI)/4 && robotHeading > -1*(Math.PI)/4){
+                setPower(0,0, -1);
+            }else{
+                setPower(0,0, 1);
+            }
+        }
+        else if(getAllianceColor() == allianceColor.BLUE){
+            if(robotHeading <= (Math.PI)/4 && robotHeading >= -3*(Math.PI)/4){
+                setPower(0,0,1);
+            }else{
+                setPower(0, 0, -1);
+            }
+        }
+        }else{
+            return;
+        }
+    }
 }
