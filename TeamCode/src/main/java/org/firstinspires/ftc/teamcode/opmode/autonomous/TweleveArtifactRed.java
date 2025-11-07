@@ -113,7 +113,7 @@ public class TwelveArtifactRed extends OpMode {
                 robot.setState(Robot.RobotState.SHOOT);
                 robot.setState(Robot.RobotState.NONE);
                 follower.followPath(secondCycleChain, true);
-                pathState = AutonomousState.INTAKE_ROW_1;
+                pathState = AutonomousState.INTAKE_ROW_1_AND_SHOOT;
                 break;
             /* intakes the first three artifacts, goes to the shooting position for the first three artifacts
              *
@@ -123,7 +123,7 @@ public class TwelveArtifactRed extends OpMode {
                 robot.setState(Robot.RobotState.INTAKE);
                 follower.followPath(thirdCycleChain, true);
                 robot.setState(Robot.RobotState.SHOOT);
-                pathState = AutonomousState.SHOOT;
+                pathState = AutonomousState.INTAKE_SECOND_ROW;
                 break;
             /*
              * at the shooting position of the robot, it shoots the first row of three atifacts collected
@@ -135,7 +135,7 @@ public class TwelveArtifactRed extends OpMode {
                 //if balls are stuck then reverse the transfer so we don't pick up more than 3
                 robot.setState(Robot.RobotState.REVERSE_INTAKE);
                 follower.followPath(fourthCycleChain, true);
-                pathState = AutonomousState.INTAKE_AND_SHOOT_ROW_2;
+                pathState = AutonomousState.SHOOT_ROW_2;
                 break;
         /* 
         Here, the robot picks up that second row of artifacts and then shoots
@@ -148,7 +148,7 @@ public class TwelveArtifactRed extends OpMode {
                 robot.setState(Robot.RobotState.SHOOT);
                 //if balls are stuck then reverse the transfer so we don't pick up more than 3
                 robot.setState(Robot.RobotState.REVERSE_INTAKE);
-                pathState = AutonomousState.INTAKE_AND_SHOOT_ROW_3;
+                pathState = AutonomousState.INTAKE_ROW_3;
                 /* 
                  * go to the next position ready to pick up that third and last row of artifacts
                  */
@@ -176,22 +176,22 @@ public class TwelveArtifactRed extends OpMode {
 
     private void buildPaths() {
         // Your path chain definitions...
-        startPose = new Pose(119.3, 124.2, Math.toRadians(90));
+        startPose = new Pose(119.3, 124.2, Math.toDegrees(90));
         //adjust these positions accordingly
-        shootPreloadedArtifacts = new Pose(95, 95, Math.toRadians(51));
-        firstControlPoint = new Pose(92.6, 96.2, Math.toRadians(0));
-        firstThreeArtifactsPose = new Pose(101.9, 84, Math.toRadians(-1));
-        intakeFirstThreeArtifactsPose = new Pose(127.7, 84, Math.toRadians(-1));
-        shootFirstThreeArtifactPose = new Pose(100, 106, Math.toRadians(48));
+        shootPreloadedArtifacts = new Pose(95, 95, Math.toDegrees(51));
+        firstControlPoint = new Pose(92.6, 96.2, Math.toDegrees(0));
+        firstThreeArtifactsPose = new Pose(101.9, 84, Math.toDegrees(-1));
+        intakeFirstThreeArtifactsPose = new Pose(127.7, 84, Math.toDegrees(-1));
+        shootFirstThreeArtifactPose = new Pose(100, 106, Math.toDegrees(48));
         secondControlPoint = new Pose(100, 84, Math.toRadians(0));
-        secondThreeArtifactPose = new Pose(100.9, 59.2, Math.toRadians(-1));
-        intakeSecondThreeArtifactsPose = new Pose(129.8, 59.5, Math.toRadians(-1));
-        thirdControlPoint = new Pose(83.2, 58.3, Math.toRadians(0));
-        shootSecondThreeArtifactPose = new Pose(92.1, 100.7, Math.toRadians(43));
-        fourthControlPoint = new Pose(98, 71, Math.toRadians(0));
-        thirdThreeArtifactPose = new Pose(103.8, 35.3, Math.toRadians(0));
-        intakeLastThreeArtifactsPose = new Pose(134.4, 35.3, Math.toRadians(0));
-        shootThirdThreeArtifactPose = new Pose(86.7, 89.5, Math.toRadians(47));
+        secondThreeArtifactPose = new Pose(100.9, 59.2, Math.toDegrees(-1));
+        intakeSecondThreeArtifactsPose = new Pose(129.8, 59.5, Math.toDegrees(-1));
+        thirdControlPoint = new Pose(83.2, 58.3, Math.toDegrees(0));
+        shootSecondThreeArtifactPose = new Pose(92.1, 100.7, Math.toDegrees(43));
+        fourthControlPoint = new Pose(98, 71, Math.toDegrees(0));
+        thirdThreeArtifactPose = new Pose(103.8, 35.3, Math.toDegrees(0));
+        intakeLastThreeArtifactsPose = new Pose(134.4, 35.3, Math.toDegrees(0));
+        shootThirdThreeArtifactPose = new Pose(86.7, 89.5, Math.toDegrees(47));
 
         // FIRST CYCLE: Shooting the preloaded artifacts
         {

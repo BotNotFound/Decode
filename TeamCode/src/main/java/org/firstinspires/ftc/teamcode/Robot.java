@@ -50,6 +50,9 @@ public class Robot {
     }
 
     public static double MOVE_SCALE = 1;
+    /*private static double redTurnValue= 2.356;
+    private static double blueTurnValue = 0.7853;*/
+
 
     /* Modules */
     private final FieldCentricDriveTrain driveTrain;
@@ -99,15 +102,25 @@ public class Robot {
         switch (newState) {
             case INTAKE:
                 shooter.disengageKicker();
-                shooter.setRPM(0);
                 intake.startIntake();
                 break;
 
             case REVERSE_INTAKE:
                 shooter.disengageKicker();
-                shooter.setRPM(0);
                 intake.setPower(-1);
                 transfer.reverseTransfer();
+                break;
+            
+            case SHOOT:
+                AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
+                driveTrain.aimAtAprilTag(target);
+                shooter.setRPMForAprilTag(target);
+
+                if(shooter.isReady()) {
+                    shooter.engageKicker();
+                    intake.startIntake();
+                    transfer.startTransfer();
+                }
                 break;
 
             case NONE:
@@ -180,4 +193,6 @@ public class Robot {
     public void decreaseDefaultShooterRPM() {
         shooter.decreaseDefaultRPM();
     }
+
+    
 }
