@@ -6,11 +6,6 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
-import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
-import org.firstinspires.ftc.teamcode.module.Intake;
-import org.firstinspires.ftc.teamcode.module.Shooter;
-import org.firstinspires.ftc.teamcode.module.Transfer;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
@@ -37,15 +32,40 @@ public class TwelveArtifactBlue extends OpMode {
      */
     enum AutonomousState {
         /**
-         * case 0, goes to the shooting position for preload
+         * case 0: goes to the shooting position for preload
          */
         BEGIN,
 
         /**
-         * shoots the preloads, spits out the remaining balls if there are any
+         * case 1: shoots the preloads, spits out the remaining balls if there are any
          * then it goes to the position where its ready to pick up the next three artifacts
          */
         SHOOT_PRELOADS,
+        /**
+         * case 2: intakes the first three artifacts, goes to the shooting position for the first three artifacts
+         */
+        INTAKE_ROW_1,
+
+        /**
+         * case 3: at the shooting position of the robot, it shoots the first row of three artifacts
+         * collected, then goes to the next position ready to collect the next second row of three artifacts
+         */
+        SHOOT,
+
+        /**
+         * case 4: Here, the robot picks up that second row of artifacts and then shoots
+         */
+        INTAKE_AND_SHOOT_ROW_2,
+
+        /**
+         * case 5: go to the next position ready to pick up that third and last row of artifacts
+         */
+        INTAKE_AND_SHOOT_ROW_3,
+
+        /**
+         * Final case: idle the robot until auto completes
+         */
+        COMPLETE
     }
 
     private Follower follower;
@@ -129,22 +149,22 @@ public class TwelveArtifactBlue extends OpMode {
                 intake.setPower(-1);
                 transfer.reverseTransfer();
                 follower.followPath(secondCycleChain, true);
-                pathState = 2;
+                pathState = AutonomousState.INTAKE_ROW_1;
                 break;
             /* case 2, intakes the first three artifacts, goes to the shooting position for the first three artifacts
              *
              */
-            case 2:
+            case INTAKE_ROW_1:
                 intake.startIntake();
                 transfer.startTransfer();
                 follower.followPath(thirdCycleChain, true);
-                pathState = 3;
+                pathState = AutonomousState.SHOOT;
                 break;
             /*case 3
              * at the shooting position of the robot, it shoots the first row of three atifacts collected
              * goes to the next position ready to collect the next second row of three artifacts
              */
-            case 3:
+            case SHOOT:
                 AprilTagPoseFtc target1 = aprilTagDetector.getTagPose(20); //20 for blue
                 driveTrain.setPowerFacingAprilTag(0, 0, 0, target1); //not sure what to do
                 shooter.setRPMForAprilTag(target1);
@@ -159,12 +179,12 @@ public class TwelveArtifactBlue extends OpMode {
                 intake.setPower(-1);
                 transfer.reverseTransfer();
                 follower.followPath(fourthCycleChain, true);
-                pathState = 4;
+                pathState = AutonomousState.INTAKE_AND_SHOOT_ROW_2;
                 break;
         /* case 4
         Here, the robot picks up that second row of artifacts and then shoots
          */
-            case 4:
+            case INTAKE_AND_SHOOT_ROW_2:
                 intake.startIntake();
                 transfer.startTransfer();
                 follower.followPath(fifthCycleChain, true);
@@ -182,15 +202,15 @@ public class TwelveArtifactBlue extends OpMode {
                 shooter.disengageKicker();
                 intake.setPower(-1);
                 transfer.reverseTransfer();
-                pathState = 5;
+                pathState = AutonomousState.INTAKE_AND_SHOOT_ROW_3;
                 /* case 5
                  * go to the next position ready to pick up that third and last row of artifacts
                  */
-            case 5:
+            case INTAKE_AND_SHOOT_ROW_3:
                 intake.startIntake();
                 transfer.startTransfer();
                 follower.followPath(sixthCycleChain, true);
-                pathState = 6;
+                pathState = AutonomousState.COMPLETE;
                 break;
         }
     }
