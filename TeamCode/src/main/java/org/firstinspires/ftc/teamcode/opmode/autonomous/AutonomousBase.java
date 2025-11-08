@@ -61,6 +61,11 @@ public abstract class AutonomousBase extends OpMode {
         }
     }
 
+    /**
+     * Creates the plan for the robot to execute during this autonomous
+     * @return The stage sequence to use
+     * @implNote This method is called in init after {@link #robot} and {@link #follower} are initialized
+     */
     protected abstract AutonomousStage[] buildStageSequence();
 
     @Override
