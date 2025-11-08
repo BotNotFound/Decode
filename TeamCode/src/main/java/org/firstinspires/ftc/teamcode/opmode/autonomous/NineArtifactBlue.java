@@ -11,15 +11,15 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 
-@Autonomous(name = "12 Artifact Blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
-public class TwelveArtifactBlue extends AutonomousBase {
-    public TwelveArtifactBlue() {
+@Autonomous(name = "9 Artifact Blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
+public class NineArtifactBlue extends AutonomousBase {
+    public NineArtifactBlue() {
         super(new Pose(111.622, 135.414).mirror(), Robot.AllianceColor.RED);
     }
 
     @Override
     protected AutonomousStage[] buildStageSequence() {
-        TwelveArtifactRed.Paths autoPath = new TwelveArtifactRed.Paths(follower);
+        NineArtifactRed.Paths autoPath = new NineArtifactRed.Paths(follower);
         return new AutonomousStage[]{
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(

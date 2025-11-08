@@ -11,9 +11,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 
-@Autonomous(name = "12 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
-public class TwelveArtifactRed extends AutonomousBase {
-    public TwelveArtifactRed() {
+@Autonomous(name = "9 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
+public class NineArtifactRed extends AutonomousBase {
+    public NineArtifactRed() {
         super(new Pose(111.622, 135.414), Robot.AllianceColor.RED);
     }
 
