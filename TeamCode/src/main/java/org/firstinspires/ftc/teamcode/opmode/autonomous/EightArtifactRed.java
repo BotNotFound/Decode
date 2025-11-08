@@ -55,6 +55,15 @@ public class EightArtifactRed extends AutonomousBase {
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
+                new AutonomousStage(
+                        follower.pathBuilder().addPath(
+                                new BezierLine(
+                                        autoPath.shootThirdRow.endPoint(),
+                                        new Pose(116.559, 64.120)
+                                )
+                        ).setConstantHeadingInterpolation(Math.toRadians(45)).build(),
+                        Robot.RobotState.NONE
+                ),
         };
     }
 

@@ -55,6 +55,15 @@ public class EightArtifactBlue extends AutonomousBase {
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
+                new AutonomousStage(
+                        follower.pathBuilder().addPath(
+                                new BezierLine(
+                                        autoPath.shootThirdRow.endPoint(),
+                                        new Pose(116.559, 64.120).mirror()
+                                )
+                        ).setConstantHeadingInterpolation(Math.toRadians(180-45)).build(),
+                        Robot.RobotState.NONE
+                ),
         };
     }
 
