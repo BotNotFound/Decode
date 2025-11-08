@@ -81,7 +81,6 @@ public abstract class AutonomousBase extends OpMode {
         AutonomousStage currentStage = tryGetCurrentStage();
         if (currentStage == null) {
             robot.setState(Robot.RobotState.NONE);
-            return; // no more stages to run
         }
     }
 
