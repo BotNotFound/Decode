@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.*;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.SquIDController;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
@@ -31,7 +32,7 @@ public class FieldCentricDriveTrain {
 
     private final SquIDController turnController;
     public static double turnP = 0.09;
-    public static double turnTarget = 7;
+    public static double turnTarget = 2;
     public static double turnTolerance = 0.5;
 
 
