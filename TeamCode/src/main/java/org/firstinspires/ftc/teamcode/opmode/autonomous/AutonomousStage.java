@@ -36,11 +36,6 @@ public class AutonomousStage implements Cloneable {
      */
     public static double POSE_TOLERANCE_HEADING = 10;
 
-    /**
-     * The maximum velocity (in inches/second) of the robot while in the intake state
-     */
-    public static double INTAKE_MAX_VELOCITY = 2.0;
-
     private final PathChain path;
     private final Robot.RobotState robotState;
     private final Timing.Timer shotTimer;
@@ -53,14 +48,6 @@ public class AutonomousStage implements Cloneable {
      * @param robotState What state the robot should be in by the end of the stage
      */
     public AutonomousStage(PathChain path, Robot.RobotState robotState) {
-        if (robotState == Robot.RobotState.INTAKE) {
-            for (int i = 0; i < path.size(); i++) {
-                PathConstraints constraints = path.getPath(i).getConstraints();
-                constraints.setVelocityConstraint(INTAKE_MAX_VELOCITY);
-                path.getPath(i).setConstraints(constraints);
-            }
-        }
-
         this.path = path;
         this.robotState = robotState;
         shotTimer = new Timing.Timer(SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
