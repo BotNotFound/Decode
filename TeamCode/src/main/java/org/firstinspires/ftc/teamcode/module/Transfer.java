@@ -10,9 +10,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @Config
 public class Transfer {
 
-    private final CRServo servo1;
+    private final CRServo transferServo;
 
-    public static final String SERVO_ONE = "Servo1";
+    public static final String TRANSFER_SERVO_NAME = "Transfer";
 
     //adjust the servo power as needed for the transfer.
     public static double POWER_VALUE = -1.0;
@@ -21,24 +21,24 @@ public class Transfer {
 
 
     public Transfer(HardwareMap hwMap, Telemetry telemetry) {
-        servo1= hwMap.get(CRServo.class, SERVO_ONE);
+        transferServo = hwMap.get(CRServo.class, TRANSFER_SERVO_NAME);
 
         this.telemetry = telemetry;
     }
 
     public void startTransfer() {
-        servo1.setPower(POWER_VALUE);
+        transferServo.setPower(POWER_VALUE);
         telemetry.addData("Transfer: ", POWER_VALUE);
     }
 
 
     public void stopTransfer() {
-        servo1.setPower(0.0);
+        transferServo.setPower(0.0);
         telemetry.addData("Transfer: ", 0.0);
     }
     //this method is useful if color sensor detects wrong artifact
     public void reverseTransfer() {
-        servo1.setPower(-POWER_VALUE);
+        transferServo.setPower(-POWER_VALUE);
         telemetry.addData("Transfer: ", -POWER_VALUE);
     }
 
