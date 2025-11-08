@@ -21,7 +21,7 @@ public class AutonomousStage implements Cloneable {
     /**
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
-    public static long SHOT_DURATION_MILLIS = 3000;
+    public static long SHOT_DURATION_MILLIS = 5000;
     /**
      * The pose tolerance used by {@link AutonomousStage} for the robot's x position, in inches
      */
