@@ -19,7 +19,7 @@ public class EightArtifactBlue extends AutonomousBase {
 
     @Override
     protected AutonomousStage[] buildStageSequence() {
-        EightArtifactRed.Paths autoPath = new EightArtifactRed.Paths(follower);
+        Paths autoPath = new Paths(follower);
         return new AutonomousStage[]{
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
