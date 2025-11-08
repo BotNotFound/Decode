@@ -24,6 +24,7 @@ public class TwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
+                                .setHeadingConstraint(Math.toRadians(45))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -32,6 +33,7 @@ public class TwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootFirstRow.endPose()))
+                                .setHeadingConstraint(Math.toRadians(45))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -40,6 +42,7 @@ public class TwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.shootSecondRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootSecondRow.endPose()))
+                                .setHeadingConstraint(Math.toRadians(45))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -48,6 +51,7 @@ public class TwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.shootThirdRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootThirdRow.endPose()))
+                                .setHeadingConstraint(Math.toRadians(45))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
