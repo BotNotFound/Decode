@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -20,16 +21,36 @@ public class TwelveArtifactRed extends AutonomousBase {
     protected AutonomousStage[] buildStageSequence() {
         Paths autoPath = new Paths(follower);
         return new AutonomousStage[]{
-                new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.SHOOT),
+                new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
+                new AutonomousStage(
+                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
+                                .build(),
+                        Robot.RobotState.SHOOT
+                ),
                 new AutonomousStage(autoPath.goToFirstRowArtifacts, Robot.RobotState.NONE),
                 new AutonomousStage(autoPath.intakeFirstRow, Robot.RobotState.INTAKE),
-                new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.SHOOT),
+                new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.NONE),
+                new AutonomousStage(
+                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootFirstRow.endPose()))
+                                .build(),
+                        Robot.RobotState.SHOOT
+                ),
                 new AutonomousStage(autoPath.goToSecondRow, Robot.RobotState.NONE),
                 new AutonomousStage(autoPath.intakeSecondRowArtifacts, Robot.RobotState.INTAKE),
-                new AutonomousStage(autoPath.shootSecondRow, Robot.RobotState.SHOOT),
+                new AutonomousStage(autoPath.shootSecondRow, Robot.RobotState.NONE),
+                new AutonomousStage(
+                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootSecondRow.endPose()))
+                                .build(),
+                        Robot.RobotState.SHOOT
+                ),
                 new AutonomousStage(autoPath.goToThirdRow, Robot.RobotState.NONE),
                 new AutonomousStage(autoPath.intakeThirdRow, Robot.RobotState.INTAKE),
-                new AutonomousStage(autoPath.shootThirdRow, Robot.RobotState.SHOOT)
+                new AutonomousStage(autoPath.shootThirdRow, Robot.RobotState.NONE),
+                new AutonomousStage(
+                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootThirdRow.endPose()))
+                                .build(),
+                        Robot.RobotState.SHOOT
+                ),
         };
     }
 
