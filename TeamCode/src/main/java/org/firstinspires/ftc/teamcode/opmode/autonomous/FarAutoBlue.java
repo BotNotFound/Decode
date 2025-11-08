@@ -55,7 +55,7 @@ public class FarAutoBlue extends AutonomousBase{
                     .addPath(
                             new BezierLine(new Pose(83.001, 11.091).mirror(), new Pose(110.191, 13.058).mirror())
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180-72), Math.toRadians(0))
+                    .setLinearHeadingInterpolation(Math.toRadians(180-72), Math.toRadians(180))
                     .build();
         }
     }
