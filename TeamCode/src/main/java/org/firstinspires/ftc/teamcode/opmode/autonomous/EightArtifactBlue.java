@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 @Autonomous(name = "8 Artifact Blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class EightArtifactBlue extends AutonomousBase {
     public EightArtifactBlue() {
-        super(new Pose(111.622, 135.414).mirror(), Robot.AllianceColor.RED);
+        super(new Pose(111.622, 135.414, 180).mirror(), Robot.AllianceColor.RED);
     }
 
     @Override
