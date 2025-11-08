@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
@@ -45,6 +44,7 @@ public class Robot {
     public enum RobotState {
         INTAKE,
         REVERSE_INTAKE,
+        PRE_SHOOT,
         SHOOT,
         NONE,
     }
@@ -98,6 +98,12 @@ public class Robot {
         return allianceColor;
     }
 
+    private void prepareToShoot() {
+        AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
+        driveTrain.aimAtAprilTag(target);
+        shooter.setRPMForAprilTag(target);
+    }
+
     public void setState(RobotState newState) {
         switch (newState) {
             case INTAKE:
@@ -110,17 +116,9 @@ public class Robot {
                 intake.setPower(-1);
                 transfer.reverseTransfer();
                 break;
-            
-            case SHOOT:
-                AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
-                driveTrain.aimAtAprilTag(target);
-                shooter.setRPMForAprilTag(target);
 
-                if(shooter.isReady()) {
-                    shooter.engageKicker();
-                    intake.startIntake();
-                    transfer.startTransfer();
-                }
+            case PRE_SHOOT:
+            case SHOOT:
                 break;
 
             case NONE:
@@ -148,10 +146,12 @@ public class Robot {
 
     public void loopWithoutMovement() {
         switch (currentState) {
+            case PRE_SHOOT:
+                prepareToShoot();
+                break;
+
             case SHOOT:
-                AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
-                driveTrain.aimAtAprilTag(target);
-                shooter.setRPMForAprilTag(target);
+                prepareToShoot();
 
                 if(shooter.isReady()) {
                     shooter.engageKicker();
