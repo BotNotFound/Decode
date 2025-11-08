@@ -26,7 +26,7 @@ public class AutoTest extends AutonomousBase {
                 ),
                 new AutonomousStage(
                         follower.pathBuilder()
-                                .addPath(new BezierPoint(new Pose(1, 0)))
+                                .addPath(new BezierPoint(new Pose(10, 0)))
                                 .build(),
                         Robot.RobotState.SHOOT
                 )

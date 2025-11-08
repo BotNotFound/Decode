@@ -109,11 +109,9 @@ public class Shooter {
             stickyTargetRPM = flywheelSpeeds.get(measuredDistance);
 
             setRPM(stickyTargetRPM);
-        }
-        else if(stickyRPM){
+        } else if (stickyRPM) {
             setRPM(stickyTargetRPM);
-        }
-        else{
+        } else {
             setRPM(defaultRPM);
         }
     }
