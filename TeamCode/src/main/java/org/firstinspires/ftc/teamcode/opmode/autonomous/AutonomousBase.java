@@ -61,6 +61,13 @@ public abstract class AutonomousBase extends OpMode {
         }
     }
 
+    @Override
+    public void start() {
+        if (stageSequence.length > 0) {
+            stageSequence[0].enterStage(robot, follower);
+        }
+    }
+
     /**
      * Creates the plan for the robot to execute during this autonomous
      * @return The stage sequence to use
