@@ -32,7 +32,7 @@ public class FieldCentricDriveTrain {
 
     private final SquIDController turnController;
     public static double turnP = 0.09;
-    public static double turnTarget = 0.5;
+    public static double turnTarget = 1;
     public static double turnTolerance = 0.5;
 
 
