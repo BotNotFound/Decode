@@ -35,7 +35,6 @@ public class AutonomousStage implements Cloneable {
      */
     public static double POSE_TOLERANCE_HEADING = 2;
 
-    private final Pose begin;
     private final PathChain path;
     private final Robot.RobotState robotState;
     private final Timing.Timer shotTimer;
@@ -44,25 +43,14 @@ public class AutonomousStage implements Cloneable {
     /**
      * Creates an autonomous stage
      *
-     * @param start      Where the robot should be at the beginning of the stage
      * @param path       The path the robot will follow during the stage
      * @param robotState What state the robot should be in by the end of the stage
      */
-    public AutonomousStage(Pose start, PathChain path, Robot.RobotState robotState) {
-        this.begin = start;
+    public AutonomousStage(PathChain path, Robot.RobotState robotState) {
         this.path = path;
         this.robotState = robotState;
         shotTimer = new Timing.Timer(SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
         complete = false;
-    }
-
-    /**
-     * Gets this stage's starting pose
-     *
-     * @return Where the robot should be before the stage starts
-     */
-    public Pose getStartPose() {
-        return begin;
     }
 
     /**
@@ -143,8 +131,8 @@ public class AutonomousStage implements Cloneable {
      * @param follower The follower moving the robot
      */
     public void enterStage(Robot robot, Follower follower) {
-        robot.setState(Robot.RobotState.NONE); // don't use excess power between stages
-        follower.holdPoint(begin);
+        robot.setState(robotState);
+        follower.followPath(path);
     }
 
     /**
@@ -154,19 +142,11 @@ public class AutonomousStage implements Cloneable {
      * @param follower The follower moving the robot
      */
     public void loopStage(Robot robot, Follower follower) {
-        if (follower.isBusy()) {
-            return; // still moving
-        }
-
-        if (follower.atPose(begin, POSE_TOLERANCE_X, POSE_TOLERANCE_Y, POSE_TOLERANCE_HEADING)) {
-            robot.setState(robotState);
-            follower.followPath(path);
-        }
     }
 
     @NonNull
     @Override
     public AutonomousStage clone() {
-        return new AutonomousStage(begin, path, robotState);
+        return new AutonomousStage(path, robotState);
     }
 }
