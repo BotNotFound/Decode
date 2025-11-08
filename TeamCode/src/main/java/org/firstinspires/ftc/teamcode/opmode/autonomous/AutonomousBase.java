@@ -58,6 +58,7 @@ public abstract class AutonomousBase extends OpMode {
         robot = new Robot(hardwareMap, telemetry, allianceColor);
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
+        currentStageIndex = 0;
 
         stageSequence = buildStageSequence();
         if (stageSequence == null) {
