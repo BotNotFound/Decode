@@ -83,7 +83,7 @@ public class TwelveArtifactRed extends AutonomousBase {
             goToFirstRowArtifacts = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(95.344, 99.816), new Pose(102.678, 83.538))
+                            new BezierLine(new Pose(95.344, 99.816), new Pose(100, 83.538))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
                     .build();
@@ -91,7 +91,7 @@ public class TwelveArtifactRed extends AutonomousBase {
             intakeFirstRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(102.678, 83.538), new Pose(143.106, 83.359))
+                            new BezierLine(new Pose(100, 83.538), new Pose(143.106, 83.359))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -107,7 +107,7 @@ public class TwelveArtifactRed extends AutonomousBase {
             goToSecondRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(99.101, 100.353), new Pose(103.215, 59.747))
+                            new BezierLine(new Pose(99.101, 100.353), new Pose(100, 59.747))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
                     .build();
@@ -115,7 +115,7 @@ public class TwelveArtifactRed extends AutonomousBase {
             intakeSecondRowArtifacts = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(103.215, 59.747), new Pose(142.390, 59.210))
+                            new BezierLine(new Pose(100, 59.747), new Pose(142.390, 59.210))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -135,7 +135,7 @@ public class TwelveArtifactRed extends AutonomousBase {
             goToThirdRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(91.051, 92.482), new Pose(104.467, 35.240))
+                            new BezierLine(new Pose(91.051, 92.482), new Pose(100, 35.240))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
                     .build();
@@ -143,7 +143,7 @@ public class TwelveArtifactRed extends AutonomousBase {
             intakeThirdRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(104.467, 35.240), new Pose(142.211, 35.598))
+                            new BezierLine(new Pose(100, 35.240), new Pose(142.211, 35.598))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
