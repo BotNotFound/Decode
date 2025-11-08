@@ -83,8 +83,6 @@ public abstract class AutonomousBase extends OpMode {
             robot.setState(Robot.RobotState.NONE);
             return; // no more stages to run
         }
-
-        currentStage.loopStage(robot, follower);
     }
 
 }

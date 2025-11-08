@@ -135,15 +135,6 @@ public class AutonomousStage implements Cloneable {
         follower.followPath(path);
     }
 
-    /**
-     * Runs a cycle of the stage.  Does not loop the robot or follower
-     *
-     * @param robot    The robot running this stage
-     * @param follower The follower moving the robot
-     */
-    public void loopStage(Robot robot, Follower follower) {
-    }
-
     @NonNull
     @Override
     public AutonomousStage clone() {
