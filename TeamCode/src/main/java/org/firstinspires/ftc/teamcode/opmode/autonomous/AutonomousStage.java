@@ -21,19 +21,19 @@ public class AutonomousStage implements Cloneable {
     /**
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
-    public static long SHOT_DURATION_MILLIS = 5000;
+    public static long SHOT_DURATION_MILLIS = 3000;
     /**
      * The pose tolerance used by {@link AutonomousStage} for the robot's x position, in inches
      */
-    public static double POSE_TOLERANCE_X = 2;
+    public static double POSE_TOLERANCE_X = 25;
     /**
      * The pose tolerance used by {@link AutonomousStage} for the robot's y position, in inches
      */
-    public static double POSE_TOLERANCE_Y = 2;
+    public static double POSE_TOLERANCE_Y = 25;
     /**
      * The pose tolerance used by {@link AutonomousStage} for the robot's heading, in degrees
      */
-    public static double POSE_TOLERANCE_HEADING = 2;
+    public static double POSE_TOLERANCE_HEADING = 10;
 
     private final PathChain path;
     private final Robot.RobotState robotState;
@@ -79,7 +79,7 @@ public class AutonomousStage implements Cloneable {
      * @return {@code true} if the stage is complete, {@code false} otherwise
      */
     private boolean checkForCompletion(Robot robot, Follower follower) {
-        if (!follower.atPose(path.endPose(), POSE_TOLERANCE_X, POSE_TOLERANCE_Y, POSE_TOLERANCE_HEADING)) {
+        if (!follower.atPose(path.endPose(), POSE_TOLERANCE_X, POSE_TOLERANCE_Y, Math.toRadians(POSE_TOLERANCE_HEADING))) {
             // we aren't yet at our destination, so the state can't be complete
             return false;
         }
