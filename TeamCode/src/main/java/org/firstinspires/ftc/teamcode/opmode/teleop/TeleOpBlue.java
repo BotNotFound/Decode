@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "1-Driver Teleop (Blue)", group = "1driver")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = TeleOpBlue.OP_MODE_NAME, group = "1driver")
 public class TeleOpBlue extends TeleOp {
+    public static final String OP_MODE_NAME = "1-Driver Teleop (Blue)";
+
     @Override
     public void init() {
         super.init();
