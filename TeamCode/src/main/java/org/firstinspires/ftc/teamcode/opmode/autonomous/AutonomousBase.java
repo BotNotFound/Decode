@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Robot;
@@ -10,15 +11,16 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class AutonomousBase extends OpMode {
     private final Robot.AllianceColor allianceColor;
+    private final Pose startPose;
     private final AutonomousStage[] stageSequence;
     private int currentStageIndex;
 
     private Robot robot;
     private Follower follower;
 
-    public AutonomousBase(AutonomousStage[] stageSequence, Robot.AllianceColor allianceColor) {
+    public AutonomousBase(Pose startPose, AutonomousStage[] stageSequence, Robot.AllianceColor allianceColor) {
         this.allianceColor = allianceColor;
-        // add on a null stage as a buffer
+        this.startPose = startPose;
         this.stageSequence = stageSequence;
         currentStageIndex = 0;
     }
@@ -52,6 +54,7 @@ public class AutonomousBase extends OpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         robot = new Robot(hardwareMap, telemetry, allianceColor);
         follower = Constants.createFollower(hardwareMap);
+        follower.setStartingPose(startPose);
     }
 
     @Override
