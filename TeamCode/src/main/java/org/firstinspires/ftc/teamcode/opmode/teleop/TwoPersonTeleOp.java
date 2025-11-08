@@ -12,8 +12,6 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class TwoPersonTeleOp extends OpMode {    
     protected Robot robot;
 
-    private boolean intakeToggle = false;
-
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -34,24 +32,14 @@ public class TwoPersonTeleOp extends OpMode {
         if (gamepad2.right_bumper) {
             robot.setState(Robot.RobotState.SHOOT);
         }
-        else if (gamepad2.leftBumperWasReleased()) {
-            if (!intakeToggle) {
-                robot.setState(Robot.RobotState.INTAKE);
-                intakeToggle = true;
-                telemetry.addData("LBumper", "Enter. !Intake");
-            }
-            else {
-                robot.setState(Robot.RobotState.NONE);
-                intakeToggle = false;
-                telemetry.addData("LBumper", "Enter. Intake");
-            }
+        else if (gamepad2.left_bumper) {
+           robot.setState(Robot.RobotState.INTAKE);
         }
         else if (gamepad2.left_trigger > 0.5) {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
-        else if (robot.getState() == Robot.RobotState.SHOOT || gamepad1.left_trigger > 0) {
+        else {
             robot.setState(Robot.RobotState.NONE);
-            intakeToggle = false;
         }
 
         robot.loop(gamepad1);
