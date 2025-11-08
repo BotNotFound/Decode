@@ -7,7 +7,6 @@ import com.pedropathing.follower.Follower;
 
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
@@ -87,7 +86,7 @@ public class TwelveArtifactRed extends OpMode {
         Pose cur = follower.getPose();
         telemetry.addData("X", cur.getX());
         telemetry.addData("Y", cur.getY());
-        telemetry.addData("Heading (deg)", Math.toDegrees(cur.getHeading()));
+        telemetry.addData("Heading (deg)", Math.toRadians(cur.getHeading()));
         telemetry.addData("Path State", pathState);
         telemetry.update();
     }
@@ -176,29 +175,29 @@ public class TwelveArtifactRed extends OpMode {
 
     private void buildPaths() {
         // Your path chain definitions...
-        startPose = new Pose(119.3, 124.2, Math.toDegrees(90));
+        startPose = new Pose(119.3, 124.2, Math.toRadians(90));
         //adjust these positions accordingly
-        shootPreloadedArtifacts = new Pose(95, 95, Math.toDegrees(51));
-        firstControlPoint = new Pose(92.6, 96.2, Math.toDegrees(0));
-        firstThreeArtifactsPose = new Pose(101.9, 84, Math.toDegrees(-1));
-        intakeFirstThreeArtifactsPose = new Pose(127.7, 84, Math.toDegrees(-1));
-        shootFirstThreeArtifactPose = new Pose(100, 106, Math.toDegrees(48));
+        shootPreloadedArtifacts = new Pose(95, 95, Math.toRadians(51));
+        firstControlPoint = new Pose(92.6, 96.2, Math.toRadians(0));
+        firstThreeArtifactsPose = new Pose(101.9, 84, Math.toRadians(-1));
+        intakeFirstThreeArtifactsPose = new Pose(127.7, 84, Math.toRadians(-1));
+        shootFirstThreeArtifactPose = new Pose(100, 106, Math.toRadians(48));
         secondControlPoint = new Pose(100, 84, Math.toRadians(0));
-        secondThreeArtifactPose = new Pose(100.9, 59.2, Math.toDegrees(-1));
-        intakeSecondThreeArtifactsPose = new Pose(129.8, 59.5, Math.toDegrees(-1));
-        thirdControlPoint = new Pose(83.2, 58.3, Math.toDegrees(0));
-        shootSecondThreeArtifactPose = new Pose(92.1, 100.7, Math.toDegrees(43));
-        fourthControlPoint = new Pose(98, 71, Math.toDegrees(0));
-        thirdThreeArtifactPose = new Pose(103.8, 35.3, Math.toDegrees(0));
-        intakeLastThreeArtifactsPose = new Pose(134.4, 35.3, Math.toDegrees(0));
-        shootThirdThreeArtifactPose = new Pose(86.7, 89.5, Math.toDegrees(47));
+        secondThreeArtifactPose = new Pose(100.9, 59.2, Math.toRadians(-1));
+        intakeSecondThreeArtifactsPose = new Pose(129.8, 59.5, Math.toRadians(-1));
+        thirdControlPoint = new Pose(83.2, 58.3, Math.toRadians(0));
+        shootSecondThreeArtifactPose = new Pose(92.1, 100.7, Math.toRadians(43));
+        fourthControlPoint = new Pose(98, 71, Math.toRadians(0));
+        thirdThreeArtifactPose = new Pose(103.8, 35.3, Math.toRadians(0));
+        intakeLastThreeArtifactsPose = new Pose(134.4, 35.3, Math.toRadians(0));
+        shootThirdThreeArtifactPose = new Pose(86.7, 89.5, Math.toRadians(47));
 
         // FIRST CYCLE: Shooting the preloaded artifacts
         {
             PathBuilder builder = follower.pathBuilder();
             builder
-                    .addPath(new BezierLine(start, shootPreloadedArtifacts))
-                    .setLinearHeadingInterpolation(start.getHeading(), shootPreloadedArtifacts.getHeading());
+                    .addPath(new BezierLine(startPose, shootPreloadedArtifacts))
+                    .setLinearHeadingInterpolation(startPose.getHeading(), shootPreloadedArtifacts.getHeading());
             firstCycleChain = builder.build();
         }
         // SECOND CYCLE: Going to the next first three artifacts
