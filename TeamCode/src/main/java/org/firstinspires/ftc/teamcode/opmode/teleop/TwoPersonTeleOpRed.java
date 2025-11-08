@@ -4,8 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
-@TeleOp(name = "2-Driver Teleop (Red)", group = "2driver")
+@TeleOp(name = TwoPersonTeleOpRed.OP_MODE_NAME, group = "2driver")
 public class TwoPersonTeleOpRed extends TwoPersonTeleOp {
+    public static final String OP_MODE_NAME= "2-Driver Teleop (Red)";
     @Override
     public void init() {
         super.init();

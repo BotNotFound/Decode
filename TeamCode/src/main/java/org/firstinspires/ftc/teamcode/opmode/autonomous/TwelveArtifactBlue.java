@@ -8,9 +8,9 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.opmode.teleop.TeleOpBlue;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 
-@Autonomous(name = "12 Artifact Blue", group = "blue", preselectTeleOp = TeleOpBlue.OP_MODE_NAME)
+@Autonomous(name = "12 Artifact Blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class TwelveArtifactBlue extends AutonomousBase {
     public TwelveArtifactBlue() {
         super(new Pose(22.000, 120.000), Robot.AllianceColor.BLUE);
