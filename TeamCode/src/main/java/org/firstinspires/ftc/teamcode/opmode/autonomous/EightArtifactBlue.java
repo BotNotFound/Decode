@@ -61,7 +61,7 @@ public class EightArtifactBlue extends AutonomousBase {
                                         autoPath.shootThirdRow.endPoint(),
                                         new Pose(116.559, 64.120).mirror()
                                 )
-                        ).setConstantHeadingInterpolation(Math.toRadians(180-45)).build(),
+                        ).setConstantHeadingInterpolation(Math.toRadians(180-180)).build(),
                         Robot.RobotState.NONE
                 ),
         };
