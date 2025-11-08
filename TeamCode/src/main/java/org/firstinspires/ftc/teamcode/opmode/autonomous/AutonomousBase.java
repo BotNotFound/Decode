@@ -82,6 +82,8 @@ public abstract class AutonomousBase extends OpMode {
         if (currentStage == null) {
             robot.setState(Robot.RobotState.NONE);
         }
+
+        telemetry.addData("Autonomous Stage", currentStageIndex);
     }
 
 }
