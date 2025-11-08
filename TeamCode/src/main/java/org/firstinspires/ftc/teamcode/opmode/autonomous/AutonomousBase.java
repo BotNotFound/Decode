@@ -9,19 +9,18 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-public class AutonomousBase extends OpMode {
+public abstract class AutonomousBase extends OpMode {
     private final Robot.AllianceColor allianceColor;
     private final Pose startPose;
-    private final AutonomousStage[] stageSequence;
+    private AutonomousStage[] stageSequence;
     private int currentStageIndex;
 
-    private Robot robot;
-    private Follower follower;
+    protected Robot robot;
+    protected Follower follower;
 
-    public AutonomousBase(Pose startPose, AutonomousStage[] stageSequence, Robot.AllianceColor allianceColor) {
+    public AutonomousBase(Pose startPose, Robot.AllianceColor allianceColor) {
         this.allianceColor = allianceColor;
         this.startPose = startPose;
-        this.stageSequence = stageSequence;
         currentStageIndex = 0;
     }
 
@@ -55,7 +54,14 @@ public class AutonomousBase extends OpMode {
         robot = new Robot(hardwareMap, telemetry, allianceColor);
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
+
+        stageSequence = buildStageSequence();
+        if (stageSequence == null) {
+            stageSequence = new AutonomousStage[0];
+        }
     }
+
+    protected abstract AutonomousStage[] buildStageSequence();
 
     @Override
     public void loop() {
