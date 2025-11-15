@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 
 public class Constants {
-    public static FollowerConstants followerConstants = new FollowerConstants()
+    public static final FollowerConstants followerConstants = new FollowerConstants()
         .mass(9.162566)
         .forwardZeroPowerAcceleration(-36.278554120599594)
         .lateralZeroPowerAcceleration(-74.29537018748395)
@@ -25,7 +25,7 @@ public class Constants {
         .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.01, 0, 0, 0, 0.01))
         .centripetalScaling(0.0009);
 
-    public static MecanumConstants driveConstants = new MecanumConstants()
+    public static final MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1)
             .rightFrontMotorName(FieldCentricDriveTrain.FRONT_RIGHT_DRIVE_MOTOR_NAME)
             .rightRearMotorName(FieldCentricDriveTrain.BACK_RIGHT_DRIVE_MOTOR_NAME)
@@ -38,7 +38,7 @@ public class Constants {
             .xVelocity(61.33050344872662)
             .yVelocity(50.51176969272884);
 
-    public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
+    public static final PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
 
     public static Follower createFollower(HardwareMap hardwareMap) {
@@ -49,7 +49,7 @@ public class Constants {
                 .build();
     }
 
-    public static PinpointConstants localizerConstants = new PinpointConstants()
+    public static final PinpointConstants localizerConstants = new PinpointConstants()
             .forwardPodY(32)
             .strafePodX(8)
             .distanceUnit(DistanceUnit.MM)
