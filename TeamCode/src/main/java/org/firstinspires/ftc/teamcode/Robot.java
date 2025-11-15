@@ -52,8 +52,6 @@ public class Robot {
     }
 
     public static double MOVE_SCALE = 1;
-    /*private static double redTurnValue= 2.356;
-    private static double blueTurnValue = 0.7853;*/
 
 
     /* Modules */
