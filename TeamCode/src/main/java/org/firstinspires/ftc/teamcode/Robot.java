@@ -53,7 +53,7 @@ public class Robot {
     }
 
     public static double MOVE_SCALE = 1;
-    public static final int MAX_DETECTION_LULL_TIME = 1;
+    public static int MAX_DETECTION_LULL_TIME = 1;
 
 
     /* Modules */
