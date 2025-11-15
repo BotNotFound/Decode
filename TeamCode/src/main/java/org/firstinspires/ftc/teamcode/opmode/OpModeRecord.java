@@ -112,19 +112,33 @@ public class OpModeRecord implements Serializable {
         return records;
     }
 
+    private static OpModeManager curManager;
+
     @OpModeRegistrar
     public static void registerRecords(OpModeManager manager) {
+        curManager = manager;
         final Map<String, OpModeRecord> records = loadRecords();
         for (Map.Entry<String, OpModeRecord> recordEntry : records.entrySet()) {
-            manager.register(
-                    new OpModeMeta.Builder()
-                            .setName(recordEntry.getKey())
-                            .setFlavor(OpModeMeta.Flavor.AUTONOMOUS)
-                            .setGroup("-RECORDED-")
-                            .build(),
-                    new Replayer(recordEntry.getValue())
-            );
+            registerRecordAsOpMode(manager, recordEntry.getKey(), recordEntry.getValue());
         }
+    }
+
+    private static void registerRecordAsOpMode(OpModeManager manager, String recordName, OpModeRecord record) {
+        manager.register(
+                new OpModeMeta.Builder()
+                        .setName(recordName)
+                        .setFlavor(OpModeMeta.Flavor.AUTONOMOUS)
+                        .setGroup("-RECORDED-")
+                        .build(),
+                new Replayer(record)
+        );
+    }
+
+    public static void registerRecordAsOpMode(String recordName, OpModeRecord record) {
+        if (curManager == null) {
+            throw new IllegalStateException("No OpModeManager has been initialized!");
+        }
+        registerRecordAsOpMode(curManager, recordName, record);
     }
 
     public static class OpModeState implements Serializable {
