@@ -1,14 +1,31 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
+import android.util.Log;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
+import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.teamcode.Robot;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 
 public class OpModeRecord implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final String TAG = OpModeRecord.class.getSimpleName();
+
+    public static final String RECORDINGS_FOLDER_PATH = "/sdcard/";
+    public static final String RECORDINGS_FILE_EXTENSION = ".omr";
 
     private final Robot.AllianceColor allianceColor;
     private final OpModeState[] record;
@@ -40,6 +57,74 @@ public class OpModeRecord implements Serializable {
 
     public void moveToNextState() {
         curState++;
+    }
+
+    private static String toRecordFilename(String recordName) {
+        return RECORDINGS_FOLDER_PATH + recordName + RECORDINGS_FILE_EXTENSION;
+    }
+
+    public static void saveRecord(String recordName, OpModeRecord record) {
+        final String filename = toRecordFilename(recordName);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filename);
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            objectOutputStream.writeObject(record);
+        }
+        catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    public static Map<String, OpModeRecord> loadRecords() {
+        final File recordsDir = new File(RECORDINGS_FOLDER_PATH);
+        final File[] recordFiles = recordsDir.listFiles();
+        final Hashtable<String, OpModeRecord> records = new Hashtable<>();
+        if (recordFiles == null) {
+            return records; // no files
+        }
+
+        for (File recordFile : recordFiles) {
+            if (!recordFile.isFile()) {
+                continue;
+            }
+            if (!recordFile.canRead()) {
+                continue;
+            }
+
+            final String recordFilename = recordFile.getName();
+            if (!recordFilename.endsWith(RECORDINGS_FILE_EXTENSION)) {
+                continue;
+            }
+
+            final String recordName = recordFilename.substring(0, recordFilename.length() - RECORDINGS_FILE_EXTENSION.length());
+            final OpModeRecord record;
+            try (FileInputStream fileInputStream = new FileInputStream(recordFile);
+                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+                record = (OpModeRecord) objectInputStream.readObject();
+            }
+            catch (Exception e) {
+                Log.e(TAG, e.toString());
+                continue;
+            }
+
+            records.put(recordName, record);
+        }
+
+        return records;
+    }
+
+    @OpModeRegistrar
+    public static void registerRecords(OpModeManager manager) {
+        final Map<String, OpModeRecord> records = loadRecords();
+        for (Map.Entry<String, OpModeRecord> recordEntry : records.entrySet()) {
+            manager.register(
+                    new OpModeMeta.Builder()
+                            .setName(recordEntry.getKey())
+                            .setFlavor(OpModeMeta.Flavor.AUTONOMOUS)
+                            .setGroup("-RECORDED-")
+                            .build(),
+                    new Replayer(recordEntry.getValue())
+            );
+        }
     }
 
     public static class OpModeState implements Serializable {

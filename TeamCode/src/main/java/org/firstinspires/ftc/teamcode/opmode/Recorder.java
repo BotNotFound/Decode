@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleOp;
 
 import java.util.UUID;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Record New Autonomous")
+@Autonomous(name = "Record New Autonomous")
 public class Recorder extends TeleOp {
     private OpModeRecord.Recorder recorder;
 

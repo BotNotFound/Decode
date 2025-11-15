@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleOp;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 public class Replayer extends TeleOp {
     private final OpModeRecord record;
@@ -35,10 +35,11 @@ public class Replayer extends TeleOp {
 
     @Autonomous(name = "Replay Recorded Autos")
     public static class Hub extends OpMode {
-        private static final Hashtable<String, OpModeRecord> records = new Hashtable<>();
+        private static Map<String, OpModeRecord> records;
 
         public static void registerRecord(String name, OpModeRecord record) {
             records.put(name, record);
+            OpModeRecord.saveRecord(name, record);
         }
 
         // this is a field instead of a base class because we need to recreate it whenever
@@ -47,6 +48,7 @@ public class Replayer extends TeleOp {
 
         @Override
         public void init() {
+            records = OpModeRecord.loadRecords();
             opMode = new SelectableOpMode("Select a record to replay", s -> {
                 records.forEach((name, record) -> {
                     s.add(name, () -> new Replayer(record));
