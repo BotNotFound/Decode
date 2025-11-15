@@ -12,6 +12,7 @@ public class Recorder extends TeleOp {
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
     private StringBuilder recordName;
     private int recordNameCurIdx;
+    private boolean nameFinalized;
 
     private static int rotateInt(int cur, int offset, int max) {
         int next = cur + offset;
@@ -26,13 +27,16 @@ public class Recorder extends TeleOp {
 
     @Override
     public void init() {
-        super.init();
         recordName = new StringBuilder();
+        nameFinalized = false;
     }
 
     @Override
     public void init_loop() {
-        super.init_loop();
+        if (nameFinalized) {
+            super.init_loop();
+            return;
+        }
 
         while (recordNameCurIdx > recordName.length()) {
             recordNameCurIdx -= recordName.length();
@@ -69,12 +73,21 @@ public class Recorder extends TeleOp {
             recordNameCurIdx = rotateInt(recordNameCurIdx, -1, recordName.length());
         }
 
-        telemetry.addLine("Record Name [use DPAD to change]:");
+        telemetry.addLine("Record Name [DPAD to change, A to submit]:");
         telemetry.addLine(recordName.toString());
+
+        if (gamepad1.aWasPressed()) {
+            nameFinalized = true;
+            super.init();
+        }
     }
 
     @Override
     public void start() {
+        if (!nameFinalized) {
+            nameFinalized = true;
+            super.init();
+        }
         super.start();
         recorder = new OpModeRecord.Recorder(robot.getAllianceColor());
     }
