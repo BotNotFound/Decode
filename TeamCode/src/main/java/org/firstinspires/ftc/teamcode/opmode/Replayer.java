@@ -26,8 +26,7 @@ public class Replayer extends TeleOp {
     public void loop() {
         if (!record.isRecordComplete()) {
             OpModeRecord.OpModeState state = record.getCurrentState();
-            gamepad1.copy(state.getGamepad1());
-            gamepad2.copy(state.getGamepad2());
+            state.setupState(gamepad1, gamepad2);
             record.moveToNextState();
         }
 
