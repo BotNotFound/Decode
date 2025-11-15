@@ -58,11 +58,11 @@ public class Replayer extends TeleOp {
         @Override
         public void init() {
             records = OpModeRecord.loadRecords();
-            opMode = new SelectableOpMode("Select a record to replay", s -> {
-                records.forEach((name, record) -> {
-                    s.add(name, () -> new Replayer(record));
-                });
-            }) {};
+            opMode = new SelectableOpMode("Select a record to replay",
+                    s -> records.forEach(
+                            (name, record) -> s.add(name, () -> new Replayer(record))
+                    )
+            ) {};
             opMode.gamepad1 = gamepad1;
             opMode.gamepad2 = gamepad2;
             opMode.telemetry = telemetry;
