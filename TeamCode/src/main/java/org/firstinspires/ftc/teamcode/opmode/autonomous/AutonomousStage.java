@@ -106,7 +106,7 @@ public class AutonomousStage {
                 return false;
         }
 
-        return true; // should never be reached
+        throw new IllegalStateException(); // should never be reached
     }
 
     /**
