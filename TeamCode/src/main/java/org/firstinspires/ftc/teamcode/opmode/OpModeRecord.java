@@ -132,11 +132,17 @@ public class OpModeRecord implements Serializable {
 
         private byte[] gamepad1Bytes;
         private byte[] gamepad2Bytes;
+        private double timestamp;
 
         public OpModeState() {}
-        public OpModeState(Gamepad gamepad1, Gamepad gamepad2) {
+        public OpModeState(Gamepad gamepad1, Gamepad gamepad2, double timestamp) {
             this.gamepad1Bytes = gamepad1.toByteArray();
             this.gamepad2Bytes = gamepad2.toByteArray();
+            this.timestamp = timestamp;
+        }
+
+        public double getTimestamp() {
+            return timestamp;
         }
 
         public void setupState(Gamepad gamepad1, Gamepad gamepad2) {
@@ -156,8 +162,8 @@ public class OpModeRecord implements Serializable {
             this.record = new ArrayList<>();
         }
 
-        public void recordCycle(Gamepad gamepad1, Gamepad gamepad2) {
-            record.add(new OpModeState(gamepad1, gamepad2));
+        public void recordCycle(Gamepad gamepad1, Gamepad gamepad2, double timestamp) {
+            record.add(new OpModeState(gamepad1, gamepad2, timestamp));
         }
 
         public OpModeRecord finishRecording() {

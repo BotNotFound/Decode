@@ -82,7 +82,7 @@ public class Recorder extends TeleOp {
     @Override
     public void loop() {
         super.loop();
-        recorder.recordCycle(gamepad1, gamepad2);
+        recorder.recordCycle(gamepad1, gamepad2, getRuntime());
     }
 
     @Override
