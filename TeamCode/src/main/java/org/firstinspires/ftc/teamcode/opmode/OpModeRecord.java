@@ -140,11 +140,10 @@ public class OpModeRecord implements Serializable {
     public static class OpModeState implements Serializable {
         private static final long serialVersionUID = 1L;
 
-        private byte[] gamepad1Bytes;
-        private byte[] gamepad2Bytes;
-        private double timestamp;
+        private final byte[] gamepad1Bytes;
+        private final byte[] gamepad2Bytes;
+        private final double timestamp;
 
-        public OpModeState() {}
         public OpModeState(Gamepad gamepad1, Gamepad gamepad2, double timestamp) {
             this.gamepad1Bytes = gamepad1.toByteArray();
             this.gamepad2Bytes = gamepad2.toByteArray();
