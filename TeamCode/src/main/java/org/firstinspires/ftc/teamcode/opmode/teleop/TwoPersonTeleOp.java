@@ -20,6 +20,7 @@ public class TwoPersonTeleOp extends OpMode {
     protected TwoPersonTeleOp(boolean allowAllianceSwap) {
         this.allowAllianceSwap = allowAllianceSwap;
     }
+    @SuppressWarnings("unused")
     public TwoPersonTeleOp() {
         this(true);
     }
