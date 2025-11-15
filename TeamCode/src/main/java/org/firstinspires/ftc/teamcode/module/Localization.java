@@ -23,15 +23,13 @@ public class Localization {
     private static final Position cameraPosition = new Position(DistanceUnit.MM, 0, 0, 0, 0);
     private static final YawPitchRollAngles cameraAngle = new YawPitchRollAngles(AngleUnit.DEGREES, 0, -90, 0, 0);
 
-
-    public static void setUpLocalization(HardwareMap hardware, Telemetry tele) {
-        hardwareMap = hardware;
-        telemetry = tele;
-
+    public Localization(HardwareMap hardwareMap, Telemetry telemetry) {
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         aprilTagProcessor = new AprilTagProcessor.Builder()
                 .setCameraPose(cameraPosition, cameraAngle)
                 .build();
+
+        robotPose = new Pose2D();
     }
 
     public static void setPose(Pose2D newPose) {
