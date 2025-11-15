@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TeleOp;
 
 @Autonomous(name = "Record New Autonomous")
 public class Recorder extends TeleOp {
-    private OpModeRecord.Recorder recorder;
+    private OpModeRecord.Recorder recorder = null;
 
     private static final String RECORD_NAME_AVAILABLE_CHARS =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
@@ -88,6 +88,10 @@ public class Recorder extends TeleOp {
     @Override
     public void stop() {
         super.stop();
-        Replayer.Hub.registerRecord(recordName.toString(), recorder.finishRecording());
+
+        if (recorder != null) {
+            Replayer.Hub.registerRecord(recordName.toString(), recorder.finishRecording());
+            recorder = null;
+        }
     }
 }
