@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
-import androidx.annotation.NonNull;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.util.Timing;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
-import com.pedropathing.paths.PathConstraints;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
@@ -18,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * an autonomous sequence
  */
 @Config
-public class AutonomousStage implements Cloneable {
+public class AutonomousStage {
     /**
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
@@ -138,11 +134,5 @@ public class AutonomousStage implements Cloneable {
     public void enterStage(Robot robot, Follower follower) {
         robot.setState(robotState);
         follower.followPath(path);
-    }
-
-    @NonNull
-    @Override
-    public AutonomousStage clone() {
-        return new AutonomousStage(path, robotState);
     }
 }
