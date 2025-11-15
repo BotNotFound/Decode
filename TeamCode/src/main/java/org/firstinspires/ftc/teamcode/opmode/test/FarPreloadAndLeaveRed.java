@@ -14,24 +14,17 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import java.util.concurrent.TimeUnit;
 @Autonomous(name="Far Preload and Leave Red")
 public class FarPreloadAndLeaveRed extends LinearOpMode {
-    private FieldCentricDriveTrain driveTrain;
-
-    private Shooter shooter;
-    private Intake intake;
-    private Transfer transfer;
-
-    private AprilTagDetector detector;
 
     @Override
     public void runOpMode(){
         ElapsedTime runtime = new ElapsedTime();
-        driveTrain= new FieldCentricDriveTrain(hardwareMap, telemetry);
+        final FieldCentricDriveTrain driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
 
-        shooter = new Shooter(hardwareMap, telemetry);
-        intake = new Intake(hardwareMap, telemetry);
-        transfer = new Transfer(hardwareMap, telemetry);
+        final Shooter shooter = new Shooter(hardwareMap, telemetry);
+        final Intake intake = new Intake(hardwareMap, telemetry);
+        final Transfer transfer = new Transfer(hardwareMap, telemetry);
 
-        detector = new AprilTagDetector(hardwareMap, telemetry);
+        final AprilTagDetector detector = new AprilTagDetector(hardwareMap, telemetry);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();

@@ -10,12 +10,11 @@ import org.firstinspires.ftc.teamcode.module.DriveTrain;
 //I'm not sure what to put for the group here
 @Autonomous(name="Leaving the Launch Zone Only")
 public class LeaveAuto extends LinearOpMode{
-    private DriveTrain driveTrain;
 
     @Override
     public void runOpMode(){
         ElapsedTime runtime = new ElapsedTime();
-        driveTrain= new DriveTrain(hardwareMap, telemetry);
+        final DriveTrain driveTrain = new DriveTrain(hardwareMap, telemetry);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
