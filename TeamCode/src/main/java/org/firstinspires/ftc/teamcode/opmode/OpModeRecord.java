@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
+import android.os.Environment;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
@@ -24,7 +25,7 @@ public class OpModeRecord implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String TAG = OpModeRecord.class.getSimpleName();
 
-    public static final String RECORDINGS_FOLDER_PATH = "/sdcard/";
+    public static final File RECORDINGS_FOLDER = Environment.getExternalStorageDirectory();
     public static final String RECORDINGS_FILE_EXTENSION = ".omr";
 
     private final Robot.AllianceColor allianceColor;
@@ -60,7 +61,7 @@ public class OpModeRecord implements Serializable {
     }
 
     private static String toRecordFilename(String recordName) {
-        return RECORDINGS_FOLDER_PATH + recordName + RECORDINGS_FILE_EXTENSION;
+        return RECORDINGS_FOLDER.getPath() + recordName + RECORDINGS_FILE_EXTENSION;
     }
 
     public static void saveRecord(String recordName, OpModeRecord record) {
@@ -75,8 +76,7 @@ public class OpModeRecord implements Serializable {
     }
 
     public static Map<String, OpModeRecord> loadRecords() {
-        final File recordsDir = new File(RECORDINGS_FOLDER_PATH);
-        final File[] recordFiles = recordsDir.listFiles();
+        final File[] recordFiles = RECORDINGS_FOLDER.listFiles((dir, name) -> name.endsWith(RECORDINGS_FILE_EXTENSION));
         final Hashtable<String, OpModeRecord> records = new Hashtable<>();
         if (recordFiles == null) {
             return records; // no files
@@ -91,10 +91,6 @@ public class OpModeRecord implements Serializable {
             }
 
             final String recordFilename = recordFile.getName();
-            if (!recordFilename.endsWith(RECORDINGS_FILE_EXTENSION)) {
-                continue;
-            }
-
             final String recordName = recordFilename.substring(0, recordFilename.length() - RECORDINGS_FILE_EXTENSION.length());
             final OpModeRecord record;
             try (FileInputStream fileInputStream = new FileInputStream(recordFile);
