@@ -157,16 +157,35 @@ public class FieldCentricDriveTrain {
         return (backLeftPower - frontRightPower) / 2;
     }
 
+    public void setDrivePower(double power) {
+        setPower(power, getStrafePower(), getTurnPower());
+    }
+
+    public void setStrafePower(double power) {
+        setPower(getDrivePower(), power, getTurnPower());
+    }
+
+    public void setTurnPower(double power) {
+        setPower(getDrivePower(), getStrafePower(), power);
+    }
+
+    public void tryAimAtAprilTag(AprilTagPoseFtc target, double fallbackRotation) {
+        final double bearing;
+        if (target == null) {
+            bearing = pinpointDriver.getHeading(AngleUnit.RADIANS) - fallbackRotation;
+        }
+        else {
+            bearing = target.bearing;
+        }
+        setTurnPower(bearing);
+    }
+
     public void aimAtAprilTag(AprilTagPoseFtc target) {
         if (target == null) {
             return; // no tag to aim at
         }
 
-        final double curDrivePower = getDrivePower();
-        final double curStrafePower = getStrafePower();
-        final double newTurnPower = getAimRotationPower(target.bearing);
-
-        setPower(curDrivePower, curStrafePower, newTurnPower);
+        setTurnPower(getAimRotationPower(target.bearing));
     }
 
     private double getAimRotationPower(double bearing) {

@@ -17,13 +17,15 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 @Config
 public class Robot {
     public enum AllianceColor {
-        RED(24),
-        BLUE(20);
+        RED(24, Math.PI / 4),
+        BLUE(20, -Math.PI / 4);
 
         public final int targetAprilTagID;
+        public final double defaultShootingRotation;
 
-        AllianceColor(int targetAprilTagID) {
+        AllianceColor(int targetAprilTagID, double defaultShootingRotation) {
             this.targetAprilTagID = targetAprilTagID;
+            this.defaultShootingRotation = defaultShootingRotation;
         }
 
 
@@ -100,7 +102,7 @@ public class Robot {
 
     private void prepareToShoot() {
         AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
-        driveTrain.aimAtAprilTag(target);
+        driveTrain.tryAimAtAprilTag(target, allianceColor.defaultShootingRotation);
         shooter.setRPMForAprilTag(target);
     }
 
