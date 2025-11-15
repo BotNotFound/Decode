@@ -14,6 +14,18 @@ public class TeleOp extends OpMode {
 
     protected Robot robot;
 
+    /**
+     * Should we allow the driver to swap alliance colors in init?
+     */
+    private final boolean allowAllianceSwap;
+
+    protected TeleOp(boolean allowAllianceSwap) {
+        this.allowAllianceSwap = allowAllianceSwap;
+    }
+    public TeleOp() {
+        this(true);
+    }
+
     @Override
     public void init() {
         // assume red alliance until driver indicates otherwise
@@ -23,7 +35,7 @@ public class TeleOp extends OpMode {
 
     @Override
     public void init_loop() {
-        if (gamepad1.aWasPressed()) {
+        if (allowAllianceSwap && gamepad1.aWasPressed()) {
             robot.swapAllianceColor();
         }
         telemetry.addData("Current Alliance", robot.getAllianceColor());

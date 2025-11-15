@@ -9,14 +9,13 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class TwoPersonTeleOpBlue extends TwoPersonTeleOp {
     public static final String OP_MODE_NAME= "2-Driver Teleop (Blue)";
 
+    public TwoPersonTeleOpBlue() {
+        super(false);
+    }
+
     @Override
     public void init() {
         super.init();
         robot.setAllianceColor(Robot.AllianceColor.BLUE);
-    }
-
-    @Override
-    public void init_loop() {
-        // do not allow driver to change alliance color
     }
 }

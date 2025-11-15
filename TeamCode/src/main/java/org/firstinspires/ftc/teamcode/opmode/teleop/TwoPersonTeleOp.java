@@ -12,6 +12,18 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class TwoPersonTeleOp extends OpMode {    
     protected Robot robot;
 
+    /**
+     * Should we allow the driver to swap alliance colors in init?
+     */
+    private final boolean allowAllianceSwap;
+
+    protected TwoPersonTeleOp(boolean allowAllianceSwap) {
+        this.allowAllianceSwap = allowAllianceSwap;
+    }
+    public TwoPersonTeleOp() {
+        this(true);
+    }
+
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -21,7 +33,7 @@ public class TwoPersonTeleOp extends OpMode {
 
     @Override
     public void init_loop() {
-        if (gamepad1.aWasPressed()) {
+        if (allowAllianceSwap && gamepad1.aWasPressed()) {
             robot.swapAllianceColor();
         }
         telemetry.addData("Current Alliance", robot.getAllianceColor());

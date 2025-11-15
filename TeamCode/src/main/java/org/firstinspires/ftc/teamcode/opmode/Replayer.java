@@ -12,13 +12,19 @@ public class Replayer extends TeleOp {
     private final OpModeRecord record;
 
     protected Replayer(OpModeRecord record) {
+        super(false);
         this.record = record;
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        robot.setAllianceColor(record.getAllianceColor());
     }
 
     @Override
     public void start() {
         super.start();
-        robot.setAllianceColor(record.getAllianceColor());
         record.restartRecord();
     }
 

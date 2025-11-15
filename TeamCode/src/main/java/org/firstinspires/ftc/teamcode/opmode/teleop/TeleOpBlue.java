@@ -6,14 +6,13 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class TeleOpBlue extends TeleOp {
     public static final String OP_MODE_NAME = "1-Driver Teleop (Blue)";
 
+    public TeleOpBlue() {
+        super(false);
+    }
+
     @Override
     public void init() {
         super.init();
         robot.setAllianceColor(Robot.AllianceColor.BLUE);
-    }
-
-    @Override
-    public void init_loop() {
-        // do not allow driver to change alliance color
     }
 }
