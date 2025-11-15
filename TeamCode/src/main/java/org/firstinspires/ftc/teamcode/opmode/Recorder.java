@@ -15,11 +15,11 @@ public class Recorder extends TeleOp {
 
     private static int rotateInt(int cur, int offset, int max) {
         int next = cur + offset;
-        while (cur >= max) {
-            cur -= max;
+        while (next >= max) {
+            next -= max;
         }
-        while (cur < 0) {
-            cur += max;
+        while (next < 0) {
+            next += max;
         }
         return next;
     }
