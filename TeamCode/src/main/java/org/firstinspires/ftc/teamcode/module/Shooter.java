@@ -55,6 +55,9 @@ public class Shooter {
         lowerFlywheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         upperFlywheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        lowerFlywheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        upperFlywheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
         kickerServo.setPosition(KICKER_IDLE_POSITION);
 
         velocityPID = new PIDFController(kP, kI, kD, kF);
@@ -74,6 +77,13 @@ public class Shooter {
     }
 
     public void setRPM(double rpm) {
+        if (rpm == 0) {
+            // no need for velocity control if we aren't spinning
+            lowerFlywheelMotor.setPower(0);
+            upperFlywheelMotor.setPower(0);
+            return;
+        }
+
         velocityPID.setTolerance(tolerance);
         velocityPID.setPIDF(kP, kI, kD, kF);
         double actualRPM = upperFlywheelMotor.getVelocity() / motorCPS * 60;
