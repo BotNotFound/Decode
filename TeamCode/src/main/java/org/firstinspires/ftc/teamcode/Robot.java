@@ -129,6 +129,10 @@ public class Robot {
     }
 
     public void setState(RobotState newState) {
+        if (newState == currentState) {
+            return;
+        }
+
         switch (newState) {
             case INTAKE:
                 shooter.disengageKicker();
