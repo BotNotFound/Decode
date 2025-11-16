@@ -17,17 +17,30 @@ public class OpModeReplayer extends OpMode {
         this.opMode = recording.createOpMode();
     }
 
+    private static void registerRecordingAsOpMode(OpModeManager manager, String name, OpModeRecording recording) {
+        manager.register(
+                new OpModeMeta.Builder()
+                        .setName(name)
+                        .setGroup("-RECORDING-")
+                        .setFlavor(OpModeMeta.Flavor.AUTONOMOUS)
+                        .build(),
+                new OpModeReplayer(recording)
+        );
+    }
+
+    private static OpModeManager opModeManager = null;
+    public static void registerRecording(String name, OpModeRecording recording) {
+        OpModeRecording.saveRecording(name, recording);
+        if (opModeManager != null) {
+            registerRecordingAsOpMode(opModeManager, name, recording);
+        }
+    }
+
     @OpModeRegistrar
     public static void registerRecordings(OpModeManager manager) {
+        opModeManager = manager;
         for (Map.Entry<String, OpModeRecording> recording : OpModeRecording.loadRecordings().entrySet()) {
-            manager.register(
-                    new OpModeMeta.Builder()
-                            .setName(recording.getKey())
-                            .setGroup("-RECORDING-")
-                            .setFlavor(OpModeMeta.Flavor.AUTONOMOUS)
-                            .build(),
-                    new OpModeReplayer(recording.getValue())
-            );
+            registerRecordingAsOpMode(manager, recording.getKey(), recording.getValue());
         }
     }
 
