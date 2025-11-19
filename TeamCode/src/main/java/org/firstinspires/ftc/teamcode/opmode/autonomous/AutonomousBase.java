@@ -12,8 +12,6 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Config
 public abstract class AutonomousBase extends OpMode {
-    public static double MAX_INTAKE_MOTOR_POWER = 0.5;
-
     private final Robot.AllianceColor allianceColor;
     private final Pose startPose;
     private AutonomousStage[] stageSequence;
@@ -94,19 +92,6 @@ public abstract class AutonomousBase extends OpMode {
         if (currentStage == null) {
             robot.setState(Robot.RobotState.NONE);
             return;
-        }
-
-        if (robot.getState() == Robot.RobotState.INTAKE) {
-            // limit motor power on intake
-            final double curDrivePower = robot.getDrivePower();
-            final double curStrafePower = robot.getStrafePower();
-            final double curTurnPower = robot.getTurnPower();
-
-            final double newDrivePower = Math.copySign(Math.min(Math.abs(curDrivePower), MAX_INTAKE_MOTOR_POWER), curDrivePower);
-            final double newStrafePower = Math.copySign(Math.min(Math.abs(curStrafePower), MAX_INTAKE_MOTOR_POWER), curStrafePower);
-            final double newTurnPower = Math.copySign(Math.min(Math.abs(curTurnPower), MAX_INTAKE_MOTOR_POWER), curTurnPower);
-
-            robot.setDrivePowers(newDrivePower, newStrafePower, newTurnPower);
         }
 
         telemetry.addData("Autonomous Stage", currentStageIndex);
