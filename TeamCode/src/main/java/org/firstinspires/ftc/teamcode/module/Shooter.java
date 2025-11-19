@@ -19,17 +19,17 @@ public class Shooter {
     public static final String KICKER_SERVO_NAME = "Kicker";
 
     public static double KICKER_IDLE_POSITION = 0.82;
-    public static double KICKER_LAUNCH_POSITION = 0.32;
+    public static double KICKER_LAUNCH_POSITION = 0.3;
 
     private final DcMotorEx lowerFlywheelMotor;
     private final DcMotorEx upperFlywheelMotor;
     private final Servo kickerServo;
 
     private final PIDFController velocityPID;
-    public static double kP = 0.007;
+    public static double kP = 0.005;
     public static double kI = 0;
     public static double kD = 0;
-    public static double kF = 0.0002;
+    public static double kF = 0.000175;
     public static double tolerance = 100;
 
     public static int motorCPS = 28;
