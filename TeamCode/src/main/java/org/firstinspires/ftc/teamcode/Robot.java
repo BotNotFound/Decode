@@ -190,9 +190,7 @@ public class Robot {
                 break;
 
             case INTAKE:
-                if (intake.hasBall()) {
-                    transfer.startTransfer();
-                }
+                transfer.startTransfer();
                 break;
 
             case REVERSE_INTAKE:
