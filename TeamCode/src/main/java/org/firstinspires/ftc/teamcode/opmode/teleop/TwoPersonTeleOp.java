@@ -48,10 +48,10 @@ public class TwoPersonTeleOp extends OpMode {
         else if (gamepad2.left_trigger > 0.5) {
            robot.setState(Robot.RobotState.INTAKE);
         }
-        else if (gamepad2.leftBumperWasPressed()) {
+        else if (gamepad2.left_bumper) {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
-        else if(gamepad2.rightBumperWasPressed()) {
+        else if(gamepad2.right_bumper) {
             robot.setState(Robot.RobotState.PRE_SHOOT);
         }
         else {

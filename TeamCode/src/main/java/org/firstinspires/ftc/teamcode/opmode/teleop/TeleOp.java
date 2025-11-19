@@ -49,10 +49,10 @@ public class TeleOp extends OpMode {
         else if (gamepad1.left_trigger > 0.5) {
             robot.setState(Robot.RobotState.INTAKE);
         }
-        else if (gamepad1.leftBumperWasPressed()) {
+        else if (gamepad1.left_bumper) {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
-        else if(gamepad1.rightBumperWasPressed()){
+        else if(gamepad1.right_bumper){
             robot.setState(Robot.RobotState.PRE_SHOOT);
         }
         else {
