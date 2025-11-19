@@ -116,7 +116,7 @@ public class EightArtifactRed extends AutonomousBase {
             goToSecondRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(99.101, 100.353), new Pose(90, 60))
+                            new BezierLine(new Pose(99.101, 100.353), new Pose(90, 62))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
                     .build();
@@ -124,7 +124,7 @@ public class EightArtifactRed extends AutonomousBase {
             intakeSecondRowArtifacts = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(90, 60), new Pose(135, 60))
+                            new BezierLine(new Pose(90, 62), new Pose(135, 62))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -133,7 +133,7 @@ public class EightArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(135, 60),
+                                    new Pose(135, 62),
                                     new Pose(92.303, 68.154),
                                     new Pose(91.051, 92.482)
                             )
