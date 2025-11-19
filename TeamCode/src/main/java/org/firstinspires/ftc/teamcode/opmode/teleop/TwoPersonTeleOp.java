@@ -48,10 +48,10 @@ public class TwoPersonTeleOp extends OpMode {
         else if (gamepad2.left_trigger > 0.5) {
            robot.setState(Robot.RobotState.INTAKE);
         }
-        else if (gamepad2.left_bumper) {
+        else if (gamepad2.leftBumperWasPressed()) {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
-        else if(gamepad2.right_bumper) {
+        else if(gamepad2.rightBumperWasPressed()) {
             robot.setState(Robot.RobotState.PRE_SHOOT);
         }
         else {
@@ -67,7 +67,7 @@ public class TwoPersonTeleOp extends OpMode {
             robot.decreaseDefaultShooterRPM();
         }
 
-        if (gamepad1.yWasPressed()) {
+        if (gamepad1.start && gamepad1.back) {
             robot.resetOdometry();
         }
 

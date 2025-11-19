@@ -43,16 +43,16 @@ public class TeleOp extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.right_trigger > 0.5 ) {
+        if (gamepad1.right_trigger > 0.5) {
             robot.setState(Robot.RobotState.SHOOT);
         }
         else if (gamepad1.left_trigger > 0.5) {
             robot.setState(Robot.RobotState.INTAKE);
         }
-        else if (gamepad1.left_bumper) {
+        else if (gamepad1.leftBumperWasPressed()) {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
-        else if(gamepad1.right_bumper){
+        else if(gamepad1.rightBumperWasPressed()){
             robot.setState(Robot.RobotState.PRE_SHOOT);
         }
         else {
@@ -70,7 +70,7 @@ public class TeleOp extends OpMode {
 
         telemetry.addData("target shooter rpm", targetRPM);
 
-        if (gamepad1.yWasPressed()) {
+        if (gamepad1.start && gamepad1.back) {
             robot.resetOdometry();
         }
 
