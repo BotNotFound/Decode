@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleOp;
 
+import java.util.Hashtable;
 import java.util.Map;
 
 public class Replayer extends TeleOp {
@@ -43,7 +44,7 @@ public class Replayer extends TeleOp {
 
     @Autonomous(name = "Replay Recorded Autos")
     public static class Hub extends OpMode {
-        private static Map<String, OpModeRecord> records;
+        private static Map<String, OpModeRecord> records = new Hashtable<>();
 
         public static void registerRecord(String name, OpModeRecord record) {
             records.put(name, record);
