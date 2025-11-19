@@ -176,7 +176,7 @@ public class Robot {
     public void loopWithoutMovement() {
         switch (currentState) {
             case PRE_SHOOT:
-                prepareToShoot();
+                shooter.setRPMForAprilTag(aprilTagDetector.getTagPose(allianceColor.targetAprilTagID));
                 break;
 
             case SHOOT:
