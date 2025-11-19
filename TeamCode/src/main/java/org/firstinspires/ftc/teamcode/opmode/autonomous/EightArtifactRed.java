@@ -84,7 +84,7 @@ public class EightArtifactRed extends AutonomousBase {
             shootPreloads = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(111.622, 135.414), new Pose(95.344, 99.816))
+                            new BezierLine(new Pose(106.800, 135.414), new Pose(95.344, 99.816))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
                     .build();
