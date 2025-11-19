@@ -134,5 +134,6 @@ public class AutonomousStage {
     public void enterStage(Robot robot, Follower follower) {
         robot.setState(robotState);
         follower.followPath(path);
+        complete = false;
     }
 }
