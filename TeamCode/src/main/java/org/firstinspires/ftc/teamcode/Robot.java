@@ -137,6 +137,7 @@ public class Robot {
             case INTAKE:
                 shooter.disengageKicker();
                 intake.startIntake();
+                transfer.startTransfer();
                 break;
 
             case REVERSE_INTAKE:
