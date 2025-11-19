@@ -92,7 +92,7 @@ public class EightArtifactRed extends AutonomousBase {
             goToFirstRowArtifacts = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(95.344, 99.816), new Pose(90, 83.538))
+                            new BezierLine(new Pose(95.344, 99.816), new Pose(90, 84))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
                     .build();
@@ -100,7 +100,7 @@ public class EightArtifactRed extends AutonomousBase {
             intakeFirstRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(90, 83.538), new Pose(135, 83.359))
+                            new BezierLine(new Pose(90, 84), new Pose(135, 84))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -108,7 +108,7 @@ public class EightArtifactRed extends AutonomousBase {
             shootFirstRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(135, 83.359), new Pose(99.101, 100.353))
+                            new BezierLine(new Pose(135, 84), new Pose(99.101, 100.353))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
                     .build();
