@@ -70,7 +70,7 @@ public class OpModeRecorder extends OpMode {
         }
 
         if (gamepad1.dpadRightWasPressed()) {
-            recordNameCurIdx = rotateInt(recordNameCurIdx, 1, recordingName.length());
+            recordNameCurIdx = rotateInt(recordNameCurIdx, 1, recordingName.length() + 1);
         }
         if (gamepad1.dpadLeftWasPressed()) {
             recordNameCurIdx = rotateInt(recordNameCurIdx, -1, recordingName.length());

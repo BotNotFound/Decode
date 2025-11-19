@@ -67,7 +67,7 @@ public class Recorder extends TeleOp {
         }
 
         if (gamepad1.dpadRightWasPressed()) {
-            recordNameCurIdx = rotateInt(recordNameCurIdx, 1, recordName.length());
+            recordNameCurIdx = rotateInt(recordNameCurIdx, 1, recordName.length() + 1);
         }
         if (gamepad1.dpadLeftWasPressed()) {
             recordNameCurIdx = rotateInt(recordNameCurIdx, -1, recordName.length());
