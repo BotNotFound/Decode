@@ -49,7 +49,6 @@ public class Replayer extends TeleOp {
         public static void registerRecord(String name, OpModeRecord record) {
             records.put(name, record);
             OpModeRecord.saveRecord(name, record);
-            OpModeRecord.registerRecordAsOpMode(name, record);
         }
 
         // this is a field instead of a base class because we need to recreate it whenever

@@ -107,7 +107,7 @@ public class OpModeRecorder extends OpMode {
 
         if (recordingBuilder != null) {
             OpModeRecording recording = recordingBuilder.build();
-            OpModeReplayer.registerRecording(recordingName.toString(), recording);
+            OpModeRecording.saveRecording(recordingName.toString(), recording);
             recordingBuilder = null;
         }
     }

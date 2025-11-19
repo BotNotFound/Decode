@@ -28,17 +28,8 @@ public class OpModeReplayer extends OpMode {
         );
     }
 
-    private static OpModeManager opModeManager = null;
-    public static void registerRecording(String name, OpModeRecording recording) {
-        OpModeRecording.saveRecording(name, recording);
-        if (opModeManager != null) {
-            registerRecordingAsOpMode(opModeManager, name, recording);
-        }
-    }
-
     @OpModeRegistrar
     public static void registerRecordings(OpModeManager manager) {
-        opModeManager = manager;
         for (Map.Entry<String, OpModeRecording> recording : OpModeRecording.loadRecordings().entrySet()) {
             registerRecordingAsOpMode(manager, recording.getKey(), recording.getValue());
         }
