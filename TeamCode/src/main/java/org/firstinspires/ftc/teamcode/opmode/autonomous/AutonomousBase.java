@@ -108,6 +108,10 @@ public abstract class AutonomousBase extends OpMode {
 
     @Override
     public void stop() {
-        Log.i(TAG, "Op mode stopped");
+        if (isAutoComplete()) {
+            Log.i(TAG, "Op mode stopped after sequence was completed");
+        } else {
+            Log.i(TAG, "Op mode stopped at stage " + currentStageIndex);
+        }
     }
 }
