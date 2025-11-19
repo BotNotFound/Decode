@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
+import android.util.Log;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -12,6 +14,8 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Config
 public abstract class AutonomousBase extends OpMode {
+    private static final String TAG = "AutonomousBase";
+
     private final Robot.AllianceColor allianceColor;
     private final Pose startPose;
     private AutonomousStage[] stageSequence;
@@ -37,8 +41,10 @@ public abstract class AutonomousBase extends OpMode {
 
         AutonomousStage currentStage = stageSequence[currentStageIndex];
         if (currentStage.isStateComplete(robot, follower)) {
+            Log.i(TAG, "Completed stage " + currentStageIndex);
             currentStageIndex++;
             if (currentStageIndex >= stageSequence.length) {
+                Log.i(TAG, "Completed autonomous sequence");
                 return null; // we have just finished the auto
             }
 
@@ -62,6 +68,8 @@ public abstract class AutonomousBase extends OpMode {
         if (stageSequence == null) {
             stageSequence = new AutonomousStage[0];
         }
+
+        Log.i(TAG, "Op mode initialized");
     }
 
     @Override
@@ -69,6 +77,7 @@ public abstract class AutonomousBase extends OpMode {
         if (stageSequence.length > 0) {
             stageSequence[0].enterStage(robot, follower);
         }
+        Log.i(TAG, "Starting autonomous sequence");
     }
 
     /**
@@ -97,4 +106,8 @@ public abstract class AutonomousBase extends OpMode {
         telemetry.addData("Autonomous Stage", currentStageIndex);
     }
 
+    @Override
+    public void stop() {
+        Log.i(TAG, "Op mode stopped");
+    }
 }
