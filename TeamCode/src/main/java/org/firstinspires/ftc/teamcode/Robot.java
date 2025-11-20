@@ -52,8 +52,8 @@ public class Robot {
         NONE,
     }
 
-    public static double MOVE_SCALE = 1;
-    public static double HEADING_SCALE = 1;
+    private double moveScale = 1;
+    private double headingScale = 1;
     public static int MAX_DETECTION_LULL_TIME = 1;
 
 
@@ -166,7 +166,7 @@ public class Robot {
     }
 
     public void loop(Gamepad gamepad1) {
-        loop(-gamepad1.left_stick_y * MOVE_SCALE, gamepad1.left_stick_x * MOVE_SCALE, gamepad1.right_stick_x * HEADING_SCALE);
+        loop(-gamepad1.left_stick_y * moveScale, gamepad1.left_stick_x * moveScale, gamepad1.right_stick_x * headingScale);
     }
 
     public void loop(double drivePower, double strafePower, double turnPower) {
@@ -183,7 +183,7 @@ public class Robot {
             case SHOOT:
                 prepareToShoot();
 
-                if(shooter.isReady()) {
+                if (shooter.isReady()) {
                     shooter.engageKicker();
                     intake.startIntake();
                     transfer.startTransfer();
@@ -234,5 +234,11 @@ public class Robot {
         return driveTrain.getTurnPower();
     }
 
-    public void setHeadingScale(double newHeadingScale) { HEADING_SCALE = newHeadingScale; }
+    public void setMoveScale(double moveScale) {
+        this.moveScale = moveScale;
+    }
+
+    public void setHeadingScale(double newHeadingScale) {
+        headingScale = newHeadingScale;
+    }
 }
