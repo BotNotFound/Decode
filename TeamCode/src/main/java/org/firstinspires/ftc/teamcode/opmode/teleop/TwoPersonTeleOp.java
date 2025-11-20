@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 @Config
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "2-Driver Teleop", group = "2driver")
-public class TwoPersonTeleOp extends OpMode {    
+public class TwoPersonTeleOp extends OpMode {
     protected Robot robot;
 
     /**
@@ -20,6 +20,7 @@ public class TwoPersonTeleOp extends OpMode {
     protected TwoPersonTeleOp(boolean allowAllianceSwap) {
         this.allowAllianceSwap = allowAllianceSwap;
     }
+
     @SuppressWarnings("unused")
     public TwoPersonTeleOp() {
         this(true);
@@ -44,26 +45,27 @@ public class TwoPersonTeleOp extends OpMode {
     public void loop() {
         if (gamepad2.right_trigger > 0.5) {
             robot.setState(Robot.RobotState.SHOOT);
-        }
-        else if (gamepad2.left_trigger > 0.5) {
-           robot.setState(Robot.RobotState.INTAKE);
-        }
-        else if (gamepad2.left_bumper) {
+        } else if (gamepad2.left_trigger > 0.5) {
+            robot.setState(Robot.RobotState.INTAKE);
+            if (gamepad1.right_bumper) {
+                robot.setHeadingScale(0.5);
+            } else {
+                robot.setHeadingScale(1.0);
+            }
+        } else if (gamepad2.left_bumper) {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
-        }
-        else if(gamepad2.right_bumper) {
+        } else if (gamepad2.right_bumper) {
             robot.setState(Robot.RobotState.PRE_SHOOT);
-        }
-        else {
+        } else {
             robot.setState(Robot.RobotState.NONE);
+            robot.setHeadingScale(1.0);
         }
 
         robot.loop(gamepad1);
 
         if (gamepad2.dpadUpWasPressed()) {
             robot.increaseDefaultShooterRPM();
-        }
-        else if (gamepad2.dpadDownWasPressed()) {
+        } else if (gamepad2.dpadDownWasPressed()) {
             robot.decreaseDefaultShooterRPM();
         }
 

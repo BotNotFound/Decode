@@ -53,6 +53,7 @@ public class Robot {
     }
 
     public static double MOVE_SCALE = 1;
+    public static double HEADING_SCALE = 1;
     public static int MAX_DETECTION_LULL_TIME = 1;
 
 
@@ -165,7 +166,7 @@ public class Robot {
     }
 
     public void loop(Gamepad gamepad1) {
-        loop(-gamepad1.left_stick_y * MOVE_SCALE, gamepad1.left_stick_x * MOVE_SCALE, gamepad1.right_stick_x * MOVE_SCALE);
+        loop(-gamepad1.left_stick_y * MOVE_SCALE, gamepad1.left_stick_x * MOVE_SCALE, gamepad1.right_stick_x * HEADING_SCALE);
     }
 
     public void loop(double drivePower, double strafePower, double turnPower) {
@@ -232,4 +233,6 @@ public class Robot {
     public double getTurnPower() {
         return driveTrain.getTurnPower();
     }
+
+    public void setHeadingScale(double newHeadingScale) { HEADING_SCALE = newHeadingScale; }
 }
