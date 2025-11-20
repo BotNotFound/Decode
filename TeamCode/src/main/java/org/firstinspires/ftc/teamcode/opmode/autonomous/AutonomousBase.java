@@ -61,7 +61,6 @@ public abstract class AutonomousBase extends OpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         robot = new Robot(hardwareMap, telemetry, allianceColor);
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(startPose);
         currentStageIndex = 0;
 
         stageSequence = buildStageSequence();
@@ -77,6 +76,7 @@ public abstract class AutonomousBase extends OpMode {
         if (stageSequence.length > 0) {
             stageSequence[0].enterStage(robot, follower);
         }
+        follower.setStartingPose(startPose);
         Log.i(TAG, "Starting autonomous sequence");
     }
 
