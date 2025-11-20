@@ -75,7 +75,7 @@ public class FieldCentricDriveTrain {
         }
         turnController.setTolerance(turnTolerance);
 
-        if(targetTag != null){
+        if (targetTag != null) {
             turn = getAimRotationPower(targetTag.bearing);
             telemetry.addData("turn power", turn);
         }

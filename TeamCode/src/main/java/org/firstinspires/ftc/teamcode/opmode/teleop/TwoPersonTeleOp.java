@@ -45,18 +45,23 @@ public class TwoPersonTeleOp extends OpMode {
     public void loop() {
         if (gamepad2.right_trigger > 0.5) {
             robot.setState(Robot.RobotState.SHOOT);
-        } else if (gamepad2.left_trigger > 0.5) {
+        }
+        else if (gamepad2.left_trigger > 0.5) {
             robot.setState(Robot.RobotState.INTAKE);
             if (gamepad1.right_bumper) {
                 robot.setHeadingScale(0.5);
-            } else {
+            }
+            else {
                 robot.setHeadingScale(1.0);
             }
-        } else if (gamepad2.left_bumper) {
+        }
+        else if (gamepad2.left_bumper) {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
-        } else if (gamepad2.right_bumper) {
+        }
+        else if (gamepad2.right_bumper) {
             robot.setState(Robot.RobotState.PRE_SHOOT);
-        } else {
+        }
+        else {
             robot.setState(Robot.RobotState.NONE);
             robot.setHeadingScale(1.0);
         }
@@ -65,7 +70,8 @@ public class TwoPersonTeleOp extends OpMode {
 
         if (gamepad2.dpadUpWasPressed()) {
             robot.increaseDefaultShooterRPM();
-        } else if (gamepad2.dpadDownWasPressed()) {
+        }
+        else if (gamepad2.dpadDownWasPressed()) {
             robot.decreaseDefaultShooterRPM();
         }
 
