@@ -11,9 +11,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 
-@Autonomous(name = "8 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
-public class EightArtifactRed extends AutonomousBase {
-    public EightArtifactRed() {
+@Autonomous(name = "(simple) 12 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
+public class SimpleTwelveArtifactRed extends AutonomousBase {
+    public SimpleTwelveArtifactRed() {
         super(new Pose(106.8, 135.414, Math.toRadians(0)), Robot.AllianceColor.RED);
     }
 
@@ -124,7 +124,7 @@ public class EightArtifactRed extends AutonomousBase {
             intakeSecondRowArtifacts = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(90, 62), new Pose(135, 62))
+                            new BezierLine(new Pose(90, 62), new Pose(150, 62))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -133,7 +133,7 @@ public class EightArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(135, 62),
+                                    new Pose(150, 62),
                                     new Pose(92.303, 68.154),
                                     new Pose(91.051, 92.482)
                             )
@@ -152,7 +152,7 @@ public class EightArtifactRed extends AutonomousBase {
             intakeThirdRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(90, 37), new Pose(140, 37))
+                            new BezierLine(new Pose(90, 37), new Pose(150, 37))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -160,7 +160,7 @@ public class EightArtifactRed extends AutonomousBase {
             shootThirdRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(140, 37), new Pose(91.051, 92.482))
+                            new BezierLine(new Pose(150, 37), new Pose(91.051, 92.482))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
                     .build();
