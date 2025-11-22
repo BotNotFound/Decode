@@ -148,6 +148,9 @@ public class Robot {
                 break;
 
             case PRE_SHOOT:
+                transfer.reverseTransfer();
+                break;
+
             case SHOOT:
                 break;
 
