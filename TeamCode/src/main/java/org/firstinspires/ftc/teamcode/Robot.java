@@ -126,7 +126,7 @@ public class Robot {
             return;
         }
 
-        Log.v(TAG, "State " + newState + " lasted for " + stateStopwatch.seconds() + " seconds");
+        Log.v(TAG, "State " + currentState + " lasted for " + stateStopwatch.seconds() + " seconds");
         Log.i(TAG, "Switched to new state: " + newState);
         stateStopwatch.reset();
 
