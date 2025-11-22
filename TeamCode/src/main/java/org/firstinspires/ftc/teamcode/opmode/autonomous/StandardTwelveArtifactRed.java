@@ -116,7 +116,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                             new BezierCurve(
                                     new Pose(140.000, 84.000),
                                     new Pose(120.980, 77.461),
-                                    new Pose(130.054, 76.453),
+                                    new Pose(130.390, 80.149),
                                     new Pose(132.574, 71.748)
                             )
                     )
