@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 public class FarAutoBlue extends AutonomousBase{
 
     public FarAutoBlue() {
-        super(new Pose(84.432, 8.407, Math.toRadians(180-90)).mirror(), Robot.AllianceColor.BLUE);
+        super(new Pose(84.432, 8.407, Math.toRadians(90)).mirror(), Robot.AllianceColor.BLUE);
     }
     @Override
     protected AutonomousStage[] buildStageSequence() {
