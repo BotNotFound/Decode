@@ -121,6 +121,8 @@ public class Robot {
             return;
         }
 
+        Log.i(TAG, "Switched to new state: " + newState);
+
         switch (newState) {
             case INTAKE:
                 shooter.disengageKicker();
