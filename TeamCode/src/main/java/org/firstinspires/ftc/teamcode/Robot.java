@@ -88,6 +88,8 @@ public class Robot {
         currentState = RobotState.NONE;
 
         timeSinceShotReady = new ElapsedTime();
+
+        Log.i(TAG, "Robot initialized");
     }
 
     public void setAllianceColor(AllianceColor color) {
