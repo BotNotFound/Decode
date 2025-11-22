@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
@@ -18,15 +17,13 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 @Config
 public class Robot {
     public enum AllianceColor {
-        RED(24, Math.PI / 4),
-        BLUE(20, -Math.PI / 4);
+        RED(24),
+        BLUE(20);
 
         public final int targetAprilTagID;
-        public final double defaultShootingRotation;
 
-        AllianceColor(int targetAprilTagID, double defaultShootingRotation) {
+        AllianceColor(int targetAprilTagID) {
             this.targetAprilTagID = targetAprilTagID;
-            this.defaultShootingRotation = defaultShootingRotation;
         }
 
 
@@ -67,8 +64,6 @@ public class Robot {
     private AllianceColor allianceColor;
     private RobotState currentState;
 
-    private final ElapsedTime timeSinceLastTagDetection;
-
     public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         driveTrain.resetOdometry();
@@ -77,8 +72,6 @@ public class Robot {
         intake = new Intake(hardwareMap, telemetry);
         transfer = new Transfer(hardwareMap, telemetry);
         aprilTagDetector = new AprilTagDetector(hardwareMap, telemetry);
-
-        timeSinceLastTagDetection = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
         setAllianceColor(color);
 
@@ -107,26 +100,8 @@ public class Robot {
 
     private void prepareToShoot() {
         AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
-        if (target != null) {
-            // We've detected a tag; do auto-aim as normal
-            timeSinceLastTagDetection.reset();
-            driveTrain.aimAtAprilTag(target);
-            shooter.setRPMForAprilTag(target);
-            return;
-        }
-
-        if (timeSinceLastTagDetection.time() <= MAX_DETECTION_LULL_TIME) {
-            // We don't have a detection, but there was one recently enough that we're probably
-            // just blurring the image with our movement.  Let the robot settle so the image
-            // can clear before we use the fallback rotation
-            shooter.setRPMForAprilTag(null);
-            return;
-        }
-
-        // At this point, we can safely assume that there really are no april tags in view.
-        // Rotate to fallback heading and prepare to shoot
-        driveTrain.tryAimAtAprilTag(null, allianceColor.defaultShootingRotation);
-        shooter.setRPMForAprilTag(null);
+        driveTrain.aimAtAprilTag(target);
+        shooter.setRPMForAprilTag(target);
     }
 
     public void setState(RobotState newState) {
