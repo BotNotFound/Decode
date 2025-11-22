@@ -188,6 +188,11 @@ public class Robot {
                     intake.startIntake();
                     transfer.startTransfer();
                 }
+                else {
+                    shooter.disengageKicker();
+                    transfer.stopTransfer();
+                    intake.stopIntake();
+                }
                 break;
 
             case INTAKE:
