@@ -118,7 +118,7 @@ public class SimpleTwelveArtifactBlue extends AutonomousBase {
             goToSecondRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(99.101, 100.353).mirror(), new Pose(90, 62).mirror())
+                            new BezierLine(new Pose(99.101, 100.353).mirror(), new Pose(90, 61).mirror())
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-45), Math.toRadians(180-0))
                     .build();
@@ -126,7 +126,7 @@ public class SimpleTwelveArtifactBlue extends AutonomousBase {
             intakeSecondRowArtifacts = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(90, 62).mirror(), new Pose(150, 62).mirror())
+                            new BezierLine(new Pose(90, 61).mirror(), new Pose(150, 61).mirror())
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-0), Math.toRadians(180-0))
                     .build();
@@ -135,7 +135,7 @@ public class SimpleTwelveArtifactBlue extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(150, 62).mirror(),
+                                    new Pose(150, 61).mirror(),
                                     new Pose(92.303, 68.154).mirror(),
                                     new Pose(91.051, 92.482).mirror()
                             )
