@@ -169,17 +169,6 @@ public class FieldCentricDriveTrain {
         setPower(getDrivePower(), getStrafePower(), power);
     }
 
-    public void tryAimAtAprilTag(AprilTagPoseFtc target, double fallbackRotation) {
-        final double bearing;
-        if (target == null) {
-            bearing = pinpointDriver.getHeading(AngleUnit.RADIANS) - fallbackRotation;
-        }
-        else {
-            bearing = target.bearing;
-        }
-        setTurnPower(bearing);
-    }
-
     public void aimAtAprilTag(AprilTagPoseFtc target) {
         if (target == null) {
             return; // no tag to aim at
