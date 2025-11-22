@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 @Autonomous(name = "12 Artifact Blue (simple)", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class SimpleTwelveArtifactBlue extends AutonomousBase {
     public SimpleTwelveArtifactBlue() {
-        super(new Pose(106.8, 135.414, Math.toRadians(180 - 0)), Robot.AllianceColor.BLUE);
+        super(new Pose(106.8, 135.414, Math.toRadians(0)).mirror(), Robot.AllianceColor.BLUE);
     }
 
     @Override
