@@ -55,7 +55,7 @@ public class Robot {
     }
 
     public static double SLOW_TRANSFER_POWER = 0.2;
-    public static double SLOW_TRANSFER_DURATION = Double.POSITIVE_INFINITY; // switch to fast transfer is currently disabled
+    public static double SLOW_TRANSFER_DURATION = 1.0;
 
     private double moveScale = 1;
     private double headingScale = 1;
