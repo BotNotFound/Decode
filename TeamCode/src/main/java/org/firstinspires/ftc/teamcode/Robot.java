@@ -71,8 +71,9 @@ public class Robot {
     private AllianceColor allianceColor;
     private RobotState currentState;
 
+    private final ElapsedTime stateStopwatch;
     private final ElapsedTime timeSinceShotReady;
-    private final ElapsedTime shotPrepTime = new ElapsedTime();
+    private final ElapsedTime shotPrepTime;
 
     public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
@@ -87,7 +88,9 @@ public class Robot {
 
         currentState = RobotState.NONE;
 
+        stateStopwatch = new ElapsedTime();
         timeSinceShotReady = new ElapsedTime();
+        shotPrepTime = new ElapsedTime();
 
         Log.i(TAG, "Robot initialized");
     }
@@ -123,7 +126,9 @@ public class Robot {
             return;
         }
 
+        Log.v(TAG, "State " + newState + " lasted for " + stateStopwatch.seconds() + " seconds");
         Log.i(TAG, "Switched to new state: " + newState);
+        stateStopwatch.reset();
 
         switch (newState) {
             case INTAKE:
