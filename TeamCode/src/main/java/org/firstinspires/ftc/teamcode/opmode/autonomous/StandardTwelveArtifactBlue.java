@@ -95,8 +95,8 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .addPath(
                             new BezierCurve(
                                     new Pose(95.344, 99.816).mirror(),
-                                    new Pose(92.000, 84.000).mirror(),
-                                    new Pose(92.000, 84.000).mirror()
+                                    new Pose(90.000, 84.000).mirror(),
+                                    new Pose(90.000, 84.000).mirror()
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-45), Math.toRadians(180-0))
@@ -105,7 +105,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
             intakeFirstRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(92.000, 84.000).mirror(), new Pose(140, 84.000).mirror())
+                            new BezierLine(new Pose(90.000, 84.000).mirror(), new Pose(144, 84.000).mirror())
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-0), Math.toRadians(180-0))
                     .build();
@@ -114,10 +114,10 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(140, 84.000).mirror(),
-                                    new Pose(109.722, 82.838).mirror(),
-                                    new Pose(135.900, 73.244).mirror(),
-                                    new Pose(135.900, 73.244).mirror()
+                                    new Pose(144.000, 84.000).mirror(),
+                                    new Pose(96.616, 81.326).mirror(),
+                                    new Pose(128.373, 76.957).mirror(),
+                                    new Pose(131.902, 74.436).mirror()
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-0), Math.toRadians(180-90))
@@ -127,7 +127,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(135.900, 73.244).mirror(),
+                                    new Pose(131.902, 74.436).mirror(),
                                     new Pose(99.101, 100.353).mirror(),
                                     new Pose(99.101, 100.353).mirror()
                             )
@@ -140,8 +140,8 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .addPath(
                             new BezierCurve(
                                     new Pose(99.101, 100.353).mirror(),
-                                    new Pose(101.800, 62).mirror(),
-                                    new Pose(101.800, 62).mirror()
+                                    new Pose(90, 61).mirror(),
+                                    new Pose(90, 61).mirror()
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-45), Math.toRadians(180-0))
@@ -150,7 +150,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
             intakeSecondRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(101.800, 62).mirror(), new Pose(140.975, 62).mirror())
+                            new BezierLine(new Pose(90, 61).mirror(), new Pose(155, 61).mirror())
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-0), Math.toRadians(180-0))
                     .build();
@@ -159,33 +159,33 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(140.975, 62).mirror(),
-                                    new Pose(78.469, 63.347).mirror(),
-                                    new Pose(85.862, 84.854).mirror(),
-                                    new Pose(85.862, 83.846).mirror(),
-                                    new Pose(86.030, 85.862).mirror()
+                                    new Pose(155.000, 61.000).mirror(),
+                                    new Pose(87.039, 42.343).mirror(),
+                                    new Pose(82.502, 82.166).mirror(),
+                                    new Pose(82.838, 81.830).mirror(),
+                                    new Pose(82.838, 83.006).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180-0), Math.toRadians(180-47))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 45))
                     .build();
 
             goToThirdRow = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(86.030, 85.862).mirror(),
-                                    new Pose(100.400, 37).mirror(),
-                                    new Pose(100.400, 37).mirror(),
-                                    new Pose(100.400, 37).mirror()
+                                    new Pose(82.838, 83.006).mirror(),
+                                    new Pose(90, 37).mirror(),
+                                    new Pose(90, 37).mirror(),
+                                    new Pose(90, 37).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180-47), Math.toRadians(180-0))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 45), Math.toRadians(180 - 0))
                     .build();
 
             intakeThirdRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(100.400, 37).mirror(), new Pose(140.975, 37).mirror())
+                            new BezierLine(new Pose(90, 37).mirror(), new Pose(150, 37).mirror())
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-0), Math.toRadians(180-0))
                     .build();
@@ -194,12 +194,12 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(140.975, 37).mirror(),
+                                    new Pose(150, 37).mirror(),
                                     new Pose(91.743, 90.903).mirror(),
                                     new Pose(91.743, 90.903).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180-0), Math.toRadians(180-48.5))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 45))
                     .build();
 
             leaveLaunchZone = follower
@@ -211,7 +211,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(114.091, 71.748).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180-48.5), Math.toRadians(180-0))
+                    .setConstantHeadingInterpolation(0)
                     .build();
         }
     }
