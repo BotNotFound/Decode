@@ -95,8 +95,8 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .addPath(
                             new BezierCurve(
                                     new Pose(95.344, 99.816),
-                                    new Pose(91.000, 84.000),
-                                    new Pose(91.000, 84.000)
+                                    new Pose(90.000, 84.000),
+                                    new Pose(90.000, 84.000)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
@@ -105,7 +105,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
             intakeFirstRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(91.000, 84.000), new Pose(140, 84.000))
+                            new BezierLine(new Pose(90.000, 84.000), new Pose(140, 84.000))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -120,7 +120,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(132.574, 71.748)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(73.67))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(83.67))
                     .build();
 
             shootFirstRow = follower
@@ -132,7 +132,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(99.101, 100.353)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(73.67), Math.toRadians(45))
+                    .setLinearHeadingInterpolation(Math.toRadians(83.67), Math.toRadians(45))
                     .build();
 
             goToSecondRow = follower
@@ -140,8 +140,8 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .addPath(
                             new BezierCurve(
                                     new Pose(99.101, 100.353),
-                                    new Pose(91, 62),
-                                    new Pose(91, 62)
+                                    new Pose(90, 62),
+                                    new Pose(90, 62)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
@@ -150,7 +150,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
             intakeSecondRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(91, 62), new Pose(150, 62))
+                            new BezierLine(new Pose(90, 62), new Pose(150, 62))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -159,33 +159,33 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(150, 62),
-                                    new Pose(78.469, 63.347),
-                                    new Pose(85.862, 84.854),
-                                    new Pose(85.862, 83.846),
-                                    new Pose(85.862 , 85.862)
+                                    new Pose(150.000, 62.000),
+                                    new Pose(87.039, 42.343),
+                                    new Pose(82.502, 82.166),
+                                    new Pose(82.838, 81.830),
+                                    new Pose(82.838, 83.006)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(47))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
                     .build();
 
             goToThirdRow = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(85.862, 85.862),
-                                    new Pose(91, 37),
-                                    new Pose(91, 37),
-                                    new Pose(91, 37)
+                                    new Pose(82.838, 83.006),
+                                    new Pose(90, 37),
+                                    new Pose(90, 37),
+                                    new Pose(90, 37)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(47), Math.toRadians(0))
+                    .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
                     .build();
 
             intakeThirdRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(91, 37), new Pose(150, 37))
+                            new BezierLine(new Pose(90, 37), new Pose(150, 37))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -199,7 +199,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(91.743, 90.903)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(48.5))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
                     .build();
 
             leaveLaunchZone = follower
@@ -211,7 +211,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(114.091, 71.748)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(48.5), Math.toRadians(0))
+                    .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
                     .build();
         }
     }
