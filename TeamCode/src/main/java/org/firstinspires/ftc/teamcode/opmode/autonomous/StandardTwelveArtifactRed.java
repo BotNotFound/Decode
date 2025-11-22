@@ -115,24 +115,24 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .addPath(
                             new BezierCurve(
                                     new Pose(140.000, 84.000),
-                                    new Pose(125.349, 75.949),
-                                    new Pose(130.390, 77.797),
-                                    new Pose(134.954, 70.740)
+                                    new Pose(121.652, 78.469),
+                                    new Pose(129.550, 78.301),
+                                    new Pose(134.086, 72.252)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(78.67))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(87.67))
                     .build();
 
             shootFirstRow = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(134.954, 70.740),
+                                    new Pose(134.086, 72.252),
                                     new Pose(99.101, 100.353),
                                     new Pose(99.101, 100.353)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(78.67), Math.toRadians(45))
+                    .setLinearHeadingInterpolation(Math.toRadians(87.67), Math.toRadians(45))
                     .build();
 
             goToSecondRow = follower
