@@ -21,7 +21,7 @@ public class Shooter {
 
     public static double KICKER_IDLE_POSITION = 0.82;
     public static double KICKER_LAUNCH_POSITION = 0.344;
-    public static double KICKER_MILLIS_TO_ENGAGE = 100;
+    public static double KICKER_MILLIS_TO_ENGAGE = 300;
 
     private final DcMotorEx lowerFlywheelMotor;
     private final DcMotorEx upperFlywheelMotor;
