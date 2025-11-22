@@ -71,7 +71,8 @@ public class Shooter {
         flywheelSpeeds.add(39.0, 2900);
         flywheelSpeeds.add(70.0, 3200);
         flywheelSpeeds.add(82.0, 3400);
-        flywheelSpeeds.add(96.5, 3700);
+        flywheelSpeeds.add(98.0, 3700);
+        flywheelSpeeds.add(117.1, 3900);
         flywheelSpeeds.add(120.0, 3950); // extrapolated upper bound
         flywheelSpeeds.createLUT();
     }
