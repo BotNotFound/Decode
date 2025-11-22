@@ -56,7 +56,6 @@ public class Robot {
 
     private double moveScale = 1;
     private double headingScale = 1;
-    public static int MAX_DETECTION_LULL_TIME = 1;
 
 
     /* Modules */
