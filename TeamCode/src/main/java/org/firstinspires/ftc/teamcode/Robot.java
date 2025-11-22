@@ -135,10 +135,15 @@ public class Robot {
                 break;
 
             case PRE_SHOOT:
+                intake.startIntake();
                 transfer.reverseTransfer();
+                shooter.disengageKicker();
                 break;
 
             case SHOOT:
+                intake.stopIntake();
+                transfer.stopTransfer();
+                shooter.disengageKicker();
                 shotPrepTime.reset();
                 break;
 
