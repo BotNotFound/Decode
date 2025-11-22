@@ -18,7 +18,7 @@ public class Transfer {
     public static final String TRANSFER2_SERVO_NAME = "Transfer 2";
 
     //adjust the servo power as needed for the transfer.
-    public static double POWER_VALUE = 0.2;
+    public static double POWER_VALUE = 1.0;
 
     private final Telemetry telemetry;
 
