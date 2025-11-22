@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 @Autonomous(name = "12 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 public class StandardTwelveArtifactRed extends AutonomousBase {
     public StandardTwelveArtifactRed() {
-        super(new Pose(106.8, 135.414, Math.toRadians(0)), Robot.AllianceColor.RED);
+        super(new Pose(116.77946324387398, 132.7421236872812, Math.toRadians(36)), Robot.AllianceColor.RED);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
+                                .setLinearHeadingInterpolation(Math.toRadians(36), Math.toRadians(45))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -87,7 +87,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(95.344, 99.816)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
+                    .setLinearHeadingInterpolation(Math.toRadians(36), Math.toRadians(45))
                     .build();
 
             goToFirstRow = follower
