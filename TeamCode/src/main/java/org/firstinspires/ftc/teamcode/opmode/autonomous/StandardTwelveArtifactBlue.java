@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 
+@SuppressWarnings("PointlessArithmeticExpression")
+// arithmetic is applied uniformly to ensure everything is mirrored
 @Autonomous(name = "12 Artifact Blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class StandardTwelveArtifactBlue extends AutonomousBase {
     public StandardTwelveArtifactBlue() {
@@ -61,6 +63,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
         };
     }
 
+    @SuppressWarnings("PointlessArithmeticExpression") // see rationale at top of file
     public static class Paths {
 
         public PathChain shootPreloads;
