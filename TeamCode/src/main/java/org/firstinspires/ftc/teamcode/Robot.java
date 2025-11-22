@@ -153,6 +153,8 @@ public class Robot {
                 intake.stopIntake();
                 transfer.stopTransfer();
                 shooter.disengageKicker();
+
+                shotReady = false;
                 shotPrepTime.reset();
                 break;
 
