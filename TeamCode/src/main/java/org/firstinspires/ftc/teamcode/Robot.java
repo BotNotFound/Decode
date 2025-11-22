@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
@@ -16,6 +19,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
 public class Robot {
+    public static final String TAG = "Robot";
+
     public enum AllianceColor {
         RED(24),
         BLUE(20);
@@ -127,6 +132,7 @@ public class Robot {
                 break;
 
             case SHOOT:
+                shotPrepTime.reset();
                 break;
 
             case NONE:
@@ -152,6 +158,9 @@ public class Robot {
         loopWithoutMovement();
     }
 
+    private final ElapsedTime shotPrepTime = new ElapsedTime();
+    private boolean shot = false;
+
     public void loopWithoutMovement() {
         switch (currentState) {
             case PRE_SHOOT:
@@ -166,6 +175,7 @@ public class Robot {
                     shooter.disengageKicker();
                     transfer.stopTransfer();
                     intake.stopIntake();
+                    shot = false;
                 }
                 else if (!shooter.isKickerEngaged()) {
                     // if shooter is ready, but kicker isn't engaged, don't risk
@@ -173,9 +183,15 @@ public class Robot {
                     shooter.engageKicker();
                     transfer.stopTransfer();
                     intake.stopIntake();
+                    shot = false;
                 }
                 else {
                     // otherwise, we are truly ready to feed balls
+                    if (!shot) {
+                        Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
+                        shotPrepTime.reset();
+                        shot = true;
+                    }
                     intake.startIntake();
                     transfer.startTransfer();
                 }
