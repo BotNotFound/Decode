@@ -55,7 +55,7 @@ public class Robot {
     }
 
     public static double SLOW_TRANSFER_POWER = 0.2;
-    public static double SLOW_TRANSFER_DURATION = 1.0;
+    public static double SLOW_TRANSFER_DURATION = 1.1;
 
     private double moveScale = 1;
     private double headingScale = 1;
@@ -184,6 +184,10 @@ public class Robot {
                     shooter.disengageKicker();
                     transfer.stopTransfer();
                     intake.stopIntake();
+
+                    if (shotReady) {
+                        Log.d(TAG, "Shot completed in " + timeSinceShotReady.milliseconds() + " millis");
+                    }
                     shotReady = false;
                 }
                 else if (!shooter.isKickerEngaged()) {
