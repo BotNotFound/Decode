@@ -214,7 +214,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(114.091, 71.748).mirror()
                             )
                     )
-                    .setConstantHeadingInterpolation(0)
+                    .setConstantHeadingInterpolation(Math.toRadians(180 - 0))
                     .build();
         }
     }
