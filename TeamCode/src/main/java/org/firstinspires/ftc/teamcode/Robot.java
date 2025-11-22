@@ -186,15 +186,23 @@ public class Robot {
             case SHOOT:
                 prepareToShoot();
 
-                if (shooter.isReady()) {
-                    shooter.engageKicker();
-                    intake.startIntake();
-                    transfer.startTransfer();
-                }
-                else {
+                if (!shooter.isReady()) {
+                    // if shooter isn't ready, don't put any balls in
                     shooter.disengageKicker();
                     transfer.stopTransfer();
                     intake.stopIntake();
+                }
+                else if (!shooter.isKickerEngaged()) {
+                    // if shooter is ready, but kicker isn't engaged, don't risk
+                    // prematurely shooting balls
+                    shooter.engageKicker();
+                    transfer.stopTransfer();
+                    intake.stopIntake();
+                }
+                else {
+                    // otherwise, we are truly ready to feed balls
+                    intake.startIntake();
+                    transfer.startTransfer();
                 }
                 break;
 

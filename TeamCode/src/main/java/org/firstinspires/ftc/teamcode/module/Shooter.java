@@ -20,6 +20,7 @@ public class Shooter {
 
     public static double KICKER_IDLE_POSITION = 0.82;
     public static double KICKER_LAUNCH_POSITION = 0.344;
+    public static double KICKER_POSITION_TOLERANCE = 0.01;
 
     private final DcMotorEx lowerFlywheelMotor;
     private final DcMotorEx upperFlywheelMotor;
@@ -145,6 +146,10 @@ public class Shooter {
         kickerServo.setPosition(KICKER_IDLE_POSITION);
 
         telemetry.addData("Kicker Position", "disengaged");
+    }
+
+    public boolean isKickerEngaged() {
+        return Math.abs(kickerServo.getPosition() - KICKER_LAUNCH_POSITION) <= KICKER_POSITION_TOLERANCE;
     }
 
     public boolean isReady() {
