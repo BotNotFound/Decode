@@ -211,7 +211,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(114.091, 71.748)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
+                    .setConstantHeadingInterpolation(0)
                     .build();
         }
     }
