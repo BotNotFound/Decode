@@ -120,7 +120,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(132.574, 71.748)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(83.67))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(73.67))
                     .build();
 
             shootFirstRow = follower
@@ -132,7 +132,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(99.101, 100.353)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(83.67), Math.toRadians(45))
+                    .setLinearHeadingInterpolation(Math.toRadians(73.67), Math.toRadians(45))
                     .build();
 
             goToSecondRow = follower
