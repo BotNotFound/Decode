@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
@@ -20,7 +21,7 @@ public class Shooter {
 
     public static double KICKER_IDLE_POSITION = 0.82;
     public static double KICKER_LAUNCH_POSITION = 0.344;
-    public static double KICKER_POSITION_TOLERANCE = 0.01;
+    public static double KICKER_MILLIS_TO_ENGAGE = 500;
 
     private final DcMotorEx lowerFlywheelMotor;
     private final DcMotorEx upperFlywheelMotor;
@@ -40,9 +41,13 @@ public class Shooter {
     private boolean stickyRPM = false;
     private double stickyTargetRPM;
 
+    private boolean isKickerEngaged;
+
     private final Telemetry telemetry;
 
     private final InterpLUT flywheelSpeeds;
+
+    private final ElapsedTime timeSinceKickerEngaged;
 
     
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -76,6 +81,9 @@ public class Shooter {
         flywheelSpeeds.add(117.1, 3900);
         flywheelSpeeds.add(120.0, 3950); // extrapolated upper bound
         flywheelSpeeds.createLUT();
+
+        timeSinceKickerEngaged = new ElapsedTime();
+        isKickerEngaged = false;
     }
 
     public void setRPM(double rpm) {
@@ -138,18 +146,25 @@ public class Shooter {
 
     public void engageKicker() {
         kickerServo.setPosition(KICKER_LAUNCH_POSITION);
+        isKickerEngaged = true;
+        timeSinceKickerEngaged.reset();
 
         telemetry.addData("Kicker Position", "engaged");
     }
 
     public void disengageKicker() {
         kickerServo.setPosition(KICKER_IDLE_POSITION);
+        isKickerEngaged = false;
 
         telemetry.addData("Kicker Position", "disengaged");
     }
 
     public boolean isKickerEngaged() {
-        return Math.abs(kickerServo.getPosition() - KICKER_LAUNCH_POSITION) <= KICKER_POSITION_TOLERANCE;
+        if (!isKickerEngaged) {
+            return false;
+        }
+
+        return timeSinceKickerEngaged.milliseconds() >= KICKER_MILLIS_TO_ENGAGE;
     }
 
     public boolean isReady() {
