@@ -81,7 +81,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(106.800, 135.414),
+                                    new Pose(116.77946324387398, 132.7421236872812),
                                     new Pose(95.344, 99.816),
                                     new Pose(95.344, 99.816),
                                     new Pose(95.344, 99.816)

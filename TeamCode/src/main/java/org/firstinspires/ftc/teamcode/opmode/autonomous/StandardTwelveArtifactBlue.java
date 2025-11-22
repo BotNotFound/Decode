@@ -84,7 +84,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(106.800, 135.414).mirror(),
+                                    new Pose(116.77946324387398, 132.7421236872812).mirror(),
                                     new Pose(95.344, 99.816).mirror(),
                                     new Pose(95.344, 99.816).mirror(),
                                     new Pose(95.344, 99.816).mirror()
