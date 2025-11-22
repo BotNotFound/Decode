@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 @Autonomous(name = "12 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 public class StandardTwelveArtifactRed extends AutonomousBase {
     public StandardTwelveArtifactRed() {
-        super(new Pose(116.77946324387398, 132.7421236872812, Math.toRadians(36)), Robot.AllianceColor.RED);
+        super(new Pose(119.5, 133, Math.toRadians(36)), Robot.AllianceColor.RED);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(116.77946324387398, 132.7421236872812),
+                                    new Pose(119.5, 133),
                                     new Pose(95.344, 99.816),
                                     new Pose(95.344, 99.816),
                                     new Pose(95.344, 99.816)
@@ -117,7 +117,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(144.000, 84.000),
                                     new Pose(96.616, 81.326),
                                     new Pose(128.373, 76.957),
-                                    new Pose(131.902, 74.436)
+                                    new Pose(130, 74.5)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(90))
@@ -127,7 +127,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(131.902, 74.436),
+                                    new Pose(130, 74.5),
                                     new Pose(99.101, 100.353),
                                     new Pose(99.101, 100.353)
                             )

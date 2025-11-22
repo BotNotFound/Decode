@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 @Autonomous(name = "12 Artifact Blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class StandardTwelveArtifactBlue extends AutonomousBase {
     public StandardTwelveArtifactBlue() {
-        super(new Pose(116.77946324387398, 132.7421236872812, Math.toRadians(36)).mirror(), Robot.AllianceColor.RED);
+        super(new Pose(119.5, 133, Math.toRadians(36)).mirror(), Robot.AllianceColor.RED);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(116.77946324387398, 132.7421236872812).mirror(),
+                                    new Pose(119.5, 133).mirror(),
                                     new Pose(95.344, 99.816).mirror(),
                                     new Pose(95.344, 99.816).mirror(),
                                     new Pose(95.344, 99.816).mirror()
@@ -120,7 +120,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(144.000, 84.000).mirror(),
                                     new Pose(96.616, 81.326).mirror(),
                                     new Pose(128.373, 76.957).mirror(),
-                                    new Pose(131.902, 74.436).mirror()
+                                    new Pose(130, 74.5).mirror()
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180-0), Math.toRadians(180-90))
@@ -130,7 +130,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(131.902, 74.436).mirror(),
+                                    new Pose(130, 74.5).mirror(),
                                     new Pose(99.101, 100.353).mirror(),
                                     new Pose(99.101, 100.353).mirror()
                             )
