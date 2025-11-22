@@ -33,23 +33,21 @@ public class Transfer {
         this.telemetry = telemetry;
     }
 
-    public void setTransferPower(double power) {
-        transferServo.setPower(power);
-        transferServo2.setPower(power);
+    public void startTransfer() {
+        transferServo.setPower(POWER_VALUE);
+        transferServo2.setPower(POWER_VALUE);
     }
 
-    public void startTransfer() {
-        setTransferPower(POWER_VALUE);
-    }
 
     public void stopTransfer() {
-        setTransferPower(0.0);
+        transferServo.setPower(0.0);
+        transferServo2.setPower(0.0);
         telemetry.addData("Transfer: ", "Stopped");
     }
-
     //this method is useful if color sensor detects wrong artifact
     public void reverseTransfer() {
-        setTransferPower(-POWER_VALUE);
+        transferServo.setPower(-POWER_VALUE);
+        transferServo2.setPower(-POWER_VALUE);
     }
 
 

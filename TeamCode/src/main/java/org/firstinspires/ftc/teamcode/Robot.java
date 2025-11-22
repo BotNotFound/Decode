@@ -54,12 +54,9 @@ public class Robot {
         NONE,
     }
 
-    public static double SLOW_TRANSFER_POWER = 0.9;
-    public static double SLOW_TRANSFER_DURATION = 1.0;
-
     private double moveScale = 1;
     private double headingScale = 1;
-    private boolean shotReady = false;
+
 
     /* Modules */
     private final FieldCentricDriveTrain driveTrain;
@@ -70,9 +67,6 @@ public class Robot {
 
     private AllianceColor allianceColor;
     private RobotState currentState;
-
-    private final ElapsedTime timeSinceShotReady;
-    private final ElapsedTime shotPrepTime = new ElapsedTime();
 
     public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
@@ -86,8 +80,6 @@ public class Robot {
         setAllianceColor(color);
 
         currentState = RobotState.NONE;
-
-        timeSinceShotReady = new ElapsedTime();
     }
 
     public void setAllianceColor(AllianceColor color) {
@@ -165,6 +157,9 @@ public class Robot {
         loopWithoutMovement();
     }
 
+    private final ElapsedTime shotPrepTime = new ElapsedTime();
+    private boolean shot = false;
+
     public void loopWithoutMovement() {
         switch (currentState) {
             case PRE_SHOOT:
@@ -179,7 +174,7 @@ public class Robot {
                     shooter.disengageKicker();
                     transfer.stopTransfer();
                     intake.stopIntake();
-                    shotReady = false;
+                    shot = false;
                 }
                 else if (!shooter.isKickerEngaged()) {
                     // if shooter is ready, but kicker isn't engaged, don't risk
@@ -187,23 +182,17 @@ public class Robot {
                     shooter.engageKicker();
                     transfer.stopTransfer();
                     intake.stopIntake();
+                    shot = false;
                 }
                 else {
                     // otherwise, we are truly ready to feed balls
-                    if (!shotReady) {
+                    if (!shot) {
                         Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
                         shotPrepTime.reset();
-                        shotReady = true;
-                        timeSinceShotReady.reset();
+                        shot = true;
                     }
                     intake.startIntake();
-
-                    if (timeSinceShotReady.seconds() <= SLOW_TRANSFER_DURATION) {
-                        transfer.setTransferPower(SLOW_TRANSFER_POWER);
-                    }
-                    else {
-                        transfer.startTransfer();
-                    }
+                    transfer.startTransfer();
                 }
                 break;
 
