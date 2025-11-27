@@ -95,11 +95,12 @@ public class ArtifactTracker {
     
     public boolean tooManyArtifacts(){
 
-        if((!colorSensorNear.hasBall() && colorSensorFar.hasBall())
-        || (colorSensorNear.hasBall() && colorSensorFar.hasBall())){
+        if((!colorSensorNear.hasBall() && !colorSensorFar.hasBall())
+        || (colorSensorNear.hasBall() && !colorSensorFar.hasBall())){
             LED.setPosition(0.722);
             return true;
         }
+        return false; 
 
     }
     
