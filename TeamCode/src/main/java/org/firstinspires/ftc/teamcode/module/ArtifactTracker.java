@@ -63,9 +63,10 @@ public class ArtifactTracker {
     /*This is because when we have four artifacts the fourth ball get pushed up the hood and the color sensor at
      * the back will think its too far. This is the only cases I know for when there are 4 artifacts in our robot.
      */
-    public boolean tooManyArtifacts(){
+    //Not needed actually if we're intaking two at the front it will think there's too many
+    /*public boolean tooManyArtifacts(){
         return hasBall(colorSensorNear) && hasBall(colorSensorMiddle) && !hasBall(colorSensorFar);
-    }
+    }*/
 
     public void setLEDViolet(){
         tele.addData("CAREFUL!! ", "YOU HAVE TOO MANY ARTIFACTS!! REVERSE INTAKE NOW!!");
@@ -84,7 +85,7 @@ public class ArtifactTracker {
         LED.setPosition(0.277);
     }
     public void setLEDGreen(){
-        tele.addData("THE ROBOT IS FULL OF ARTIFACTS!!", "GO SHOOT NOW!!!");
+        tele.addData("THE ROBOT IS FULL OF ARTIFACTS!!", "GO SHOOT NOW!!");
         tele.update();
         LED.setPosition(0.500);
     }
