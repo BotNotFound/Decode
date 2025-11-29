@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.module;
 
 
 import com.acmerobotics.dashboard.config.Config;
+import com.bylazar.lights.RGBIndicator;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -18,6 +18,7 @@ public class ArtifactTracker {
     public static final String FAR_COLOR_SENSOR_NAME = "ColorSensorFar";
     public static final String MIDDLE_COLOR_SENSOR_NAME = "ColorSensorMiddle";
     public static final String NEAR_COLOR_SENSOR_NAME = "ColorSensorNear";
+    public static final String INDICATOR_LIGHT_NAME = "LED Light";
 
     public enum ArtifactLocation {
         NEAR(0, NEAR_COLOR_SENSOR_NAME),
@@ -35,7 +36,7 @@ public class ArtifactTracker {
 
     private final RevColorSensorV3[] colorSensors;
 
-    private final Servo LED;
+    private final RGBIndicator indicatorLight;
 
 
     public static final double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
@@ -51,9 +52,7 @@ public class ArtifactTracker {
             colorSensors[location.index] = hardwareMap.get(RevColorSensorV3.class, location.hardwareName);
         }
 
-        LED = hardwareMap.get(Servo.class, "LED Light");
-
-
+        indicatorLight = hardwareMap.get(RGBIndicator.class, INDICATOR_LIGHT_NAME);
     }
 
     private boolean hasBall(RevColorSensorV3 sensor) {
@@ -73,22 +72,22 @@ public class ArtifactTracker {
 
     public void setLEDViolet() {
         telemetry.addLine("CAREFUL!!  YOU HAVE TOO MANY ARTIFACTS!! REVERSE INTAKE NOW!!");
-        LED.setPosition(0.722);
+        indicatorLight.update(0.722);
     }
 
     public void setLEDYellow() {
         telemetry.addLine("ROBOT HAS SOME BUT NOT ALL ARTIFACTS!!  KEEP INTAKING!!");
-        LED.setPosition(0.388);
+        indicatorLight.update(0.388);
     }
 
     public void setLEDRed() {
         telemetry.addLine("THE ROBOT IS EMPTY!!  START INTAKING!!");
-        LED.setPosition(0.277);
+        indicatorLight.update(0.277);
     }
 
     public void setLEDGreen() {
         telemetry.addLine("THE ROBOT IS FULL OF ARTIFACTS!! GO SHOOT NOW!!");
-        LED.setPosition(0.500);
+        indicatorLight.update(0.500);
     }
 
 
