@@ -11,6 +11,7 @@
 
     import org.firstinspires.ftc.robotcore.external.Telemetry;
     import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
+    import org.firstinspires.ftc.teamcode.module.ArtifactTracker;
     import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
     import org.firstinspires.ftc.teamcode.module.Intake;
     import org.firstinspires.ftc.teamcode.module.Shooter;
@@ -84,6 +85,7 @@
             intake = new Intake(hardwareMap, telemetry);
             transfer = new Transfer(hardwareMap, telemetry);
             aprilTagDetector = new AprilTagDetector(hardwareMap, telemetry);
+            ballTracker = new ArtifactTracker(hardwareMap, telemetry);
 
             setAllianceColor(color);
 

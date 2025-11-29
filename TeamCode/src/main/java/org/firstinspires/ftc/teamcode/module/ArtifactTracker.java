@@ -3,9 +3,9 @@ package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -23,7 +23,7 @@ public class ArtifactTracker {
     private final RevColorSensorV3 colorSensorMiddle;
     private final RevColorSensorV3 colorSensorFar;
 
-    private final Servo LED; 
+    private final Servo LED;
 
 
     public static final double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
