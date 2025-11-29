@@ -19,9 +19,21 @@ public class ArtifactTracker {
     public static final String COLOR_SENSOR_MIDDLE = "ColorSensorMiddle";
     public static final String COLOR_SENSOR_NEAR = "ColorSensorNear";
 
-    private final RevColorSensorV3 colorSensorNear;
-    private final RevColorSensorV3 colorSensorMiddle;
-    private final RevColorSensorV3 colorSensorFar;
+    public enum ArtifactLocation {
+        NEAR(0, COLOR_SENSOR_NEAR),
+        MIDDLE(1, COLOR_SENSOR_MIDDLE),
+        FAR(2, COLOR_SENSOR_FAR);
+
+        public final int index;
+        public final String hardwareName;
+
+        private ArtifactLocation(int index, String hardwareName) {
+            this.index = index;
+            this.hardwareName = hardwareName;
+        }
+    }
+
+    private final RevColorSensorV3[] colorSensors;
 
     private final Servo LED;
 
@@ -34,9 +46,11 @@ public class ArtifactTracker {
     public ArtifactTracker(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
 
-        colorSensorNear = hardwareMap.get(RevColorSensorV3.class, COLOR_SENSOR_NEAR);
-        colorSensorMiddle = hardwareMap.get(RevColorSensorV3.class, COLOR_SENSOR_MIDDLE);
-        colorSensorFar = hardwareMap.get(RevColorSensorV3.class, COLOR_SENSOR_FAR);
+        colorSensors = new RevColorSensorV3[ArtifactLocation.values().length];
+        for (ArtifactLocation location : ArtifactLocation.values()) {
+            colorSensors[location.index] = hardwareMap.get(RevColorSensorV3.class, location.hardwareName);
+        }
+
         LED = hardwareMap.get(Servo.class, "LED Light");
 
 
@@ -48,15 +62,8 @@ public class ArtifactTracker {
 
     }
 
-    public boolean hasAllArtifacts() {
-        return (numArtifacts() == 3) || (hasBall(colorSensorNear) &&
-                hasBall(colorSensorMiddle) && hasBall(colorSensorFar));
-    }
-
-    public boolean hasNoArtifacts() {
-        return (numArtifacts() == 0) || (!hasBall(colorSensorNear) &&
-                !hasBall(colorSensorMiddle) && !hasBall(colorSensorFar));
-
+    public boolean hasBall(ArtifactLocation location) {
+        return hasBall(colorSensors[location.index]);
     }
 
     public boolean hasSomeArtifacts() {
@@ -87,32 +94,28 @@ public class ArtifactTracker {
 
     public int numArtifacts() {
         int count = 0;
-        if (hasBall(colorSensorNear)) {
-            count++;
-        }
-        if (hasBall(colorSensorMiddle)) {
-            count++;
-        }
-        if (hasBall(colorSensorFar)) {
-            count++;
+        for (RevColorSensorV3 sensor : colorSensors) {
+            if (hasBall(sensor)) {
+                count++;
+            }
         }
         return count;
     }
 
     public void reportDetections() {
-        if (hasBall(colorSensorNear)) {
+        if (hasBall(ArtifactLocation.NEAR)) {
             telemetry.addData("Artifact ", "detected at the front of the robot");
         }
         else {
             telemetry.addData("Artifact ", "NOT detected at the front of the robot");
         }
-        if (hasBall(colorSensorMiddle)) {
+        if (hasBall(ArtifactLocation.MIDDLE)) {
             telemetry.addData("Artifact ", "detected in the middle of the robot");
         }
         else {
             telemetry.addData("Artifact ", "NOT detected in the middle of the robot");
         }
-        if (hasBall(colorSensorFar)) {
+        if (hasBall(ArtifactLocation.FAR)) {
             telemetry.addData("Artifact ", "detected at the back of the robot");
         }
         else {
