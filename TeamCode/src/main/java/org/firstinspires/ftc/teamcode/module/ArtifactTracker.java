@@ -15,14 +15,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  */
 @Config
 public class ArtifactTracker {
-    public static final String COLOR_SENSOR_FAR = "ColorSensorFar";
-    public static final String COLOR_SENSOR_MIDDLE = "ColorSensorMiddle";
-    public static final String COLOR_SENSOR_NEAR = "ColorSensorNear";
+    public static final String FAR_COLOR_SENSOR_NAME = "ColorSensorFar";
+    public static final String MIDDLE_COLOR_SENSOR_NAME = "ColorSensorMiddle";
+    public static final String NEAR_COLOR_SENSOR_NAME = "ColorSensorNear";
 
     public enum ArtifactLocation {
-        NEAR(0, COLOR_SENSOR_NEAR),
-        MIDDLE(1, COLOR_SENSOR_MIDDLE),
-        FAR(2, COLOR_SENSOR_FAR);
+        NEAR(0, NEAR_COLOR_SENSOR_NAME),
+        MIDDLE(1, MIDDLE_COLOR_SENSOR_NAME),
+        FAR(2, FAR_COLOR_SENSOR_NAME);
 
         public final int index;
         public final String hardwareName;
