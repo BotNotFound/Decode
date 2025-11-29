@@ -66,25 +66,21 @@ public class ArtifactTracker {
 
     public void setLEDViolet() {
         telemetry.addData("CAREFUL!! ", "YOU HAVE TOO MANY ARTIFACTS!! REVERSE INTAKE NOW!!");
-        telemetry.update();
         LED.setPosition(0.722);
     }
 
     public void setLEDYellow() {
         telemetry.addData("ROBOT HAS SOME BUT NOT ALL ARTIFACTS!! ", "KEEP INTAKING!!");
-        telemetry.update();
         LED.setPosition(0.388);
     }
 
     public void setLEDRed() {
         telemetry.addData("THE ROBOT IS EMPTY!! ", "START INTAKING!!");
-        telemetry.update();
         LED.setPosition(0.277);
     }
 
     public void setLEDGreen() {
         telemetry.addData("THE ROBOT IS FULL OF ARTIFACTS!!", "GO SHOOT NOW!!");
-        telemetry.update();
         LED.setPosition(0.500);
     }
 
