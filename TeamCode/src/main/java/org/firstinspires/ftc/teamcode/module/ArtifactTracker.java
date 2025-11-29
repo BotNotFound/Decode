@@ -72,22 +72,22 @@ public class ArtifactTracker {
     }
 
     public void setLEDViolet() {
-        telemetry.addData("CAREFUL!! ", "YOU HAVE TOO MANY ARTIFACTS!! REVERSE INTAKE NOW!!");
+        telemetry.addLine("CAREFUL!!  YOU HAVE TOO MANY ARTIFACTS!! REVERSE INTAKE NOW!!");
         LED.setPosition(0.722);
     }
 
     public void setLEDYellow() {
-        telemetry.addData("ROBOT HAS SOME BUT NOT ALL ARTIFACTS!! ", "KEEP INTAKING!!");
+        telemetry.addLine("ROBOT HAS SOME BUT NOT ALL ARTIFACTS!!  KEEP INTAKING!!");
         LED.setPosition(0.388);
     }
 
     public void setLEDRed() {
-        telemetry.addData("THE ROBOT IS EMPTY!! ", "START INTAKING!!");
+        telemetry.addLine("THE ROBOT IS EMPTY!!  START INTAKING!!");
         LED.setPosition(0.277);
     }
 
     public void setLEDGreen() {
-        telemetry.addData("THE ROBOT IS FULL OF ARTIFACTS!!", "GO SHOOT NOW!!");
+        telemetry.addLine("THE ROBOT IS FULL OF ARTIFACTS!! GO SHOOT NOW!!");
         LED.setPosition(0.500);
     }
 
@@ -103,25 +103,18 @@ public class ArtifactTracker {
     }
 
     public void reportDetections() {
-        if (hasBall(ArtifactLocation.NEAR)) {
-            telemetry.addData("Artifact ", "detected at the front of the robot");
-        }
-        else {
-            telemetry.addData("Artifact ", "NOT detected at the front of the robot");
-        }
-        if (hasBall(ArtifactLocation.MIDDLE)) {
-            telemetry.addData("Artifact ", "detected in the middle of the robot");
-        }
-        else {
-            telemetry.addData("Artifact ", "NOT detected in the middle of the robot");
-        }
-        if (hasBall(ArtifactLocation.FAR)) {
-            telemetry.addData("Artifact ", "detected at the back of the robot");
-        }
-        else {
-            telemetry.addData("Artifact ", "NOT detected at the back of the robot");
-        }
+        telemetry.addData(
+                "Near Artifact",
+                hasBall(ArtifactLocation.NEAR) ? "Detected" : "Not Detected"
+        );
+        telemetry.addData(
+                "Middle Artifact",
+                hasBall(ArtifactLocation.MIDDLE) ? "Detected" : "Not Detected"
+        );
+        telemetry.addData(
+                "Far Artifact",
+                hasBall(ArtifactLocation.FAR) ? "Detected" : "Not Detected"
+        );
         telemetry.update();
     }
-
 }
