@@ -19,6 +19,7 @@ public class ArtifactTracker {
     public static final String MIDDLE_COLOR_SENSOR_NAME = "ColorSensorMiddle";
     public static final String NEAR_COLOR_SENSOR_NAME = "ColorSensorNear";
     public static final String INDICATOR_LIGHT_NAME = "LED Light";
+    public static final int MAX_ARTIFACT_COUNT = 3;
 
     public enum ArtifactLocation {
         NEAR(0, NEAR_COLOR_SENSOR_NAME),
@@ -66,7 +67,7 @@ public class ArtifactTracker {
     }
 
     public boolean hasSomeArtifacts() {
-        return numArtifacts() > 0 && numArtifacts() < 3;
+        return numArtifacts() > 0 && numArtifacts() < MAX_ARTIFACT_COUNT;
 
     }
 
@@ -99,6 +100,10 @@ public class ArtifactTracker {
             }
         }
         return count;
+    }
+
+    public boolean hasAllArtifacts() {
+        return numArtifacts() == MAX_ARTIFACT_COUNT;
     }
 
     public void reportDetections() {

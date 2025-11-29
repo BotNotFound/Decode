@@ -125,20 +125,20 @@
         }
 
         private void updateLED(){
-            if(ballTracker.hasAllArtifacts()){
-                ballTracker.setLEDGreen();
-                ballTracker.reportDetections();
+            switch (ballTracker.numArtifacts()) {
+                case 0:
+                    ballTracker.setLEDRed();
+                    break;
+                case 1:
+                case 2:
+                    ballTracker.setLEDYellow();
+                    break;
+                case 3:
+                default:
+                    ballTracker.setLEDGreen();
+                    break;
             }
-            else if(ballTracker.hasSomeArtifacts()){
-                ballTracker.setLEDYellow();
-                ballTracker.reportDetections();
-            }
-            else if(ballTracker.hasNoArtifacts()){
-                ballTracker.setLEDRed();
-                ballTracker.reportDetections();
-            }else{
-                ballTracker.reportDetections();
-            }
+            ballTracker.reportDetections();
         }
 
         public void setState(RobotState newState) {
