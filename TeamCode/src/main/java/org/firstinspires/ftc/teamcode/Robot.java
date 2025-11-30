@@ -5,6 +5,7 @@
     import androidx.annotation.NonNull;
 
     import com.acmerobotics.dashboard.config.Config;
+    import com.qualcomm.hardware.lynx.LynxModule;
     import com.qualcomm.robotcore.hardware.Gamepad;
     import com.qualcomm.robotcore.hardware.HardwareMap;
     import com.qualcomm.robotcore.util.ElapsedTime;
@@ -17,6 +18,8 @@
     import org.firstinspires.ftc.teamcode.module.Shooter;
     import org.firstinspires.ftc.teamcode.module.Transfer;
     import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
+
+    import java.util.List;
 
     @Config
     public class Robot {
@@ -95,6 +98,12 @@
             timeSinceShotReady = new ElapsedTime();
             shotPrepTime = new ElapsedTime();
 
+            List<LynxModule> allHubs = hardwareMap.getAll(LynxModule.class);
+
+            for (LynxModule hub : allHubs) {
+                hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+            }
+            
             Log.i(TAG, "Robot initialized");
         }
 
