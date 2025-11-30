@@ -139,12 +139,16 @@
                     ballTracker.setLEDRed();
                     break;
                 case 1:
+                    ballTracker.setLEDYellow();
+                    break;
                 case 2:
                     ballTracker.setLEDYellow();
                     break;
                 case 3:
-                default:
                     ballTracker.setLEDGreen();
+                    break;
+                default:
+                    ballTracker.setLEDViolet();
                     break;
             }
             ballTracker.reportDetections();
