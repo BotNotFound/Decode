@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.module;
 
 
 import com.acmerobotics.dashboard.config.Config;
-import com.bylazar.lights.RGBIndicator;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -37,7 +37,7 @@ public class ArtifactTracker {
 
     private final RevColorSensorV3[] colorSensors;
 
-    private final RGBIndicator indicatorLight;
+    private final Servo indicatorLight;
 
 
     public static final double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
@@ -53,7 +53,7 @@ public class ArtifactTracker {
             colorSensors[location.index] = hardwareMap.get(RevColorSensorV3.class, location.hardwareName);
         }
 
-        indicatorLight = hardwareMap.get(RGBIndicator.class, INDICATOR_LIGHT_NAME);
+        indicatorLight = hardwareMap.get(Servo.class, INDICATOR_LIGHT_NAME);
     }
 
     private boolean hasBall(RevColorSensorV3 sensor) {
@@ -73,22 +73,22 @@ public class ArtifactTracker {
 
     public void setLEDViolet() {
         telemetry.addLine("CAREFUL!!  YOU HAVE TOO MANY ARTIFACTS!! REVERSE INTAKE NOW!!");
-        indicatorLight.update(0.722);
+        indicatorLight.setPosition(0.722);
     }
 
     public void setLEDYellow() {
         telemetry.addLine("ROBOT HAS SOME BUT NOT ALL ARTIFACTS!!  KEEP INTAKING!!");
-        indicatorLight.update(0.388);
+        indicatorLight.setPosition(0.388);
     }
 
     public void setLEDRed() {
         telemetry.addLine("THE ROBOT IS EMPTY!!  START INTAKING!!");
-        indicatorLight.update(0.277);
+        indicatorLight.setPosition(0.277);
     }
 
     public void setLEDGreen() {
         telemetry.addLine("THE ROBOT IS FULL OF ARTIFACTS!! GO SHOOT NOW!!");
-        indicatorLight.update(0.500);
+        indicatorLight.setPosition(0.500);
     }
 
 
