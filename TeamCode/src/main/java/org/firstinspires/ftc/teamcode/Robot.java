@@ -19,8 +19,6 @@
     import org.firstinspires.ftc.teamcode.module.Transfer;
     import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
-    import java.util.List;
-
     @Config
     public class Robot {
         public static final String TAG = "Robot";
@@ -98,9 +96,7 @@
             timeSinceShotReady = new ElapsedTime();
             shotPrepTime = new ElapsedTime();
 
-            List<LynxModule> allHubs = hardwareMap.getAll(LynxModule.class);
-
-            for (LynxModule hub : allHubs) {
+            for (LynxModule hub : hardwareMap.getAll(LynxModule.class)) {
                 hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
             }
             
