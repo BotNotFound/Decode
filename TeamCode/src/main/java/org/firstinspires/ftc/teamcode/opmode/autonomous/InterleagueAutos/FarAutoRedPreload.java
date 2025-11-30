@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 public class FarAutoRed extends AutonomousBase{
 
     public FarAutoRed() {
-        super(new Pose(84.432, 8.407, Math.toRadians(90)), Robot.AllianceColor.RED);
+        super(new Pose(86.6, 8.000, Math.toRadians(90)), Robot.AllianceColor.RED);
     }
     @Override
     protected AutonomousStage[] buildStageSequence() {
@@ -42,7 +42,7 @@ public class FarAutoRed extends AutonomousBase{
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(84.432, 8.407),
+                                    new Pose(86.6, 8.000),
                                     new Pose(86.758, 11.806),
                                     new Pose(83.001, 11.091)
                             )
