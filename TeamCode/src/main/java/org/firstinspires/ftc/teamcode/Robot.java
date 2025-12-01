@@ -162,11 +162,6 @@ public class Robot {
                 shooter.disengageKicker();
                 intake.startIntake();
                 transfer.startTransfer();
-                if (ballTracker.hasAllArtifacts()) {
-                    shooter.disengageKicker();
-                    intake.stopIntake();
-                    transfer.stopTransfer();
-                }
                 break;
 
             case REVERSE_INTAKE:
@@ -263,7 +258,21 @@ public class Robot {
                 break;
 
             case INTAKE:
-                transfer.startTransfer();
+                if (ballTracker.hasAllArtifacts()) {
+                    transfer.stopTransfer();
+                    intake.stopIntake();
+                }
+                else if (
+                        ballTracker.hasBall(ArtifactTracker.ArtifactLocation.FAR) &&
+                                ballTracker.hasBall(ArtifactTracker.ArtifactLocation.MIDDLE)
+                ) {
+                    transfer.stopTransfer();
+                    intake.startIntake();
+                }
+                else {
+                    transfer.startTransfer();
+                    intake.startIntake();
+                }
                 break;
 
             case REVERSE_INTAKE:
