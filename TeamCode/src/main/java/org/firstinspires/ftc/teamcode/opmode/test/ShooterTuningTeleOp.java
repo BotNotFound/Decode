@@ -32,7 +32,8 @@ public class ShooterTuningTeleOp extends OpMode {
     private enum RobotStates {
         INTAKE, SHOOT, NONE
     }
-    private RobotStates currentState= RobotStates.NONE;
+
+    private RobotStates currentState = RobotStates.NONE;
 
     @Override
     public void init() {
@@ -45,44 +46,44 @@ public class ShooterTuningTeleOp extends OpMode {
     }
 
     @Override
-    public void init_loop(){
-        if(gamepad1.aWasPressed()){
+    public void init_loop() {
+        if (gamepad1.aWasPressed()) {
             allianceColor = !allianceColor;
         }
-        if(allianceColor){
+        if (allianceColor) {
             telemetry.addData("Alliance", "Red");
         }
-        else{
+        else {
             telemetry.addData("Alliance", "Blue");
         }
         telemetry.update();
     }
 
     @Override
-    public void start(){
-        if(allianceColor){
+    public void start() {
+        if (allianceColor) {
             aprilTagID = 24;
         }
     }
 
     @Override
     public void loop() {
-        if(gamepad1.right_bumper){
+        if (gamepad1.right_bumper) {
             currentState = RobotStates.SHOOT;
         }
-        else if(gamepad1.leftBumperWasReleased()){
-            if(!intakeToggle){
+        else if (gamepad1.leftBumperWasReleased()) {
+            if (!intakeToggle) {
                 currentState = RobotStates.INTAKE;
                 intakeToggle = true;
                 telemetry.addData("LBumper", "Enter. !Intake");
             }
-            else{
+            else {
                 currentState = RobotStates.NONE;
                 intakeToggle = false;
                 telemetry.addData("LBumper", "Enter. Intake");
             }
         }
-        else if(currentState == RobotStates.SHOOT){
+        else if (currentState == RobotStates.SHOOT) {
             currentState = RobotStates.NONE;
             intakeToggle = false;
         }
@@ -92,12 +93,12 @@ public class ShooterTuningTeleOp extends OpMode {
             telemetry.addData("Distance to April Tag", target.range);
         }
 
-        switch (currentState){
+        switch (currentState) {
             case SHOOT:
                 driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
                 shooter.setRPM(targetRPM);
 
-                if(shooter.isReady()) {
+                if (shooter.isReady()) {
                     shooter.engageKicker();
                     intake.startIntake();
                     transfer.startTransfer();
@@ -121,18 +122,18 @@ public class ShooterTuningTeleOp extends OpMode {
                 break;
         }
 
-        if(gamepad1.dpadUpWasPressed()){
+        if (gamepad1.dpadUpWasPressed()) {
             shooter.increaseDefaultRPM();
             targetRPM = shooter.defaultRPM;
         }
-        else if(gamepad1.dpadDownWasPressed()){
+        else if (gamepad1.dpadDownWasPressed()) {
             shooter.decreaseDefaultRPM();
             targetRPM = shooter.defaultRPM;
         }
 
         telemetry.addData("target shooter rpm", targetRPM);
 
-        if(gamepad1.startWasPressed()){
+        if (gamepad1.startWasPressed()) {
             driveTrain.resetOdometry();
         }
 
