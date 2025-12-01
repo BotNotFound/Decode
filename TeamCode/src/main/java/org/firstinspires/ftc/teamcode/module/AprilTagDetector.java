@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -29,6 +30,10 @@ public class AprilTagDetector {
 
     private final Telemetry telemetry;
 
+    private Pose3D targetPose;
+    private AprilTagPoseFtc robotPose;
+    private boolean tagDetected = false;
+
     public AprilTagDetector(HardwareMap hardwareMap, Telemetry telemetry) {
         processor = new AprilTagProcessor.Builder()
                 .setCameraPose(CAMERA_POSITION, CAMERA_ORIENTATION)
@@ -41,15 +46,43 @@ public class AprilTagDetector {
         this.telemetry = telemetry;
     }
 
-    @Nullable
-    public AprilTagPoseFtc getTagPose(int tagID){
+    /**
+     * MUST BE UPDATED EVERY LOOP ITERATION
+     * @param tagID the ID of the tag that is being detected
+     */
+    public void update(int tagID){
+        tagDetected = false;
+
         for (AprilTagDetection detection : processor.getDetections()) {
             if (detection.id == tagID) {
+                targetPose = detection.robotPose;
+                robotPose = detection.ftcPose;
+
+                tagDetected = true;
                 telemetry.addData("AprilTag " + tagID + " ", "detected");
-                return detection.ftcPose;
             }
         }
-        telemetry.addData("AprilTag " + tagID + " ", "not detected");
+
+        if(tagDetected){
+            telemetry.addData("AprilTag " + tagID + " ", "not detected");
+        }
+    }
+
+    @Nullable
+    public Pose3D getTargetPose(){
+        if(tagDetected){
+            return targetPose;
+        }
+
         return null;
     }
+
+    @Nullable
+    public AprilTagPoseFtc getRobotPose(){
+        if(tagDetected){
+            return robotPose;
+        }
+        return null;
+    }
+
 }

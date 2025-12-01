@@ -124,7 +124,7 @@ public class Robot {
     }
 
     private void prepareToShoot() {
-        AprilTagPoseFtc target = aprilTagDetector.getTagPose(allianceColor.targetAprilTagID);
+        AprilTagPoseFtc target = aprilTagDetector.getRobotPose();
         driveTrain.aimAtAprilTag(target);
         shooter.setRPMForAprilTag(target);
     }
@@ -212,10 +212,13 @@ public class Robot {
 
         switch (currentState) {
             case PRE_SHOOT:
-                shooter.setRPMForAprilTag(aprilTagDetector.getTagPose(allianceColor.targetAprilTagID));
+                aprilTagDetector.update(allianceColor.targetAprilTagID);
+                shooter.setRPMForAprilTag(aprilTagDetector.getRobotPose());
                 break;
 
             case SHOOT:
+                aprilTagDetector.update(allianceColor.targetAprilTagID);
+
                 prepareToShoot();
 
                 if (!shooter.isReady()) {
