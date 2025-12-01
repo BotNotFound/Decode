@@ -67,11 +67,6 @@ public class ArtifactTracker {
         return hasBall(colorSensors[location.index]);
     }
 
-    public void setLEDViolet() {
-        telemetry.addLine("CAREFUL!!  YOU HAVE TOO MANY ARTIFACTS!! REVERSE INTAKE NOW!!");
-        indicatorLight.setPosition(0.722);
-    }
-
     public void setLEDYellow() {
         telemetry.addLine("ROBOT HAS SOME BUT NOT ALL ARTIFACTS!!  KEEP INTAKING!!");
         indicatorLight.setPosition(0.388);

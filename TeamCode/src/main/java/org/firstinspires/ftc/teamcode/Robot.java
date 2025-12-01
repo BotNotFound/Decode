@@ -139,10 +139,8 @@ public class Robot {
                 ballTracker.setLEDYellow();
                 break;
             case 3:
-                ballTracker.setLEDGreen();
-                break;
             default:
-                ballTracker.setLEDViolet();
+                ballTracker.setLEDGreen();
                 break;
         }
         ballTracker.reportDetections();
