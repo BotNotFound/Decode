@@ -88,7 +88,7 @@ public class ArtifactTracker {
     }
 
 
-    public int numArtifacts() {
+    public int getArtifactCount() {
         int count = 0;
         for (RevColorSensorV3 sensor : colorSensors) {
             if (hasBall(sensor)) {
@@ -99,7 +99,7 @@ public class ArtifactTracker {
     }
 
     public boolean hasAllArtifacts() {
-        return numArtifacts() == MAX_ARTIFACT_COUNT;
+        return getArtifactCount() == MAX_ARTIFACT_COUNT;
     }
 
     public void reportDetections() {

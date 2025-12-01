@@ -130,7 +130,7 @@ public class Robot {
     }
 
     private void updateLED() {
-        switch (ballTracker.numArtifacts()) {
+        switch (ballTracker.getArtifactCount()) {
             case 0:
                 ballTracker.setLEDRed();
                 break;
