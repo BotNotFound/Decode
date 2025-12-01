@@ -219,39 +219,34 @@ public class Robot {
                 prepareToShoot();
 
                 if (!shooter.isReady()) {
-                    // if shooter isn't ready, don't put any balls in
-                    shooter.disengageKicker();
-                    transfer.stopTransfer();
                     intake.stopIntake();
+                    transfer.stopTransfer();
+
 
                     if (shotReady) {
                         Log.d(TAG, "Shot completed in " + timeSinceShotReady.milliseconds() + " millis");
                     }
                     shotReady = false;
+
+                    break;
                 }
-                else if (!shooter.isKickerEngaged()) {
-                    // if shooter is ready, but kicker isn't engaged, don't risk
-                    // prematurely shooting balls
-                    shooter.engageKicker();
-                    transfer.stopTransfer();
+
+                if (!shotReady) {
+                    Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
+                    shotPrepTime.reset();
+                    shotReady = true;
+                    timeSinceShotReady.reset();
+                }
+
+                if (ballTracker.hasBall(ArtifactTracker.ArtifactLocation.FAR)) {
                     intake.stopIntake();
+                    transfer.stopTransfer();
+                    shooter.engageKicker();
                 }
                 else {
-                    // otherwise, we are truly ready to feed balls
-                    if (!shotReady) {
-                        Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
-                        shotPrepTime.reset();
-                        shotReady = true;
-                        timeSinceShotReady.reset();
-                    }
                     intake.startIntake();
-
-                    if (timeSinceShotReady.seconds() <= SLOW_TRANSFER_DURATION) {
-                        transfer.setTransferPower(SLOW_TRANSFER_POWER);
-                    }
-                    else {
-                        transfer.startTransfer();
-                    }
+                    transfer.startTransfer();
+                    shooter.engageKicker();
                 }
                 break;
 
