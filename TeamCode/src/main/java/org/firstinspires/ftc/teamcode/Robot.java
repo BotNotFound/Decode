@@ -168,24 +168,20 @@
                         shooter.disengageKicker();
                         intake.stopIntake();
                         transfer.stopTransfer();
-                        updateLED();
                     }
-                    updateLED();
                     break;
 
                 case REVERSE_INTAKE:
                         shooter.disengageKicker();
                         intake.setPower(-1);
                         transfer.reverseTransfer();
-                        updateLED();
-                
+
                     break;
 
                 case PRE_SHOOT:
                     intake.startIntake();
                     transfer.reverseTransfer();
                     shooter.disengageKicker();
-                    updateLED();
                     break;
 
                 case SHOOT:
@@ -195,7 +191,6 @@
 
                     shotReady = false;
                     shotPrepTime.reset();
-                    updateLED();
                     break;
 
                 case NONE:
@@ -203,7 +198,6 @@
                     shooter.setRPM(0);
                     intake.stopIntake();
                     transfer.stopTransfer();
-                    updateLED();
                     break;
             }
             currentState = newState;
@@ -220,19 +214,18 @@
         public void loop(double drivePower, double strafePower, double turnPower) {
             setDrivePowers(drivePower, strafePower, turnPower);
             loopWithoutMovement();
-            updateLED();
         }
 
         public void loopWithoutMovement() {
+            updateLED();
+
             switch (currentState) {
                 case PRE_SHOOT:
-                    updateLED();
                     shooter.setRPMForAprilTag(aprilTagDetector.getTagPose(allianceColor.targetAprilTagID));
                     break;
 
                 case SHOOT:
                     prepareToShoot();
-                    updateLED();
 
                     if (!shooter.isReady()) {
                         // if shooter isn't ready, don't put any balls in
@@ -251,7 +244,6 @@
                         shooter.engageKicker();
                         transfer.stopTransfer();
                         intake.stopIntake();
-                        updateLED();
                     }
                     else {
                         // otherwise, we are truly ready to feed balls
@@ -260,25 +252,20 @@
                             shotPrepTime.reset();
                             shotReady = true;
                             timeSinceShotReady.reset();
-                            updateLED();
                         }
                         intake.startIntake();
-                        updateLED();
 
                         if (timeSinceShotReady.seconds() <= SLOW_TRANSFER_DURATION) {
                             transfer.setTransferPower(SLOW_TRANSFER_POWER);
-                            updateLED();
                         }
                         else {
                             transfer.startTransfer();
-                            updateLED();
                         }
                     }
                     break;
 
                 case INTAKE:
                     transfer.startTransfer();
-                    updateLED();
                     break;
 
                 case REVERSE_INTAKE:
