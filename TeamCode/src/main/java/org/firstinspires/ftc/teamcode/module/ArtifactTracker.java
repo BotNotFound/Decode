@@ -67,11 +67,6 @@ public class ArtifactTracker {
         return hasBall(colorSensors[location.index]);
     }
 
-    public boolean hasSomeArtifacts() {
-        return numArtifacts() > 0 && numArtifacts() < MAX_ARTIFACT_COUNT;
-
-    }
-
     public void setLEDViolet() {
         telemetry.addLine("CAREFUL!!  YOU HAVE TOO MANY ARTIFACTS!! REVERSE INTAKE NOW!!");
         indicatorLight.setPosition(0.722);
