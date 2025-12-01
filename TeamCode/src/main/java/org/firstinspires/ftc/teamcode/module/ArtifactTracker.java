@@ -29,7 +29,7 @@ public class ArtifactTracker {
         public final int index;
         public final String hardwareName;
 
-        private ArtifactLocation(int index, String hardwareName) {
+        ArtifactLocation(int index, String hardwareName) {
             this.index = index;
             this.hardwareName = hardwareName;
         }
@@ -61,7 +61,7 @@ public class ArtifactTracker {
         return !Double.isNaN(dist) && dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
 
     }
-    
+
 
     public boolean hasBall(ArtifactLocation location) {
         return hasBall(colorSensors[location.index]);
