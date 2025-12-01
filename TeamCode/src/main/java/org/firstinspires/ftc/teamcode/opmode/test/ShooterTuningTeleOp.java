@@ -23,7 +23,6 @@ public class ShooterTuningTeleOp extends OpMode {
     private Intake intake;
     private Transfer transfer;
     private boolean intakeToggle = false;
-    private boolean intakeHold = false;
     private AprilTagDetector aprilDetector;
 
     // true is RED, false is BLUE
@@ -80,14 +79,12 @@ public class ShooterTuningTeleOp extends OpMode {
             else{
                 currentState = RobotStates.NONE;
                 intakeToggle = false;
-                intakeHold = false;
                 telemetry.addData("LBumper", "Enter. Intake");
             }
         }
         else if(currentState == RobotStates.SHOOT){
             currentState = RobotStates.NONE;
             intakeToggle = false;
-            intakeHold = false;
         }
 
         AprilTagPoseFtc target = aprilDetector.getTagPose(aprilTagID);

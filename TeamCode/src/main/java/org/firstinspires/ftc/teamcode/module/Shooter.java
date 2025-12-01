@@ -72,14 +72,17 @@ public class Shooter {
         this.telemetry = telemetry;
 
         flywheelSpeeds = new InterpLUT();
-        // the control points have to be in increasing order
-        flywheelSpeeds.add(30.0, 2700); // extrapolated lower bound
-        flywheelSpeeds.add(39.0, 2900);
-        flywheelSpeeds.add(70.0, 3200);
-        flywheelSpeeds.add(82.0, 3400);
-        flywheelSpeeds.add(98.0, 3700);
-        flywheelSpeeds.add(117.1, 3900);
-        flywheelSpeeds.add(120.0, 3950); // extrapolated upper bound
+        // the control points have to be in increasing
+        flywheelSpeeds.add(28.0, 2500);
+        flywheelSpeeds.add(31.3, 2600);
+        flywheelSpeeds.add(36.1, 2625);
+        flywheelSpeeds.add(47.0, 2750);
+        flywheelSpeeds.add(62.3, 3000);
+        flywheelSpeeds.add(74.5, 3025);
+        flywheelSpeeds.add(94.8, 3425);
+        flywheelSpeeds.add(101.3, 3550);
+        flywheelSpeeds.add(121.5, 3850);
+        flywheelSpeeds.add(130, 3925);
         flywheelSpeeds.createLUT();
 
         timeSinceKickerEngaged = new ElapsedTime();
