@@ -52,6 +52,11 @@ public class FieldCentricDriveTrain {
         backRightDriveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftDriveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        frontRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         this.telemetry = telemetry;
 
         pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class, PINPOINT_DRIVER_NAME);
