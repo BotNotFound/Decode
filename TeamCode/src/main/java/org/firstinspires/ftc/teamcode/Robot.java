@@ -135,8 +135,6 @@
                     ballTracker.setLEDRed();
                     break;
                 case 1:
-                    ballTracker.setLEDYellow();
-                    break;
                 case 2:
                     ballTracker.setLEDYellow();
                     break;
