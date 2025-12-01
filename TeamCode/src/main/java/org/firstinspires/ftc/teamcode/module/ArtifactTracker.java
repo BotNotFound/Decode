@@ -40,7 +40,7 @@ public class ArtifactTracker {
     private final Servo indicatorLight;
 
 
-    public static final double ARTIFACT_DISTANCE_THRESHOLD_CM = 15;
+    public static final double ARTIFACT_DISTANCE_THRESHOLD_CM = 7;
 
     private final Telemetry telemetry;
 
