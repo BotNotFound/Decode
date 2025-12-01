@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Intake {
@@ -18,13 +14,10 @@ public class Intake {
 
     private final DcMotor intakeMotor;
 
-    private final Telemetry telemetry;
-
-    public Intake(HardwareMap hwMap, Telemetry tele) {
+    public Intake(HardwareMap hwMap) {
         intakeMotor = hwMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        telemetry = tele;
     }
     public void setPower(double power) {
         intakeMotor.setPower(power);

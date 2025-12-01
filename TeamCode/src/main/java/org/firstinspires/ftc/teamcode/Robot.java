@@ -83,7 +83,7 @@ public class Robot {
         driveTrain.resetOdometry();
 
         shooter = new Shooter(hardwareMap, telemetry);
-        intake = new Intake(hardwareMap, telemetry);
+        intake = new Intake(hardwareMap);
         transfer = new Transfer(hardwareMap, telemetry);
         aprilTagDetector = new AprilTagDetector(hardwareMap, telemetry);
         ballTracker = new ArtifactTracker(hardwareMap, telemetry);

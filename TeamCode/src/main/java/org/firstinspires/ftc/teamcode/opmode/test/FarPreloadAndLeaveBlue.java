@@ -23,7 +23,7 @@ public class FarPreloadAndLeaveBlue extends LinearOpMode {
         final FieldCentricDriveTrain driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
 
         final Shooter shooter = new Shooter(hardwareMap, telemetry);
-        final Intake intake = new Intake(hardwareMap, telemetry);
+        final Intake intake = new Intake(hardwareMap);
         final Transfer transfer = new Transfer(hardwareMap, telemetry);
 
         final AprilTagDetector detector = new AprilTagDetector(hardwareMap, telemetry);

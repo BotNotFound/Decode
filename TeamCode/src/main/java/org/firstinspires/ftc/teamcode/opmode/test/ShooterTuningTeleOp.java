@@ -39,7 +39,7 @@ public class ShooterTuningTeleOp extends OpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         shooter = new Shooter(hardwareMap, telemetry);
-        intake = new Intake(hardwareMap, telemetry);
+        intake = new Intake(hardwareMap);
         transfer = new Transfer(hardwareMap, telemetry);
         aprilDetector = new AprilTagDetector(hardwareMap, telemetry);
     }
