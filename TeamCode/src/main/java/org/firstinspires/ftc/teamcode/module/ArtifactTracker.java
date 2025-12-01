@@ -40,7 +40,7 @@ public class ArtifactTracker {
     private final Servo indicatorLight;
 
 
-    public static final double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
+    public static final double ARTIFACT_DISTANCE_THRESHOLD_CM = 15;
 
     private final Telemetry telemetry;
 
@@ -61,6 +61,7 @@ public class ArtifactTracker {
         return !Double.isNaN(dist) && dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
 
     }
+    
 
     public boolean hasBall(ArtifactLocation location) {
         return hasBall(colorSensors[location.index]);
@@ -108,7 +109,7 @@ public class ArtifactTracker {
 
     public void reportDetections() {
         telemetry.addData(
-                "Near Artifact",
+                "Front Artifact",
                 hasBall(ArtifactLocation.NEAR) ? "Detected" : "Not Detected"
         );
         telemetry.addData(
@@ -116,7 +117,7 @@ public class ArtifactTracker {
                 hasBall(ArtifactLocation.MIDDLE) ? "Detected" : "Not Detected"
         );
         telemetry.addData(
-                "Far Artifact",
+                "Back Artifact",
                 hasBall(ArtifactLocation.FAR) ? "Detected" : "Not Detected"
         );
         telemetry.update();
