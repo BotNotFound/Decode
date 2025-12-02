@@ -37,7 +37,8 @@ public class GetAprilTagInfo extends OpMode {
     }
 
     private void logAprilTagInfo(int tagID) {
-        final AprilTagPoseFtc detection = detector.getTagPose(tagID);
+        detector.update(tagID);
+        final AprilTagPoseFtc detection = detector.getTagPose();
         // getTagPose() currently logs whether or not the tag is detected, so we don't want
         // to duplicate log messages
         if (detection == null) {

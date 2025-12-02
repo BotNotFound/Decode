@@ -30,8 +30,8 @@ public class AprilTagDetector {
 
     private final Telemetry telemetry;
 
-    private Pose3D targetPose;
-    private AprilTagPoseFtc robotPose;
+    private Pose3D robotPose;
+    private AprilTagPoseFtc tagPose;
     private boolean tagDetected = false;
 
     public AprilTagDetector(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -47,7 +47,7 @@ public class AprilTagDetector {
     }
 
     /**
-     * MUST BE UPDATED EVERY LOOP ITERATION
+     * @apiNote Must be called every relevant loop iteration. Otherwise, the AprilTagDetector object will give stale values.
      * @param tagID the ID of the tag that is being detected
      */
     public void update(int tagID){
@@ -55,8 +55,8 @@ public class AprilTagDetector {
 
         for (AprilTagDetection detection : processor.getDetections()) {
             if (detection.id == tagID) {
-                targetPose = detection.robotPose;
-                robotPose = detection.ftcPose;
+                robotPose = detection.robotPose;
+                tagPose = detection.ftcPose;
 
                 tagDetected = true;
                 telemetry.addData("AprilTag " + tagID + " ", "detected");
@@ -69,18 +69,18 @@ public class AprilTagDetector {
     }
 
     @Nullable
-    public Pose3D getTargetPose(){
+    public Pose3D getRobotPose(){
         if(tagDetected){
-            return targetPose;
+            return robotPose;
         }
 
         return null;
     }
 
     @Nullable
-    public AprilTagPoseFtc getRobotPose(){
+    public AprilTagPoseFtc getTagPose(){
         if(tagDetected){
-            return robotPose;
+            return tagPose;
         }
         return null;
     }

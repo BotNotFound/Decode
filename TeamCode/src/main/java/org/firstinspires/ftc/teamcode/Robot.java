@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.ArtifactTracker;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
@@ -124,8 +125,9 @@ public class Robot {
     }
 
     private void prepareToShoot() {
-        AprilTagPoseFtc target = aprilTagDetector.getRobotPose();
-        driveTrain.aimAtAprilTag(target);
+        AprilTagPoseFtc target = aprilTagDetector.getTagPose();
+        Pose3D robot = aprilTagDetector.getRobotPose();
+        driveTrain.aimAtAprilTag(target, robot);
         shooter.setRPMForAprilTag(target);
     }
 
@@ -213,7 +215,7 @@ public class Robot {
         switch (currentState) {
             case PRE_SHOOT:
                 aprilTagDetector.update(allianceColor.targetAprilTagID);
-                shooter.setRPMForAprilTag(aprilTagDetector.getRobotPose());
+                shooter.setRPMForAprilTag(aprilTagDetector.getTagPose());
                 break;
 
             case SHOOT:

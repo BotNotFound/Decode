@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.teamcode.module.Intake;
@@ -88,14 +89,17 @@ public class ShooterTuningTeleOp extends OpMode {
             intakeToggle = false;
         }
 
-        AprilTagPoseFtc target = aprilDetector.getTagPose(aprilTagID);
+        aprilDetector.update(aprilTagID);
+        AprilTagPoseFtc target = aprilDetector.getTagPose();
+        Pose3D robot = aprilDetector.getRobotPose();
+
         if (target != null) {
             telemetry.addData("Distance to April Tag", target.range);
         }
 
         switch (currentState) {
             case SHOOT:
-                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target);
+                driveTrain.setPowerFacingAprilTag(-gamepad1.left_stick_y, gamepad1.left_stick_x * Math.sqrt(2), gamepad1.right_stick_x, target, robot);
                 shooter.setRPM(targetRPM);
 
                 if (shooter.isReady()) {

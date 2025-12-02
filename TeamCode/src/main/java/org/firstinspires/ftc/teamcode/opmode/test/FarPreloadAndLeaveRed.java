@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.teamcode.module.Intake;
@@ -41,9 +42,12 @@ public class FarPreloadAndLeaveRed extends LinearOpMode {
         runtime.reset();
 
         while (runtime.time(TimeUnit.SECONDS) < 10 && opModeIsActive()){
-            AprilTagPoseFtc tagPose = detector.getTagPose(24);
-            if(tagPose != null) {
-                driveTrain.setPowerFacingAprilTag(0, 0, 0, tagPose);
+            detector.update(24);
+            AprilTagPoseFtc tagPose = detector.getTagPose();
+            Pose3D robotPose = detector.getRobotPose();
+
+            if(tagPose != null){
+                driveTrain.setPowerFacingAprilTag(0, 0, 0, tagPose, robotPose);
                 shooter.setRPMForAprilTag(tagPose);
             }else{
                 shooter.setRPM(subRPM);

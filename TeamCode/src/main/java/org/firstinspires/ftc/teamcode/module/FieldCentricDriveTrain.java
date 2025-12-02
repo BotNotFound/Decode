@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.SquIDController;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
@@ -34,6 +35,9 @@ public class FieldCentricDriveTrain {
     public static double turnP = 0.09;
     public static double turnTarget = 1;
     public static double turnTolerance = 0.5;
+
+    public static double aimOffsetMultiplier = 0.0;
+    public static double aimOffsetZero = 90;
 
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -74,15 +78,12 @@ public class FieldCentricDriveTrain {
         pinpointDriver.resetPosAndIMU();
     }
 
-    public void setPowerFacingAprilTag(double drive, double strafe, double turn, AprilTagPoseFtc targetTag) {
-        if (turnTarget != turnController.getTolerance()) {
-            turnController.setTarget(turnTarget);
-        }
+    public void setPowerFacingAprilTag(double drive, double strafe, double turn, AprilTagPoseFtc tagPose, Pose3D robotPose) {
         turnController.setTolerance(turnTolerance);
 
-        if (targetTag != null) {
-            turn = getAimRotationPower(targetTag.bearing);
-            telemetry.addData("turn power", turn);
+        if (robotPose != null && tagPose != null) {
+
+            turn = getAimRotationPower(tagPose.bearing, robotPose.getOrientation().getYaw(AngleUnit.DEGREES));
         }
 
         setPower(drive, strafe, turn);
@@ -174,16 +175,21 @@ public class FieldCentricDriveTrain {
         setPower(getDrivePower(), getStrafePower(), power);
     }
 
-    public void aimAtAprilTag(AprilTagPoseFtc target) {
+    public void aimAtAprilTag(AprilTagPoseFtc target, Pose3D robotAngle) {
         if (target == null) {
             return; // no tag to aim at
         }
 
-        setTurnPower(getAimRotationPower(target.bearing));
+        setTurnPower(getAimRotationPower(target.bearing, robotAngle.getOrientation().getYaw(AngleUnit.DEGREES)));
     }
 
-    private double getAimRotationPower(double bearing) {
+    private double getAimRotationPower(double bearing, double yaw) {
+        turnController.setTarget(turnTarget + (yaw - aimOffsetZero) * aimOffsetMultiplier);
+
+
         telemetry.addData("Bearing", bearing);
+        telemetry.addData("Yaw", yaw);
+
         turnController.setP(turnP);
         return turnController.calculate(bearing);
     }

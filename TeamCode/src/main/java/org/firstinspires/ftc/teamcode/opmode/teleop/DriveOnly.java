@@ -23,7 +23,8 @@ public class DriveOnly extends OpMode {
     public void loop() {
         driveTrain.setPower(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
-        AprilTagPoseFtc temp = aprilDetector.getTagPose(24);
+        aprilDetector.update(24);
+        AprilTagPoseFtc temp = aprilDetector.getTagPose();
 
         if(temp != null){
             telemetry.addData("Bearing", temp.bearing);
