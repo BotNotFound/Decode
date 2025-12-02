@@ -133,7 +133,16 @@ public class AutonomousStage {
      */
     public void enterStage(Robot robot, Follower follower) {
         robot.setState(robotState);
+
+        double oldMaxPower = FollowerConstants.maxPower;
+
+        if (robotState == Robot.RobotState.INTAKE) {
+            FollowerConstants.maxPower = 0.6;
+        }
+
         follower.followPath(path);
+        FollowerConstants.maxPower = oldMaxPower;
+
         complete = false;
     }
 }
