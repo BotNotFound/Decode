@@ -77,9 +77,11 @@ public class Shooter {
         flywheelSpeeds.add(31.3, 2600);
         flywheelSpeeds.add(36.1, 2625);
         flywheelSpeeds.add(47.0, 2750);
+        flywheelSpeeds.add(55, 2850);
         flywheelSpeeds.add(62.3, 3000);
         flywheelSpeeds.add(74.5, 3025);
-        flywheelSpeeds.add(94.8, 3425);
+        flywheelSpeeds.add(84, 3350);
+        flywheelSpeeds.add(94.8, 3500);
         flywheelSpeeds.add(101.3, 3550);
         flywheelSpeeds.add(121.5, 3850);
         flywheelSpeeds.add(130, 3925); // extrapolated upper bound
