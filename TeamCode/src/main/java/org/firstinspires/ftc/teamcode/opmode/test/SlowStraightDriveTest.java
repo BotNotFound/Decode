@@ -31,7 +31,7 @@ public class SlowStraightDriveTest extends AutonomousBase {
         //adjust starting position
         super(startPosition, Robot.AllianceColor.RED);
     }
-    //end point 140.000, 84.000
+
     @Override
     protected AutonomousStage[] buildStageSequence() {
         buildStages();
