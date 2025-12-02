@@ -36,8 +36,8 @@ public class FieldCentricDriveTrain {
     public static double turnTarget = 1;
     public static double turnTolerance = 0.5;
 
-    public static double aimOffsetMultiplier = 0.0;
-    public static double aimOffsetZero = 90;
+    public static double aimOffsetMultiplier = 0.2;
+    public static double aimOffsetZero = 35;
 
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -176,7 +176,7 @@ public class FieldCentricDriveTrain {
     }
 
     public void aimAtAprilTag(AprilTagPoseFtc target, Pose3D robotAngle) {
-        if (target == null) {
+        if (target == null || robotAngle == null) {
             return; // no tag to aim at
         }
 
