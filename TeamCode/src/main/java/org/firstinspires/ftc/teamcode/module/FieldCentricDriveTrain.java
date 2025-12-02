@@ -36,7 +36,7 @@ public class FieldCentricDriveTrain {
     public static double turnTarget = 1;
     public static double turnTolerance = 0.5;
 
-    public static double aimOffsetMultiplier = -0.1;
+    public static double aimOffsetMultiplier = 0.15;
     public static double aimOffsetZero = 35;
 
 
