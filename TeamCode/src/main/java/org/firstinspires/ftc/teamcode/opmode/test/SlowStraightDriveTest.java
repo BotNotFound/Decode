@@ -49,7 +49,7 @@ public class SlowStraightDriveTest extends AutonomousBase {
             pathTest[i-1]= new AutonomousStage(follower.pathBuilder().addPath(
                 new BezierLine(new Pose(oldX, startPosition.getY()), new Pose(newX, startPosition.getY()))
                 ).build(),
-                Robot.RobotState.NONE);
+                Robot.RobotState.INTAKE);
     
         }
     
