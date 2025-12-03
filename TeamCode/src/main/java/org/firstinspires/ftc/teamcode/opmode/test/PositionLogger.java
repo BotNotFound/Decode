@@ -19,10 +19,11 @@ public class PositionLogger extends OnePersonTeleOp {
     public static double START_HEADING = 35;
     public static AngleUnit ANGLE_UNIT = AngleUnit.DEGREES;
 
-    private final GoBildaPinpointDriver pinpoint;
+    private GoBildaPinpointDriver pinpoint;
 
-    public PositionLogger() {
-        super();
+    @Override
+    public void init() {
+        super.init();
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, FieldCentricDriveTrain.PINPOINT_DRIVER_NAME);
         pinpoint.setOffsets(START_POSITION_X, START_POSITION_Y, DISTANCE_UNIT);
         pinpoint.setHeading(START_HEADING, ANGLE_UNIT);
