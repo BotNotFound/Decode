@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.teamcode.Robot;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = TeleOpRed.OP_MODE_NAME, group = "1driver")
-public class TeleOpRed extends TeleOp {
+@TeleOp(name = OnePersonTeleOpRed.OP_MODE_NAME, group = "1driver")
+@Disabled
+public class OnePersonTeleOpRed extends OnePersonTeleOp {
     public static final String OP_MODE_NAME = "1-Driver Teleop (Red)";
 
-    public TeleOpRed() {
+    public OnePersonTeleOpRed() {
         super(false);
     }
 

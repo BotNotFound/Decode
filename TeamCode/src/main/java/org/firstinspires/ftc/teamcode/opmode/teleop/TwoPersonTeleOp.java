@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
-@Config
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "2-Driver Teleop", group = "2driver")
+@TeleOp(name = "2-Driver Teleop", group = "2driver")
+@Disabled
 public class TwoPersonTeleOp extends OpMode {
     protected Robot robot;
 
@@ -21,7 +22,7 @@ public class TwoPersonTeleOp extends OpMode {
         this.allowAllianceSwap = allowAllianceSwap;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") // required for opmode annotations to work
     public TwoPersonTeleOp() {
         this(true);
     }

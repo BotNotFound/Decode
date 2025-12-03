@@ -4,12 +4,13 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
 @Config
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "1-Driver Teleop", group = "1driver")
-public class TeleOp extends OpMode {
+@TeleOp(name = "1-Driver Teleop", group = "1driver")
+public class OnePersonTeleOp extends OpMode {
     public static double targetRPM = 3000;
 
     protected Robot robot;
@@ -19,10 +20,12 @@ public class TeleOp extends OpMode {
      */
     private final boolean allowAllianceSwap;
 
-    protected TeleOp(boolean allowAllianceSwap) {
+    protected OnePersonTeleOp(boolean allowAllianceSwap) {
         this.allowAllianceSwap = allowAllianceSwap;
     }
-    public TeleOp() {
+
+    @SuppressWarnings("unused") // required for opmode annotations to work
+    public OnePersonTeleOp() {
         this(true);
     }
 
