@@ -76,7 +76,5 @@ public class TwoPersonTeleOp extends OpMode {
         if (gamepad1.start && gamepad1.back) {
             robot.resetOdometry();
         }
-
-        telemetry.update();
     }
 }
