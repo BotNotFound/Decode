@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 @Autonomous(name = "12 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 public class StandardTwelveArtifactRed extends AutonomousBase {
     public StandardTwelveArtifactRed() {
-        super(new Pose(119.5, 133, Math.toRadians(36)), Robot.AllianceColor.RED);
+        super(new Pose(125.5, 128, Math.toRadians(36)), Robot.AllianceColor.RED);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setLinearHeadingInterpolation(Math.toRadians(36), Math.toRadians(45))
+                                .setLinearHeadingInterpolation(Math.toRadians(36), Math.toRadians(36))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -77,17 +77,18 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
         public PathChain leaveLaunchZone;
 
         public Paths(Follower follower) {
+            //this path is inefficient
             shootPreloads = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(119.5, 133),
+                                    new Pose(125.5, 128),
                                     new Pose(95.344, 99.816),
                                     new Pose(95.344, 99.816),
                                     new Pose(95.344, 99.816)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(36), Math.toRadians(45))
+                    .setLinearHeadingInterpolation(Math.toRadians(36), Math.toRadians(36))
                     .build();
 
             goToFirstRow = follower
@@ -99,7 +100,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(90.000, 84.000)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
+                    .setLinearHeadingInterpolation(Math.toRadians(36), Math.toRadians(0))
                     .build();
 
             intakeFirstRow = follower
@@ -109,7 +110,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
-
+            //this is inefficient, need visualizer
             hitGate = follower
                     .pathBuilder()
                     .addPath(
@@ -122,7 +123,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
-
+            //this is inefficient
             shootFirstRow = follower
                     .pathBuilder()
                     .addPath(
@@ -150,16 +151,16 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
             intakeSecondRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(90, 62), new Pose(155, 62))
+                            new BezierLine(new Pose(90, 62), new Pose(129, 62))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
-
+            //this path is inefficient
             shootSecondRow = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(155.000, 62),
+                                    new Pose(129.000, 62),
                                     new Pose(87.039, 42.343),
                                     new Pose(82.502, 82.166),
                                     new Pose(82.838, 81.830),
@@ -185,16 +186,16 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
             intakeThirdRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(90, 39), new Pose(150, 39))
+                            new BezierLine(new Pose(90, 39), new Pose(129, 39))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
-
+            //this path is inefficient
             shootThirdRow = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(150, 39),
+                                    new Pose(129, 39),
                                     new Pose(91.743, 90.903),
                                     new Pose(91.743, 90.903)
                             )
