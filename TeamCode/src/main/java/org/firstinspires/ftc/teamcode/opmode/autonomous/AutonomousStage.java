@@ -19,18 +19,11 @@ public class AutonomousStage {
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
     public static long SHOT_DURATION_MILLIS = 3500;
+
     /**
-     * The pose tolerance used by {@link AutonomousStage} for the robot's x position, in inches
+     * The max motor power used by the follower when running an {@link org.firstinspires.ftc.teamcode.Robot.RobotState#INTAKE INTAKE} stage
      */
-    public static double POSE_TOLERANCE_X = 25;
-    /**
-     * The pose tolerance used by {@link AutonomousStage} for the robot's y position, in inches
-     */
-    public static double POSE_TOLERANCE_Y = 25;
-    /**
-     * The pose tolerance used by {@link AutonomousStage} for the robot's heading, in degrees
-     */
-    public static double POSE_TOLERANCE_HEADING = 10;
+    public static double MAX_INTAKE_DRIVE_POWER = 0.7;
 
     private final PathChain path;
     private final Robot.RobotState robotState;
@@ -76,7 +69,7 @@ public class AutonomousStage {
      * @return {@code true} if the stage is complete, {@code false} otherwise
      */
     private boolean checkForCompletion(Robot robot, Follower follower) {
-        if (!follower.atPose(path.endPose(), POSE_TOLERANCE_X, POSE_TOLERANCE_Y, Math.toRadians(POSE_TOLERANCE_HEADING))) {
+        if (follower.isBusy()) {
             // we aren't yet at our destination, so the state can't be complete
             return false;
         }
@@ -134,14 +127,14 @@ public class AutonomousStage {
     public void enterStage(Robot robot, Follower follower) {
         robot.setState(robotState);
 
-        double oldMaxPower = FollowerConstants.maxPower;
-
         if (robotState == Robot.RobotState.INTAKE) {
-            FollowerConstants.maxPower = 0.6;
+            follower.setMaxPower(MAX_INTAKE_DRIVE_POWER);
+        }
+        else {
+            follower.setMaxPower(1);
         }
 
         follower.followPath(path);
-        FollowerConstants.maxPower = oldMaxPower;
 
         complete = false;
     }
