@@ -231,7 +231,7 @@ public class Robot {
                     timeSinceShotReady.reset();
                 }
 
-                if (ballTracker.hasBall(ArtifactTracker.ArtifactLocation.FAR)) {
+                if (ballTracker.hasBall(ArtifactTracker.ArtifactLocation.BACK)) {
                     intake.stopIntake();
                     transfer.stopTransfer();
                     shooter.engageKicker();
@@ -249,7 +249,7 @@ public class Robot {
                     intake.stopIntake();
                 }
                 else if (
-                        ballTracker.hasBall(ArtifactTracker.ArtifactLocation.FAR) &&
+                        ballTracker.hasBall(ArtifactTracker.ArtifactLocation.BACK) &&
                                 ballTracker.hasBall(ArtifactTracker.ArtifactLocation.MIDDLE)
                 ) {
                     transfer.stopTransfer();

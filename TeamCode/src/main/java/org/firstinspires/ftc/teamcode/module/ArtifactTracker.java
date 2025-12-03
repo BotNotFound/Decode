@@ -15,16 +15,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  */
 @Config
 public class ArtifactTracker {
-    public static final String FAR_COLOR_SENSOR_NAME = "ColorSensorFar";
+    public static final String BACK_COLOR_SENSOR_NAME = "ColorSensorBack";
     public static final String MIDDLE_COLOR_SENSOR_NAME = "ColorSensorMiddle";
-    public static final String NEAR_COLOR_SENSOR_NAME = "ColorSensorNear";
+    public static final String FRONT_COLOR_SENSOR_NAME = "ColorSensorFront";
     public static final String INDICATOR_LIGHT_NAME = "LED Light";
     public static final int MAX_ARTIFACT_COUNT = 3;
 
     public enum ArtifactLocation {
-        NEAR(0, NEAR_COLOR_SENSOR_NAME),
+        FRONT(0, FRONT_COLOR_SENSOR_NAME),
         MIDDLE(1, MIDDLE_COLOR_SENSOR_NAME),
-        FAR(2, FAR_COLOR_SENSOR_NAME);
+        BACK(2, BACK_COLOR_SENSOR_NAME);
 
         public final int index;
         public final String hardwareName;
@@ -97,7 +97,7 @@ public class ArtifactTracker {
     public void reportDetections() {
         telemetry.addData(
                 "Front Artifact",
-                hasBall(ArtifactLocation.NEAR) ? "Detected" : "Not Detected"
+                hasBall(ArtifactLocation.FRONT) ? "Detected" : "Not Detected"
         );
         telemetry.addData(
                 "Middle Artifact",
@@ -105,7 +105,7 @@ public class ArtifactTracker {
         );
         telemetry.addData(
                 "Back Artifact",
-                hasBall(ArtifactLocation.FAR) ? "Detected" : "Not Detected"
+                hasBall(ArtifactLocation.BACK) ? "Detected" : "Not Detected"
         );
         telemetry.update();
     }
