@@ -107,6 +107,5 @@ public class ArtifactTracker {
                 "Back Artifact",
                 hasBall(ArtifactLocation.BACK) ? "Detected" : "Not Detected"
         );
-        telemetry.update();
     }
 }
