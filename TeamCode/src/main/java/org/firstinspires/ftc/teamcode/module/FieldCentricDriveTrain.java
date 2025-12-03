@@ -36,8 +36,8 @@ public class FieldCentricDriveTrain {
     public static double turnTarget = 1;
     public static double turnTolerance = 0.5;
 
-    public static double aimOffsetMultiplier = 0.15;
-    public static double aimOffsetZero = 35;
+    public static double AIM_OFFSET_MULTIPLIER = 0.15;
+    public static double AIM_OFFSET_ZERO = 35;
 
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -184,7 +184,7 @@ public class FieldCentricDriveTrain {
     }
 
     private double getAimRotationPower(double bearing, double yaw) {
-        turnController.setTarget(turnTarget + (yaw - aimOffsetZero) * aimOffsetMultiplier);
+        turnController.setTarget(turnTarget + (yaw - AIM_OFFSET_ZERO) * AIM_OFFSET_MULTIPLIER);
 
 
         telemetry.addData("Bearing", bearing);
