@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 import java.util.ArrayList;
 
-@Autonomous
+@Autonomous(group = "test")
 public class IdentifyCameras extends OpMode {
     private final ArrayList<WebcamName> cameras = new ArrayList<>();
 

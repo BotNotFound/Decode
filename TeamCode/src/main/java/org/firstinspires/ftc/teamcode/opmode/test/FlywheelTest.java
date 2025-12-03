@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.module.Shooter;
 
-@TeleOp(group = "Test")
+@TeleOp(group = "test")
 public class FlywheelTest extends OpMode {
 
     private Shooter flywheel;

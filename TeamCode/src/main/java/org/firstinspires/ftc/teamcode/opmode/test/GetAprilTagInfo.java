@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
-@TeleOp
+@TeleOp(group = "test")
 public class GetAprilTagInfo extends OpMode {
     private FieldCentricDriveTrain driveTrain;
     private AprilTagDetector detector;
