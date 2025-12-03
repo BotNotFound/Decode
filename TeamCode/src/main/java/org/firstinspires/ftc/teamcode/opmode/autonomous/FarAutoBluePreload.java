@@ -22,7 +22,7 @@ public class FarAutoBluePreload extends AutonomousBase {
     protected AutonomousStage[] buildStageSequence() {
         Paths autoPath = new Paths(follower);
         return new AutonomousStage[]{
-                new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
+                new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
                                 .setConstantHeadingInterpolation(Math.toRadians(180 - 72))

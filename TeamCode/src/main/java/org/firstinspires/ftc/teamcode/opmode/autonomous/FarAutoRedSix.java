@@ -21,7 +21,7 @@ public class FarAutoRedSix extends AutonomousBase{
     protected AutonomousStage[] buildStageSequence() {
         Paths autoPath = new Paths(follower);
         return new AutonomousStage[]{
-            new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
+                new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
             new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
                                 .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(72))
@@ -30,7 +30,7 @@ public class FarAutoRedSix extends AutonomousBase{
             ),
             new AutonomousStage(autoPath.goToArtifactRow, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.intakeArtifacts, Robot.RobotState.INTAKE),
-            new AutonomousStage(autoPath.shootArtifacts, Robot.RobotState.PRE_SHOOT),
+                new AutonomousStage(autoPath.shootArtifacts, Robot.RobotState.NONE),
             new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootArtifacts.endPose()))
                                 .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(72))

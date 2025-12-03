@@ -82,10 +82,6 @@ public class AutonomousStage {
             case REVERSE_INTAKE:
                 // these states are only useful when the robot is moving
                 return true;
-            case PRE_SHOOT:
-                // this state is only a buffer for shoot, so if we are able to shoot,
-                // we can end it
-                return true;
             case SHOOT:
                 if (shotTimer.isTimerOn()) {
                     // we are currently shooting, wait until we're done
