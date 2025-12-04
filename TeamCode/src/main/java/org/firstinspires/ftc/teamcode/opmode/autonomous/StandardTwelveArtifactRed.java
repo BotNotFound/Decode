@@ -97,8 +97,8 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .addPath(
                             new BezierCurve(
                                     new Pose(95.344, 95.344),
-                                    new Pose(90.000, 84.000),
-                                    new Pose(90.000, 84.000)
+                                    new Pose(90.000, 80),
+                                    new Pose(90.000, 80)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(50), Math.toRadians(0))
@@ -107,20 +107,20 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
             intakeFirstRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(90.000, 84.000), new Pose(127.5, 84.000))
+                            new BezierLine(new Pose(90.000, 80), new Pose(129, 80))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
-            //this is inefficient, need visualizer
             hitGate = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(
-                                    new Pose(127.5, 84.000),
-                                    new Pose(127.447, 75.706)
+                            new BezierCurve(
+                                    new Pose(129, 80),
+                                    new Pose(115, 80),
+                                    new Pose(129, 76)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
+                    .setConstantHeadingInterpolation(Math.toRadians(0))
                     .build();
             hitGate2 = follower
                     .pathBuilder()
