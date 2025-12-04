@@ -20,11 +20,6 @@ public class AutonomousStage {
      */
     public static long SHOT_DURATION_MILLIS = 3500;
 
-    /**
-     * The max motor power used by the follower when running an {@link org.firstinspires.ftc.teamcode.Robot.RobotState#INTAKE INTAKE} stage
-     */
-    public static double MAX_INTAKE_DRIVE_POWER = 0.7;
-
     private final PathChain path;
     private final Robot.RobotState robotState;
     private final Timing.Timer shotTimer;
@@ -122,13 +117,6 @@ public class AutonomousStage {
      */
     public void enterStage(Robot robot, Follower follower) {
         robot.setState(robotState);
-
-        if (robotState == Robot.RobotState.INTAKE) {
-            follower.setMaxPower(MAX_INTAKE_DRIVE_POWER);
-        }
-        else {
-            follower.setMaxPower(1);
-        }
 
         follower.followPath(path);
 
