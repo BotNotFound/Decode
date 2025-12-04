@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
@@ -15,30 +14,35 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 public class FarAutoRedNine extends AutonomousBase{
 
     public FarAutoRedNine() {
-        super(new Pose(86.6, 8.000, Math.toRadians(90)), Robot.AllianceColor.RED);
+        super(new Pose(92.048, 0.355, Math.toRadians(90)), Robot.AllianceColor.RED);
     }
     @Override
     protected AutonomousStage[] buildStageSequence() {
         Paths autoPath = new Paths(follower);
         return new AutonomousStage[]{
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
-            new AutonomousStage(
-                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(72))
-                                .build(),
+                new AutonomousStage(follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
+                        .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(67))
+                        .build(),
                         Robot.RobotState.SHOOT
-            ),
-            new AutonomousStage(autoPath.goToArtifactRow, Robot.RobotState.NONE),
-            new AutonomousStage(autoPath.intakeArtifacts, Robot.RobotState.INTAKE),
-                new AutonomousStage(autoPath.shootArtifacts, Robot.RobotState.NONE),
-            new AutonomousStage(
-                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootArtifacts.endPose()))
-                                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(72))
-                                .build(),
+                ),
+                new AutonomousStage(autoPath.goToArtifactRow, Robot.RobotState.NONE),
+                new AutonomousStage(autoPath.intakeArtifacts, Robot.RobotState.INTAKE),
+                new AutonomousStage(autoPath.shootArtifactRowOne, Robot.RobotState.NONE),
+                new AutonomousStage(follower.pathBuilder().addPath(new BezierPoint(autoPath.shootArtifactRowOne.endPose()))
+                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(67))
+                        .build(),
                         Robot.RobotState.SHOOT
-            ),   
-            new AutonomousStage(autoPath.leaveLaunchZone, Robot.RobotState.INTAKE),
-                
+                ),
+                new AutonomousStage(autoPath.goToSecondArtifactRow, Robot.RobotState.NONE),
+                new AutonomousStage(autoPath.intakeSecondArtifactRow, Robot.RobotState.INTAKE),
+                new AutonomousStage(autoPath.shootSecondArtifactRow, Robot.RobotState.NONE),
+                new AutonomousStage(follower.pathBuilder().addPath(new BezierPoint(autoPath.shootSecondArtifactRow.endPose()))
+                        .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(67))
+                        .build(),
+                        Robot.RobotState.SHOOT
+                ),
+                        new AutonomousStage(autoPath.leaveLaunchZone, Robot.RobotState.INTAKE),
         };
     }
 
@@ -47,59 +51,74 @@ public class FarAutoRedNine extends AutonomousBase{
         public PathChain shootPreloads;
         public PathChain goToArtifactRow;
         public PathChain intakeArtifacts;
-        public PathChain shootArtifacts;
+        public PathChain shootArtifactRowOne;
+        public PathChain goToSecondArtifactRow;
+        public PathChain intakeSecondArtifactRow;
+        public PathChain shootSecondArtifactRow;
         public PathChain leaveLaunchZone;
-      
+
         public Paths(Follower follower) {
-          shootPreloads = follower
-            .pathBuilder()
-            .addPath(
-              new BezierCurve(
-                new Pose(86.600, 8.407),
-                new Pose(86.758, 11.806),
-                new Pose(82.700, 11.091)
-              )
-            )
-            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(72))
-            .build();
-      
-          goToArtifactRow = follower
-            .pathBuilder()
-            .addPath(
-              new BezierCurve(
-                new Pose(82.700, 11.091),
-                new Pose(131.015, 8.657),
-                new Pose(104.046, 11.154),
-                new Pose(118.363, 12.153),
-                new Pose(141.836, 29.133)
-              )
-            )
-            .setLinearHeadingInterpolation(Math.toRadians(72), Math.toRadians(-90))
-            .build();
-      
-          intakeArtifacts = follower
-            .pathBuilder()
-            .addPath(
-              new BezierLine(new Pose(141.836, 29.133), new Pose(141.336, 2.164))
-            )
-            .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(-90))
-            .build();
-      
-          shootArtifacts = follower
-            .pathBuilder()
-            .addPath(
-              new BezierLine(new Pose(141.336, 2.164), new Pose(90.562, 16.980))
-            )
-            .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(72))
-            .build();
-      
-          leaveLaunchZone = follower
-            .pathBuilder()
-            .addPath(
-              new BezierLine(new Pose(90.562, 16.980), new Pose(105.711, 10.155))
-            )
-            .setLinearHeadingInterpolation(Math.toRadians(72), Math.toRadians(0))
-            .build();
+            shootPreloads = follower
+                    .pathBuilder()
+                    .addPath(new BezierLine(new Pose(92.048, 0.355), new Pose(87.908, 4.177)))
+                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(67))
+                    .build();
+
+            goToArtifactRow = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierLine(new Pose(87.908, 4.177), new Pose(105.900, 29.498))
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(67), Math.toRadians(0))
+                    .build();
+
+            intakeArtifacts = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierLine(new Pose(105.900, 29.498), new Pose(134.100, 29.498))
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
+                    .build();
+
+            shootArtifactRowOne = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierLine(new Pose(134.100, 29.498), new Pose(87.908, 4.177))
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(67))
+                    .build();
+
+            goToSecondArtifactRow = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierLine(new Pose(87.908, 4.177), new Pose(144.000, 21.900))
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(67), Math.toRadians(-90))
+                    .build();
+
+            intakeSecondArtifactRow = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierLine(new Pose(144.000, 21.900), new Pose(144.000, 2.500))
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(-90))
+                    .build();
+
+            shootSecondArtifactRow = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierLine(new Pose(144.000, 2.500), new Pose(87.908, 4.177))
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(67))
+                    .build();
+
+            leaveLaunchZone = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierLine(new Pose(87.908, 4.177), new Pose(110.840, 4.018))
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(67), Math.toRadians(0))
+                    .build();
         }
-      }
+    }
 }
