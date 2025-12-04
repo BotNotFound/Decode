@@ -32,7 +32,7 @@ public class Shooter {
     public static double kI = 0;
     public static double kD = 0;
     public static double kF = 0.000175;
-    public static double tolerance = 100;
+    public static double tolerance = 150;
 
     public static int motorCPS = 28;
 
