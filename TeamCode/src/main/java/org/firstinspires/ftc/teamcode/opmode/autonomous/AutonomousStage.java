@@ -64,7 +64,7 @@ public class AutonomousStage {
      * @return {@code true} if the stage is complete, {@code false} otherwise
      */
     private boolean checkForCompletion(Robot robot, Follower follower) {
-        if (follower.isBusy()) {
+        if (robotState != Robot.RobotState.SHOOT && follower.isBusy()) {
             // we aren't yet at our destination, so the state can't be complete
             return false;
         }
