@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.IndicatorColorValues;
 
 
 /*If we ever consider mild sorting efforts and tracking whether or not we have three artifacts inside
@@ -20,6 +21,14 @@ public class ArtifactTracker {
     public static final String FRONT_COLOR_SENSOR_NAME = "ColorSensorFront";
     public static final String INDICATOR_LIGHT_NAME = "LED Light";
     public static final int MAX_ARTIFACT_COUNT = 3;
+
+    public static double[] INDICATOR_COLORS = {
+            IndicatorColorValues.OFF,
+            IndicatorColorValues.VIOLET,
+            IndicatorColorValues.YELLOW,
+            IndicatorColorValues.GREEN,
+    };
+
 
     public enum ArtifactLocation {
         FRONT(0, FRONT_COLOR_SENSOR_NAME),
@@ -67,34 +76,10 @@ public class ArtifactTracker {
         return hasBall(colorSensors[location.index]);
     }
 
-    private void setLEDYellow() {
-        indicatorLight.setPosition(0.388);
-    }
-
-    private void setLEDRed() {
-        indicatorLight.setPosition(0.277);
-    }
-
-    private void setLEDGreen() {
-        indicatorLight.setPosition(0.500);
-    }
-
     public void updateLED() {
-        switch (getArtifactCount()) {
-            case 0:
-                indicatorLight.setPosition(0); // off
-                break;
-            case 1:
-                setLEDRed();
-                break;
-            case 2:
-                setLEDYellow();
-                break;
-            case 3:
-            default:
-                setLEDGreen();
-                break;
-        }
+        indicatorLight.setPosition(
+                INDICATOR_COLORS[Math.min(getArtifactCount(), INDICATOR_COLORS.length)]
+        );
     }
 
 
