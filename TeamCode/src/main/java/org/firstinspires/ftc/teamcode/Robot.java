@@ -52,6 +52,7 @@ public class Robot {
     public enum RobotState {
         INTAKE,
         REVERSE_INTAKE,
+        PRE_SHOOT,
         SHOOT,
         NONE,
     }
@@ -153,6 +154,12 @@ public class Robot {
 
                 break;
 
+            case PRE_SHOOT:
+                intake.startIntake();
+                transfer.reverseTransfer();
+                shooter.disengageKicker();
+                break;
+
             case SHOOT:
                 intake.stopIntake();
                 transfer.stopTransfer();
@@ -225,6 +232,10 @@ public class Robot {
                     shooter.engageKicker();
                 }
                 break;
+
+            case PRE_SHOOT:
+                aprilTagDetector.update(allianceColor.targetAprilTagID);
+                shooter.setRPMForAprilTag(aprilTagDetector.getTagPose());
 
             case INTAKE:
                 if (ballTracker.hasAllArtifacts()) {

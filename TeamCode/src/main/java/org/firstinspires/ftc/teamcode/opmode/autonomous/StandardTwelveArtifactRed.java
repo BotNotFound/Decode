@@ -21,7 +21,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
     protected AutonomousStage[] buildStageSequence() {
         Paths autoPath = new Paths(follower);
         return new AutonomousStage[]{
-                new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
+                new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
                                 .setConstantHeadingInterpolation(Math.toRadians(35))
@@ -31,7 +31,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.goToFirstRow, Robot.RobotState.NONE),
                 new AutonomousStage(autoPath.intakeFirstRow, Robot.RobotState.INTAKE),
                 new AutonomousStage(autoPath.hitGate, Robot.RobotState.INTAKE),
-                new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.INTAKE),
+                new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootFirstRow.endPose()))
                                 .setConstantHeadingInterpolation(Math.toRadians(35))
@@ -40,7 +40,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 ),
                 new AutonomousStage(autoPath.goToSecondRow, Robot.RobotState.NONE),
                 new AutonomousStage(autoPath.intakeSecondRow, Robot.RobotState.INTAKE),
-                new AutonomousStage(autoPath.shootSecondRow, Robot.RobotState.INTAKE),
+                new AutonomousStage(autoPath.shootSecondRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootSecondRow.endPose()))
                                 .setConstantHeadingInterpolation(Math.toRadians(35))
@@ -49,7 +49,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 ),
                 new AutonomousStage(autoPath.goToThirdRow, Robot.RobotState.NONE),
                 new AutonomousStage(autoPath.intakeThirdRow, Robot.RobotState.INTAKE),
-                new AutonomousStage(autoPath.shootThirdRow, Robot.RobotState.INTAKE),
+                new AutonomousStage(autoPath.shootThirdRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootThirdRow.endPose()))
                                 .setConstantHeadingInterpolation(Math.toRadians(35))
