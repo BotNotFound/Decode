@@ -67,7 +67,6 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
         public PathChain goToFirstRow;
         public PathChain intakeFirstRow;
         public PathChain hitGate;
-        public PathChain hitGate2;
         public PathChain shootFirstRow;
         public PathChain goToSecondRow;
         public PathChain intakeSecondRow;
@@ -114,16 +113,6 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(132, 80),
                                     new Pose(115, 80),
                                     new Pose(132, 72)
-                            )
-                    )
-                    .setConstantHeadingInterpolation(Math.toRadians(0))
-                    .build();
-            hitGate2 = follower
-                    .pathBuilder()
-                    .addPath(
-                            new BezierLine(
-                                    new Pose(127.447, 75.706),
-                                    new Pose(130.2, 75.70600)
                             )
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(0))
