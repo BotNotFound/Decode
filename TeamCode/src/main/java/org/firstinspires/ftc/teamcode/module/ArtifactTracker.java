@@ -67,16 +67,32 @@ public class ArtifactTracker {
         return hasBall(colorSensors[location.index]);
     }
 
-    public void setLEDYellow() {
+    private void setLEDYellow() {
         indicatorLight.setPosition(0.388);
     }
 
-    public void setLEDRed() {
+    private void setLEDRed() {
         indicatorLight.setPosition(0.277);
     }
 
-    public void setLEDGreen() {
+    private void setLEDGreen() {
         indicatorLight.setPosition(0.500);
+    }
+
+    public void updateLED() {
+        switch (getArtifactCount()) {
+            case 0:
+                setLEDRed();
+                break;
+            case 1:
+            case 2:
+                setLEDYellow();
+                break;
+            case 3:
+            default:
+                setLEDGreen();
+                break;
+        }
     }
 
 
@@ -107,5 +123,6 @@ public class ArtifactTracker {
                 "Back Artifact",
                 hasBall(ArtifactLocation.BACK) ? "Detected" : "Not Detected"
         );
+        updateLED();
     }
 }

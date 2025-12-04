@@ -130,23 +130,6 @@ public class Robot {
         shooter.setRPMForAprilTag(target);
     }
 
-    private void updateLED() {
-        switch (ballTracker.getArtifactCount()) {
-            case 0:
-                ballTracker.setLEDRed();
-                break;
-            case 1:
-            case 2:
-                ballTracker.setLEDYellow();
-                break;
-            case 3:
-            default:
-                ballTracker.setLEDGreen();
-                break;
-        }
-        ballTracker.reportDetections();
-    }
-
     public void setState(RobotState newState) {
         if (newState == currentState) {
             return;
@@ -203,7 +186,7 @@ public class Robot {
     }
 
     public void loopWithoutMovement() {
-        updateLED();
+        ballTracker.reportDetections();
 
         switch (currentState) {
             case SHOOT:
@@ -213,7 +196,7 @@ public class Robot {
 
                 if (!shooter.isReady()) {
                     intake.stopIntake();
-                    transfer.stopTransfer();
+                    transfer.reverseTransfer();
 
 
                     if (shotReady) {
