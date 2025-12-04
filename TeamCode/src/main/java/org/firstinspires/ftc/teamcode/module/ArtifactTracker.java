@@ -82,9 +82,11 @@ public class ArtifactTracker {
     public void updateLED() {
         switch (getArtifactCount()) {
             case 0:
-                setLEDRed();
+                indicatorLight.setPosition(0); // off
                 break;
             case 1:
+                setLEDRed();
+                break;
             case 2:
                 setLEDYellow();
                 break;
