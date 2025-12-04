@@ -22,10 +22,13 @@ public class ArtifactTracker {
     public static final String INDICATOR_LIGHT_NAME = "LED Light";
     public static final int MAX_ARTIFACT_COUNT = 3;
 
+    /* Contains the colors to for each amount of balls we can have at once.
+     * The color's index is the number of held balls it will represent
+     */
     public static double[] INDICATOR_COLORS = {
             IndicatorColorValues.OFF,
             IndicatorColorValues.VIOLET,
-            IndicatorColorValues.YELLOW,
+            IndicatorColorValues.BLUE,
             IndicatorColorValues.GREEN,
     };
 
