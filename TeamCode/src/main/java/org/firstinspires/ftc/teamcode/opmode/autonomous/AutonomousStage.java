@@ -18,12 +18,16 @@ public class AutonomousStage {
     /**
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
-    public static long SHOT_DURATION_MILLIS = 3000;
+    public static long MIN_SHOT_DURATION_MILLIS = 3000;
+    public static long MAX_SHOT_DURATION_MILLIS = 4000;
 
     private final PathChain path;
     private final Robot.RobotState robotState;
-    private final Timing.Timer shotTimer;
+    private final Timing.Timer minShotTimer;
+    private final Timing.Timer maxShotTimer;
+
     private boolean complete;
+    private int ballsHeldAtStart;
 
     /**
      * Creates an autonomous stage
@@ -34,7 +38,8 @@ public class AutonomousStage {
     public AutonomousStage(PathChain path, Robot.RobotState robotState) {
         this.path = path;
         this.robotState = robotState;
-        shotTimer = new Timing.Timer(SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
+        minShotTimer = new Timing.Timer(MIN_SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
+        maxShotTimer = new Timing.Timer(MAX_SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
         complete = false;
     }
 
@@ -82,14 +87,15 @@ public class AutonomousStage {
                 // we can end it
                 return true;
             case SHOOT:
-                if (shotTimer.isTimerOn()) {
+                if (minShotTimer.isTimerOn()) {
                     // we are currently shooting, wait until we're done
-                    return shotTimer.done();
+                    return maxShotTimer.done() || (minShotTimer.done() && robot.getShotsTaken() >= ballsHeldAtStart);
                 }
 
                 if (robot.isShotReady()) {
                     // we are ready to shoot, start the timer
-                    shotTimer.start();
+                    minShotTimer.start();
+                    maxShotTimer.start();
                 }
                 return false;
         }
@@ -120,6 +126,7 @@ public class AutonomousStage {
      * @param follower The follower moving the robot
      */
     public void enterStage(Robot robot, Follower follower) {
+        ballsHeldAtStart = robot.getHeldArtifactCount();
         robot.setState(robotState);
 
         follower.followPath(path);

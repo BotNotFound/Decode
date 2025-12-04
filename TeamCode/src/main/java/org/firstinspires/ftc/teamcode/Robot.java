@@ -311,4 +311,8 @@ public class Robot {
     public void setHeadingScale(double newHeadingScale) {
         headingScale = newHeadingScale;
     }
+
+    public int getHeldArtifactCount() {
+        return ballTracker.getArtifactCount();
+    }
 }
