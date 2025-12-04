@@ -63,6 +63,7 @@ public class Robot {
     private double moveScale = 1;
     private double headingScale = 1;
     private boolean shotReady = false;
+    private int shotsTaken = 0;
 
     /* Modules */
     private final FieldCentricDriveTrain driveTrain;
@@ -124,6 +125,13 @@ public class Robot {
         return allianceColor;
     }
 
+    public int getShotsTaken() {
+        if (currentState != RobotState.SHOOT) {
+            return 0;
+        }
+        return shotsTaken;
+    }
+
     private void prepareToShoot() {
         AprilTagPoseFtc target = aprilTagDetector.getTagPose();
         Pose3D robot = aprilTagDetector.getRobotPose();
@@ -167,6 +175,7 @@ public class Robot {
 
                 shotReady = false;
                 shotPrepTime.reset();
+                shotsTaken = 0;
                 break;
 
             case NONE:
@@ -205,9 +214,9 @@ public class Robot {
                     intake.stopIntake();
                     transfer.reverseTransfer();
 
-
                     if (shotReady) {
-                        Log.d(TAG, "Shot completed in " + timeSinceShotReady.milliseconds() + " millis");
+                        shotsTaken++;
+                        Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
                     }
                     shotReady = false;
 
