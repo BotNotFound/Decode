@@ -89,9 +89,7 @@ public class AutonomousStage {
             case SHOOT:
                 if (minShotTimer.isTimerOn()) {
                     // we are currently shooting, wait until we're done
-                    //much faster if we can just check all of these as or and if we can decrease time it takes to shoot
-                    //all three artifacts through removing slow transfer speed and tuning flywheel velocity PID
-                    return maxShotTimer.done() || (minShotTimer.done()) || (robot.getShotsTaken() >= ballsHeldAtStart);
+                    return maxShotTimer.done() || (minShotTimer.done() && (robot.getShotsTaken() >= ballsHeldAtStart));
                 }
 
                 if (robot.isShotReady()) {
@@ -130,6 +128,10 @@ public class AutonomousStage {
     public void enterStage(Robot robot, Follower follower) {
         ballsHeldAtStart = robot.getHeldArtifactCount();
         robot.setState(robotState);
+        //adjust power when we go to intake.
+        if(getRobotState() == Robot.RobotState.INTAKE){
+            follower.setmaxPower(0.8);
+        }
 
         follower.followPath(path);
 
