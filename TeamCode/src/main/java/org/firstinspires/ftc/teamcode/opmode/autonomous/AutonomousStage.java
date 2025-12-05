@@ -130,7 +130,7 @@ public class AutonomousStage {
         robot.setState(robotState);
         //adjust power when we go to intake.
         if(getRobotState() == Robot.RobotState.INTAKE){
-            follower.setmaxPower(0.8);
+            follower.setmaxPower(1);
         }
 
         follower.followPath(path);
