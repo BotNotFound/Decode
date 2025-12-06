@@ -25,7 +25,7 @@ public class FarAutoRedPreload extends AutonomousBase {
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(72))
+                                .setConstantHeadingInterpolation(Math.toRadians(64.7))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
