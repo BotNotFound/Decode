@@ -13,7 +13,9 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.OnePersonTeleOp;
 @Config
 @TeleOp(group = "test")
 public class PositionLogger extends OnePersonTeleOp {
-    public static Pose2D START_POSE = new Pose2D(DistanceUnit.INCH, 125.5, 128, AngleUnit.DEGREES, 36);
+    public static double START_X = 125.5;
+    public static double START_Y = 128;
+    public static double START_HEADING = 35;
 
     private GoBildaPinpointDriver pinpoint;
 
@@ -21,7 +23,7 @@ public class PositionLogger extends OnePersonTeleOp {
     public void start() {
         super.start();
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, FieldCentricDriveTrain.PINPOINT_DRIVER_NAME);
-        pinpoint.setPosition(START_POSE);
+        pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, START_X, START_Y, AngleUnit.DEGREES, START_HEADING));
     }
 
     @Override
