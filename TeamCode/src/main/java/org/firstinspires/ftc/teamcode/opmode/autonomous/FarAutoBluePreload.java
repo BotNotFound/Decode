@@ -20,7 +20,7 @@ public class FarAutoBluePreload extends AutonomousBase {
 
     @Override
     protected AutonomousStage[] buildStageSequence() {
-        FarAutoRedPreload.Paths autoPath = new FarAutoRedPreload.Paths(follower);
+        Paths autoPath = new Paths(follower);
         return new AutonomousStage[]{
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
                 new AutonomousStage(
