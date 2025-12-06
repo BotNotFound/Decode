@@ -67,7 +67,7 @@ public class FarAutoRedNine extends AutonomousBase{
             goToArtifactRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(87.908, 4.177), new Pose(105.900, 29.498))
+                            new BezierLine(new Pose(87.908, 4.177), new Pose(105.900, 27.3))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(67), Math.toRadians(0))
                     .build();
@@ -75,7 +75,7 @@ public class FarAutoRedNine extends AutonomousBase{
             intakeArtifacts = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(105.900, 29.498), new Pose(134.100, 29.498))
+                            new BezierLine(new Pose(105.900, 27.3), new Pose(134.100, 27.3))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .build();
@@ -83,7 +83,7 @@ public class FarAutoRedNine extends AutonomousBase{
             shootArtifactRowOne = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(134.100, 29.498), new Pose(87.908, 4.177))
+                            new BezierLine(new Pose(134.100, 27.3), new Pose(87.908, 4.177))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(67))
                     .build();
@@ -91,7 +91,7 @@ public class FarAutoRedNine extends AutonomousBase{
             goToSecondArtifactRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(87.908, 4.177), new Pose(144.000, 21.900))
+                            new BezierLine(new Pose(87.908, 4.177), new Pose(137, 20))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(67), Math.toRadians(-90))
                     .build();
@@ -99,7 +99,7 @@ public class FarAutoRedNine extends AutonomousBase{
             intakeSecondArtifactRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(144.000, 21.900), new Pose(144.000, 2.500))
+                            new BezierLine(new Pose(137, 20), new Pose(137, 1.3))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(-90))
                     .build();
@@ -107,7 +107,7 @@ public class FarAutoRedNine extends AutonomousBase{
             shootSecondArtifactRow = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(144.000, 2.500), new Pose(87.908, 4.177))
+                            new BezierLine(new Pose(137, 1.3), new Pose(87.908, 4.177))
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(67))
                     .build();
