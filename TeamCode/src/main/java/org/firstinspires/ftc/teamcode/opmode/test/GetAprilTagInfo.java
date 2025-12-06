@@ -21,7 +21,7 @@ public class GetAprilTagInfo extends OpMode {
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
+        driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry, AllianceColor.RED);
         detector = new AprilTagDetector(hardwareMap, telemetry);
     }
 

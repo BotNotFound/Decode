@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.SquIDController;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
@@ -39,10 +40,10 @@ public class FieldCentricDriveTrain {
     private boolean aimingAtAprilTag;
 
     public static double AIM_OFFSET_MULTIPLIER = 0.15;
-    public static double AIM_OFFSET_ZERO = 35;
+    private final double aimOffsetZero;
 
 
-    public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
+    public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor alliance) {
         frontRightDriveMotor = hardwareMap.get(DcMotor.class, FRONT_RIGHT_DRIVE_MOTOR_NAME);
         frontLeftDriveMotor = hardwareMap.get(DcMotor.class, FRONT_LEFT_DRIVE_MOTOR_NAME);
         backRightDriveMotor = hardwareMap.get(DcMotor.class, BACK_RIGHT_DRIVE_MOTOR_NAME);
@@ -75,6 +76,7 @@ public class FieldCentricDriveTrain {
         turnController.setTolerance(turnTolerance);
         turnController.setTarget(turnTarget);
         aimingAtAprilTag = false;
+        aimOffsetZero = alliance.tagAimOffsetZero;
     }
 
     public void resetOdometry() {
@@ -189,7 +191,7 @@ public class FieldCentricDriveTrain {
     }
 
     private double getAimRotationPower(double bearing, double yaw) {
-        turnController.setTarget(turnTarget + (yaw - AIM_OFFSET_ZERO) * AIM_OFFSET_MULTIPLIER);
+        turnController.setTarget(turnTarget + (yaw - aimOffsetZero) * AIM_OFFSET_MULTIPLIER);
 
 
         telemetry.addData("Bearing", bearing);

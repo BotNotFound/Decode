@@ -53,7 +53,7 @@ public class Robot {
     private final ElapsedTime shotPrepTime;
 
     public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
-        driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
+        driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry, color);
         driveTrain.resetOdometry();
 
         shooter = new Shooter(hardwareMap, telemetry);
