@@ -177,6 +177,12 @@ public class Robot {
                 shotsTaken = 0;
                 keepBallsApart = ballTracker.hasBall(ArtifactLocation.BACK) &&
                         ballTracker.hasBall(ArtifactLocation.MIDDLE);
+
+                Log.d(TAG, "enter shoot {" +
+                        (ballTracker.hasBall(ArtifactLocation.FRONT) ? "front | " : "      | ") +
+                        (ballTracker.hasBall(ArtifactLocation.MIDDLE) ? "middle | " : "       | ") +
+                        (ballTracker.hasBall(ArtifactLocation.BACK) ? "back | " : "     | ") +
+                        "keepBallsApart = " + keepBallsApart + "}");
                 break;
 
             case NONE:
