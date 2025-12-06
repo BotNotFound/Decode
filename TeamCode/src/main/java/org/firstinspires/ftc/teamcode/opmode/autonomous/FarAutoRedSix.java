@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 public class FarAutoRedSix extends AutonomousBase{
 
     public FarAutoRedSix() {
-        super(new Pose(86.6, 8.000, Math.toRadians(90)), Robot.AllianceColor.RED);
+        super(new Pose(89.5, 10.1, Math.toRadians(90)), Robot.AllianceColor.RED);
     }
     @Override
     protected AutonomousStage[] buildStageSequence() {
@@ -24,7 +24,7 @@ public class FarAutoRedSix extends AutonomousBase{
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(67))
+                                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(64.7))
                                 .build(),
                         Robot.RobotState.SHOOT
             ),
@@ -45,7 +45,8 @@ public class FarAutoRedSix extends AutonomousBase{
     public static class Paths {
 
         public PathChain shootPreloads;
-        public PathChain goToArtifactRow;
+        public PathChain goToArtifactRowOne;
+        public PathChain goToArtifactRowTwo; 
         public PathChain intakeArtifacts;
         public PathChain shootArtifacts;
         public PathChain leaveLaunchZone;
@@ -54,33 +55,42 @@ public class FarAutoRedSix extends AutonomousBase{
           shootPreloads = follower
             .pathBuilder()
             .addPath(
-              new BezierCurve(
-                new Pose(86.600, 8.407),
-                new Pose(86.758, 11.806),
-                new Pose(82.700, 11.091)
+              new BezierLine(
+                new Pose(89.5, 10.1),
+                new Pose(86.7, 18.03)
               )
             )
-            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(67))
+            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(64.7))
             .build();
       
-          goToArtifactRow = follower
+          goToArtifactRowOne = follower
             .pathBuilder()
             .addPath(
-                    //use position logger
               new BezierLine(
-                new Pose(82.700, 11.091),
-                new Pose(141.836, 29.133)
+                new Pose(86.7, 18.03),
+                new Pose(126.5, 17.5)
               )
             )
-            .setLinearHeadingInterpolation(Math.toRadians(67), Math.toRadians(-90))
+            .setLinearHeadingInterpolation(Math.toRadians(64.7), Math.toRadians(-90))
             .build();
-      
+            
+          goToArtifactRowTwo = follower
+            .pathBuilder()
+            .addPath (
+              new BezierLine(
+                new Pose(126.5, 17.5),
+                new Pose(137.8, 23.25)
+              )
+            )
+            .setConstantHeadingInterpolation(Math.toRadians(-90))
+            .build();
+          //the end pose should be adjusted with Position Logger
           intakeArtifacts = follower
             .pathBuilder()
             .addPath(
-              new BezierLine(new Pose(141.836, 29.133), new Pose(141.336, 2.164))
+              new BezierLine(new Pose(137.8, 23.25), new Pose(141.336, 2.164))
             )
-            .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(-90))
+            .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(-110))
             .build();
       
           shootArtifacts = follower
@@ -88,7 +98,7 @@ public class FarAutoRedSix extends AutonomousBase{
             .addPath(
               new BezierLine(new Pose(141.336, 2.164), new Pose(90.562, 16.980))
             )
-            .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(67))
+            .setLinearHeadingInterpolation(Math.toRadians(-110), Math.toRadians(64.7))
             .build();
       
           leaveLaunchZone = follower
@@ -96,7 +106,7 @@ public class FarAutoRedSix extends AutonomousBase{
             .addPath(
               new BezierLine(new Pose(90.562, 16.980), new Pose(105.711, 10.155))
             )
-            .setLinearHeadingInterpolation(Math.toRadians(67), Math.toRadians(0))
+            .setLinearHeadingInterpolation(Math.toRadians(64.7), Math.toRadians(0))
             .build();
         }
       }
