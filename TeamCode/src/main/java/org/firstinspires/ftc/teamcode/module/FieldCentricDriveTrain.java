@@ -36,6 +36,8 @@ public class FieldCentricDriveTrain {
     public static double turnTarget = 1;
     public static double turnTolerance = 1;
 
+    private boolean aimingAtAprilTag;
+
     public static double AIM_OFFSET_MULTIPLIER = 0.15;
     public static double AIM_OFFSET_ZERO = 35;
 
@@ -72,6 +74,7 @@ public class FieldCentricDriveTrain {
         turnController = new SquIDController(turnP);
         turnController.setTolerance(turnTolerance);
         turnController.setTarget(turnTarget);
+        aimingAtAprilTag = false;
     }
 
     public void resetOdometry() {
@@ -177,9 +180,11 @@ public class FieldCentricDriveTrain {
 
     public void aimAtAprilTag(AprilTagPoseFtc target, Pose3D robotAngle) {
         if (target == null || robotAngle == null) {
+            aimingAtAprilTag = false;
             return; // no tag to aim at
         }
 
+        aimingAtAprilTag = true;
         setTurnPower(getAimRotationPower(target.bearing, robotAngle.getOrientation().getYaw(AngleUnit.DEGREES)));
     }
 
@@ -196,7 +201,7 @@ public class FieldCentricDriveTrain {
     }
 
     public boolean isReady(){
-        return turnController.atTarget();
+        return !aimingAtAprilTag || turnController.atTarget();
     }
 
 }
