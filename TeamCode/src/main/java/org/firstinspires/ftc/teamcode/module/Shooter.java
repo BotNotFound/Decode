@@ -119,11 +119,13 @@ public class Shooter {
 
         telemetry.addData("Target RPM", rpm);
         telemetry.addData("Real RPM", actualRPM);
-        telemetry.addData("Default RPM", defaultRPM);
-
     }
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
+        setRPMForAprilTag(tagPose, defaultRPM);
+    }
+
+    public void setRPMForAprilTag(AprilTagPoseFtc tagPose, double fallbackRPM) {
         if(tagPose != null){
             // clamps the range to the min/max for the interpLUT to avoid bound errors
             double measuredDistance = tagPose.range;
@@ -137,7 +139,7 @@ public class Shooter {
         } else if (stickyRPM) {
             setRPM(stickyTargetRPM);
         } else {
-            setRPM(defaultRPM);
+            setRPM(fallbackRPM);
         }
     }
 

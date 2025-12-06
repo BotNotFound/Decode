@@ -64,13 +64,13 @@ public class OnePersonTeleOp extends OpMode {
         robot.loop(gamepad1);
 
         if (gamepad1.dpadUpWasPressed()) {
-            robot.increaseDefaultShooterRPM();
+            robot.increaseFallbackShooterRPM();
         }
         else if (gamepad1.dpadDownWasPressed()) {
-            robot.decreaseDefaultShooterRPM();
+            robot.decreaseFallbackShooterRPM();
         }
 
-        telemetry.addData("default shooter rpm", robot.getDefaultShooterRPM());
+        telemetry.addData("default shooter rpm", robot.getFallbackShooterRPM());
 
         if (gamepad1.start && gamepad1.back) {
             robot.resetOdometry();

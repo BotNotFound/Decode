@@ -31,6 +31,8 @@ public class Robot {
         NONE,
     }
 
+    public static double fallbackRPM = 2900;
+
     private double moveScale = 1;
     private double headingScale = 1;
     private boolean shotReady = false;
@@ -113,7 +115,7 @@ public class Robot {
         AprilTagPoseFtc target = aprilTagDetector.getTagPose();
         Pose3D robot = aprilTagDetector.getRobotPose();
         driveTrain.aimAtAprilTag(target, robot);
-        shooter.setRPMForAprilTag(target);
+        shooter.setRPMForAprilTag(target, fallbackRPM);
     }
 
     public void setState(RobotState newState) {
@@ -234,7 +236,7 @@ public class Robot {
 
             case PRE_SHOOT:
                 aprilTagDetector.update(allianceColor.targetAprilTagID);
-                shooter.setRPMForAprilTag(aprilTagDetector.getTagPose());
+                shooter.setRPMForAprilTag(aprilTagDetector.getTagPose(), fallbackRPM);
 
             case INTAKE:
                 if (ballTracker.hasAllArtifacts()) {
@@ -274,16 +276,16 @@ public class Robot {
         driveTrain.resetOdometry();
     }
 
-    public void increaseDefaultShooterRPM() {
-        shooter.increaseDefaultRPM();
+    public void increaseFallbackShooterRPM() {
+        fallbackRPM += 50;
     }
 
-    public void decreaseDefaultShooterRPM() {
-        shooter.decreaseDefaultRPM();
+    public void decreaseFallbackShooterRPM() {
+        fallbackRPM -= 50;
     }
 
-    public double getDefaultShooterRPM() {
-        return shooter.defaultRPM;
+    public double getFallbackShooterRPM() {
+        return fallbackRPM;
     }
 
     public double getDrivePower() {
