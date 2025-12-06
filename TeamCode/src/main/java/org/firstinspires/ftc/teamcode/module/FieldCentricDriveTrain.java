@@ -39,7 +39,7 @@ public class FieldCentricDriveTrain {
 
     private boolean aimingAtAprilTag;
 
-    public static double AIM_OFFSET_MULTIPLIER = 0.15;
+    private final double aimOffsetMultiplier;
     private final double aimOffsetZero;
 
 
@@ -77,6 +77,7 @@ public class FieldCentricDriveTrain {
         turnController.setTarget(turnTarget);
         aimingAtAprilTag = false;
         aimOffsetZero = alliance.tagAimOffsetZero;
+        aimOffsetMultiplier = alliance.tagAimOffsetMultiplier;
     }
 
     public void resetOdometry() {
@@ -191,7 +192,7 @@ public class FieldCentricDriveTrain {
     }
 
     private double getAimRotationPower(double bearing, double yaw) {
-        turnController.setTarget(turnTarget + (yaw - aimOffsetZero) * AIM_OFFSET_MULTIPLIER);
+        turnController.setTarget(turnTarget + (yaw - aimOffsetZero) * aimOffsetMultiplier);
 
 
         telemetry.addData("Bearing", bearing);

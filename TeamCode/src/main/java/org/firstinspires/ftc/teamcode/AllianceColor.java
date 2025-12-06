@@ -3,15 +3,17 @@ package org.firstinspires.ftc.teamcode;
 import androidx.annotation.NonNull;
 
 public enum AllianceColor {
-    RED(24, 35),
-    BLUE(20, 145);
+    RED(24, 35, 0.15),
+    BLUE(20, 145, -0.15);
 
     public final int targetAprilTagID;
     public final double tagAimOffsetZero;
+    public final double tagAimOffsetMultiplier;
 
-    AllianceColor(int targetAprilTagID, double tagAimOffsetZero) {
+    AllianceColor(int targetAprilTagID, double tagAimOffsetZero, double tagAimOffsetMultiplier) {
         this.targetAprilTagID = targetAprilTagID;
         this.tagAimOffsetZero = tagAimOffsetZero;
+        this.tagAimOffsetMultiplier = tagAimOffsetMultiplier;
     }
 
 
