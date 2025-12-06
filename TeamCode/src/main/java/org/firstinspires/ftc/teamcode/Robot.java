@@ -58,9 +58,6 @@ public class Robot {
         NONE,
     }
 
-    public static double SLOW_TRANSFER_POWER = 0.2;
-    public static double SLOW_TRANSFER_DURATION = 0.5;
-
     private double moveScale = 1;
     private double headingScale = 1;
     private boolean shotReady = false;
