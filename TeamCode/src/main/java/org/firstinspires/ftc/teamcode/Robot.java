@@ -298,6 +298,10 @@ public class Robot {
         shooter.decreaseDefaultRPM();
     }
 
+    public double getDefaultShooterRPM() {
+        return shooter.defaultRPM;
+    }
+
     public double getDrivePower() {
         return driveTrain.getDrivePower();
     }

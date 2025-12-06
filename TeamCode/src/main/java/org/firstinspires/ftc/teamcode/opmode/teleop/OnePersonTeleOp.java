@@ -11,8 +11,6 @@ import org.firstinspires.ftc.teamcode.Robot;
 @Config
 @TeleOp(name = "1-Driver Teleop", group = "1driver")
 public class OnePersonTeleOp extends OpMode {
-    public static double targetRPM = 3000;
-
     protected Robot robot;
 
     /**
@@ -71,7 +69,7 @@ public class OnePersonTeleOp extends OpMode {
             robot.decreaseDefaultShooterRPM();
         }
 
-        telemetry.addData("target shooter rpm", targetRPM);
+        telemetry.addData("default shooter rpm", robot.getDefaultShooterRPM());
 
         if (gamepad1.start && gamepad1.back) {
             robot.resetOdometry();

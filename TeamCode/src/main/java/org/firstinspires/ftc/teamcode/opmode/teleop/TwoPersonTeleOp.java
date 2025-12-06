@@ -76,6 +76,8 @@ public class TwoPersonTeleOp extends OpMode {
             robot.decreaseDefaultShooterRPM();
         }
 
+        telemetry.addData("default shooter rpm", robot.getDefaultShooterRPM());
+
         if (gamepad1.start && gamepad1.back) {
             robot.resetOdometry();
         }
