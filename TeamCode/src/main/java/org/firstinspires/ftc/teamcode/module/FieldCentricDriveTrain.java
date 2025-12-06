@@ -34,13 +34,13 @@ public class FieldCentricDriveTrain {
 
     private final SquIDController turnController;
     public static double turnP = 0.09;
-    public static double turnTarget = 1;
+    public static double turnTarget = 0;
     public static double turnTolerance = 1;
 
     private boolean aimingAtAprilTag;
 
-    private final double aimOffsetMultiplier;
-    private final double aimOffsetZero;
+    private double aimOffsetMultiplier;
+    private double aimOffsetZero;
 
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor alliance) {
@@ -76,8 +76,7 @@ public class FieldCentricDriveTrain {
         turnController.setTolerance(turnTolerance);
         turnController.setTarget(turnTarget);
         aimingAtAprilTag = false;
-        aimOffsetZero = alliance.tagAimOffsetZero;
-        aimOffsetMultiplier = alliance.tagAimOffsetMultiplier;
+        configureAutoAim(alliance);
     }
 
     public void resetOdometry() {
@@ -207,4 +206,8 @@ public class FieldCentricDriveTrain {
         return !aimingAtAprilTag || turnController.atTarget();
     }
 
+    public void configureAutoAim(AllianceColor alliance) {
+        aimOffsetZero = alliance.tagAimOffsetZero;
+        aimOffsetMultiplier = alliance.tagAimOffsetMultiplier;
+    }
 }

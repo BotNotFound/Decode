@@ -83,6 +83,7 @@ public class Robot {
 
     public void setAllianceColor(AllianceColor color) {
         allianceColor = color;
+        driveTrain.configureAutoAim(color);
     }
 
     public void swapAllianceColor() {
