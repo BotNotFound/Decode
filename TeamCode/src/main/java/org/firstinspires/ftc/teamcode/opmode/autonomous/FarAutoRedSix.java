@@ -28,6 +28,7 @@ public class FarAutoRedSix extends AutonomousBase{
                     Robot.RobotState.SHOOT
             ),
                 new AutonomousStage(autoPath.goToArtifactRowOne, Robot.RobotState.NONE),
+                new AutonomousStage(autoPath.goToArtifactRowTwo, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.intakeArtifacts, Robot.RobotState.INTAKE),
                 new AutonomousStage(autoPath.shootArtifacts, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
