@@ -178,6 +178,8 @@ public class Robot {
                 shotReady = false;
                 shotPrepTime.reset();
                 shotsTaken = 0;
+                keepBallsApart = ballTracker.hasBall(ArtifactLocation.BACK) &&
+                        ballTracker.hasBall(ArtifactLocation.MIDDLE);
                 break;
 
             case NONE:
@@ -214,8 +216,12 @@ public class Robot {
 
                 if (!shooter.isReady()) {
                     intake.stopIntake();
-                    transfer.reverseTransfer();
-
+                    if (keepBallsApart && shotsTaken < 1) {
+                        transfer.reverseTransfer();
+                    }
+                    else {
+                        transfer.stopTransfer();
+                    }
 
                     if (shotReady) {
                         shotsTaken++;
