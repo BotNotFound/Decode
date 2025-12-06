@@ -5,6 +5,8 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
@@ -50,5 +52,16 @@ public class GetAprilTagInfo extends OpMode {
         telemetry.addData("Tag " + tagID + " Z", detection.z);
         telemetry.addData("Tag " + tagID + " Distance", detection.range);
         telemetry.addData("Tag " + tagID + " Real Bearing", detection.bearing);
+
+        final Pose3D robotPose = detector.getRobotPose();
+        if (robotPose == null) {
+            return;
+        }
+        telemetry.addData("Tag " + tagID + " Robot X", robotPose.getPosition().x);
+        telemetry.addData("Tag " + tagID + " Robot Y", robotPose.getPosition().y);
+        telemetry.addData("Tag " + tagID + " Robot Z", robotPose.getPosition().z);
+        telemetry.addData("Tag " + tagID + " Robot Pitch", robotPose.getOrientation().getPitch(AngleUnit.DEGREES));
+        telemetry.addData("Tag " + tagID + " Robot Yaw", robotPose.getOrientation().getYaw(AngleUnit.DEGREES));
+        telemetry.addData("Tag " + tagID + " Robot Roll", robotPose.getOrientation().getRoll(AngleUnit.DEGREES));
     }
 }
