@@ -13,9 +13,9 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 
 @Autonomous(name = "far auto red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 public class FarAutoRedPreload extends AutonomousBase {
-
+    //use position logger for positions
     public FarAutoRedPreload() {
-        super(new Pose(86.6, 8.000, Math.toRadians(90)), Robot.AllianceColor.RED);
+        super(new Pose(89.5, 10.1, Math.toRadians(90)), Robot.AllianceColor.RED);
     }
 
     @Override
@@ -42,21 +42,20 @@ public class FarAutoRedPreload extends AutonomousBase {
             shootPreloads = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierCurve(
-                                    new Pose(86.6, 8.000),
-                                    new Pose(86.758, 11.806),
-                                    new Pose(83.001, 11.091)
+                            new BezierLine(
+                                    new Pose(89.5, 10.1),
+                                    new Pose(86.7, 18.03)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(72))
+                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(64.7))
                     .build();
 
             leavingLaunchZone = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(83.001, 11.091), new Pose(110.191, 13.058))
+                            new BezierLine(new Pose(86.7, 18.03), new Pose(108.9, 8.53))
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(72), Math.toRadians(0))
+                    .setLinearHeadingInterpolation(Math.toRadians(64.7), Math.toRadians(0))
                     .build();
         }
     }

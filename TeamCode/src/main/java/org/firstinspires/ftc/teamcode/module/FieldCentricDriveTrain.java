@@ -34,7 +34,7 @@ public class FieldCentricDriveTrain {
     private final SquIDController turnController;
     public static double turnP = 0.09;
     public static double turnTarget = 1;
-    public static double turnTolerance = 0.5;
+    public static double turnTolerance = 1;
 
     public static double AIM_OFFSET_MULTIPLIER = 0.15;
     public static double AIM_OFFSET_ZERO = 35;
@@ -189,9 +189,14 @@ public class FieldCentricDriveTrain {
 
         telemetry.addData("Bearing", bearing);
         telemetry.addData("Yaw", yaw);
+        telemetry.addData("Turn Error", turnController.getTarget() - bearing);
 
         turnController.setP(turnP);
         return turnController.calculate(bearing);
+    }
+
+    public boolean isReady(){
+        return turnController.atTarget();
     }
 
 }

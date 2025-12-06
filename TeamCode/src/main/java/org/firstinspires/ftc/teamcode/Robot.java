@@ -287,7 +287,7 @@ public class Robot {
     }
 
     public boolean isShotReady() {
-        return currentState == RobotState.SHOOT && shooter.isReady();
+        return currentState == RobotState.SHOOT && shooter.isReady() && driveTrain.isReady();
     }
 
     /* Module-specific methods */
