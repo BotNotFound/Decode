@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 public enum AllianceColor {
     RED(24, 35, 0.15),
-    BLUE(20, 145, -0.15);
+    BLUE(20, 135, -0.15);
 
     public final int targetAprilTagID;
     public final double tagAimOffsetZero;
