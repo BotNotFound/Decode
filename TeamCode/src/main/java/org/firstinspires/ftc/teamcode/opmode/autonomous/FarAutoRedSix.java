@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
@@ -23,22 +22,21 @@ public class FarAutoRedSix extends AutonomousBase{
         return new AutonomousStage[]{
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
-                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(64.7))
-                                .build(),
-                        Robot.RobotState.SHOOT
+                    follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
+                            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(64.7))
+                            .build(),
+                    Robot.RobotState.SHOOT
             ),
-            new AutonomousStage(autoPath.goToArtifactRow, Robot.RobotState.NONE),
+                new AutonomousStage(autoPath.goToArtifactRowOne, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.intakeArtifacts, Robot.RobotState.INTAKE),
                 new AutonomousStage(autoPath.shootArtifacts, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
-                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootArtifacts.endPose()))
-                                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(67))
-                                .build(),
-                        Robot.RobotState.SHOOT
-            ),   
+                    follower.pathBuilder().addPath(new BezierPoint(autoPath.shootArtifacts.endPose()))
+                            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(67))
+                            .build(),
+                    Robot.RobotState.SHOOT
+            ),
             new AutonomousStage(autoPath.leaveLaunchZone, Robot.RobotState.INTAKE),
-                
         };
     }
 
