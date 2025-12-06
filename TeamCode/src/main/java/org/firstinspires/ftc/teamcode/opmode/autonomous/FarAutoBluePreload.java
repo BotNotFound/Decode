@@ -7,6 +7,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 @Autonomous(name = "far auto blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class FarAutoBluePreload extends AutonomousBase {
     public FarAutoBluePreload() {
-        super(new Pose(89.5, 10.1, Math.toRadians(90)).mirror(), Robot.AllianceColor.RED);
+        super(new Pose(89.5, 10.1, Math.toRadians(90)).mirror(), AllianceColor.RED);
     }
 
     @Override

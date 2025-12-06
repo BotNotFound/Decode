@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 
@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 public class FarAutoRedPreload extends AutonomousBase {
     //use position logger for positions
     public FarAutoRedPreload() {
-        super(new Pose(89.5, 10.1, Math.toRadians(90)), Robot.AllianceColor.RED);
+        super(new Pose(89.5, 10.1, Math.toRadians(90)), AllianceColor.RED);
     }
 
     @Override

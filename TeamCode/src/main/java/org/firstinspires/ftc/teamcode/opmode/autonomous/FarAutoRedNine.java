@@ -7,6 +7,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 public class FarAutoRedNine extends AutonomousBase{
 
     public FarAutoRedNine() {
-        super(new Pose(92.048, 0.355, Math.toRadians(90)), Robot.AllianceColor.RED);
+        super(new Pose(92.048, 0.355, Math.toRadians(90)), AllianceColor.RED);
     }
     @Override
     protected AutonomousStage[] buildStageSequence() {

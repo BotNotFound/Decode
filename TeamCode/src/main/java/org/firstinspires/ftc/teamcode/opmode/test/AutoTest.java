@@ -5,6 +5,7 @@ import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.autonomous.AutonomousBase;
 import org.firstinspires.ftc.teamcode.opmode.autonomous.AutonomousStage;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.opmode.autonomous.AutonomousStage;
 @Autonomous(group = "test")
 public class AutoTest extends AutonomousBase {
     public AutoTest() {
-        super(new Pose(0, 0), Robot.AllianceColor.RED);
+        super(new Pose(0, 0), AllianceColor.RED);
     }
 
     @Override

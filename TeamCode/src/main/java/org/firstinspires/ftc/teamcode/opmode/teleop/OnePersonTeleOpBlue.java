@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.AllianceColor;
 
 @TeleOp(name = OnePersonTeleOpBlue.OP_MODE_NAME, group = "1driver")
 @Disabled
@@ -17,6 +17,6 @@ public class OnePersonTeleOpBlue extends OnePersonTeleOp {
     @Override
     public void init() {
         super.init();
-        robot.setAllianceColor(Robot.AllianceColor.BLUE);
+        robot.setAllianceColor(AllianceColor.BLUE);
     }
 }
