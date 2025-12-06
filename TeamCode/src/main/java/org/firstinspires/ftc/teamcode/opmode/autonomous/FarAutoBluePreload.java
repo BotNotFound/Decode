@@ -25,7 +25,7 @@ public class FarAutoBluePreload extends AutonomousBase {
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(64.7))
+                                .setConstantHeadingInterpolation(Math.toRadians(180-64.7))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -47,7 +47,7 @@ public class FarAutoBluePreload extends AutonomousBase {
                                     new Pose(86.7, 18.03).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 90), Math.toRadians(64.7))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 90), Math.toRadians(180-64.7))
                     .build();
 
             leavingLaunchZone = follower
@@ -55,7 +55,7 @@ public class FarAutoBluePreload extends AutonomousBase {
                     .addPath(
                             new BezierLine(new Pose(86.7, 18.03).mirror(), new Pose(108.9, 8.53).mirror())
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(64.7), Math.toRadians(180 - 0))
+                    .setLinearHeadingInterpolation(Math.toRadians(180-64.7), Math.toRadians(180 - 0))
                     .build();
         }
     }

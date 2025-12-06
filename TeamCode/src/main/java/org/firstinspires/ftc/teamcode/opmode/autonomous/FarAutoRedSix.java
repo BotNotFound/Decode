@@ -89,7 +89,7 @@ public class FarAutoRedSix extends AutonomousBase{
           intakeArtifacts = follower
             .pathBuilder()
             .addPath(
-                    new BezierLine(new Pose(137, 23.25), new Pose(147, 1.3))
+                    new BezierLine(new Pose(137, 23.25), new Pose(147, 11))
             )
             .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(-110))
             .build();
@@ -97,7 +97,7 @@ public class FarAutoRedSix extends AutonomousBase{
           shootArtifacts = follower
             .pathBuilder()
             .addPath(
-              new BezierLine(new Pose(141.336, 2.164), new Pose(90.562, 16.980))
+              new BezierLine(new Pose(147, 11), new Pose(90.562, 16.980))
             )
             .setLinearHeadingInterpolation(Math.toRadians(-110), Math.toRadians(64.7))
             .build();
