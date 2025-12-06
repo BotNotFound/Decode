@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
+import org.firstinspires.ftc.teamcode.module.ArtifactLocation;
 import org.firstinspires.ftc.teamcode.module.ArtifactTracker;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.teamcode.module.Intake;
@@ -64,6 +65,7 @@ public class Robot {
     private double headingScale = 1;
     private boolean shotReady = false;
     private int shotsTaken = 0;
+    private boolean keepBallsApart;
 
     /* Modules */
     private final FieldCentricDriveTrain driveTrain;
@@ -214,6 +216,7 @@ public class Robot {
                     intake.stopIntake();
                     transfer.reverseTransfer();
 
+
                     if (shotReady) {
                         shotsTaken++;
                         Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
@@ -230,7 +233,7 @@ public class Robot {
                     timeSinceShotReady.reset();
                 }
 
-                if (ballTracker.hasBall(ArtifactTracker.ArtifactLocation.BACK)) {
+                if (ballTracker.hasBall(ArtifactLocation.BACK)) {
                     intake.stopIntake();
                     transfer.stopTransfer();
                     shooter.engageKicker();
@@ -252,8 +255,8 @@ public class Robot {
                     intake.stopIntake();
                 }
                 else if (
-                        ballTracker.hasBall(ArtifactTracker.ArtifactLocation.BACK) &&
-                                ballTracker.hasBall(ArtifactTracker.ArtifactLocation.MIDDLE)
+                        ballTracker.hasBall(ArtifactLocation.BACK) &&
+                                ballTracker.hasBall(ArtifactLocation.MIDDLE)
                 ) {
                     transfer.stopTransfer();
                     intake.startIntake();
