@@ -89,7 +89,7 @@ public class AutonomousStage {
             case SHOOT:
                 if (minShotTimer.isTimerOn()) {
                     // we are currently shooting, wait until we're done
-                    return maxShotTimer.done() || (minShotTimer.done() && robot.getShotsTaken() >= ballsHeldAtStart);
+                    return maxShotTimer.done() || (minShotTimer.done() && (robot.getShotsTaken() >= ballsHeldAtStart));
                 }
 
                 if (robot.isShotReady()) {
@@ -128,6 +128,10 @@ public class AutonomousStage {
     public void enterStage(Robot robot, Follower follower) {
         ballsHeldAtStart = robot.getHeldArtifactCount();
         robot.setState(robotState);
+        //adjust power when we go to intake.
+        if(getRobotState() == Robot.RobotState.INTAKE){
+            follower.setmaxPower(1);
+        }
 
         follower.followPath(path);
 
