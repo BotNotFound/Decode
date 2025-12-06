@@ -8,6 +8,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 
@@ -16,7 +17,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 @Autonomous(name = "12 Artifact Blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class StandardTwelveArtifactBlue extends AutonomousBase {
     public StandardTwelveArtifactBlue() {
-        super(new Pose(125.5, 128, Math.toRadians(35)).mirror(), Robot.AllianceColor.RED);
+        super(new Pose(125.5, 128, Math.toRadians(35)).mirror(), AllianceColor.RED);
     }
 
     @Override

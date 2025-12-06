@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 
 @Config
@@ -31,7 +32,7 @@ public class OnePersonTeleOp extends OpMode {
     public void init() {
         // assume red alliance until driver indicates otherwise
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        robot = new Robot(hardwareMap, telemetry, Robot.AllianceColor.RED);
+        robot = new Robot(hardwareMap, telemetry, AllianceColor.RED);
     }
 
     @Override

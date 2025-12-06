@@ -9,6 +9,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
@@ -16,7 +17,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 public abstract class AutonomousBase extends OpMode {
     private static final String TAG = "AutonomousBase";
 
-    private final Robot.AllianceColor allianceColor;
+    private final AllianceColor allianceColor;
     private final Pose startPose;
     private AutonomousStage[] stageSequence;
     private int currentStageIndex;
@@ -24,7 +25,7 @@ public abstract class AutonomousBase extends OpMode {
     protected Robot robot;
     protected Follower follower;
 
-    public AutonomousBase(Pose startPose, Robot.AllianceColor allianceColor) {
+    public AutonomousBase(Pose startPose, AllianceColor allianceColor) {
         this.allianceColor = allianceColor;
         this.startPose = startPose;
         currentStageIndex = 0;
