@@ -128,10 +128,6 @@ public class AutonomousStage {
     public void enterStage(Robot robot, Follower follower) {
         ballsHeldAtStart = robot.getHeldArtifactCount();
         robot.setState(robotState);
-        //adjust power when we go to intake.
-        if(getRobotState() == Robot.RobotState.INTAKE){
-            follower.setmaxPower(1);
-        }
 
         follower.followPath(path);
 
