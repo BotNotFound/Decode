@@ -135,7 +135,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 0))
                     .addPath(
-                            new BezierLine(new Pose(96, 58.5).mirror(), new Pose(135, 58.5).mirror())
+                            new BezierCurve(new Pose(96, 58.5).mirror(), new Pose(138.5, 58.5).mirror(), new Pose(135, 55).mirror())
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(180 - 0))
                     .build();
