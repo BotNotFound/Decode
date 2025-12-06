@@ -75,8 +75,8 @@ public class Shooter {
         // the control points have to be in increasing order
         flywheelSpeeds.add(28.0, 2500); // extrapolated lower bound
         flywheelSpeeds.add(31.3, 2600);
-        flywheelSpeeds.add(36.1, 2625);
-        flywheelSpeeds.add(47.0, 2750);
+        flywheelSpeeds.add(36.1, 2675);
+        flywheelSpeeds.add(47.0, 2825);
         flywheelSpeeds.add(55, 2900);
         flywheelSpeeds.add(62.3, 3050);
         flywheelSpeeds.add(74.5, 3125);
