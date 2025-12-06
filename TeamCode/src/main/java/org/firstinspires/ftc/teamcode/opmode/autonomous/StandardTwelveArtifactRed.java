@@ -88,14 +88,14 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .addPath(
                             new BezierCurve(
                                     new Pose(94, 86.5),
-                                    new Pose(94, 80),
-                                    new Pose(96, 80)
+                                    new Pose(94, 82),
+                                    new Pose(96, 82)
                             )
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(0))
                     .addPath(
 
-                            new BezierLine(new Pose(96, 80), new Pose(132.5, 80))
+                            new BezierLine(new Pose(96, 82), new Pose(132.5, 82))
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(0))
                     .build();
@@ -103,9 +103,9 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(132.5, 80),
+                                    new Pose(132.5, 82),
                                     new Pose(115, 77),
-                                    new Pose(132, 67.67)
+                                    new Pose(128, 72)
                             )
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -115,7 +115,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierLine(
-                                    new Pose(132, 67.67),
+                                    new Pose(128, 72),
                                     new Pose(94, 86.5)
                             )
                     )
@@ -127,13 +127,13 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .addPath(
                             new BezierCurve(
                                     new Pose(94, 86.5),
-                                    new Pose(94, 56),
-                                    new Pose(96, 56)
+                                    new Pose(94, 58.5),
+                                    new Pose(96, 58.5)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                     .addPath(
-                            new BezierLine(new Pose(96, 56), new Pose(135, 56))
+                            new BezierLine(new Pose(96, 58.5), new Pose(135, 58.5))
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(0))
                     .build();
@@ -141,7 +141,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(135, 58),
+                                    new Pose(135, 58.5),
                                     new Pose(111, 53),
                                     new Pose(94, 86.5)
                             )
