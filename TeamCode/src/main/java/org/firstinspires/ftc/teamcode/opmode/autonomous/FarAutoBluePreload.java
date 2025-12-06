@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
@@ -9,23 +8,24 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 
-@Autonomous(name = "far auto blue", group = "blue", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
+// arithmetic is applied uniformly to ensure everything is mirrored
+@SuppressWarnings("PointlessArithmeticExpression")
+@Autonomous(name = "far auto blue", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class FarAutoBluePreload extends AutonomousBase {
-
     public FarAutoBluePreload() {
-        super(new Pose(84.432, 8.407, Math.toRadians(90)).mirror(), Robot.AllianceColor.BLUE);
+        super(new Pose(89.5, 10.1, Math.toRadians(90)).mirror(), Robot.AllianceColor.RED);
     }
 
     @Override
     protected AutonomousStage[] buildStageSequence() {
-        Paths autoPath = new Paths(follower);
+        FarAutoRedPreload.Paths autoPath = new FarAutoRedPreload.Paths(follower);
         return new AutonomousStage[]{
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(180 - 72))
+                                .setConstantHeadingInterpolation(Math.toRadians(64.7))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -42,21 +42,20 @@ public class FarAutoBluePreload extends AutonomousBase {
             shootPreloads = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierCurve(
-                                    new Pose(84.432, 8.407).mirror(),
-                                    new Pose(86.758, 11.806).mirror(),
-                                    new Pose(83.001, 11.091).mirror()
+                            new BezierLine(
+                                    new Pose(89.5, 10.1).mirror(),
+                                    new Pose(86.7, 18.03).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 90), Math.toRadians(180 - 72))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 90), Math.toRadians(64.7))
                     .build();
 
             leavingLaunchZone = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(83.001, 11.091).mirror(), new Pose(110.191, 13.058).mirror())
+                            new BezierLine(new Pose(86.7, 18.03).mirror(), new Pose(108.9, 8.53).mirror())
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 72), Math.toRadians(180))
+                    .setLinearHeadingInterpolation(Math.toRadians(64.7), Math.toRadians(180 - 0))
                     .build();
         }
     }
