@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
@@ -28,7 +29,7 @@ public class FarAutoRedSix extends AutonomousBase{
                     Robot.RobotState.SHOOT
             ),
                 new AutonomousStage(autoPath.goToArtifactRowOne, Robot.RobotState.NONE),
-                new AutonomousStage(autoPath.goToArtifactRowTwo, Robot.RobotState.NONE),
+//            new AutonomousStage(autoPath.goToArtifactRowTwo, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.intakeArtifacts, Robot.RobotState.INTAKE),
                 new AutonomousStage(autoPath.shootArtifacts, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
@@ -65,10 +66,11 @@ public class FarAutoRedSix extends AutonomousBase{
           goToArtifactRowOne = follower
             .pathBuilder()
             .addPath(
-              new BezierLine(
-                new Pose(86.7, 18.03),
-                new Pose(126.5, 17.5)
-              )
+                    new BezierCurve(
+                            new Pose(86.700, 18.030),
+                            new Pose(130.000, 6.000),
+                            new Pose(137.000, 20.000)
+                    )
             )
             .setLinearHeadingInterpolation(Math.toRadians(64.7), Math.toRadians(-90))
             .build();
@@ -78,7 +80,7 @@ public class FarAutoRedSix extends AutonomousBase{
             .addPath (
               new BezierLine(
                 new Pose(126.5, 17.5),
-                new Pose(137.8, 23.25)
+                      new Pose(137, 23.25)
               )
             )
             .setConstantHeadingInterpolation(Math.toRadians(-90))
@@ -87,7 +89,7 @@ public class FarAutoRedSix extends AutonomousBase{
           intakeArtifacts = follower
             .pathBuilder()
             .addPath(
-              new BezierLine(new Pose(137.8, 23.25), new Pose(141.336, 2.164))
+                    new BezierLine(new Pose(137, 23.25), new Pose(147, 1.3))
             )
             .setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(-110))
             .build();
