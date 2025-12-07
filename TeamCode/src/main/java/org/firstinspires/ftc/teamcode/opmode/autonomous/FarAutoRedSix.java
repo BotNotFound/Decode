@@ -25,7 +25,7 @@ public class FarAutoRedSix extends AutonomousBase{
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
                     follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(64.7))
+                            .setConstantHeadingInterpolation(Math.toRadians(64.7))
                             .build(),
                     Robot.RobotState.SHOOT
             ),
