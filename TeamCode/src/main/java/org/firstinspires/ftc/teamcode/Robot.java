@@ -197,7 +197,7 @@ public class Robot {
 
                 prepareToShoot();
 
-                if (!shooter.isReady()) {
+                if (!shooter.isReady() || !driveTrain.isReady()) {
                     intake.stopIntake();
                     if (keepBallsApart && shotsTaken < 1) {
                         transfer.reverseTransfer();
