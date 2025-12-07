@@ -77,10 +77,6 @@ public class Robot {
         }
 
         Log.i(TAG, "Robot initialized");
-
-        // for FTC Dashboard
-        telemetry.addData("Real RPM", 0);
-        telemetry.addData("Target RPM", 0);
     }
 
     public void setAllianceColor(AllianceColor color) {
