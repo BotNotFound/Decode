@@ -82,7 +82,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(94, 86.5).mirror()
                             )
                     )
-                    .setConstantHeadingInterpolation(Math.toRadians(180 - 35))
+                    .setConstantHeadingInterpolation(Math.toRadians(180 - Math.atan2(86.5, 94)))
                     .build();
 
             intakeFirstRow = follower
@@ -121,7 +121,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(94, 86.5).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 35))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - Math.atan2(86.5, 94)))
                     .build();
 
             intakeSecondRow = follower
@@ -148,7 +148,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(94, 86.5).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 35))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - Math.atan2(86.5, 94)))
                     .build();
 
             intakeThirdRow = follower
@@ -175,7 +175,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(94, 86.5).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 35))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - Math.atan2(86.5, 94)))
                     .build();
 
             leaveLaunchZone = follower
