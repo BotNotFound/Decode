@@ -32,7 +32,7 @@ public class Shooter {
     public static double kI = 0;
     public static double kD = 0;
     public static double kF = 0.000175;
-    public static double tolerance = 150;
+    public static double tolerance = 200;
 
     public static int motorCPS = 28;
 
@@ -89,6 +89,9 @@ public class Shooter {
 
         timeSinceKickerEngaged = new ElapsedTime();
         kickerEngaged = false;
+
+        // for FTC dashboard
+        logRPM(0, 0);
     }
 
     public void setRPM(double rpm) {
@@ -117,8 +120,14 @@ public class Shooter {
             stickyRPM = false;
         }
 
-        telemetry.addData("Target RPM", rpm);
-        telemetry.addData("Real RPM", actualRPM);
+        logRPM(rpm, actualRPM);
+    }
+
+    private void logRPM(double target, double real) {
+        telemetry.addData("Target RPM", target);
+        telemetry.addData("Real RPM", real);
+        telemetry.addData("Upper RPM Bound", target + tolerance);
+        telemetry.addData("Lower RPM Bound", target - tolerance);
     }
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
