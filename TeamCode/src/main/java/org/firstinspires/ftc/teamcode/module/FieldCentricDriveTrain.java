@@ -11,7 +11,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.AllianceColor;
-import org.firstinspires.ftc.teamcode.SquIDController;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
@@ -31,11 +30,7 @@ public class FieldCentricDriveTrain {
     public static final String PINPOINT_DRIVER_NAME = "Pinpoint";
 
     private final GoBildaPinpointDriver pinpointDriver;
-
-    private final SquIDController turnController;
-    public static double turnP = 0.09;
-    public static double turnTarget = 0;
-    public static double turnTolerance = 1;
+    
 
     private boolean aimingAtAprilTag;
 
@@ -72,17 +67,15 @@ public class FieldCentricDriveTrain {
         pinpointDriver.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpointDriver.resetPosAndIMU();
 
-        turnController = new SquIDController(turnP);
-        turnController.setTolerance(turnTolerance);
-        turnController.setTarget(turnTarget);
-        aimingAtAprilTag = false;
+        /*aimingAtAprilTag = false;
         configureAutoAim(alliance);
+        */
     }
 
     public void resetOdometry() {
         pinpointDriver.resetPosAndIMU();
     }
-
+    /* NOTE: change for turret
     public void setPowerFacingAprilTag(double drive, double strafe, double turn, AprilTagPoseFtc tagPose, Pose3D robotPose) {
         turnController.setTolerance(turnTolerance);
 
@@ -93,7 +86,8 @@ public class FieldCentricDriveTrain {
 
         setPower(drive, strafe, turn);
     }
-
+    */
+    //keep the set power for drivetrain 
     public void setPower(double drive, double strafe, double turn) {
         pinpointDriver.update();
 
@@ -135,7 +129,7 @@ public class FieldCentricDriveTrain {
     }
 
     /* get current powers using forward kinematics -- see https://www.desmos.com/calculator/je1clj0udl */
-
+    //its ok to keep these but they probably won't be used
     private double getRobotCentricDrivePower() {
         final double frontLeftPower = frontLeftDriveMotor.getPower();
         final double frontRightPower = frontRightDriveMotor.getPower();
@@ -179,7 +173,7 @@ public class FieldCentricDriveTrain {
     public void setTurnPower(double power) {
         setPower(getDrivePower(), getStrafePower(), power);
     }
-
+    /*NOTE: if its null, should code so that turret turns to apriltag regardless of heading
     public void aimAtAprilTag(AprilTagPoseFtc target, Pose3D robotAngle) {
         if (target == null || robotAngle == null) {
             aimingAtAprilTag = false;
@@ -187,9 +181,11 @@ public class FieldCentricDriveTrain {
         }
 
         aimingAtAprilTag = true;
+        //turn power for turret should be changed so its not for  forward kinematics
         setTurnPower(getAimRotationPower(target.bearing, robotAngle.getOrientation().getYaw(AngleUnit.DEGREES)));
     }
-
+    */
+    /* NOTE: should be the logic for our turret
     private double getAimRotationPower(double bearing, double yaw) {
         turnController.setTarget(turnTarget + (yaw - aimOffsetZero) * aimOffsetMultiplier);
 
@@ -201,13 +197,17 @@ public class FieldCentricDriveTrain {
         turnController.setP(turnP);
         return turnController.calculate(bearing);
     }
-
+    */
+    /*NOTE: should keep this
     public boolean isReady(){
         return !aimingAtAprilTag || turnController.atTarget();
     }
-
+    */
+    /* NOTE: should keep this
     public void configureAutoAim(AllianceColor alliance) {
         aimOffsetZero = alliance.tagAimOffsetZero;
         aimOffsetMultiplier = alliance.tagAimOffsetMultiplier;
     }
+    */
+    
 }
