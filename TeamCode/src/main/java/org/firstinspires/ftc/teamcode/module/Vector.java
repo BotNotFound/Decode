@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.module
+package org.firstinspires.ftc.teamcode.module;
 
 public class Vector {
     public double x;

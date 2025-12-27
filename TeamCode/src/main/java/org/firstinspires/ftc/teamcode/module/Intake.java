@@ -30,4 +30,6 @@ public class Intake {
     public void stopIntake() {
         intakeMotor.setPower(0);
     }
+
+    public void reverseIntake(){ intakeMotor.setPower(-engagePower); }
 }

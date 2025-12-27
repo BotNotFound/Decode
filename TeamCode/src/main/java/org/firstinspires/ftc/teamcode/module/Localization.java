@@ -7,12 +7,15 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 public class Localization {
-    private static Pose2D robotPose;
+    private static Pose2D robotPose2D;
+
+    private static Pose3D robotPose3D;
 
     private static HardwareMap hardwareMap;
     private static Telemetry telemetry;
@@ -34,12 +37,20 @@ public class Localization {
                 .build();
     }
 
-    public static void setPose(Pose2D newPose) {
-        robotPose = newPose;
+    public static void setRobotPose2D(Pose2D newPose) {
+        robotPose2D = newPose;
     }
 
-    public static Pose2D getPose() {
-        return robotPose;
+    public static void setRobotPose3D(Pose3D newPose){
+        robotPose3D = newPose;
+    }
+
+    public static Pose2D getRobotPose2D() {
+        return robotPose2D;
+    }
+
+    public static Pose3D getRobotPose3D(){
+        return robotPose3D;
     }
 
 }
