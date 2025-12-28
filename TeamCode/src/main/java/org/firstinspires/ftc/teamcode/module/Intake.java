@@ -16,7 +16,7 @@ public class Intake {
 
     public Intake(HardwareMap hwMap) {
         intakeMotor = hwMap.get(DcMotor.class, INTAKE_MOTOR_NAME);
-        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
     }
     public void setPower(double power) {
@@ -30,4 +30,6 @@ public class Intake {
     public void stopIntake() {
         intakeMotor.setPower(0);
     }
+
+    public void reverseIntake(){ intakeMotor.setPower(-engagePower); }
 }
