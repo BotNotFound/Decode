@@ -49,7 +49,7 @@ public class Shooter {
 
     private final ElapsedTime timeSinceKickerEngaged;
 
-    
+
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
         lowerFlywheelMotor = hardwareMap.get(DcMotorEx.class, LOWER_FLYWHEEL_MOTOR_NAME);
         upperFlywheelMotor = hardwareMap.get(DcMotorEx.class, UPPER_FLYWHEEL_MOTOR_NAME);
@@ -106,14 +106,14 @@ public class Shooter {
         velocityPID.setPIDF(kP, kI, kD, kF);
         double actualRPM = upperFlywheelMotor.getVelocity() / motorCPS * 60;
 
-        if(rpm > 0){
+        if (rpm > 0) {
             double power = velocityPID.calculate(actualRPM, rpm);
             telemetry.addData("shooter power", power);
 
             lowerFlywheelMotor.setPower(power);
             upperFlywheelMotor.setPower(power);
         }
-        else{
+        else {
             lowerFlywheelMotor.setPower(0);
             upperFlywheelMotor.setPower(0);
 
@@ -135,7 +135,7 @@ public class Shooter {
     }
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose, double fallbackRPM) {
-        if(tagPose != null){
+        if (tagPose != null) {
             // clamps the range to the min/max for the interpLUT to avoid bound errors
             double measuredDistance = tagPose.range;
             measuredDistance = Math.min(120.0, Math.max(30.0, measuredDistance));
@@ -145,9 +145,11 @@ public class Shooter {
             stickyTargetRPM = flywheelSpeeds.get(measuredDistance);
 
             setRPM(stickyTargetRPM);
-        } else if (stickyRPM) {
+        }
+        else if (stickyRPM) {
             setRPM(stickyTargetRPM);
-        } else {
+        }
+        else {
             setRPM(fallbackRPM);
         }
     }

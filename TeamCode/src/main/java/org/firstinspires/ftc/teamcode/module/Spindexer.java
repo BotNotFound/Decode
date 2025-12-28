@@ -5,7 +5,7 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -21,7 +21,7 @@ public class Spindexer {
 
     private static final String SENS_ORANGE_ENCODER = "spindexer encoder";
 
-    private static final String FRONT_COLOR_SENSOR= "Front Color Sensor";
+    private static final String FRONT_COLOR_SENSOR = "Front Color Sensor";
 
     private final CRServo spindexerServoOne;
     private final CRServo spindexerServoTwo;
@@ -42,14 +42,13 @@ public class Spindexer {
     public static double spindexerPower = 0.3;
 
 
-
-
     //was thinking of using timers to switch to the next slot
     public static double TIME_TO_SWITCH_TO_NEXT_EMPTY_SLOT = 0.3;
 
     public static double TIME_TO_SWITCH_TO_NEXT_TWO_EMPTY_SLOTS = 0.6;
-    public Spindexer(HardwareMap hardwareMap, Telemetry telemetry){
-        spindexerServoOne= hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
+
+    public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
+        spindexerServoOne = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
         spindexerServoThree = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_THREE);
         spindexerServoFour = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_FOUR);
@@ -58,12 +57,7 @@ public class Spindexer {
 
         spindexerEncoder = hardwareMap.get(AnalogInput.class, SENS_ORANGE_ENCODER);
 
-        spindexerAngle = AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage()-0.043)/3.1*360 + offsetAngle);
-
-
-
-
-
+        spindexerAngle = AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
 
 
         this.telemetry = telemetry;
@@ -84,14 +78,14 @@ public class Spindexer {
     }
 
     //sets the spindexer power, absolute value is there not to confuse servo directions
-    public void setSpindexerPower(double power){
+    public void setSpindexerPower(double power) {
         spindexerServoOne.setPower(Math.abs(power));
         spindexerServoTwo.setPower(Math.abs(power));
         spindexerServoThree.setPower(Math.abs(power));
         spindexerServoFour.setPower(Math.abs(power));
     }
 
-    public void runSpindexer(){
+    public void runSpindexer() {
         spindexerServoOne.setPower(spindexerPower);
         spindexerServoTwo.setPower(spindexerPower);
         spindexerServoThree.setPower(spindexerPower);
@@ -99,7 +93,7 @@ public class Spindexer {
     }
 
     //spindexer rotates counterclockwise
-    public void rotateCounterClockWise(){
+    public void rotateCounterClockWise() {
         spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
         spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
         spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
@@ -107,31 +101,28 @@ public class Spindexer {
     }
 
     //spindexer rotates clockwise
-    public void rotateClockWise(){
+    public void rotateClockWise() {
         spindexerServoOne.setDirection(CRServo.Direction.REVERSE);
         spindexerServoTwo.setDirection(CRServo.Direction.FORWARD);
         spindexerServoThree.setDirection(CRServo.Direction.FORWARD);
         spindexerServoFour.setDirection(CRServo.Direction.REVERSE);
     }
 
-    public void rotateToEmptySlot(){
+    public void rotateToEmptySlot() {
 
 
     }
 
-    public void zeroSpindexer(){
+    public void zeroSpindexer() {
 
     }
 
-    public void stopSpindexer(){
+    public void stopSpindexer() {
         spindexerServoOne.setPower(0);
         spindexerServoTwo.setPower(0);
         spindexerServoThree.setPower(0);
         spindexerServoFour.setPower(0);
     }
-
-
-
 
 
 }

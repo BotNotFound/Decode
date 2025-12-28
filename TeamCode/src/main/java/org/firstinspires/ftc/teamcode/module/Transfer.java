@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-// as of 10/10/25 there is no second servo for transfer
 @Config
 public class Transfer {
 

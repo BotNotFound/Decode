@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.module;
 
+import androidx.annotation.NonNull;
+
+import java.util.Locale;
+
 public class Vector {
     public double x;
     public double y;
@@ -39,7 +43,9 @@ public class Vector {
     }
 
     public Vector divide(double scalar) {
-        if (scalar == 0) return new Vector();
+        if (scalar == 0) {
+            return new Vector();
+        }
         return new Vector(x / scalar, y / scalar, z / scalar);
     }
 
@@ -55,7 +61,9 @@ public class Vector {
     // Normalize
     public Vector normalized() {
         double mag = magnitude();
-        if (mag == 0) return new Vector();
+        if (mag == 0) {
+            return new Vector();
+        }
         return divide(mag);
     }
 
@@ -99,8 +107,10 @@ public class Vector {
         return copy();
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return String.format("Vector(%.3f, %.3f, %.3f)", x, y, z);
+        final StringBuilder builder = new StringBuilder();
+        return String.format(Locale.ENGLISH, "Vector(%.3f, %.3f, %.3f)", x, y, z);
     }
 }

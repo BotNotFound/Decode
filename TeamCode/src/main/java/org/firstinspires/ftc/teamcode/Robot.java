@@ -81,7 +81,6 @@ public class Robot {
 
     public void setAllianceColor(AllianceColor color) {
         allianceColor = color;
-        driveTrain.configureAutoAim(color);
     }
 
     public void swapAllianceColor() {
@@ -110,7 +109,8 @@ public class Robot {
     private void prepareToShoot() {
         AprilTagPoseFtc target = aprilTagDetector.getTagPose();
         Pose3D robot = aprilTagDetector.getRobotPose();
-        driveTrain.aimAtAprilTag(target, robot);
+        // TODO replace with correct method
+//        driveTrain.aimAtAprilTag(target, robot);
         shooter.setRPMForAprilTag(target, fallbackRPM);
     }
 
@@ -193,7 +193,8 @@ public class Robot {
 
                 prepareToShoot();
 
-                if (!shooter.isReady() || !driveTrain.isReady()) {
+                // TODO replace with correct method
+                if (!shooter.isReady() /* || !driveTrain.isReady() */) {
                     intake.stopIntake();
                     if (keepBallsApart && shotsTaken < 1) {
                         transfer.reverseTransfer();
@@ -259,7 +260,8 @@ public class Robot {
     }
 
     public boolean isShotReady() {
-        return currentState == RobotState.SHOOT && shooter.isReady() && driveTrain.isReady();
+        // TODO replace with correct method
+        return currentState == RobotState.SHOOT && shooter.isReady() /* && driveTrain.isReady() */;
     }
 
     /* Module-specific methods */
