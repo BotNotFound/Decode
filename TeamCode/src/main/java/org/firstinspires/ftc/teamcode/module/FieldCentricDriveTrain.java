@@ -9,9 +9,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.teamcode.AllianceColor;
-import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
 public class FieldCentricDriveTrain {
@@ -30,17 +27,9 @@ public class FieldCentricDriveTrain {
     public static final String PINPOINT_DRIVER_NAME = "Pinpoint";
 
     private final GoBildaPinpointDriver pinpointDriver;
-    
-
-    private boolean aimingAtAprilTag;
-
-    private double aimOffsetMultiplier;
-
-    //want to check if I can commit from Android Studio again
-    private double aimOffsetZero;
 
 
-    public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor alliance) {
+    public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
         frontRightDriveMotor = hardwareMap.get(DcMotor.class, FRONT_RIGHT_DRIVE_MOTOR_NAME);
         frontLeftDriveMotor = hardwareMap.get(DcMotor.class, FRONT_LEFT_DRIVE_MOTOR_NAME);
         backRightDriveMotor = hardwareMap.get(DcMotor.class, BACK_RIGHT_DRIVE_MOTOR_NAME);
@@ -68,27 +57,11 @@ public class FieldCentricDriveTrain {
         pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpointDriver.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpointDriver.resetPosAndIMU();
-
-        /*aimingAtAprilTag = false;
-        configureAutoAim(alliance);
-        */
     }
 
     public void resetOdometry() {
         pinpointDriver.resetPosAndIMU();
     }
-    /* NOTE: change for turret
-    public void setPowerFacingAprilTag(double drive, double strafe, double turn, AprilTagPoseFtc tagPose, Pose3D robotPose) {
-        turnController.setTolerance(turnTolerance);
-
-        if (robotPose != null && tagPose != null) {
-
-            turn = getAimRotationPower(tagPose.bearing, robotPose.getOrientation().getYaw(AngleUnit.DEGREES));
-        }
-
-        setPower(drive, strafe, turn);
-    }
-    */
     //keep the set power for drivetrain 
     public void setPower(double drive, double strafe, double turn) {
         pinpointDriver.update();
@@ -131,7 +104,7 @@ public class FieldCentricDriveTrain {
     }
 
     /* get current powers using forward kinematics -- see https://www.desmos.com/calculator/je1clj0udl */
-    //its ok to keep these but they probably won't be used
+
     private double getRobotCentricDrivePower() {
         final double frontLeftPower = frontLeftDriveMotor.getPower();
         final double frontRightPower = frontRightDriveMotor.getPower();
@@ -175,41 +148,4 @@ public class FieldCentricDriveTrain {
     public void setTurnPower(double power) {
         setPower(getDrivePower(), getStrafePower(), power);
     }
-    /*NOTE: if its null, should code so that turret turns to apriltag regardless of heading
-    public void aimAtAprilTag(AprilTagPoseFtc target, Pose3D robotAngle) {
-        if (target == null || robotAngle == null) {
-            aimingAtAprilTag = false;
-            return; // no tag to aim at
-        }
-
-        aimingAtAprilTag = true;
-        //turn power for turret should be changed so its not for  forward kinematics
-        setTurnPower(getAimRotationPower(target.bearing, robotAngle.getOrientation().getYaw(AngleUnit.DEGREES)));
-    }
-    */
-    /* NOTE: should be the logic for our turret
-    private double getAimRotationPower(double bearing, double yaw) {
-        turnController.setTarget(turnTarget + (yaw - aimOffsetZero) * aimOffsetMultiplier);
-
-
-        telemetry.addData("Bearing", bearing);
-        telemetry.addData("Yaw", yaw);
-        telemetry.addData("Turn Error", turnController.getTarget() - bearing);
-
-        turnController.setP(turnP);
-        return turnController.calculate(bearing);
-    }
-    */
-    /*NOTE: should keep this
-    public boolean isReady(){
-        return !aimingAtAprilTag || turnController.atTarget();
-    }
-    */
-    /* NOTE: should keep this
-    public void configureAutoAim(AllianceColor alliance) {
-        aimOffsetZero = alliance.tagAimOffsetZero;
-        aimOffsetMultiplier = alliance.tagAimOffsetMultiplier;
-    }
-    */
-    
 }

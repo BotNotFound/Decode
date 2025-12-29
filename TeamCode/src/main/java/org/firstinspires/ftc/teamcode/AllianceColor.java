@@ -3,17 +3,16 @@ package org.firstinspires.ftc.teamcode;
 import androidx.annotation.NonNull;
 
 public enum AllianceColor {
-    RED(24, 35, 0.15),
-    BLUE(20, 145, 0.15);
+    // TODO test goal angles
+    RED(24, 45),
+    BLUE(20, 135);
 
     public final int targetAprilTagID;
-    public final double tagAimOffsetZero;
-    public final double tagAimOffsetMultiplier;
+    public final double goalAngle;
 
-    AllianceColor(int targetAprilTagID, double tagAimOffsetZero, double tagAimOffsetMultiplier) {
+    AllianceColor(int targetAprilTagID, double goalAngle) {
         this.targetAprilTagID = targetAprilTagID;
-        this.tagAimOffsetZero = tagAimOffsetZero;
-        this.tagAimOffsetMultiplier = tagAimOffsetMultiplier;
+        this.goalAngle = goalAngle;
     }
 
 

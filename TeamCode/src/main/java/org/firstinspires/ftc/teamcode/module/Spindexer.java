@@ -6,7 +6,7 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -22,7 +22,7 @@ public class Spindexer {
 
     private static final String SENS_ORANGE_ENCODER = "spindexer encoder";
 
-    private static final String FRONT_COLOR_SENSOR= "Front Color Sensor";
+    private static final String FRONT_COLOR_SENSOR = "Front Color Sensor";
 
     private final CRServo spindexerServoOne;
     private final CRServo spindexerServoTwo;
@@ -34,38 +34,41 @@ public class Spindexer {
 
     private final Telemetry telemetry;
 
+    //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 2;
 
     private static double spindexerAngle;
 
+    //TODO: Tune the below angles and power values
     public static double offsetAngle = 0;
 
     public static double spindexerPower = 0.3;
 
-    private static double FIRST_SLOT_ANGLE = 0;
+    public static double FIRST_SLOT_ANGLE = 0;
 
-    private static double SECOND_SLOT_ANGLE = 120;
+    public static double SECOND_SLOT_ANGLE = 120;
 
-    private static double THIRD_SLOT_ANGLE = 240;
+    public static double THIRD_SLOT_ANGLE = 240;
 
+    // TODO tune PIDF values + tolerance
     private final PIDFController spindexerController;
 
     public static double kP = 0.1;
     public static double kI = 0.01;
     public static double kD = 0;
     public static double kF = 0;
-    public static double tolerance = 200;
-
-
-
+    public static double tolerance = 1;
 
 
     //was thinking of using timers to switch to the next slot
     public static double TIME_TO_SWITCH_TO_NEXT_EMPTY_SLOT = 0.3;
 
     public static double TIME_TO_SWITCH_TO_NEXT_TWO_EMPTY_SLOTS = 0.6;
-    public Spindexer(HardwareMap hardwareMap, Telemetry telemetry){
-        spindexerServoOne= hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
+
+    public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
+        this.telemetry = telemetry;
+
+        spindexerServoOne = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
         spindexerServoThree = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_THREE);
         spindexerServoFour = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_FOUR);
@@ -74,114 +77,140 @@ public class Spindexer {
 
         spindexerEncoder = hardwareMap.get(AnalogInput.class, SENS_ORANGE_ENCODER);
 
-        spindexerAngle = AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage()-0.043)/3.1*360 + offsetAngle);
+        spindexerAngle = getAngle();
 
-        spindexerController = new PIDFController(kP,kI, kD, kF);
+        spindexerController = new PIDFController(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
-
-
-
-
-
-
-        this.telemetry = telemetry;
-
-        //set all spindexer servo directions for spindexer to turn counterclockwise initially
+        //set all servo directions for spindexer to turn counterclockwise
         spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
         spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
         spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
         spindexerServoFour.setDirection(CRServo.Direction.FORWARD);
-
-
     }
 
     private boolean hasBall(RevColorSensorV3 sensor) {
         double dist = sensor.getDistance(DistanceUnit.CM);
-        return !Double.isNaN(dist) && dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
-
+        return dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
     }
 
-    //sets the spindexer power, absolute value is there not to confuse servo directions
-    public void setSpindexerPower(double power){
-        spindexerServoOne.setPower(Math.abs(power));
-        spindexerServoTwo.setPower(Math.abs(power));
-        spindexerServoThree.setPower(Math.abs(power));
-        spindexerServoFour.setPower(Math.abs(power));
+    public void setSpindexerPower(double power) {
+        spindexerServoOne.setPower(power);
+        spindexerServoTwo.setPower(power);
+        spindexerServoThree.setPower(power);
+        spindexerServoFour.setPower(power);
     }
 
-    public void runSpindexer(){
+    public void runSpindexer() {
         spindexerServoOne.setPower(spindexerPower);
         spindexerServoTwo.setPower(spindexerPower);
         spindexerServoThree.setPower(spindexerPower);
         spindexerServoFour.setPower(spindexerPower);
     }
 
-    //spindexer rotates counterclockwise
-    public void setRotationCounterClockWise(){
-        spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
-        spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
-        spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
-        spindexerServoFour.setDirection(CRServo.Direction.FORWARD);
+    /**
+     * Given 3 values, returns the one with the lowest magnitude.
+     *
+     * @return The value with the lowest magnitude
+     */
+    private static double signedMin(double a, double b, double c) {
+        if (Math.abs(a) <= Math.abs(b) && Math.abs(a) <= Math.abs(c)) {
+            return a;
+        }
+        if (Math.abs(b) <= Math.abs(a) && Math.abs(b) <= Math.abs(c)) {
+            return b;
+        }
+        return c;
     }
 
-    //spindexer rotates clockwise
-    public void setRotationClockWise(){
-        spindexerServoOne.setDirection(CRServo.Direction.REVERSE);
-        spindexerServoTwo.setDirection(CRServo.Direction.FORWARD);
-        spindexerServoThree.setDirection(CRServo.Direction.FORWARD);
-        spindexerServoFour.setDirection(CRServo.Direction.REVERSE);
+    /**
+     * Calculates the shortest displacement of {@code angle1} relative to {@code angle2}. This is
+     * similar to a simple {@code angle1 - angle2}, with the exception that the calculated
+     * displacement will not be unnecessarily large when the angles are across the normalization
+     * boundary (e.g. {@code angle1 = 170} and {@code angle2 = -175})
+     *
+     * @param angle1 The angle to get the displacement of
+     * @param angle2 The 'source' angle -- displacement is calculated relative to this value
+     * @param unit   The unit of the given angles
+     * @return The shortest displacement of {@code angle1} relative to {@code angle2}
+     */
+    private static double getShortestDisplacement(double angle1, double angle2, AngleUnit unit) {
+        final double ROTATION;
+        switch (unit) {
+            case DEGREES:
+                ROTATION = 360;
+                break;
+
+            case RADIANS:
+            default:
+                ROTATION = 2.0 * Math.PI;
+                break;
+        }
+
+        angle1 = unit.normalize(angle1);
+        angle2 = unit.normalize(angle2);
+
+        return signedMin(
+                angle1 - angle2,
+                angle1 + ROTATION - angle2,
+                angle1 - angle2 - ROTATION
+        );
     }
 
-    public void rotateToAngle(double angle){
+    /**
+     * Calculates the closest angle to {@code closeToAngle} that is equivalent to {@code angle}
+     *
+     * @param angle        The angle to transform
+     * @param closeToAngle The target angle -- the calculated angle will be as close as possible to
+     *                     this
+     * @param unit         The unit both angles are in
+     * @return The closest angle to {@code closeToAngle} that is equivalent to {@code angle}
+     */
+    private static double closestEquivalentAngle(double angle, double closeToAngle, AngleUnit unit) {
+        return closeToAngle + getShortestDisplacement(angle, closeToAngle, unit);
+    }
+
+    public void rotateToAngle(double angle) {
+        spindexerController.setSetPoint(angle);
+        updateSpindexerPowers();
+    }
+
+    public void updateSpindexerPowers() {
         spindexerController.setTolerance(tolerance);
         spindexerController.setPIDF(kP, kI, kD, kF);
-        double power = spindexerController.calculate(getSpindexerAngle(), angle);
-        double angleDifference = AngleUnit.normalizeDegrees(angle-getSpindexerAngle());
-        if(angleDifference < 0){
-            setRotationClockWise();
-        }else if(angleDifference > 0){
-            setRotationCounterClockWise();
-        }
-        setSpindexerPower(power);
+        spindexerController.setTolerance(tolerance);
 
-        telemetry.addData("Current spindexer angle, ", getSpindexerAngle());
+        final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES);
+        setSpindexerPower(spindexerController.calculate(curEquivAngle));
+    }
+
+    public boolean atTargetRotation() {
+        return spindexerController.atSetPoint();
+    }
+
+    public void rotateToEmptySlot() {
 
     }
 
-    public void rotateToEmptySlot(){
-
-
-
-    }
-
-    public void zeroSpindexer(){
-        spindexerAngle = getSpindexerAngle();
+    public void zeroSpindexer() {
+        spindexerAngle = getAngle();
         //should use tolerances
-        if(spindexerAngle != FIRST_SLOT_ANGLE){
+        if (spindexerAngle != FIRST_SLOT_ANGLE) {
 
         }
     }
 
-    public void stopSpindexer(){
-        spindexerServoOne.setPower(0);
-        spindexerServoTwo.setPower(0);
-        spindexerServoThree.setPower(0);
-        spindexerServoFour.setPower(0);
+    public void stopSpindexer() {
+        setSpindexerPower(0);
     }
 
-    public void printAngle(){
-        spindexerAngle = AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage()-0.043)/3.1*360 + offsetAngle);
-        telemetry.addData("Spindexer Angle(degrees): ", spindexerAngle);
+    public void logAngle() {
+        telemetry.addData("Spindexer Angle (degrees)", getAngle());
 
     }
 
-    private double getSpindexerAngle(){
-        return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage()-0.043)/3.1*360 + offsetAngle);
+    private double getAngle() {
+        // see https://docs.sensorangerobotics.com/encoder/#analog-usage
+        return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
     }
-
-
-
-
-
 }
