@@ -45,4 +45,15 @@ public class Turret {
         aimController.setSetPoint(goalAngle);
         turretMotor.setPower(aimController.calculate(curHeading));
     }
+
+    public void resetRotation() {
+        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        turretMotor.setTargetPosition(0);
+        turretMotor.setPower(1);
+        turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void resetEncoder() {
+        turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 }
