@@ -45,6 +45,4 @@ public class Turret {
         aimController.setSetPoint(goalAngle);
         turretMotor.setPower(aimController.calculate(curHeading));
     }
-
-
 }

@@ -34,27 +34,30 @@ public class Spindexer {
 
     private final Telemetry telemetry;
 
+    //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 2;
 
     private static double spindexerAngle;
 
+    //TODO: Tune the below angles and power values
     public static double offsetAngle = 0;
 
     public static double spindexerPower = 0.3;
 
-    private static final double FIRST_SLOT_ANGLE = 0;
+    public static double FIRST_SLOT_ANGLE = 0;
 
-    private static final double SECOND_SLOT_ANGLE = 120;
+    public static double SECOND_SLOT_ANGLE = 120;
 
-    private static final double THIRD_SLOT_ANGLE = 240;
+    public static double THIRD_SLOT_ANGLE = 240;
 
+    // TODO tune PIDF values + tolerance
     private final PIDFController spindexerController;
 
     public static double kP = 0.1;
     public static double kI = 0.01;
     public static double kD = 0;
     public static double kF = 0;
-    public static double tolerance = 200;
+    public static double tolerance = 1;
 
 
     //was thinking of using timers to switch to the next slot
