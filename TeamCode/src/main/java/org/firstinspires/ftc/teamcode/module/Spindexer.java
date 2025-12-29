@@ -63,6 +63,8 @@ public class Spindexer {
     public static double TIME_TO_SWITCH_TO_NEXT_TWO_EMPTY_SLOTS = 0.6;
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
+        this.telemetry = telemetry;
+
         spindexerServoOne = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
         spindexerServoThree = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_THREE);
@@ -72,20 +74,16 @@ public class Spindexer {
 
         spindexerEncoder = hardwareMap.get(AnalogInput.class, SENS_ORANGE_ENCODER);
 
-        spindexerAngle = AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
+        spindexerAngle = getAngle();
 
         spindexerController = new PIDFController(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
-        this.telemetry = telemetry;
-
-        //set all spindexer servo directions for spindexer to turn counterclockwise initially
+        //set all servo directions for spindexer to turn counterclockwise
         spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
         spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
         spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
         spindexerServoFour.setDirection(CRServo.Direction.FORWARD);
-
-
     }
 
     private boolean hasBall(RevColorSensorV3 sensor) {
@@ -93,12 +91,11 @@ public class Spindexer {
         return dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
     }
 
-    //sets the spindexer power, absolute value is there not to confuse servo directions
     public void setSpindexerPower(double power) {
-        spindexerServoOne.setPower(Math.abs(power));
-        spindexerServoTwo.setPower(Math.abs(power));
-        spindexerServoThree.setPower(Math.abs(power));
-        spindexerServoFour.setPower(Math.abs(power));
+        spindexerServoOne.setPower(power);
+        spindexerServoTwo.setPower(power);
+        spindexerServoThree.setPower(power);
+        spindexerServoFour.setPower(power);
     }
 
     public void runSpindexer() {
@@ -108,31 +105,11 @@ public class Spindexer {
         spindexerServoFour.setPower(spindexerPower);
     }
 
-    public void setRotationCounterclockwise() {
-        spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
-        spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
-        spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
-        spindexerServoFour.setDirection(CRServo.Direction.FORWARD);
-    }
-
-    public void setRotationClockwise() {
-        spindexerServoOne.setDirection(CRServo.Direction.REVERSE);
-        spindexerServoTwo.setDirection(CRServo.Direction.FORWARD);
-        spindexerServoThree.setDirection(CRServo.Direction.FORWARD);
-        spindexerServoFour.setDirection(CRServo.Direction.REVERSE);
-    }
-
     public void rotateToAngle(double angle) {
         spindexerController.setTolerance(tolerance);
         spindexerController.setPIDF(kP, kI, kD, kF);
         double power = spindexerController.calculate(getAngle(), angle);
         double angleDifference = AngleUnit.normalizeDegrees(angle - getAngle());
-        if (angleDifference < 0) {
-            setRotationClockwise();
-        }
-        else if (angleDifference > 0) {
-            setRotationCounterclockwise();
-        }
         setSpindexerPower(power);
 
         telemetry.addData("Current spindexer angle", getAngle());
