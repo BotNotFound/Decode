@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
@@ -20,7 +19,7 @@ public class Shooter {
     public static final String RIGHT_FLYWHEEL_MOTOR_NAME = "Upper flywheel";
     public static final String KICKER_SERVO_NAME = "Kicker";
 
-    public static final String HOOD_SERVO_NAME = "Adjustable Shooter Servo";
+    public static final String HOOD_SERVO_NAME = "Hood Servo";
 
     //TODO: tune these kicker position values using dashboard
     public static double KICKER_IDLE_POSITION = 0.82;
@@ -86,7 +85,7 @@ public class Shooter {
 
         this.telemetry = telemetry;
 
-        //TODO: change this
+        //TODO: tune table (probably)
         flywheelSpeeds = new InterpLUT();
         // the control points have to be in increasing order
         flywheelSpeeds.add(28.0, 2500); // extrapolated lower bound
@@ -129,11 +128,9 @@ public class Shooter {
             leftFlywheelMotor.setPower(power);
             rightFlywheelMotor.setPower(power);
         }
-        else{
+        else {
             leftFlywheelMotor.setPower(0);
             rightFlywheelMotor.setPower(0);
-
-            stickyRPM = false;
         }
 
         logRPM(rpm, actualRPM);
@@ -146,16 +143,14 @@ public class Shooter {
         telemetry.addData("Lower RPM Bound", target - tolerance);
     }
 
-    public void setRPMForGoal(double distanceToGoal, double hoodPosition, double fallbackRPM){
+    public void setRPMForGoal(double distanceToGoal, double hoodPosition, double fallbackRPM) {
 
     }
-    /*
+
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
         setRPMForAprilTag(tagPose, defaultRPM);
     }
-    dont need
-     */
-    /*
+
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose, double fallbackRPM) {
         if (tagPose != null) {
             // clamps the range to the min/max for the interpLUT to avoid bound errors
@@ -175,8 +170,6 @@ public class Shooter {
             setRPM(fallbackRPM);
         }
     }
-    dont need
-     */
 
     public void increaseDefaultRPM() {
         defaultRPM += 50;
