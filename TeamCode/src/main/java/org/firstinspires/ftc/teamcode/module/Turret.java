@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.AllianceColor;
 
 @Config
@@ -21,6 +22,8 @@ public class Turret {
 
     private final double goalAngle;
 
+    private final Telemetry telemetry;
+
     /**
      * The number of encoder ticks in a single revolution of the motor We are currently using a
      * <a href="https://www.gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-5-2-1-ratio-24mm-length-8mm-rex-shaft-1150-rpm-3-3-5v-encoder/">
@@ -30,8 +33,9 @@ public class Turret {
      */
     public static final double TICKS_PER_REVOLUTION = 145.1 * (113.0 / 12.0);
 
-    public Turret(HardwareMap hardwareMap, AllianceColor allianceColor) {
+    public Turret(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor allianceColor) {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
+        this.telemetry = telemetry;
         goalAngle = allianceColor.goalAngle;
         aimController = new PIDFController(kP, kI, kD, kF);
     }
@@ -41,4 +45,6 @@ public class Turret {
         aimController.setSetPoint(goalAngle);
         turretMotor.setPower(aimController.calculate(curHeading));
     }
+
+
 }
