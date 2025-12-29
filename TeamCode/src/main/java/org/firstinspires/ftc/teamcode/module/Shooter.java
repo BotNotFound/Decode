@@ -11,22 +11,35 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
 public class Shooter {
-    public static final String LOWER_FLYWHEEL_MOTOR_NAME = "Lower flywheel";
-    public static final String UPPER_FLYWHEEL_MOTOR_NAME = "Upper flywheel";
+    public static final String LEFT_FLYWHEEL_MOTOR_NAME = "Lower flywheel";
+    public static final String RIGHT_FLYWHEEL_MOTOR_NAME = "Upper flywheel";
     public static final String KICKER_SERVO_NAME = "Kicker";
 
+    public static final String HOOD_SERVO_NAME = "Adjustable Shooter Servo";
+
+    //TODO: tune these kicker position values using dashboard
     public static double KICKER_IDLE_POSITION = 0.82;
     public static double KICKER_LAUNCH_POSITION = 0.344;
     public static double KICKER_MILLIS_TO_ENGAGE = 0;
 
-    private final DcMotorEx lowerFlywheelMotor;
-    private final DcMotorEx upperFlywheelMotor;
-    private final Servo kickerServo;
 
+    //TODO: tune these values using dashboard and for clamping servo positions
+    public static double HOOD_SERVO_POSITION_LOWER_BOUND = 0.41;
+
+    public static double HOOD_SERVO_POSITION_UPPER_BOUND = 0.67;
+
+
+    private final DcMotorEx leftFlywheelMotor;
+    private final DcMotorEx rightFlywheelMotor;
+    private final Servo kickerServo;
+    private final Servo hoodServo;
+
+    //TODO: tune velocity PID
     private final PIDFController velocityPID;
     public static double kP = 0.002;
     public static double kI = 0;
@@ -51,26 +64,29 @@ public class Shooter {
 
     
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
-        lowerFlywheelMotor = hardwareMap.get(DcMotorEx.class, LOWER_FLYWHEEL_MOTOR_NAME);
-        upperFlywheelMotor = hardwareMap.get(DcMotorEx.class, UPPER_FLYWHEEL_MOTOR_NAME);
+        leftFlywheelMotor = hardwareMap.get(DcMotorEx.class, LEFT_FLYWHEEL_MOTOR_NAME);
+        rightFlywheelMotor = hardwareMap.get(DcMotorEx.class, RIGHT_FLYWHEEL_MOTOR_NAME);
         kickerServo = hardwareMap.get(Servo.class, KICKER_SERVO_NAME);
+        hoodServo = hardwareMap.get(Servo.class, HOOD_SERVO_NAME);
 
-        lowerFlywheelMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        upperFlywheelMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFlywheelMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFlywheelMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        lowerFlywheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        upperFlywheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftFlywheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFlywheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        lowerFlywheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        upperFlywheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftFlywheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightFlywheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         kickerServo.setPosition(KICKER_IDLE_POSITION);
+        hoodServo.setPosition(HOOD_SERVO_POSITION_LOWER_BOUND);
 
         velocityPID = new PIDFController(kP, kI, kD, kF);
         velocityPID.setTolerance(tolerance);
 
         this.telemetry = telemetry;
 
+        //TODO: change this
         flywheelSpeeds = new InterpLUT();
         // the control points have to be in increasing order
         flywheelSpeeds.add(28.0, 2500); // extrapolated lower bound
@@ -94,25 +110,25 @@ public class Shooter {
     public void setRPM(double rpm) {
         if (rpm == 0) {
             // no need for velocity control if we aren't spinning
-            lowerFlywheelMotor.setPower(0);
-            upperFlywheelMotor.setPower(0);
+            leftFlywheelMotor.setPower(0);
+            rightFlywheelMotor.setPower(0);
             return;
         }
 
         velocityPID.setTolerance(tolerance);
         velocityPID.setPIDF(kP, kI, kD, kF);
-        double actualRPM = upperFlywheelMotor.getVelocity() / motorCPS * 60;
+        double actualRPM = rightFlywheelMotor.getVelocity() / motorCPS * 60;
 
         if(rpm > 0){
             double power = velocityPID.calculate(actualRPM, rpm);
             telemetry.addData("shooter power", power);
 
-            lowerFlywheelMotor.setPower(power);
-            upperFlywheelMotor.setPower(power);
+            leftFlywheelMotor.setPower(power);
+            rightFlywheelMotor.setPower(power);
         }
         else{
-            lowerFlywheelMotor.setPower(0);
-            upperFlywheelMotor.setPower(0);
+            leftFlywheelMotor.setPower(0);
+            rightFlywheelMotor.setPower(0);
 
             stickyRPM = false;
         }
@@ -121,10 +137,16 @@ public class Shooter {
         telemetry.addData("Real RPM", actualRPM);
     }
 
+    public void setRPMForGoal(double distanceToGoal, double hoodPosition, double fallbackRPM){
+
+    }
+    /*
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
         setRPMForAprilTag(tagPose, defaultRPM);
     }
-
+    dont need
+     */
+    /*
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose, double fallbackRPM) {
         if(tagPose != null){
             // clamps the range to the min/max for the interpLUT to avoid bound errors
@@ -142,6 +164,8 @@ public class Shooter {
             setRPM(fallbackRPM);
         }
     }
+    dont need
+     */
 
     public void increaseDefaultRPM() {
         defaultRPM += 50;
