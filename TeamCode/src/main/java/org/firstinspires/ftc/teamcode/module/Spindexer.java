@@ -90,7 +90,7 @@ public class Spindexer {
 
     private boolean hasBall(RevColorSensorV3 sensor) {
         double dist = sensor.getDistance(DistanceUnit.CM);
-        return !Double.isNaN(dist) && dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+        return dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
     }
 
     //sets the spindexer power, absolute value is there not to confuse servo directions
