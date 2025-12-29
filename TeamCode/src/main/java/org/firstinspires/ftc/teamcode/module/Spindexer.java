@@ -158,9 +158,8 @@ public class Spindexer {
         spindexerServoFour.setPower(0);
     }
 
-    public void printAngle() {
-        spindexerAngle = AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
-        telemetry.addData("Spindexer Angle (degrees)", spindexerAngle);
+    public void logAngle() {
+        telemetry.addData("Spindexer Angle (degrees)", getSpindexerAngle());
 
     }
 
