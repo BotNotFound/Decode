@@ -90,15 +90,15 @@ public class ArtifactTracker {
     public void reportDetections() {
         telemetry.addData(
                 "Front Artifact",
-                hasBall(ArtifactLocation.FRONT) ? "Detected" : "Not Detected"
+                hasBall(ArtifactLocation.SLOT_ONE) ? "Detected" : "Not Detected"
         );
         telemetry.addData(
                 "Middle Artifact",
-                hasBall(ArtifactLocation.MIDDLE) ? "Detected" : "Not Detected"
+                hasBall(ArtifactLocation.SLOT_TWO) ? "Detected" : "Not Detected"
         );
         telemetry.addData(
                 "Back Artifact",
-                hasBall(ArtifactLocation.BACK) ? "Detected" : "Not Detected"
+                hasBall(ArtifactLocation.SLOT_THREE) ? "Detected" : "Not Detected"
         );
         updateLED();
     }

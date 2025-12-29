@@ -151,13 +151,13 @@ public class Robot {
                 shotReady = false;
                 shotPrepTime.reset();
                 shotsTaken = 0;
-                keepBallsApart = ballTracker.hasBall(ArtifactLocation.BACK) &&
-                        ballTracker.hasBall(ArtifactLocation.MIDDLE);
+                keepBallsApart = ballTracker.hasBall(ArtifactLocation.SLOT_THREE) &&
+                        ballTracker.hasBall(ArtifactLocation.SLOT_TWO);
 
                 Log.d(TAG, "enter shoot {" +
-                        (ballTracker.hasBall(ArtifactLocation.FRONT) ? "front | " : "      | ") +
-                        (ballTracker.hasBall(ArtifactLocation.MIDDLE) ? "middle | " : "       | ") +
-                        (ballTracker.hasBall(ArtifactLocation.BACK) ? "back | " : "     | ") +
+                        (ballTracker.hasBall(ArtifactLocation.SLOT_ONE) ? "front | " : "      | ") +
+                        (ballTracker.hasBall(ArtifactLocation.SLOT_TWO) ? "middle | " : "       | ") +
+                        (ballTracker.hasBall(ArtifactLocation.SLOT_THREE) ? "back | " : "     | ") +
                         "keepBallsApart = " + keepBallsApart + "}");
                 break;
 
@@ -219,7 +219,7 @@ public class Robot {
                     timeSinceShotReady.reset();
                 }
 
-                if (ballTracker.hasBall(ArtifactLocation.BACK)) {
+                if (ballTracker.hasBall(ArtifactLocation.SLOT_THREE)) {
                     intake.stopIntake();
                     transfer.stopTransfer();
                     shooter.engageKicker();
@@ -241,8 +241,8 @@ public class Robot {
                     intake.stopIntake();
                 }
                 else if (
-                        ballTracker.hasBall(ArtifactLocation.BACK) &&
-                                ballTracker.hasBall(ArtifactLocation.MIDDLE)
+                        ballTracker.hasBall(ArtifactLocation.SLOT_THREE) &&
+                                ballTracker.hasBall(ArtifactLocation.SLOT_TWO)
                 ) {
                     transfer.stopTransfer();
                     intake.startIntake();

@@ -4,7 +4,6 @@ package org.firstinspires.ftc.teamcode.module;
 public enum ArtifactLocation {
     SLOT_ONE(1, Spindexer.FIRST_SLOT_ANGLE, "Slot One", false),
     SLOT_TWO(2, Spindexer.SECOND_SLOT_ANGLE, "Slot Two", false),
-
     SLOT_THREE(3,Spindexer.THIRD_SLOT_ANGLE, "Slot Three", false);
 
 
