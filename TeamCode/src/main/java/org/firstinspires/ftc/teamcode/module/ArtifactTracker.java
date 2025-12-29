@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.IndicatorColorValues;
 /*If we ever consider mild sorting efforts and tracking whether or not we have three artifacts inside
  * we'll use this class
  */
+
 @Config
 public class ArtifactTracker {
     public static final String BACK_COLOR_SENSOR_NAME = "ColorSensorBack";

@@ -6,10 +6,11 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 
 
 @Config
@@ -34,20 +35,27 @@ public class Spindexer {
 
     private final Telemetry telemetry;
 
+    //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 2;
 
     private static double spindexerAngle;
 
+    //TODO: Tune the below angles and power values
     public static double offsetAngle = 0;
+
 
     public static double spindexerPower = 0.3;
 
-    private static double FIRST_SLOT_ANGLE = 0;
+    public static double FIRST_SLOT_ANGLE = 0;
 
-    private static double SECOND_SLOT_ANGLE = 120;
+    public static double SECOND_SLOT_ANGLE = 120;
 
-    private static double THIRD_SLOT_ANGLE = 240;
+    public static double THIRD_SLOT_ANGLE = 240;
 
+    //TODO: Tune the tolerance value
+    public static double ANGLE_TOLERANCE_DEGREES = 1;
+
+    //TODO: Tune the PIDF  values for the spindexer
     private final PIDFController spindexerController;
 
     public static double kP = 0.1;
@@ -56,14 +64,12 @@ public class Spindexer {
     public static double kF = 0;
     public static double tolerance = 200;
 
+    private static final int MAX_ARTIFACT_COUNT = 3;
+
+    private int artifactCount = 0;
 
 
 
-
-    //was thinking of using timers to switch to the next slot
-    public static double TIME_TO_SWITCH_TO_NEXT_EMPTY_SLOT = 0.3;
-
-    public static double TIME_TO_SWITCH_TO_NEXT_TWO_EMPTY_SLOTS = 0.6;
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry){
         spindexerServoOne= hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
@@ -96,7 +102,7 @@ public class Spindexer {
 
     }
 
-    private boolean hasBall(RevColorSensorV3 sensor) {
+    private boolean detectsBall(RevColorSensorV3 sensor) {
         double dist = sensor.getDistance(DistanceUnit.CM);
         return !Double.isNaN(dist) && dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
 
@@ -149,25 +155,42 @@ public class Spindexer {
 
     }
 
-    public void rotateToEmptySlot(){
-
-
-
-    }
-
-    public void zeroSpindexer(){
-        spindexerAngle = getSpindexerAngle();
-        //should use tolerances
-        if(spindexerAngle != FIRST_SLOT_ANGLE){
-
+    public void rotateByEmptySlots(){
+        //for now we're just doing the case where we intake them all continuously and there are no issues but that does need to be changed
+        if(getArtifactCount() == 0 && (AngleUnit.normalizeDegrees(getSpindexerAngle()-ArtifactLocation.SLOT_ONE.angle)< ANGLE_TOLERANCE_DEGREES) && detectsBall(frontColorSensor)) {
+            artifactCount++;
+            ArtifactLocation.SLOT_ONE.hasBall = true;
+            rotateToAngle(ArtifactLocation.SLOT_TWO.angle);
+        }
+        else if(getArtifactCount() == 1 && (AngleUnit.normalizeDegrees(getSpindexerAngle()-ArtifactLocation.SLOT_TWO.angle)< ANGLE_TOLERANCE_DEGREES) && detectsBall(frontColorSensor)) {
+            artifactCount++;
+            ArtifactLocation.SLOT_TWO.hasBall = true;
+            rotateToAngle(ArtifactLocation.SLOT_THREE.angle);
+        }
+        else if(getArtifactCount() == 2 && (AngleUnit.normalizeDegrees(getSpindexerAngle()-ArtifactLocation.SLOT_THREE.angle)< ANGLE_TOLERANCE_DEGREES) &&detectsBall(frontColorSensor)) {
+            artifactCount++;
+            ArtifactLocation.SLOT_THREE.hasBall = true;
         }
     }
 
+    public void zeroSpindexer(){
+        if(!(AngleUnit.normalizeDegrees(getSpindexerAngle()-ArtifactLocation.SLOT_ONE.angle)< ANGLE_TOLERANCE_DEGREES)){
+            rotateToAngle(ArtifactLocation.SLOT_ONE.angle);
+        }
+    }
+
+
+
     public void stopSpindexer(){
-        spindexerServoOne.setPower(0);
-        spindexerServoTwo.setPower(0);
-        spindexerServoThree.setPower(0);
-        spindexerServoFour.setPower(0);
+        setSpindexerPower(0);
+    }
+
+    public int getArtifactCount(){
+        return artifactCount;
+    }
+
+    public void resetArtifactCount(){
+        artifactCount = 0;
     }
 
     public void printAngle(){
@@ -179,6 +202,7 @@ public class Spindexer {
     private double getSpindexerAngle(){
         return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage()-0.043)/3.1*360 + offsetAngle);
     }
+
 
 
 
