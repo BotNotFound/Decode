@@ -59,6 +59,8 @@ public class Shooter {
 
     private final InterpLUT flywheelSpeeds;
 
+    private final InterpLUT hoodPositions;
+
     private final ElapsedTime timeSinceKickerEngaged;
 
 
@@ -102,6 +104,21 @@ public class Shooter {
         flywheelSpeeds.add(130, 4050); // extrapolated upper bound
         flywheelSpeeds.createLUT();
 
+        //TODO: tune hood interplut
+        hoodPositions = new InterpLUT();
+        /*idea behind hoodPositions interplut is so that we adjust the hood so we always hit the back of the goal at a low height.
+        We map the rpm(x) to a hood position(y)
+         */
+        hoodPositions.add(41, 0.41);
+        hoodPositions.add(61, 0.61);
+        hoodPositions.add(67, 0.67);
+        hoodPositions.add(69, 0.69);
+        hoodPositions.createLUT();
+
+
+
+
+
         timeSinceKickerEngaged = new ElapsedTime();
         kickerEngaged = false;
 
@@ -143,7 +160,19 @@ public class Shooter {
         telemetry.addData("Lower RPM Bound", target - tolerance);
     }
 
-    public void setRPMForGoal(double distanceToGoal, double hoodPosition, double fallbackRPM) {
+    public void setRPMForGoal(double distanceToGoal) {
+        // clamps the range to the min/max for the interpLUT to avoid bound errors
+        distanceToGoal = Math.min(120.0, Math.max(30.0, distanceToGoal));
+
+        //set stickyRPM
+        stickyRPM = true;
+        stickyTargetRPM = flywheelSpeeds.get(distanceToGoal);
+        double hoodPosition = hoodPositions.get(stickyTargetRPM);
+
+        hoodPosition = Math.min(HOOD_SERVO_POSITION_UPPER_BOUND, Math.max(hoodPosition, HOOD_SERVO_POSITION_LOWER_BOUND));
+
+        hoodServo.setPosition(hoodPosition);
+        setRPM(stickyTargetRPM);
 
     }
 

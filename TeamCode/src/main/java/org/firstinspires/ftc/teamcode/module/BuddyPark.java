@@ -12,6 +12,7 @@ public class BuddyPark {
 
     private final Servo buddyParkServo;
 
+    //TODO: Tune these values in dashboard
     public static double RAISED_ROBOT_POSITION = 0.2;
 
     public static double LOWERED_ROBOT_POSITION = 0.8;
