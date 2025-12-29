@@ -105,15 +105,84 @@ public class Spindexer {
         spindexerServoFour.setPower(spindexerPower);
     }
 
+    /**
+     * Given 3 values, returns the one with the lowest magnitude.
+     *
+     * @return The value with the lowest magnitude
+     */
+    private static double signedMin(double a, double b, double c) {
+        if (Math.abs(a) <= Math.abs(b) && Math.abs(a) <= Math.abs(c)) {
+            return a;
+        }
+        if (Math.abs(b) <= Math.abs(a) && Math.abs(b) <= Math.abs(c)) {
+            return b;
+        }
+        return c;
+    }
+
+    /**
+     * Calculates the shortest displacement of {@code angle1} relative to {@code angle2}. This is
+     * similar to a simple {@code angle1 - angle2}, with the exception that the calculated
+     * displacement will not be unnecessarily large when the angles are across the normalization
+     * boundary (e.g. {@code angle1 = 170} and {@code angle2 = -175})
+     *
+     * @param angle1 The angle to get the displacement of
+     * @param angle2 The 'source' angle -- displacement is calculated relative to this value
+     * @param unit   The unit of the given angles
+     * @return The shortest displacement of {@code angle1} relative to {@code angle2}
+     */
+    private static double getShortestDisplacement(double angle1, double angle2, AngleUnit unit) {
+        final double ROTATION;
+        switch (unit) {
+            case DEGREES:
+                ROTATION = 360;
+                break;
+
+            case RADIANS:
+            default:
+                ROTATION = 2.0 * Math.PI;
+                break;
+        }
+
+        angle1 = unit.normalize(angle1);
+        angle2 = unit.normalize(angle2);
+
+        return signedMin(
+                angle1 - angle2,
+                angle1 + ROTATION - angle2,
+                angle1 - angle2 - ROTATION
+        );
+    }
+
+    /**
+     * Calculates the closest angle to {@code closeToAngle} that is equivalent to {@code angle}
+     *
+     * @param angle        The angle to transform
+     * @param closeToAngle The target angle -- the calculated angle will be as close as possible to
+     *                     this
+     * @param unit         The unit both angles are in
+     * @return The closest angle to {@code closeToAngle} that is equivalent to {@code angle}
+     */
+    private static double closestEquivalentAngle(double angle, double closeToAngle, AngleUnit unit) {
+        return closeToAngle + getShortestDisplacement(angle, closeToAngle, unit);
+    }
+
     public void rotateToAngle(double angle) {
+        spindexerController.setSetPoint(angle);
+        updateSpindexerPowers();
+    }
+
+    public void updateSpindexerPowers() {
         spindexerController.setTolerance(tolerance);
         spindexerController.setPIDF(kP, kI, kD, kF);
-        double power = spindexerController.calculate(getAngle(), angle);
-        double angleDifference = AngleUnit.normalizeDegrees(angle - getAngle());
-        setSpindexerPower(power);
+        spindexerController.setTolerance(tolerance);
 
-        telemetry.addData("Current spindexer angle", getAngle());
+        final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES);
+        setSpindexerPower(spindexerController.calculate(curEquivAngle));
+    }
 
+    public boolean atTargetRotation() {
+        return spindexerController.atSetPoint();
     }
 
     public void rotateToEmptySlot() {
