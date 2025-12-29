@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -41,6 +42,21 @@ public class Spindexer {
 
     public static double spindexerPower = 0.3;
 
+    private static double FIRST_SLOT_ANGLE = 0;
+
+    private static double SECOND_SLOT_ANGLE = 120;
+
+    private static double THIRD_SLOT_ANGLE = 240;
+
+    private final PIDFController spindexerController;
+
+    public static double kP = 0.1;
+    public static double kI = 0.01;
+    public static double kD = 0;
+    public static double kF = 0;
+    public static double tolerance = 200;
+
+
 
 
 
@@ -59,6 +75,9 @@ public class Spindexer {
         spindexerEncoder = hardwareMap.get(AnalogInput.class, SENS_ORANGE_ENCODER);
 
         spindexerAngle = AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage()-0.043)/3.1*360 + offsetAngle);
+
+        spindexerController = new PIDFController(kP,kI, kD, kF);
+        spindexerController.setTolerance(tolerance);
 
 
 
@@ -99,7 +118,7 @@ public class Spindexer {
     }
 
     //spindexer rotates counterclockwise
-    public void rotateCounterClockWise(){
+    public void setRotationCounterClockWise(){
         spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
         spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
         spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
@@ -107,20 +126,41 @@ public class Spindexer {
     }
 
     //spindexer rotates clockwise
-    public void rotateClockWise(){
+    public void setRotationClockWise(){
         spindexerServoOne.setDirection(CRServo.Direction.REVERSE);
         spindexerServoTwo.setDirection(CRServo.Direction.FORWARD);
         spindexerServoThree.setDirection(CRServo.Direction.FORWARD);
         spindexerServoFour.setDirection(CRServo.Direction.REVERSE);
     }
 
+    public void rotateToAngle(double angle){
+        spindexerController.setTolerance(tolerance);
+        spindexerController.setPIDF(kP, kI, kD, kF);
+        double power = spindexerController.calculate(getSpindexerAngle(), angle);
+        double angleDifference = AngleUnit.normalizeDegrees(angle-getSpindexerAngle());
+        if(angleDifference < 0){
+            setRotationClockWise();
+        }else if(angleDifference > 0){
+            setRotationCounterClockWise();
+        }
+        setSpindexerPower(power);
+
+        telemetry.addData("Current spindexer angle, ", getSpindexerAngle());
+
+    }
+
     public void rotateToEmptySlot(){
+
 
 
     }
 
     public void zeroSpindexer(){
+        spindexerAngle = getSpindexerAngle();
+        //should use tolerances
+        if(spindexerAngle != FIRST_SLOT_ANGLE){
 
+        }
     }
 
     public void stopSpindexer(){
@@ -128,6 +168,16 @@ public class Spindexer {
         spindexerServoTwo.setPower(0);
         spindexerServoThree.setPower(0);
         spindexerServoFour.setPower(0);
+    }
+
+    public void printAngle(){
+        spindexerAngle = AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage()-0.043)/3.1*360 + offsetAngle);
+        telemetry.addData("Spindexer Angle(degrees): ", spindexerAngle);
+
+    }
+
+    private double getSpindexerAngle(){
+        return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage()-0.043)/3.1*360 + offsetAngle);
     }
 
 
