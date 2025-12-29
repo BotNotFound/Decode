@@ -32,7 +32,7 @@ public class Shooter {
     public static double kI = 0;
     public static double kD = 0;
     public static double kF = 0.000175;
-    public static double tolerance = 150;
+    public static double tolerance = 200;
 
     public static int motorCPS = 28;
 
@@ -49,7 +49,7 @@ public class Shooter {
 
     private final ElapsedTime timeSinceKickerEngaged;
 
-    
+
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
         lowerFlywheelMotor = hardwareMap.get(DcMotorEx.class, LOWER_FLYWHEEL_MOTOR_NAME);
         upperFlywheelMotor = hardwareMap.get(DcMotorEx.class, UPPER_FLYWHEEL_MOTOR_NAME);
@@ -89,6 +89,9 @@ public class Shooter {
 
         timeSinceKickerEngaged = new ElapsedTime();
         kickerEngaged = false;
+
+        // for FTC dashboard
+        logRPM(0, 0);
     }
 
     public void setRPM(double rpm) {
@@ -103,22 +106,28 @@ public class Shooter {
         velocityPID.setPIDF(kP, kI, kD, kF);
         double actualRPM = upperFlywheelMotor.getVelocity() / motorCPS * 60;
 
-        if(rpm > 0){
+        if (rpm > 0) {
             double power = velocityPID.calculate(actualRPM, rpm);
             telemetry.addData("shooter power", power);
 
             lowerFlywheelMotor.setPower(power);
             upperFlywheelMotor.setPower(power);
         }
-        else{
+        else {
             lowerFlywheelMotor.setPower(0);
             upperFlywheelMotor.setPower(0);
 
             stickyRPM = false;
         }
 
-        telemetry.addData("Target RPM", rpm);
-        telemetry.addData("Real RPM", actualRPM);
+        logRPM(rpm, actualRPM);
+    }
+
+    private void logRPM(double target, double real) {
+        telemetry.addData("Target RPM", target);
+        telemetry.addData("Real RPM", real);
+        telemetry.addData("Upper RPM Bound", target + tolerance);
+        telemetry.addData("Lower RPM Bound", target - tolerance);
     }
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
@@ -126,7 +135,7 @@ public class Shooter {
     }
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose, double fallbackRPM) {
-        if(tagPose != null){
+        if (tagPose != null) {
             // clamps the range to the min/max for the interpLUT to avoid bound errors
             double measuredDistance = tagPose.range;
             measuredDistance = Math.min(120.0, Math.max(30.0, measuredDistance));
@@ -136,9 +145,11 @@ public class Shooter {
             stickyTargetRPM = flywheelSpeeds.get(measuredDistance);
 
             setRPM(stickyTargetRPM);
-        } else if (stickyRPM) {
+        }
+        else if (stickyRPM) {
             setRPM(stickyTargetRPM);
-        } else {
+        }
+        else {
             setRPM(fallbackRPM);
         }
     }

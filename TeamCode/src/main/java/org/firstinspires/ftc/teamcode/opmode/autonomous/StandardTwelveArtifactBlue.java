@@ -27,7 +27,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(180 - 35))
+                                .setConstantHeadingInterpolation(Math.toRadians(180 - 50))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -36,7 +36,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                 new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootFirstRow.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(180 - 35))
+                                .setConstantHeadingInterpolation(Math.toRadians(180 - 50))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -44,7 +44,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                 new AutonomousStage(autoPath.shootSecondRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootSecondRow.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(180 - 35))
+                                .setConstantHeadingInterpolation(Math.toRadians(180 - 50))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -52,7 +52,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                 new AutonomousStage(autoPath.shootThirdRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootThirdRow.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(180 - 35))
+                                .setConstantHeadingInterpolation(Math.toRadians(180 - 50))
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -82,7 +82,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(94, 86.5).mirror()
                             )
                     )
-                    .setConstantHeadingInterpolation(Math.toRadians(180 - 35))
+                    .setConstantHeadingInterpolation(Math.toRadians(180 - 50))
                     .build();
 
             intakeFirstRow = follower
@@ -121,7 +121,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(94, 86.5).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 35))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 50))
                     .build();
 
             intakeSecondRow = follower
@@ -148,7 +148,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(94, 86.5).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 35))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 50))
                     .build();
 
             intakeThirdRow = follower
@@ -160,7 +160,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(96, 35).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 35), Math.toRadians(180 - 0))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 50), Math.toRadians(180 - 0))
                     .addPath(
                             new BezierLine(new Pose(96, 35).mirror(), new Pose(135, 35).mirror())
                     )
@@ -175,7 +175,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
                                     new Pose(94, 86.5).mirror()
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 35))
+                    .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 50))
                     .build();
 
             leaveLaunchZone = follower
