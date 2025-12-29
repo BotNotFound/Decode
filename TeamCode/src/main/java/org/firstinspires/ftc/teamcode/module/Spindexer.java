@@ -129,10 +129,7 @@ public class Spindexer {
     }
 
     public void stopSpindexer() {
-        spindexerServoOne.setPower(0);
-        spindexerServoTwo.setPower(0);
-        spindexerServoThree.setPower(0);
-        spindexerServoFour.setPower(0);
+        setSpindexerPower(0);
     }
 
     public void logAngle() {
