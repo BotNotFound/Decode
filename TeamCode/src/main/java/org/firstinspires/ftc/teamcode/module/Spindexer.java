@@ -125,8 +125,8 @@ public class Spindexer {
     public void rotateToAngle(double angle) {
         spindexerController.setTolerance(tolerance);
         spindexerController.setPIDF(kP, kI, kD, kF);
-        double power = spindexerController.calculate(getSpindexerAngle(), angle);
-        double angleDifference = AngleUnit.normalizeDegrees(angle - getSpindexerAngle());
+        double power = spindexerController.calculate(getAngle(), angle);
+        double angleDifference = AngleUnit.normalizeDegrees(angle - getAngle());
         if (angleDifference < 0) {
             setRotationClockwise();
         }
@@ -135,7 +135,7 @@ public class Spindexer {
         }
         setSpindexerPower(power);
 
-        telemetry.addData("Current spindexer angle", getSpindexerAngle());
+        telemetry.addData("Current spindexer angle", getAngle());
 
     }
 
@@ -144,7 +144,7 @@ public class Spindexer {
     }
 
     public void zeroSpindexer() {
-        spindexerAngle = getSpindexerAngle();
+        spindexerAngle = getAngle();
         //should use tolerances
         if (spindexerAngle != FIRST_SLOT_ANGLE) {
 
@@ -159,11 +159,11 @@ public class Spindexer {
     }
 
     public void logAngle() {
-        telemetry.addData("Spindexer Angle (degrees)", getSpindexerAngle());
+        telemetry.addData("Spindexer Angle (degrees)", getAngle());
 
     }
 
-    private double getSpindexerAngle() {
+    private double getAngle() {
         return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
     }
 
