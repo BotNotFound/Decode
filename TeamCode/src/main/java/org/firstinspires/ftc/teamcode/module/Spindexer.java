@@ -34,6 +34,9 @@ public class Spindexer {
 
     private final Telemetry telemetry;
 
+    private final boolean[] ballDetections;
+    private ArtifactLocation curFrontLocation;
+
     //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 2;
 
@@ -67,6 +70,8 @@ public class Spindexer {
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
+        ballDetections = new boolean[ArtifactLocation.values().length];
+        curFrontLocation = ArtifactLocation.SLOT_ONE;
 
         spindexerServoOne = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
@@ -89,9 +94,17 @@ public class Spindexer {
         spindexerServoFour.setDirection(CRServo.Direction.FORWARD);
     }
 
-    private boolean hasBall(RevColorSensorV3 sensor) {
-        double dist = sensor.getDistance(DistanceUnit.CM);
-        return dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+    private void updateDetectionFromSensor() {
+        if (!spindexerController.atSetPoint()) {
+            return; // still moving; color sensor won't detect the right location
+        }
+
+        double dist = frontColorSensor.getDistance(DistanceUnit.CM);
+        ballDetections[curFrontLocation.index] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+    }
+
+    public boolean hasBall(ArtifactLocation location) {
+        return ballDetections[location.index];
     }
 
     public void setSpindexerPower(double power) {
@@ -99,13 +112,6 @@ public class Spindexer {
         spindexerServoTwo.setPower(power);
         spindexerServoThree.setPower(power);
         spindexerServoFour.setPower(power);
-    }
-
-    public void runSpindexer() {
-        spindexerServoOne.setPower(spindexerPower);
-        spindexerServoTwo.setPower(spindexerPower);
-        spindexerServoThree.setPower(spindexerPower);
-        spindexerServoFour.setPower(spindexerPower);
     }
 
     /**
@@ -172,36 +178,30 @@ public class Spindexer {
 
     public void rotateToAngle(double angle) {
         spindexerController.setSetPoint(angle);
-        updateSpindexerPowers();
+        updateSpindexer();
     }
 
-    public void updateSpindexerPowers() {
+    public void updateSpindexer() {
         spindexerController.setTolerance(tolerance);
         spindexerController.setPIDF(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
         final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES);
         setSpindexerPower(spindexerController.calculate(curEquivAngle));
+        updateDetectionFromSensor();
+    }
+
+    public void rotateLocationToFront(ArtifactLocation location) {
+        curFrontLocation = location;
+        rotateToAngle(location.angle);
     }
 
     public boolean atTargetRotation() {
         return spindexerController.atSetPoint();
     }
 
-    public void rotateToEmptySlot() {
-
-    }
-
-    public void zeroSpindexer() {
-        spindexerAngle = getAngle();
-        //should use tolerances
-        if (spindexerAngle != FIRST_SLOT_ANGLE) {
-
-        }
-    }
-
-    public void stopSpindexer() {
-        setSpindexerPower(0);
+    public void rotateToNextSlot() {
+        rotateLocationToFront(curFrontLocation.getNextLocation());
     }
 
     public void logAngle() {

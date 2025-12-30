@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.module;
 
 
 public enum ArtifactLocation {
-    SLOT_ONE(1, Spindexer.FIRST_SLOT_ANGLE, "Slot One", false),
-    SLOT_TWO(2, Spindexer.SECOND_SLOT_ANGLE, "Slot Two", false),
-    SLOT_THREE(3,Spindexer.THIRD_SLOT_ANGLE, "Slot Three", false);
+    SLOT_ONE(0, Spindexer.FIRST_SLOT_ANGLE, "Slot One"),
+    SLOT_TWO(1, Spindexer.SECOND_SLOT_ANGLE, "Slot Two"),
+    SLOT_THREE(2, Spindexer.THIRD_SLOT_ANGLE, "Slot Three");
 
 
     public final int index;
@@ -12,18 +12,23 @@ public enum ArtifactLocation {
 
     public final double angle;
 
-    public boolean hasBall;
-
-
-
     //check how to store colors for the artifact location, should store either purple or green
 
-    ArtifactLocation(int index, double angle, String hardwareName, boolean hasBall) {
+    ArtifactLocation(int index, double angle, String hardwareName) {
         this.index = index;
         this.angle = angle;
         this.hardwareName = hardwareName;
-        this.hasBall = hasBall;
     }
 
-
+    public ArtifactLocation getNextLocation() {
+        switch (this) {
+            case SLOT_ONE:
+                return SLOT_TWO;
+            case SLOT_TWO:
+                return SLOT_THREE;
+            case SLOT_THREE:
+                return SLOT_ONE;
+        }
+        throw new IllegalStateException();
+    }
 }
