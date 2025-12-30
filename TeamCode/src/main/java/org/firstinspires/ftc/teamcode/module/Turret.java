@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -12,12 +11,7 @@ public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
     private final DcMotor turretMotor;
 
-    // TODO tune controller
-    public static double kP = 0.25;
-    public static double kI = 0;
-    public static double kD = 0;
-    public static double kF = 0;
-    private final PIDFController aimController;
+    public static double TURRET_MOTOR_POWER = 1.0;
 
     /**
      * The number of encoder ticks in a single revolution of the motor We are currently using a
@@ -30,27 +24,28 @@ public class Turret {
 
     public Turret(HardwareMap hardwareMap, AllianceColor allianceColor) {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
-        aimController = new PIDFController(kP, kI, kD, kF);
+        turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void aimAtGoal(double x, double y, double curHeading) {
-        aimController.setPIDF(kP, kI, kD, kF);
-        aimController.setSetPoint(Math.atan2(y, x));
-        turretMotor.setPower(aimController.calculate(curHeading));
+        final double targetHeading = Math.atan2(y, x) - curHeading;
+        final int targetPosition = (int) (targetHeading / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
+        turretMotor.setTargetPosition(targetPosition);
+        update();
     }
 
-    public void resetRotation() {
-        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        turretMotor.setTargetPosition(0);
-        turretMotor.setPower(1);
-        turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    public void update() {
+        turretMotor.setPower(TURRET_MOTOR_POWER);
     }
 
     public void resetEncoder() {
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public boolean isReady() {
-        return aimController.atSetPoint();
+        return turretMotor.isBusy();
     }
 }

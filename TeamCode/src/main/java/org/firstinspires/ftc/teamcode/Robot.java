@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.ArtifactLocation;
@@ -106,10 +107,13 @@ public class Robot {
     }
 
     private void prepareToShoot() {
+        // TODO replace april tag pose with pinpoint pose
+
         AprilTagPoseFtc target = aprilTagDetector.getTagPose();
         Pose3D robot = aprilTagDetector.getRobotPose();
-        // TODO replace with correct method
-//        driveTrain.aimAtAprilTag(target, robot);
+        if (target != null) {
+            turret.aimAtGoal(target.x, target.y, driveTrain.getRobotPose().getHeading(AngleUnit.RADIANS));
+        }
         shooter.setRPMForAprilTag(target, fallbackRPM);
     }
 

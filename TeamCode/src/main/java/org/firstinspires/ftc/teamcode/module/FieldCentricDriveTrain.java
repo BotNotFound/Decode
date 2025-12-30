@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 @Config
 public class FieldCentricDriveTrain {
@@ -101,6 +102,10 @@ public class FieldCentricDriveTrain {
         frontLeftDriveMotor.setPower(leftFrontPower);
         backRightDriveMotor.setPower(rightBackPower);
         backLeftDriveMotor.setPower(leftBackPower);
+    }
+
+    public Pose2D getRobotPose() {
+        return pinpointDriver.getPosition();
     }
 
     /* get current powers using forward kinematics -- see https://www.desmos.com/calculator/je1clj0udl */
