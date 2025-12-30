@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-public class BuddyPark {
+public class RobotLift {
 
     public static final String BUDDY_PARK_SERVO_NAME = "Kicker";
 
@@ -21,7 +21,7 @@ public class BuddyPark {
 
     private final Telemetry telemetry;
 
-    public BuddyPark(HardwareMap hwMap, Telemetry telemetry) {
+    public RobotLift(HardwareMap hwMap, Telemetry telemetry) {
         buddyParkServo = hwMap.get(Servo.class, BUDDY_PARK_SERVO_NAME);
 
         buddyParkServo.setPosition(LOWERED_ROBOT_POSITION);
