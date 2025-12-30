@@ -43,12 +43,6 @@ public class Spindexer {
     //TODO: Tune the below angles and power values
     public static double offsetAngle = 0;
 
-    public static double FIRST_SLOT_ANGLE = 0;
-
-    public static double SECOND_SLOT_ANGLE = 120;
-
-    public static double THIRD_SLOT_ANGLE = 240;
-
     // TODO tune PIDF values + tolerance
     private final PIDFController spindexerController;
 
