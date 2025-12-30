@@ -20,7 +20,6 @@ import org.firstinspires.ftc.teamcode.module.RobotLift;
 import org.firstinspires.ftc.teamcode.module.Shooter;
 import org.firstinspires.ftc.teamcode.module.Spindexer;
 import org.firstinspires.ftc.teamcode.module.Turret;
-import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
 public class Robot {
@@ -152,14 +151,18 @@ public class Robot {
     }
 
     private void prepareToShoot() {
-        final AprilTagPoseFtc target = aprilTagDetector.getTagPose();
         final Pose2D robotPose = driveTrain.getRobotPose();
         turret.aimAtGoal(
                 robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX,
                 robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY,
                 robotPose.getHeading(AngleUnit.RADIANS)
         );
-        shooter.setRPMForAprilTag(target, fallbackRPM);
+        shooter.setRPMForGoal(
+                Math.sqrt(
+                        Math.pow(robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX, 2) +
+                                Math.pow(robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY, 2)
+                )
+        );
     }
 
     public void setState(RobotState newState) {
