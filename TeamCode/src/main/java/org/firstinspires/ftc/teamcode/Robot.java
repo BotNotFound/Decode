@@ -12,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.ArtifactLocation;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.teamcode.module.Intake;
@@ -83,7 +82,6 @@ public class Robot {
     private final Intake intake;
     private final Spindexer spindexer;
     private final Turret turret;
-    private final AprilTagDetector aprilTagDetector;
     private final RobotLift lift;
 
     private AllianceColor allianceColor;
@@ -101,7 +99,6 @@ public class Robot {
         intake = new Intake(hardwareMap);
         spindexer = new Spindexer(hardwareMap, telemetry);
         turret = new Turret(hardwareMap, color);
-        aprilTagDetector = new AprilTagDetector(hardwareMap, telemetry);
         lift = new RobotLift(hardwareMap, telemetry);
 
         setAllianceColor(color);
@@ -246,8 +243,6 @@ public class Robot {
 
         switch (currentState) {
             case SHOOT:
-                aprilTagDetector.update(allianceColor.targetAprilTagID);
-
                 prepareToShoot();
 
                 if (!isShotReady()) {
@@ -273,8 +268,8 @@ public class Robot {
                 break;
 
             case PRE_SHOOT:
-                aprilTagDetector.update(allianceColor.targetAprilTagID);
-                shooter.setRPMForAprilTag(aprilTagDetector.getTagPose(), fallbackRPM);
+                prepareToShoot();
+                break;
 
             case INTAKE:
                 if (spindexer.hasAllArtifacts()) {
