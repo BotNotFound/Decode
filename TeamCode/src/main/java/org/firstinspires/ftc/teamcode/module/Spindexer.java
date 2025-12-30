@@ -15,12 +15,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Config
 public class Spindexer {
 
-    private static final String SPINDEXER_SERVO_ONE = "Spindexer Servo 1";
-    private static final String SPINDEXER_SERVO_TWO = "Spindexer Servo 2";
-    private static final String SPINDEXER_SERVO_THREE = "Spindexer Servo 3";
-    private static final String SPINDEXER_SERVO_FOUR = "Spindexer Servo 4";
+    private static final String SPINDEXER_SERVO_ONE = "Spindexer 1";
+    private static final String SPINDEXER_SERVO_TWO = "Spindexer 2";
+    private static final String SPINDEXER_SERVO_THREE = "Spindexer 3";
+    private static final String SPINDEXER_SERVO_FOUR = "Spindexer 4";
 
-    private static final String SENS_ORANGE_ENCODER = "spindexer encoder";
+    private static final String SENS_ORANGE_ENCODER = "Spindexer encoder";
 
     private static final String FRONT_COLOR_SENSOR = "Front Color Sensor";
 

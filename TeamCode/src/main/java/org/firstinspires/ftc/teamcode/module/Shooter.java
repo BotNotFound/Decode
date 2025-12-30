@@ -19,7 +19,7 @@ public class Shooter {
     public static final String RIGHT_FLYWHEEL_MOTOR_NAME = "Upper flywheel";
     public static final String KICKER_SERVO_NAME = "Kicker";
 
-    public static final String HOOD_SERVO_NAME = "Hood Servo";
+    public static final String HOOD_SERVO_NAME = "Hood";
 
     //TODO: tune these kicker position values using dashboard
     public static double KICKER_IDLE_POSITION = 0.82;
