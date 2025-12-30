@@ -114,6 +114,10 @@ public class FieldCentricDriveTrain {
         return pinpointDriver.getPosition();
     }
 
+    public void setRobotPose(Pose2D pose) {
+        pinpointDriver.setPosition(pose);
+    }
+
     /* get current powers using forward kinematics -- see https://www.desmos.com/calculator/je1clj0udl */
 
     private double getRobotCentricDrivePower() {

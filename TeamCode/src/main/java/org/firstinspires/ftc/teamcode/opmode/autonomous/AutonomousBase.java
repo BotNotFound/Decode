@@ -74,6 +74,7 @@ public abstract class AutonomousBase extends OpMode {
 
     @Override
     public void start() {
+        robot.start();
         if (stageSequence.length > 0) {
             stageSequence[0].enterStage(robot, follower);
         }
@@ -109,6 +110,8 @@ public abstract class AutonomousBase extends OpMode {
 
     @Override
     public void stop() {
+        robot.savePersistentState();
+
         if (isAutoComplete()) {
             Log.i(TAG, "Op mode stopped after sequence was completed");
         } else {

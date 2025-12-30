@@ -26,6 +26,42 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 public class Robot {
     public static final String TAG = "Robot";
 
+    private static final class PersistentState {
+        private static PersistentState saved = null;
+
+        private final Pose2D robotPose;
+
+        private PersistentState(Pose2D robotPose) {
+            this.robotPose = robotPose;
+        }
+
+        public static void saveRobotState(Robot robot) {
+            if (robot == null) {
+                return;
+            }
+
+            saved = new PersistentState(robot.driveTrain.getRobotPose());
+        }
+
+        public static void tryLoadRobotState(Robot robot) {
+            if (saved == null || robot == null) {
+                return;
+            }
+
+            robot.driveTrain.setRobotPose(saved.robotPose);
+
+            saved = null;
+        }
+    }
+
+    public void savePersistentState() {
+        PersistentState.saveRobotState(this);
+    }
+
+    public void tryLoadPersistentState() {
+        PersistentState.tryLoadRobotState(this);
+    }
+
     public enum RobotState {
         INTAKE,
         REVERSE_INTAKE,
@@ -82,6 +118,10 @@ public class Robot {
         }
 
         Log.i(TAG, "Robot initialized");
+    }
+
+    public void start() {
+        tryLoadPersistentState();
     }
 
     public void setAllianceColor(AllianceColor color) {

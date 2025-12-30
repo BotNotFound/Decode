@@ -44,6 +44,11 @@ public class TwoPersonTeleOp extends OpMode {
     }
 
     @Override
+    public void start() {
+        robot.start();
+    }
+
+    @Override
     public void loop() {
         if (gamepad2.right_trigger > 0.5) {
             robot.setState(Robot.RobotState.SHOOT);
