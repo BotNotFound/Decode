@@ -13,6 +13,28 @@ public class Turret {
 
     public static double TURRET_MOTOR_POWER = 1.0;
 
+    public static double TURRET_INITIAL_ROTATION = Math.PI;
+    public static double TURRET_MIN_ROTATION = Math.PI / 2;
+    public static double TURRET_MAX_ROTATION = Math.PI * 3 / 2;
+
+    private static double normalizeRadiansPositive(double angle) {
+        while (angle >= Math.PI * 2) {
+            angle -= Math.PI * 2;
+        }
+        while (angle < 0) {
+            angle += Math.PI * 2;
+        }
+        return angle;
+    }
+
+    private static double clampToSafeRotation(double angle) {
+        angle = normalizeRadiansPositive(angle);
+        if (angle < TURRET_MIN_ROTATION) {
+            return TURRET_MIN_ROTATION;
+        }
+        return Math.min(angle, TURRET_MAX_ROTATION);
+    }
+
     /**
      * The number of encoder ticks in a single revolution of the motor We are currently using a
      * <a href="https://www.gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-5-2-1-ratio-24mm-length-8mm-rex-shaft-1150-rpm-3-3-5v-encoder/">
@@ -30,8 +52,8 @@ public class Turret {
     }
 
     public void aimAtGoal(double x, double y, double curRobotHeading) {
-        final double targetHeading = Math.atan2(y, x) - curRobotHeading;
-        final int targetPosition = (int) (targetHeading / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
+        final double targetHeading = clampToSafeRotation(Math.atan2(y, x) - curRobotHeading);
+        final int targetPosition = (int) ((targetHeading - TURRET_INITIAL_ROTATION) / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
         turretMotor.setTargetPosition(targetPosition);
         update();
     }
