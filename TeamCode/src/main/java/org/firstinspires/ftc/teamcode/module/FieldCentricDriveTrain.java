@@ -29,6 +29,7 @@ public class FieldCentricDriveTrain {
 
     private final GoBildaPinpointDriver pinpointDriver;
 
+    private double fieldCentricHeadingOffset = 0;
 
     public FieldCentricDriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
         frontRightDriveMotor = hardwareMap.get(DcMotor.class, FRONT_RIGHT_DRIVE_MOTOR_NAME);
@@ -63,6 +64,11 @@ public class FieldCentricDriveTrain {
     public void resetOdometry() {
         pinpointDriver.resetPosAndIMU();
     }
+
+    public void resetFieldCentricHeading() {
+        fieldCentricHeadingOffset = pinpointDriver.getHeading(AngleUnit.RADIANS);
+    }
+
     //keep the set power for drivetrain 
     public void setPower(double drive, double strafe, double turn) {
         pinpointDriver.update();
@@ -70,7 +76,7 @@ public class FieldCentricDriveTrain {
         drive = Math.pow(drive, 3);
         strafe = Math.pow(strafe, 3);
 
-        double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS);
+        double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS) + fieldCentricHeadingOffset;
         telemetry.addData("Current Angle", curRotation);
 
         double rotDrive = drive * Math.cos(curRotation) - strafe * Math.sin(curRotation);
@@ -125,14 +131,14 @@ public class FieldCentricDriveTrain {
     public double getDrivePower() {
         final double robotCentricDrivePower = getRobotCentricDrivePower();
         final double robotCentricStrafePower = getRobotCentricStrafePower();
-        final double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS);
+        final double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS) + fieldCentricHeadingOffset;
         return robotCentricDrivePower * Math.cos(curRotation) + robotCentricStrafePower * Math.sin(curRotation);
     }
 
     public double getStrafePower() {
         final double robotCentricDrivePower = getRobotCentricDrivePower();
         final double robotCentricStrafePower = getRobotCentricStrafePower();
-        final double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS);
+        final double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS) + fieldCentricHeadingOffset;
         return robotCentricStrafePower * Math.cos(curRotation) - robotCentricDrivePower * Math.sin(curRotation);
     }
 
