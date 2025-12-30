@@ -24,7 +24,6 @@ public class Shooter {
     //TODO: tune these kicker position values using dashboard
     public static double KICKER_IDLE_POSITION = 0.82;
     public static double KICKER_LAUNCH_POSITION = 0.344;
-    public static double KICKER_MILLIS_TO_ENGAGE = 0;
 
 
     //TODO: tune these values using dashboard and for clamping servo positions
