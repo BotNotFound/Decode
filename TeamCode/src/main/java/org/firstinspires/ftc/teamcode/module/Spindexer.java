@@ -20,7 +20,7 @@ public class Spindexer {
     private static final String SPINDEXER_SERVO_THREE = "Spindexer 3";
     private static final String SPINDEXER_SERVO_FOUR = "Spindexer 4";
 
-    private static final String SENS_ORANGE_ENCODER = "Spindexer encoder";
+    private static final String SENS_ORANGE_ENCODER = "Spindexer Encoder";
 
     private static final String FRONT_COLOR_SENSOR = "Front Color Sensor";
 
