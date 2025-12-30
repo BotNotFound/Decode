@@ -29,8 +29,8 @@ public class Turret {
         turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public void aimAtGoal(double x, double y, double curHeading) {
-        final double targetHeading = Math.atan2(y, x) - curHeading;
+    public void aimAtGoal(double x, double y, double curRobotHeading) {
+        final double targetHeading = Math.atan2(y, x) - curRobotHeading;
         final int targetPosition = (int) (targetHeading / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
         turretMotor.setTargetPosition(targetPosition);
         update();
