@@ -55,7 +55,7 @@ public class Spindexer {
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
         ballDetections = new boolean[ArtifactLocation.values().length];
-        curFrontLocation = ArtifactLocation.SLOT_ONE;
+        curFrontLocation = null;
 
         spindexerServoOne = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
@@ -77,8 +77,8 @@ public class Spindexer {
     }
 
     private void updateDetectionFromSensor() {
-        if (!spindexerController.atSetPoint()) {
-            return; // still moving; color sensor won't detect the right location
+        if (!spindexerController.atSetPoint() || curFrontLocation == null) {
+            return; // not at an artifact location; color sensor won't give the right data
         }
 
         double dist = frontColorSensor.getDistance(DistanceUnit.CM);
@@ -181,6 +181,7 @@ public class Spindexer {
     }
 
     public void rotateToAngle(double angle) {
+        curFrontLocation = null;
         spindexerController.setSetPoint(angle);
         updateSpindexer();
     }
@@ -196,8 +197,8 @@ public class Spindexer {
     }
 
     public void rotateLocationToFront(ArtifactLocation location) {
-        curFrontLocation = location;
         rotateToAngle(location.angle);
+        curFrontLocation = location;
     }
 
     public boolean atTargetRotation() {
@@ -205,6 +206,10 @@ public class Spindexer {
     }
 
     public void rotateToNextSlot() {
+        if (curFrontLocation == null) {
+            return;
+        }
+
         rotateLocationToFront(curFrontLocation.getNextLocation());
     }
 
