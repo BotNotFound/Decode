@@ -69,7 +69,7 @@ public class Spindexer {
         spindexerController = new PIDFController(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
-        //set all servo directions for spindexer to turn counterclockwise
+        // set all servo directions for spindexer to turn counterclockwise
         spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
         spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
         spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
