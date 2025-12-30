@@ -12,11 +12,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.ArtifactLocation;
-import org.firstinspires.ftc.teamcode.module.ArtifactTracker;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.teamcode.module.Intake;
 import org.firstinspires.ftc.teamcode.module.Shooter;
-import org.firstinspires.ftc.teamcode.module.Transfer;
+import org.firstinspires.ftc.teamcode.module.Spindexer;
+import org.firstinspires.ftc.teamcode.module.Turret;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
@@ -37,15 +37,14 @@ public class Robot {
     private double headingScale = 1;
     private boolean shotReady = false;
     private int shotsTaken = 0;
-    private boolean keepBallsApart;
 
     /* Modules */
     private final FieldCentricDriveTrain driveTrain;
     private final Shooter shooter;
     private final Intake intake;
-    private final Transfer transfer;
+    private final Spindexer spindexer;
+    private final Turret turret;
     private final AprilTagDetector aprilTagDetector;
-    private final ArtifactTracker ballTracker;
 
     private AllianceColor allianceColor;
     private RobotState currentState;
@@ -60,9 +59,9 @@ public class Robot {
 
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap);
-        transfer = new Transfer(hardwareMap, telemetry);
+        spindexer = new Spindexer(hardwareMap, telemetry);
+        turret = new Turret(hardwareMap, color);
         aprilTagDetector = new AprilTagDetector(hardwareMap, telemetry);
-        ballTracker = new ArtifactTracker(hardwareMap, telemetry);
 
         setAllianceColor(color);
 
@@ -127,45 +126,38 @@ public class Robot {
             case INTAKE:
                 shooter.disengageKicker();
                 intake.startIntake();
-                transfer.startTransfer();
                 break;
 
             case REVERSE_INTAKE:
                 shooter.disengageKicker();
                 intake.setPower(-1);
-                transfer.reverseTransfer();
 
                 break;
 
             case PRE_SHOOT:
                 intake.startIntake();
-                transfer.reverseTransfer();
                 shooter.disengageKicker();
                 break;
 
             case SHOOT:
                 intake.stopIntake();
-                transfer.stopTransfer();
                 shooter.disengageKicker();
 
                 shotReady = false;
                 shotPrepTime.reset();
                 shotsTaken = 0;
-                keepBallsApart = ballTracker.hasBall(ArtifactLocation.SLOT_THREE) &&
-                        ballTracker.hasBall(ArtifactLocation.SLOT_TWO);
 
                 Log.d(TAG, "enter shoot {" +
-                        (ballTracker.hasBall(ArtifactLocation.SLOT_ONE) ? "front | " : "      | ") +
-                        (ballTracker.hasBall(ArtifactLocation.SLOT_TWO) ? "middle | " : "       | ") +
-                        (ballTracker.hasBall(ArtifactLocation.SLOT_THREE) ? "back | " : "     | ") +
-                        "keepBallsApart = " + keepBallsApart + "}");
+                        (spindexer.hasArtifact(ArtifactLocation.SLOT_ONE) ? "front | " : "      | ") +
+                        (spindexer.hasArtifact(ArtifactLocation.SLOT_TWO) ? "middle | " : "       | ") +
+                        (spindexer.hasArtifact(ArtifactLocation.SLOT_THREE) ? "back" : "    ") +
+                        "}");
                 break;
 
             case NONE:
                 shooter.disengageKicker();
                 shooter.setRPM(0);
                 intake.stopIntake();
-                transfer.stopTransfer();
                 break;
         }
         currentState = newState;
@@ -185,7 +177,7 @@ public class Robot {
     }
 
     public void loopWithoutMovement() {
-        ballTracker.reportDetections();
+        spindexer.updateSpindexer();
 
         switch (currentState) {
             case SHOOT:
@@ -193,15 +185,8 @@ public class Robot {
 
                 prepareToShoot();
 
-                // TODO replace with correct method
-                if (!shooter.isReady() /* || !driveTrain.isReady() */) {
+                if (!isShotReady()) {
                     intake.stopIntake();
-                    if (keepBallsApart && shotsTaken < 1) {
-                        transfer.reverseTransfer();
-                    }
-                    else {
-                        transfer.stopTransfer();
-                    }
 
                     if (shotReady) {
                         shotsTaken++;
@@ -219,16 +204,7 @@ public class Robot {
                     timeSinceShotReady.reset();
                 }
 
-                if (ballTracker.hasBall(ArtifactLocation.SLOT_THREE)) {
-                    intake.stopIntake();
-                    transfer.stopTransfer();
-                    shooter.engageKicker();
-                }
-                else {
-                    intake.startIntake();
-                    transfer.startTransfer();
-                    shooter.engageKicker();
-                }
+                shooter.engageKicker();
                 break;
 
             case PRE_SHOOT:
@@ -236,19 +212,10 @@ public class Robot {
                 shooter.setRPMForAprilTag(aprilTagDetector.getTagPose(), fallbackRPM);
 
             case INTAKE:
-                if (ballTracker.hasAllArtifacts()) {
-                    transfer.stopTransfer();
+                if (spindexer.hasAllArtifacts()) {
                     intake.stopIntake();
                 }
-                else if (
-                        ballTracker.hasBall(ArtifactLocation.SLOT_THREE) &&
-                                ballTracker.hasBall(ArtifactLocation.SLOT_TWO)
-                ) {
-                    transfer.stopTransfer();
-                    intake.startIntake();
-                }
                 else {
-                    transfer.startTransfer();
                     intake.startIntake();
                 }
                 break;
@@ -260,8 +227,8 @@ public class Robot {
     }
 
     public boolean isShotReady() {
-        // TODO replace with correct method
-        return currentState == RobotState.SHOOT && shooter.isReady() /* && driveTrain.isReady() */;
+        // TODO check if a ball is loaded
+        return currentState == RobotState.SHOOT && shooter.isReady() && turret.isReady() && spindexer.atTargetRotation();
     }
 
     /* Module-specific methods */
@@ -307,6 +274,6 @@ public class Robot {
     }
 
     public int getHeldArtifactCount() {
-        return ballTracker.getArtifactCount();
+        return spindexer.getArtifactCount();
     }
 }

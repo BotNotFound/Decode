@@ -5,7 +5,6 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.AllianceColor;
 
 @Config
@@ -49,5 +48,9 @@ public class Turret {
 
     public void resetEncoder() {
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public boolean isReady() {
+        return aimController.atSetPoint();
     }
 }

@@ -103,8 +103,30 @@ public class Spindexer {
         ballDetections[curFrontLocation.index] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
     }
 
-    public boolean hasBall(ArtifactLocation location) {
+    public boolean hasArtifact(ArtifactLocation location) {
+        updateDetectionFromSensor();
         return ballDetections[location.index];
+    }
+
+    public boolean hasAllArtifacts() {
+        updateDetectionFromSensor();
+        for (boolean ballDetection : ballDetections) {
+            if (!ballDetection) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int getArtifactCount() {
+        updateDetectionFromSensor();
+        int artifacts = 0;
+        for (boolean detection : ballDetections) {
+            if (detection) {
+                artifacts++;
+            }
+        }
+        return artifacts;
     }
 
     public void setSpindexerPower(double power) {
