@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.ArtifactLocation;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 import org.firstinspires.ftc.teamcode.module.Intake;
+import org.firstinspires.ftc.teamcode.module.RobotLift;
 import org.firstinspires.ftc.teamcode.module.Shooter;
 import org.firstinspires.ftc.teamcode.module.Spindexer;
 import org.firstinspires.ftc.teamcode.module.Turret;
@@ -31,6 +32,7 @@ public class Robot {
         PRE_SHOOT,
         SHOOT,
         NONE,
+        PARK,
     }
 
     public static double fallbackRPM = 2900;
@@ -47,6 +49,7 @@ public class Robot {
     private final Spindexer spindexer;
     private final Turret turret;
     private final AprilTagDetector aprilTagDetector;
+    private final RobotLift lift;
 
     private AllianceColor allianceColor;
     private RobotState currentState;
@@ -64,6 +67,7 @@ public class Robot {
         spindexer = new Spindexer(hardwareMap, telemetry);
         turret = new Turret(hardwareMap, color);
         aprilTagDetector = new AprilTagDetector(hardwareMap, telemetry);
+        lift = new RobotLift(hardwareMap, telemetry);
 
         setAllianceColor(color);
 
@@ -123,6 +127,10 @@ public class Robot {
             return;
         }
 
+        if (newState != RobotState.PARK) {
+            lift.lowerRobot();
+        }
+
         Log.v(TAG, "State " + currentState + " lasted for " + stateStopwatch.seconds() + " seconds");
         Log.i(TAG, "Switched to new state: " + newState);
         stateStopwatch.reset();
@@ -164,6 +172,13 @@ public class Robot {
                 shooter.setRPM(0);
                 intake.stopIntake();
                 break;
+
+            case PARK:
+                shooter.disengageKicker();
+                shooter.setRPM(0);
+                intake.stopIntake();
+                lift.raiseRobot();
+                break;
         }
         currentState = newState;
     }
@@ -177,7 +192,9 @@ public class Robot {
     }
 
     public void loop(double drivePower, double strafePower, double turnPower) {
-        setDrivePowers(drivePower, strafePower, turnPower);
+        if (currentState == RobotState.PARK) {
+            setDrivePowers(drivePower, strafePower, turnPower);
+        }
         loopWithoutMovement();
     }
 

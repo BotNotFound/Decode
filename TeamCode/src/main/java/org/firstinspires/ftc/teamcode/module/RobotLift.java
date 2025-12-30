@@ -31,13 +31,13 @@ public class RobotLift {
         robotIsLifted = false;
     }
 
-    private void raiseRobot() {
+    public void raiseRobot() {
         buddyParkServo.setPosition(RAISED_ROBOT_POSITION);
         robotIsLifted = true;
         telemetry.addData("Robot is ", " lifted up.");
     }
 
-    private void lowerRobot() {
+    public void lowerRobot() {
         buddyParkServo.setPosition(LOWERED_ROBOT_POSITION);
         robotIsLifted = false;
         telemetry.addData("Robot is ", "on ground.");
