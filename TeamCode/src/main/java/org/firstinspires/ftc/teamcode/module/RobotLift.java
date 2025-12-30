@@ -8,9 +8,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class RobotLift {
 
-    public static final String BUDDY_PARK_SERVO_NAME = "Kicker";
+    public static final String LIFT_SERVO_NAME = "Kicker";
 
-    private final Servo buddyParkServo;
+    private final Servo liftServo;
 
     //TODO: Tune these values in dashboard
     public static double RAISED_ROBOT_POSITION = 0.2;
@@ -22,9 +22,9 @@ public class RobotLift {
     private final Telemetry telemetry;
 
     public RobotLift(HardwareMap hwMap, Telemetry telemetry) {
-        buddyParkServo = hwMap.get(Servo.class, BUDDY_PARK_SERVO_NAME);
+        liftServo = hwMap.get(Servo.class, LIFT_SERVO_NAME);
 
-        buddyParkServo.setPosition(LOWERED_ROBOT_POSITION);
+        liftServo.setPosition(LOWERED_ROBOT_POSITION);
 
         this.telemetry = telemetry;
 
@@ -32,13 +32,13 @@ public class RobotLift {
     }
 
     public void raiseRobot() {
-        buddyParkServo.setPosition(RAISED_ROBOT_POSITION);
+        liftServo.setPosition(RAISED_ROBOT_POSITION);
         robotIsLifted = true;
         telemetry.addData("Robot is ", " lifted up.");
     }
 
     public void lowerRobot() {
-        buddyParkServo.setPosition(LOWERED_ROBOT_POSITION);
+        liftServo.setPosition(LOWERED_ROBOT_POSITION);
         robotIsLifted = false;
         telemetry.addData("Robot is ", "on ground.");
     }
