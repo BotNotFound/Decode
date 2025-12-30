@@ -7,8 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 public class RobotLift {
-
-    public static final String LIFT_SERVO_NAME = "Kicker";
+    public static final String LIFT_SERVO_NAME = "Kickstand";
 
     private final Servo liftServo;
 
