@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.module;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-
+@Config
 public class RobotLift {
     public static final String LIFT_SERVO_NAME = "Kickstand";
 
