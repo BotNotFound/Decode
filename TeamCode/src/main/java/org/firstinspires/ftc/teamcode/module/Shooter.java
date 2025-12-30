@@ -225,14 +225,6 @@ public class Shooter {
         telemetry.addData("Kicker Position", "disengaged");
     }
 
-    public boolean isKickerEngaged() {
-        if (!kickerEngaged) {
-            return false;
-        }
-
-        return timeSinceKickerEngaged.milliseconds() >= KICKER_MILLIS_TO_ENGAGE;
-    }
-
     public boolean isReady() {
         return velocityPID.atSetPoint();
     }
