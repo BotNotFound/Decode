@@ -15,8 +15,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @Config
 public class Shooter {
-    public static final String LEFT_FLYWHEEL_MOTOR_NAME = "Lower flywheel";
-    public static final String RIGHT_FLYWHEEL_MOTOR_NAME = "Upper flywheel";
+    public static final String LEFT_FLYWHEEL_MOTOR_NAME = "Left flywheel";
+    public static final String RIGHT_FLYWHEEL_MOTOR_NAME = "Right flywheel";
     public static final String KICKER_SERVO_NAME = "Kicker";
 
     public static final String HOOD_SERVO_NAME = "Hood";
