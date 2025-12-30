@@ -16,8 +16,6 @@ public class RobotLift {
 
     public static double LOWERED_ROBOT_POSITION = 0.8;
 
-    private boolean robotIsLifted;
-
     private final Telemetry telemetry;
 
     public RobotLift(HardwareMap hwMap, Telemetry telemetry) {
@@ -27,18 +25,15 @@ public class RobotLift {
 
         this.telemetry = telemetry;
 
-        robotIsLifted = false;
     }
 
     public void raiseRobot() {
         liftServo.setPosition(RAISED_ROBOT_POSITION);
-        robotIsLifted = true;
         telemetry.addData("Robot is ", " lifted up.");
     }
 
     public void lowerRobot() {
         liftServo.setPosition(LOWERED_ROBOT_POSITION);
-        robotIsLifted = false;
         telemetry.addData("Robot is ", "on ground.");
     }
 
