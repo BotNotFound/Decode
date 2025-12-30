@@ -4,8 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.AllianceColor;
-
 @Config
 public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
@@ -44,7 +42,7 @@ public class Turret {
      */
     public static final double TICKS_PER_REVOLUTION = 145.1 * (113.0 / 12.0);
 
-    public Turret(HardwareMap hardwareMap, AllianceColor allianceColor) {
+    public Turret(HardwareMap hardwareMap) {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -60,11 +58,6 @@ public class Turret {
 
     public void update() {
         turretMotor.setPower(TURRET_MOTOR_POWER);
-    }
-
-    public void resetEncoder() {
-        turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public boolean isReady() {

@@ -98,7 +98,7 @@ public class Robot {
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap);
         spindexer = new Spindexer(hardwareMap, telemetry);
-        turret = new Turret(hardwareMap, color);
+        turret = new Turret(hardwareMap);
         lift = new RobotLift(hardwareMap, telemetry);
 
         setAllianceColor(color);
