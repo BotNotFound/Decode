@@ -10,7 +10,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.module.ArtifactLocation;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
@@ -107,13 +108,13 @@ public class Robot {
     }
 
     private void prepareToShoot() {
-        // TODO replace april tag pose with pinpoint pose
-
-        AprilTagPoseFtc target = aprilTagDetector.getTagPose();
-        Pose3D robot = aprilTagDetector.getRobotPose();
-        if (target != null) {
-            turret.aimAtGoal(target.x, target.y, driveTrain.getRobotPose().getHeading(AngleUnit.RADIANS));
-        }
+        final AprilTagPoseFtc target = aprilTagDetector.getTagPose();
+        final Pose2D robotPose = driveTrain.getRobotPose();
+        turret.aimAtGoal(
+                robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX,
+                robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY,
+                robotPose.getHeading(AngleUnit.RADIANS)
+        );
         shooter.setRPMForAprilTag(target, fallbackRPM);
     }
 
