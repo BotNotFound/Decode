@@ -40,18 +40,8 @@ public class Spindexer {
     //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 2;
 
-    private static double spindexerAngle;
-
     //TODO: Tune the below angles and power values
     public static double offsetAngle = 0;
-
-    public static double spindexerPower = 0.3;
-
-    public static double FIRST_SLOT_ANGLE = 0;
-
-    public static double SECOND_SLOT_ANGLE = 120;
-
-    public static double THIRD_SLOT_ANGLE = 240;
 
     // TODO tune PIDF values + tolerance
     private final PIDFController spindexerController;
@@ -62,16 +52,10 @@ public class Spindexer {
     public static double kF = 0;
     public static double tolerance = 1;
 
-
-    //was thinking of using timers to switch to the next slot
-    public static double TIME_TO_SWITCH_TO_NEXT_EMPTY_SLOT = 0.3;
-
-    public static double TIME_TO_SWITCH_TO_NEXT_TWO_EMPTY_SLOTS = 0.6;
-
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
         ballDetections = new boolean[ArtifactLocation.values().length];
-        curFrontLocation = ArtifactLocation.SLOT_ONE;
+        curFrontLocation = null;
 
         spindexerServoOne = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
@@ -82,12 +66,10 @@ public class Spindexer {
 
         spindexerEncoder = hardwareMap.get(AnalogInput.class, SENS_ORANGE_ENCODER);
 
-        spindexerAngle = getAngle();
-
         spindexerController = new PIDFController(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
-        //set all servo directions for spindexer to turn counterclockwise
+        // set all servo directions for spindexer to turn counterclockwise
         spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
         spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
         spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
@@ -95,8 +77,8 @@ public class Spindexer {
     }
 
     private void updateDetectionFromSensor() {
-        if (!spindexerController.atSetPoint()) {
-            return; // still moving; color sensor won't detect the right location
+        if (!spindexerController.atSetPoint() || curFrontLocation == null) {
+            return; // not at an artifact location; color sensor won't give the right data
         }
 
         double dist = frontColorSensor.getDistance(DistanceUnit.CM);
@@ -199,6 +181,7 @@ public class Spindexer {
     }
 
     public void rotateToAngle(double angle) {
+        curFrontLocation = null;
         spindexerController.setSetPoint(angle);
         updateSpindexer();
     }
@@ -214,8 +197,8 @@ public class Spindexer {
     }
 
     public void rotateLocationToFront(ArtifactLocation location) {
-        curFrontLocation = location;
         rotateToAngle(location.angle);
+        curFrontLocation = location;
     }
 
     public boolean atTargetRotation() {
@@ -223,6 +206,10 @@ public class Spindexer {
     }
 
     public void rotateToNextSlot() {
+        if (curFrontLocation == null) {
+            return;
+        }
+
         rotateLocationToFront(curFrontLocation.getNextLocation());
     }
 

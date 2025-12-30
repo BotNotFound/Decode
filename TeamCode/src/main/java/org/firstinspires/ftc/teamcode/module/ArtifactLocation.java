@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.module;
 
 
 public enum ArtifactLocation {
-    SLOT_ONE(0, Spindexer.FIRST_SLOT_ANGLE, "Slot One"),
-    SLOT_TWO(1, Spindexer.SECOND_SLOT_ANGLE, "Slot Two"),
-    SLOT_THREE(2, Spindexer.THIRD_SLOT_ANGLE, "Slot Three");
+    SLOT_ONE(0, 0, "Slot One"),
+    SLOT_TWO(1, 120, "Slot Two"),
+    SLOT_THREE(2, 240, "Slot Three");
 
 
     public final int index;
