@@ -40,12 +40,8 @@ public class Spindexer {
     //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 2;
 
-    private static double spindexerAngle;
-
     //TODO: Tune the below angles and power values
     public static double offsetAngle = 0;
-
-    public static double spindexerPower = 0.3;
 
     public static double FIRST_SLOT_ANGLE = 0;
 
@@ -62,12 +58,6 @@ public class Spindexer {
     public static double kF = 0;
     public static double tolerance = 1;
 
-
-    //was thinking of using timers to switch to the next slot
-    public static double TIME_TO_SWITCH_TO_NEXT_EMPTY_SLOT = 0.3;
-
-    public static double TIME_TO_SWITCH_TO_NEXT_TWO_EMPTY_SLOTS = 0.6;
-
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
         ballDetections = new boolean[ArtifactLocation.values().length];
@@ -81,8 +71,6 @@ public class Spindexer {
         frontColorSensor = hardwareMap.get(RevColorSensorV3.class, FRONT_COLOR_SENSOR);
 
         spindexerEncoder = hardwareMap.get(AnalogInput.class, SENS_ORANGE_ENCODER);
-
-        spindexerAngle = getAngle();
 
         spindexerController = new PIDFController(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
