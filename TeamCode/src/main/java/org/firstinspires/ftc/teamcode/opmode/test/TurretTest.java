@@ -30,18 +30,13 @@ public class TurretTest extends OpMode {
 
     @Override
     public void init() {
-        leftFlyWheelMotor= hardwareMap.get(DcMotorEx.class, SHOOTER_MOTOR_LEFT);
-
-        rightFlyWheelMotor = hardwareMap.get(DcMotorEx.class, SHOOTER_MOTOR_RIGHT);
-
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_GEAR_MOTOR);
 
-        leftFlyWheelMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFlyWheelMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        turretMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
         turretMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        telemetry.addLine("Press A to start shooter");
-        telemetry.addLine("Press B to stop shooter");
         telemetry.addLine("Press X to rotate turret");
         telemetry.addLine("Press Y to stop turret");
         telemetry.addLine("Press LB to switch turret rotation direction");
@@ -53,24 +48,8 @@ public class TurretTest extends OpMode {
     @Override
     public void loop() {
 
-        if(gamepad1.dpadUpWasPressed()){
-            shooterRPM += 50;
-        }
-        else if(gamepad1.dpadDownWasPressed()){
-            shooterRPM -= 50;
-        }
-        else if(gamepad1.aWasPressed()){
-            leftFlyWheelMotor.setPower(shooterRPM);
-            rightFlyWheelMotor.setPower(shooterRPM);
-        }
-        else if(gamepad1.bWasPressed()){
-            leftFlyWheelMotor.setPower(0);
-            rightFlyWheelMotor.setPower(0);
-        }
-        else if(gamepad1.xWasPressed()){
-            if(!leftFlyWheelMotor.isBusy() || !rightFlyWheelMotor.isBusy()){
-                turretMotor.setPower(turretSpinPower);
-            }
+        if(gamepad1.xWasPressed()){
+            turretMotor.setPower(turretSpinPower);
         }
         else if(gamepad1.yWasPressed()){
             turretMotor.setPower(0);
@@ -85,6 +64,11 @@ public class TurretTest extends OpMode {
             }
 
         }
+        int ticks = turretMotor.getCurrentPosition();
+        double tickPerRev = 145.1 * (113.0 / 12.0);
+        double degrees = (ticks/tickPerRev)*360.0;
+        telemetry.addData("Heading: ", degrees);
+        telemetry.update();
 
 
     }
