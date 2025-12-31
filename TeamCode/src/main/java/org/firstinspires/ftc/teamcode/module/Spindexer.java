@@ -48,12 +48,10 @@ public class Spindexer {
     private ArtifactLocation activeLocation;
     private SpindexerState curState;
 
-    //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
 
     public static double offsetAngle = Math.toRadians(15);
 
-    // TODO tune PIDF values + tolerance
     private final SquIDController spindexerController;
 
     public static double kP = 0.02;
