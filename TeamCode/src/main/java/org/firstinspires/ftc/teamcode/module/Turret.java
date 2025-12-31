@@ -11,7 +11,7 @@ public class Turret {
 
     public static double TURRET_MOTOR_POWER = 1.0;
 
-    public static double TURRET_INITIAL_ROTATION = Math.PI;
+    public static double TURRET_INITIAL_ROTATION = Math.toRadians(70);
     public static double TURRET_MIN_ROTATION = Math.PI / 2;
     public static double TURRET_MAX_ROTATION = Math.PI * 3 / 2;
 
