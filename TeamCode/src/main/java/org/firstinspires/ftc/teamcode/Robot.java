@@ -232,7 +232,7 @@ public class Robot {
     }
 
     public void loop(double drivePower, double strafePower, double turnPower) {
-        if (currentState == RobotState.PARK) {
+        if (currentState != RobotState.PARK) {
             setDrivePowers(drivePower, strafePower, turnPower);
         }
         loopWithoutMovement();
