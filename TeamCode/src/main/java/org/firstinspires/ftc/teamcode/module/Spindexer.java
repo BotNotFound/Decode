@@ -206,7 +206,7 @@ public class Spindexer {
 
     public void rotateToNextSlot() {
         if (curFrontLocation == null) {
-            return;
+            rotateLocationToFront(ArtifactLocation.SLOT_ONE);
         }
 
         rotateLocationToFront(curFrontLocation.getNextLocation());
