@@ -51,18 +51,29 @@ public class Turret {
         turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public void aimAtGoal(double x, double y, double curRobotHeading) {
-        final double targetHeading = clampToSafeRotation(Math.atan2(y, x) - curRobotHeading);
-        final int targetPosition = (int) ((targetHeading - TURRET_INITIAL_ROTATION) / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
-        if (targetPosition != turretMotor.getTargetPosition()) {
+    public void setTargetHeading(double targetHeadingRadians) {
+        final int targetPosition = (int) ((targetHeadingRadians - TURRET_INITIAL_ROTATION) / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
+        if (targetPosition != turretMotor.getTargetPosition() || turretMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
             turretMotor.setTargetPosition(targetPosition);
             turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
+    }
+
+    public void aimAtGoal(double x, double y, double curRobotHeading) {
+        final double targetHeading = clampToSafeRotation(Math.atan2(y, x) - curRobotHeading);
+        setTargetHeading(targetHeading);
         update();
     }
 
     public void update() {
-        turretMotor.setPower(TURRET_MOTOR_POWER);
+        if (turretMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
+            turretMotor.setPower(TURRET_MOTOR_POWER);
+        }
+    }
+
+    public void setPower(double power) {
+        turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turretMotor.setPower(power);
     }
 
     public boolean isReady() {

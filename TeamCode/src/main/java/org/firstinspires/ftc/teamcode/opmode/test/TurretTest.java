@@ -3,61 +3,53 @@ package org.firstinspires.ftc.teamcode.opmode.test;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.teamcode.module.Turret;
 
 @TeleOp(group = "test")
 @Config
 public class TurretTest extends OpMode {
-    private static final String TURRET_GEAR_MOTOR = "Turret Gear Motor";
+    /**
+     * How far the gamepad joystick has to be from the center before its input should count as
+     * rotating the turret.  Should be between 0 and 1, exclusive
+     */
+    public static double MIN_AIM_ACTIVATION_MAGNITUDE = 0.7;
 
-    private DcMotor turretMotor;
+    private Turret turret;
 
-
-    public static double turretSpinPower = 0.1;
-
+    private boolean manualPowerControl;
 
     @Override
     public void init() {
-        turretMotor = hardwareMap.get(DcMotor.class, TURRET_GEAR_MOTOR);
-
-        turretMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-        turretMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        telemetry.addLine("Press X to rotate turret");
-        telemetry.addLine("Press Y to stop turret");
-        telemetry.addLine("Press LB to switch turret rotation direction");
-
-
+        turret = new Turret(hardwareMap);
+        manualPowerControl = false;
     }
 
     @Override
     public void loop() {
-
-        if (gamepad1.xWasPressed()) {
-            turretMotor.setPower(turretSpinPower);
+        telemetry.addLine("Toggle control modes with A");
+        if (gamepad1.aWasReleased()) {
+            manualPowerControl = !manualPowerControl;
         }
-        else if (gamepad1.yWasPressed()) {
-            turretMotor.setPower(0);
+
+        if (manualPowerControl) {
+            telemetry.addLine("Power Control Enabled");
+            telemetry.addLine("Use the right joystick to set the raw turret power");
+            turret.setPower(gamepad1.right_stick_x);
+            return;
         }
-        else if (gamepad1.leftBumperWasPressed()) {
 
-            if (turretMotor.getDirection() == DcMotorSimple.Direction.FORWARD) {
-                turretMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-            }
-            if (turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE) {
-                turretMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            }
+        // auto-aim mode
+        telemetry.addLine("Rotate the turret by pointing the left joystick");
 
+        final double x = gamepad1.left_stick_x;
+        final double y = gamepad1.left_stick_y;
+
+        final double magnitude = Math.sqrt((x * x) + (y * y));
+        if (magnitude >= MIN_AIM_ACTIVATION_MAGNITUDE) {
+            turret.setTargetHeading(Math.atan2(y, x));
         }
-        int ticks = turretMotor.getCurrentPosition();
-        double tickPerRev = 145.1 * (113.0 / 12.0);
-        double degrees = (ticks / tickPerRev) * 360.0;
-        telemetry.addData("Heading: ", degrees);
-        telemetry.update();
 
-
+        turret.update();
     }
 }
