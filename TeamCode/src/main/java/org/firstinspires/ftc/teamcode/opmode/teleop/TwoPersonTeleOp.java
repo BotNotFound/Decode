@@ -68,10 +68,15 @@ public class TwoPersonTeleOp extends OpMode {
         else if (gamepad2.right_bumper) {
             robot.setState(Robot.RobotState.PRE_SHOOT);
         }
-        else if (gamepad1.yWasPressed() && robot.getState() != Robot.RobotState.PARK) {
-            robot.setState(Robot.RobotState.PARK);
+        else if (gamepad1.yWasPressed()) {
+            if (robot.getState() != Robot.RobotState.PARK) {
+                robot.setState(Robot.RobotState.PARK);
+            }
+            else {
+                robot.setState(Robot.RobotState.NONE);
+            }
         }
-        else if (robot.getState() != Robot.RobotState.PARK || gamepad1.yWasPressed()) {
+        else if (robot.getState() != Robot.RobotState.PARK) {
             robot.setState(Robot.RobotState.NONE);
             robot.setHeadingScale(1.0);
         }
