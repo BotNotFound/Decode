@@ -65,6 +65,7 @@ public class Robot {
         REVERSE_INTAKE,     // Robot is ejecting artifacts
         PRE_SHOOT,          // Robot is preparing to shoot, but cannot actually launch artifacts
         SHOOT,              // Robot is shooting artifacts into the goal
+        MANUAL_SHOOT,       // Robot is shooting using hardcoded speeds (used for tuning)
         NONE,               // No special function; robot is just moving
         PARK,               // Robot has parked (match is about to end)
     }
@@ -163,12 +164,18 @@ public class Robot {
                 robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY,
                 robotPose.getHeading(AngleUnit.RADIANS)
         );
-        shooter.setRPMForGoal(
-                Math.sqrt(
-                        Math.pow(robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX, 2) +
-                                Math.pow(robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY, 2)
-                )
-        );
+
+        if (currentState == RobotState.MANUAL_SHOOT) {
+            shooter.setRPM(fallbackRPM);
+        }
+        else {
+            shooter.setRPMForGoal(
+                    Math.sqrt(
+                            Math.pow(robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX, 2) +
+                                    Math.pow(robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY, 2)
+                    )
+            );
+        }
     }
 
     public void setState(RobotState newState) {
@@ -204,6 +211,7 @@ public class Robot {
                 shooter.disengageKicker();
                 break;
 
+            case MANUAL_SHOOT:
             case SHOOT:
                 spindexer.loadNextArtifact();
                 intake.stopIntake();
@@ -259,6 +267,7 @@ public class Robot {
         }
 
         switch (currentState) {
+            case MANUAL_SHOOT:
             case SHOOT:
                 prepareToShoot();
 
