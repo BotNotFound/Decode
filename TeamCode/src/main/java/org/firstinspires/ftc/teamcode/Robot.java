@@ -182,6 +182,7 @@ public class Robot {
                     )
             );
         }
+        shooter.adjustHood();
     }
 
     public void setState(RobotState newState) {

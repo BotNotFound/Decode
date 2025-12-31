@@ -155,13 +155,18 @@ public class Shooter {
         //set stickyRPM
         stickyRPM = true;
         stickyTargetRPM = flywheelSpeeds.get(distanceToGoal);
-        double hoodPosition = hoodPositions.get(stickyTargetRPM);
-
-        hoodPosition = Math.min(HOOD_SERVO_POSITION_UPPER_BOUND, Math.max(hoodPosition, HOOD_SERVO_POSITION_LOWER_BOUND));
-
-        hoodServo.setPosition(hoodPosition);
         setRPM(stickyTargetRPM);
+    }
 
+    public void setHoodPosition(double position) {
+        if (position < HOOD_SERVO_POSITION_LOWER_BOUND) {
+            hoodServo.setPosition(HOOD_SERVO_POSITION_LOWER_BOUND);
+        }
+        hoodServo.setPosition(Math.min(position, HOOD_SERVO_POSITION_UPPER_BOUND));
+    }
+
+    public void adjustHood() {
+        setHoodPosition(hoodPositions.get(getRPM()));
     }
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose, double fallbackRPM) {
