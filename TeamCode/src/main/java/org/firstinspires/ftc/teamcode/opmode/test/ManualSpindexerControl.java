@@ -33,13 +33,14 @@ public class ManualSpindexerControl extends OpMode {
         }
 
         if (manualPowerControl) {
-            telemetry.addLine("Power Control Enabled");
+            telemetry.addData("Current Mode", "Power Control");
             telemetry.addLine("Use the right joystick to set the raw spindexer power");
             spindexer.setPower(gamepad1.right_stick_x);
             return;
         }
 
         // auto-aim mode
+        telemetry.addData("Current Mode", "Heading Control");
         telemetry.addLine("Rotate the spindexer by pointing the left joystick");
 
         final double x = gamepad1.left_stick_x;
