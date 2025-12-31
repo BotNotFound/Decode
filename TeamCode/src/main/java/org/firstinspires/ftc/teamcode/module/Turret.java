@@ -46,13 +46,17 @@ public class Turret {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        turretMotor.setTargetPosition(0);
         turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void aimAtGoal(double x, double y, double curRobotHeading) {
         final double targetHeading = clampToSafeRotation(Math.atan2(y, x) - curRobotHeading);
         final int targetPosition = (int) ((targetHeading - TURRET_INITIAL_ROTATION) / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
-        turretMotor.setTargetPosition(targetPosition);
+        if (targetPosition != turretMotor.getTargetPosition()) {
+            turretMotor.setTargetPosition(targetPosition);
+            turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
         update();
     }
 
