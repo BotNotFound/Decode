@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.module.Turret;
 
 @TeleOp(group = "test")
 @Config
-public class TurretTest extends OpMode {
+public class ManualTurretControl extends OpMode {
     /**
      * How far the gamepad joystick has to be from the center before its input should count as
      * rotating the turret.  Should be between 0 and 1, exclusive
