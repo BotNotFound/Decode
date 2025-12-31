@@ -317,13 +317,11 @@ public class Spindexer {
     }
 
     public void beginIntaking() {
-        curState = SpindexerState.INTAKING;
-        setActiveLocation(activeLocation);
+        intakeIntoLocation(activeLocation);
     }
 
     public void beginLoading() {
-        curState = SpindexerState.LOADING;
-        setActiveLocation(activeLocation);
+        loadFromLocation(activeLocation);
     }
 
     public void removeActiveArtifact() {
