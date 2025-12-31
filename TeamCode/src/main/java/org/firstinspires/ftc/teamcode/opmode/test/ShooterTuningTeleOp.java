@@ -43,7 +43,7 @@ public class ShooterTuningTeleOp extends OpMode {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap);
-        transfer = new Transfer(hardwareMap, telemetry);
+        transfer = new Transfer(hardwareMap);
         aprilDetector = new AprilTagDetector(hardwareMap, telemetry);
     }
 

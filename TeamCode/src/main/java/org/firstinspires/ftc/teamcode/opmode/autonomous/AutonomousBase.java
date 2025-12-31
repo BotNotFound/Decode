@@ -73,6 +73,11 @@ public abstract class AutonomousBase extends OpMode {
     }
 
     @Override
+    public void init_loop() {
+        robot.logInfo();
+    }
+
+    @Override
     public void start() {
         robot.start();
         if (stageSequence.length > 0) {

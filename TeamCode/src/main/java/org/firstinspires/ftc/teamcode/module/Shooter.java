@@ -122,6 +122,10 @@ public class Shooter {
         logRPM(0, 0);
     }
 
+    public double getRPM() {
+        return rightFlywheelMotor.getVelocity() / motorCPS * 60;
+    }
+
     public void setRPM(double rpm) {
         if (rpm == 0) {
             // no need for velocity control if we aren't spinning
@@ -132,11 +136,10 @@ public class Shooter {
 
         velocityPID.setTolerance(tolerance);
         velocityPID.setPIDF(kP, kI, kD, kF);
-        double actualRPM = rightFlywheelMotor.getVelocity() / motorCPS * 60;
+        double actualRPM = getRPM();
 
         if (rpm > 0) {
             double power = velocityPID.calculate(actualRPM, rpm);
-            telemetry.addData("shooter power", power);
 
             leftFlywheelMotor.setPower(power);
             rightFlywheelMotor.setPower(power);
@@ -145,15 +148,6 @@ public class Shooter {
             leftFlywheelMotor.setPower(0);
             rightFlywheelMotor.setPower(0);
         }
-
-        logRPM(rpm, actualRPM);
-    }
-
-    private void logRPM(double target, double real) {
-        telemetry.addData("Target RPM", target);
-        telemetry.addData("Real RPM", real);
-        telemetry.addData("Upper RPM Bound", target + tolerance);
-        telemetry.addData("Lower RPM Bound", target - tolerance);
     }
 
     public void setRPMForGoal(double distanceToGoal) {
@@ -210,18 +204,35 @@ public class Shooter {
             timeSinceKickerEngaged.reset();
         }
         kickerEngaged = true;
-
-        telemetry.addData("Kicker Position", "engaged");
     }
 
     public void disengageKicker() {
         kickerServo.setPosition(KICKER_IDLE_POSITION);
         kickerEngaged = false;
-
-        telemetry.addData("Kicker Position", "disengaged");
     }
 
     public boolean isReady() {
         return velocityPID.atSetPoint();
+    }
+
+    private void logRPM(double target, double real) {
+        telemetry.addData("Target RPM", target);
+        telemetry.addData("Real RPM", real);
+        telemetry.addData("Upper RPM Bound", target + tolerance);
+        telemetry.addData("Lower RPM Bound", target - tolerance);
+    }
+
+    public void logInfo() {
+        logRPM(velocityPID.getSetPoint(), getRPM());
+
+        telemetry.addData("Flywheel power", leftFlywheelMotor.getPower());
+
+        if (kickerEngaged) {
+            telemetry.addLine("Kicker engaged");
+        }
+        else {
+            telemetry.addLine("Kicker disengaged");
+        }
+
     }
 }

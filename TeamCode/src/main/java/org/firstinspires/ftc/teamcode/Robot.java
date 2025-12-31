@@ -136,6 +136,14 @@ public class Robot {
         }
     }
 
+    public void logInfo() {
+        if (currentState == RobotState.SHOOT) {
+            shooter.logInfo();
+        }
+        spindexer.logInfo();
+        lift.logInfo();
+    }
+
     public AllianceColor getAllianceColor() {
         return allianceColor;
     }
@@ -300,7 +308,7 @@ public class Robot {
                 break;
         }
 
-        spindexer.logInfo();
+        logInfo();
     }
 
     public boolean isShotReady() {

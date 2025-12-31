@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 @Config
 public class Transfer {
 
@@ -19,17 +17,13 @@ public class Transfer {
     //adjust the servo power as needed for the transfer.
     public static double POWER_VALUE = 1.0;
 
-    private final Telemetry telemetry;
 
-
-    public Transfer(HardwareMap hwMap, Telemetry telemetry) {
+    public Transfer(HardwareMap hwMap) {
         transferServo = hwMap.get(CRServo.class, TRANSFER_SERVO_NAME);
         transferServo2 = hwMap.get(CRServo.class, TRANSFER2_SERVO_NAME);
 
         transferServo.setDirection(DcMotorSimple.Direction.REVERSE);
         transferServo2.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        this.telemetry = telemetry;
     }
 
     public void setTransferPower(double power) {
@@ -43,7 +37,6 @@ public class Transfer {
 
     public void stopTransfer() {
         setTransferPower(0.0);
-        telemetry.addData("Transfer: ", "Stopped");
     }
 
     //this method is useful if color sensor detects wrong artifact

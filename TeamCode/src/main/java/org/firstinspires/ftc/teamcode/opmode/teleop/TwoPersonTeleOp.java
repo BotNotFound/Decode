@@ -41,6 +41,8 @@ public class TwoPersonTeleOp extends OpMode {
             robot.swapAllianceColor();
         }
         telemetry.addData("Current Alliance", robot.getAllianceColor());
+
+        robot.logInfo();
     }
 
     @Override
