@@ -41,7 +41,7 @@ public class Spindexer {
 
     private final Telemetry telemetry;
 
-    private final boolean[] ballDetections;
+    private final boolean[] artifactDetections;
     private ArtifactLocation activeLocation;
     private SpindexerState curState;
 
@@ -58,7 +58,7 @@ public class Spindexer {
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
-        ballDetections = new boolean[ArtifactLocation.values().length];
+        artifactDetections = new boolean[ArtifactLocation.values().length];
         activeLocation = null;
         curState = SpindexerState.MANUAL_ROTATION;
 
@@ -87,7 +87,7 @@ public class Spindexer {
         }
 
         double dist = frontColorSensor.getDistance(DistanceUnit.CM);
-        ballDetections[activeLocation.ordinal()] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+        artifactDetections[activeLocation.ordinal()] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
     }
 
     public ArtifactLocation getActiveLocation() {
@@ -96,12 +96,12 @@ public class Spindexer {
 
     public boolean hasArtifact(ArtifactLocation location) {
         updateDetectionFromSensor();
-        return ballDetections[location.ordinal()];
+        return artifactDetections[location.ordinal()];
     }
 
     public boolean hasAllArtifacts() {
         updateDetectionFromSensor();
-        for (boolean ballDetection : ballDetections) {
+        for (boolean ballDetection : artifactDetections) {
             if (!ballDetection) {
                 return false;
             }
@@ -111,7 +111,7 @@ public class Spindexer {
 
     public boolean hasNoArtifacts() {
         updateDetectionFromSensor();
-        for (boolean detection : ballDetections) {
+        for (boolean detection : artifactDetections) {
             if (detection) {
                 return false;
             }
@@ -122,7 +122,7 @@ public class Spindexer {
     public int getArtifactCount() {
         updateDetectionFromSensor();
         int artifacts = 0;
-        for (boolean detection : ballDetections) {
+        for (boolean detection : artifactDetections) {
             if (detection) {
                 artifacts++;
             }
@@ -310,7 +310,7 @@ public class Spindexer {
 
     public void removeActiveArtifact() {
         if (activeLocation != null) {
-            ballDetections[activeLocation.ordinal()] = false;
+            artifactDetections[activeLocation.ordinal()] = false;
         }
     }
 
