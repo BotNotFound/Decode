@@ -337,7 +337,22 @@ public class Spindexer {
         return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
     }
 
+    private String getStateInfo() {
+        final StringBuilder builder = new StringBuilder(curState.toString());
+        switch (curState) {
+            case LOADING:
+            case INTAKING:
+                builder.append(" { location = ").append(activeLocation).append(" }");
+                break;
+            case MANUAL_ROTATION:
+                builder.append(" { }");
+                break;
+        }
+        return builder.toString();
+    }
+
     public void logInfo() {
+        telemetry.addData("Spindexer State", getStateInfo());
         telemetry.addData("Spindexer Angle (degrees)", getAngle());
         telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getTarget());
         telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES));
