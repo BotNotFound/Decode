@@ -43,24 +43,6 @@ public class AutonomousStage {
     }
 
     /**
-     * Gets this stage's ending pose
-     *
-     * @return The path the robot will follow during this stage
-     */
-    public PathChain getPath() {
-        return path;
-    }
-
-    /**
-     * Gets this stage's state for the robot
-     *
-     * @return What state the robot should be in while this stage is active
-     */
-    public Robot.RobotState getRobotState() {
-        return robotState;
-    }
-
-    /**
      * Checks if this state has been completed, assuming that this stage has already started
      *
      * @param robot    The robot running this stage

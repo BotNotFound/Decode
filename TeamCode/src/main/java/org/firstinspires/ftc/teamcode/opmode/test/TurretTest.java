@@ -4,28 +4,17 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(group = "test")
 @Config
 public class TurretTest extends OpMode {
-    private final String TURRET_GEAR_MOTOR = "Turret Gear Motor";
-
-    private final String SHOOTER_MOTOR_LEFT = "Shooter Motor Left";
-
-    private final String SHOOTER_MOTOR_RIGHT = "Shooter Motor Right";
-
-    private DcMotorEx leftFlyWheelMotor;
-
-    private DcMotorEx rightFlyWheelMotor;
+    private static final String TURRET_GEAR_MOTOR = "Turret Gear Motor";
 
     private DcMotor turretMotor;
 
 
     public static double turretSpinPower = 0.1;
-
-    public static double shooterRPM = 3000;
 
 
     @Override

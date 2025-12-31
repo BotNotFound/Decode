@@ -201,7 +201,7 @@ public class Robot {
             case REVERSE_INTAKE:
                 spindexer.beginIntaking();
                 shooter.disengageKicker();
-                intake.setPower(-1);
+                intake.reverseIntake();
 
                 break;
 
@@ -348,18 +348,6 @@ public class Robot {
 
     public double getFallbackShooterRPM() {
         return fallbackRPM;
-    }
-
-    public double getDrivePower() {
-        return driveTrain.getDrivePower();
-    }
-
-    public double getStrafePower() {
-        return driveTrain.getStrafePower();
-    }
-
-    public double getTurnPower() {
-        return driveTrain.getTurnPower();
     }
 
     public void setMoveScale(double moveScale) {

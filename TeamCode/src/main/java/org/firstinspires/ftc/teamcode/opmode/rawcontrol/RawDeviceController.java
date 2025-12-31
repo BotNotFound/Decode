@@ -20,7 +20,6 @@ public abstract class RawDeviceController<T extends HardwareDevice> extends OpMo
         curDeviceIndex = newIndex;
     }
 
-    @SuppressWarnings("unchecked")
     public RawDeviceController(Class<? extends T> deviceClass) {
         this.deviceClass = deviceClass;
     }

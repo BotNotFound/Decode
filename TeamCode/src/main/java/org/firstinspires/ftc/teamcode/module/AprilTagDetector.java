@@ -25,6 +25,9 @@ public class AprilTagDetector {
             0, -90 + 30, 0, 0);
 
     private final AprilTagProcessor processor;
+
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
+    // vision portal is needed to link processors to the camera
     private final VisionPortal visionPortal;
 
     private final Telemetry telemetry;
