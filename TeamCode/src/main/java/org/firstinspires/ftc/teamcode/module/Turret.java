@@ -55,6 +55,7 @@ public class Turret {
         final double safeHeadingRadians = clampToSafeRotation(targetHeadingRadians);
         final int targetPosition = (int) ((safeHeadingRadians - TURRET_INITIAL_ROTATION) / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
         if (targetPosition != turretMotor.getTargetPosition() || turretMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             turretMotor.setTargetPosition(targetPosition);
             turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
