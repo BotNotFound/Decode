@@ -281,6 +281,7 @@ public class Robot {
                 break;
 
             case REVERSE_INTAKE:
+            case PARK:
             case NONE:
                 break;
         }
