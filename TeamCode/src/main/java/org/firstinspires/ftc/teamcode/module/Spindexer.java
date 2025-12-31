@@ -176,10 +176,14 @@ public class Spindexer {
         return closeToAngle + getShortestDisplacement(angle, closeToAngle, unit);
     }
 
-    public void rotateToAngle(double angle) {
-        curFrontLocation = null;
+    private void setTargetAngle(double angle) {
         spindexerController.setTarget(angle);
         updateSpindexer();
+    }
+
+    public void rotateToAngle(double angle) {
+        curFrontLocation = null;
+        setTargetAngle(angle);
     }
 
     public void updateSpindexer() {
@@ -192,8 +196,8 @@ public class Spindexer {
     }
 
     public void rotateLocationToFront(ArtifactLocation location) {
-        rotateToAngle(location.angle);
         curFrontLocation = location;
+        setTargetAngle(location.angle);
     }
 
     public boolean atTargetRotation() {
