@@ -20,7 +20,6 @@ public class ManualSpindexerControl extends OpMode {
     private Spindexer spindexer;
 
     private boolean manualPowerControl = false;
-    private double targetAngle = 0;
 
     @Override
     public void init() {
@@ -49,6 +48,7 @@ public class ManualSpindexerControl extends OpMode {
         final double y = gamepad1.left_stick_y;
 
         final double magnitude = Math.sqrt((x * x) + (y * y));
+        double targetAngle;
         if (magnitude >= MIN_AIM_ACTIVATION_MAGNITUDE) {
             targetAngle = Math.atan2(y, x);
             dashboardAngleDegrees = Math.toDegrees(targetAngle);
@@ -57,6 +57,7 @@ public class ManualSpindexerControl extends OpMode {
             targetAngle = Math.toRadians(dashboardAngleDegrees);
         }
 
+        telemetry.addData("Target Angle", Math.toDegrees(targetAngle));
         spindexer.rotateToAngle(targetAngle);
     }
 }
