@@ -47,8 +47,6 @@ public class Shooter {
 
     public static int motorCPS = 28;
 
-    public double defaultRPM = 2900;
-
     private boolean stickyRPM = false;
     private double stickyTargetRPM;
 
@@ -166,10 +164,6 @@ public class Shooter {
 
     }
 
-    public void setRPMForAprilTag(AprilTagPoseFtc tagPose) {
-        setRPMForAprilTag(tagPose, defaultRPM);
-    }
-
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose, double fallbackRPM) {
         if (tagPose != null) {
             // clamps the range to the min/max for the interpLUT to avoid bound errors
@@ -188,14 +182,6 @@ public class Shooter {
         else {
             setRPM(fallbackRPM);
         }
-    }
-
-    public void increaseDefaultRPM() {
-        defaultRPM += 50;
-    }
-
-    public void decreaseDefaultRPM() {
-        defaultRPM -= 50;
     }
 
     public void engageKicker() {

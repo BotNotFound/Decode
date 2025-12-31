@@ -17,6 +17,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 @Config
 @TeleOp(group = "test")
 public class ShooterTuningTeleOp extends OpMode {
+    public static final int DPAD_RPM_CHANGE_AMOUNT = 50;
     private FieldCentricDriveTrain driveTrain;
 
     private Shooter shooter;
@@ -129,12 +130,10 @@ public class ShooterTuningTeleOp extends OpMode {
         }
 
         if (gamepad1.dpadUpWasPressed()) {
-            shooter.increaseDefaultRPM();
-            targetRPM = shooter.defaultRPM;
+            targetRPM += DPAD_RPM_CHANGE_AMOUNT;
         }
         else if (gamepad1.dpadDownWasPressed()) {
-            shooter.decreaseDefaultRPM();
-            targetRPM = shooter.defaultRPM;
+            targetRPM -= DPAD_RPM_CHANGE_AMOUNT;
         }
 
         telemetry.addData("target shooter rpm", targetRPM);
