@@ -148,6 +148,7 @@ public class Robot {
     }
 
     private void prepareToShoot() {
+        spindexer.loadNextArtifact();
         final Pose2D robotPose = driveTrain.getRobotPose();
         turret.aimAtGoal(
                 robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX,
@@ -177,22 +178,26 @@ public class Robot {
 
         switch (newState) {
             case INTAKE:
+                spindexer.intakeIntoEmptySlot();
                 shooter.disengageKicker();
                 intake.startIntake();
                 break;
 
             case REVERSE_INTAKE:
+                spindexer.beginIntaking();
                 shooter.disengageKicker();
                 intake.setPower(-1);
 
                 break;
 
             case PRE_SHOOT:
+                spindexer.loadNextArtifact();
                 intake.startIntake();
                 shooter.disengageKicker();
                 break;
 
             case SHOOT:
+                spindexer.loadNextArtifact();
                 intake.stopIntake();
                 shooter.disengageKicker();
 
@@ -208,12 +213,14 @@ public class Robot {
                 break;
 
             case NONE:
+                spindexer.beginLoading();
                 shooter.disengageKicker();
                 shooter.setRPM(0);
                 intake.stopIntake();
                 break;
 
             case PARK:
+                spindexer.setPower(0);
                 shooter.disengageKicker();
                 shooter.setRPM(0);
                 intake.stopIntake();
@@ -239,7 +246,9 @@ public class Robot {
     }
 
     public void loopWithoutMovement() {
-        spindexer.updateSpindexer();
+        if (currentState != RobotState.PARK) {
+            spindexer.updateSpindexer();
+        }
 
         switch (currentState) {
             case SHOOT:
@@ -249,6 +258,9 @@ public class Robot {
                     intake.stopIntake();
 
                     if (shotReady) {
+                        spindexer.removeActiveArtifact();
+                        spindexer.rotateToNextSlot();
+
                         shotsTaken++;
                         Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
                     }
@@ -273,9 +285,11 @@ public class Robot {
 
             case INTAKE:
                 if (spindexer.hasAllArtifacts()) {
+                    spindexer.beginLoading();
                     intake.stopIntake();
                 }
                 else {
+                    spindexer.intakeIntoEmptySlot();
                     intake.startIntake();
                 }
                 break;
@@ -290,8 +304,11 @@ public class Robot {
     }
 
     public boolean isShotReady() {
-        // TODO check if a ball is loaded
-        return currentState == RobotState.SHOOT && shooter.isReady() && turret.isReady() && spindexer.atTargetRotation();
+        return currentState == RobotState.SHOOT &&
+                shooter.isReady() &&
+                turret.isReady() &&
+                spindexer.atTargetRotation() &&
+                spindexer.hasArtifact(spindexer.getActiveLocation());
     }
 
     /* Module-specific methods */

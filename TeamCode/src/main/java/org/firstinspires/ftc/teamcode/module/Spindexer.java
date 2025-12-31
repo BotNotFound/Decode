@@ -14,6 +14,11 @@ import org.firstinspires.ftc.teamcode.SquIDController;
 
 @Config
 public class Spindexer {
+    private enum SpindexerState {
+        MANUAL_ROTATION,
+        INTAKING,
+        LOADING,
+    }
 
     private static final String SPINDEXER_SERVO_ONE = "Spindexer 1";
     private static final String SPINDEXER_SERVO_TWO = "Spindexer 2";
@@ -23,6 +28,8 @@ public class Spindexer {
     private static final String SENS_ORANGE_ENCODER = "Spindexer Encoder";
 
     private static final String FRONT_COLOR_SENSOR = "Front Color Sensor";
+
+    public static double LOADING_ANGLE_OFFSET = 180.0;
 
     private final CRServo spindexerServoOne;
     private final CRServo spindexerServoTwo;
@@ -35,7 +42,8 @@ public class Spindexer {
     private final Telemetry telemetry;
 
     private final boolean[] ballDetections;
-    private ArtifactLocation curFrontLocation;
+    private ArtifactLocation activeLocation;
+    private SpindexerState curState;
 
     //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 2;
@@ -51,7 +59,8 @@ public class Spindexer {
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
         ballDetections = new boolean[ArtifactLocation.values().length];
-        curFrontLocation = null;
+        activeLocation = null;
+        curState = SpindexerState.MANUAL_ROTATION;
 
         spindexerServoOne = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
@@ -73,12 +82,16 @@ public class Spindexer {
     }
 
     private void updateDetectionFromSensor() {
-        if (!spindexerController.atTarget() || curFrontLocation == null) {
+        if (!spindexerController.atTarget() || activeLocation == null || curState != SpindexerState.INTAKING) {
             return; // not at an artifact location; color sensor won't give the right data
         }
 
         double dist = frontColorSensor.getDistance(DistanceUnit.CM);
-        ballDetections[curFrontLocation.index] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+        ballDetections[activeLocation.index] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+    }
+
+    public ArtifactLocation getActiveLocation() {
+        return activeLocation;
     }
 
     public boolean hasArtifact(ArtifactLocation location) {
@@ -96,6 +109,16 @@ public class Spindexer {
         return true;
     }
 
+    public boolean hasNoArtifacts() {
+        updateDetectionFromSensor();
+        for (boolean detection : ballDetections) {
+            if (detection) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int getArtifactCount() {
         updateDetectionFromSensor();
         int artifacts = 0;
@@ -107,11 +130,17 @@ public class Spindexer {
         return artifacts;
     }
 
-    public void setSpindexerPower(double power) {
+    private void setPowerInternal(double power) {
         spindexerServoOne.setPower(power);
         spindexerServoTwo.setPower(power);
         spindexerServoThree.setPower(power);
         spindexerServoFour.setPower(power);
+    }
+
+    public void setPower(double power) {
+        curState = SpindexerState.MANUAL_ROTATION;
+        activeLocation = null;
+        setPowerInternal(power);
     }
 
     /**
@@ -182,7 +211,8 @@ public class Spindexer {
     }
 
     public void rotateToAngle(double angle) {
-        curFrontLocation = null;
+        activeLocation = null;
+        curState = SpindexerState.MANUAL_ROTATION;
         setTargetAngle(angle);
     }
 
@@ -191,13 +221,35 @@ public class Spindexer {
         spindexerController.setTolerance(tolerance);
 
         final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES);
-        setSpindexerPower(spindexerController.calculate(curEquivAngle));
+        setPowerInternal(spindexerController.calculate(curEquivAngle));
         updateDetectionFromSensor();
     }
 
-    public void rotateLocationToFront(ArtifactLocation location) {
-        curFrontLocation = location;
-        setTargetAngle(location.angle);
+    private void setActiveLocation(ArtifactLocation location) {
+        if (location == null) {
+            location = ArtifactLocation.SLOT_ONE;
+        }
+        activeLocation = location;
+        switch (curState) {
+            case MANUAL_ROTATION:
+                curState = SpindexerState.LOADING;
+            case LOADING:
+                setTargetAngle(location.angle + LOADING_ANGLE_OFFSET);
+                break;
+            case INTAKING:
+                setTargetAngle(location.angle);
+                break;
+        }
+    }
+
+    public void intakeIntoLocation(ArtifactLocation location) {
+        curState = SpindexerState.INTAKING;
+        setActiveLocation(location);
+    }
+
+    public void loadFromLocation(ArtifactLocation location) {
+        curState = SpindexerState.LOADING;
+        setActiveLocation(location);
     }
 
     public boolean atTargetRotation() {
@@ -205,11 +257,61 @@ public class Spindexer {
     }
 
     public void rotateToNextSlot() {
-        if (curFrontLocation == null) {
-            rotateLocationToFront(ArtifactLocation.SLOT_ONE);
+        if (activeLocation == null) {
+            setActiveLocation(ArtifactLocation.SLOT_ONE);
         }
 
-        rotateLocationToFront(curFrontLocation.getNextLocation());
+        setActiveLocation(activeLocation.getNextLocation());
+    }
+
+    public void intakeIntoEmptySlot() {
+        if (hasAllArtifacts()) {
+            return;
+        }
+
+        ArtifactLocation location = activeLocation;
+        if (location == null) {
+            location = ArtifactLocation.SLOT_ONE;
+        }
+
+        while (hasArtifact(location)) {
+            location = location.getNextLocation();
+        }
+
+        intakeIntoLocation(location);
+    }
+
+    public void loadNextArtifact() {
+        if (hasNoArtifacts()) {
+            return;
+        }
+
+        ArtifactLocation location = activeLocation;
+        if (location == null) {
+            location = ArtifactLocation.SLOT_ONE;
+        }
+
+        while (!hasArtifact(location)) {
+            location = location.getNextLocation();
+        }
+
+        loadFromLocation(location);
+    }
+
+    public void beginIntaking() {
+        curState = SpindexerState.INTAKING;
+        setActiveLocation(activeLocation);
+    }
+
+    public void beginLoading() {
+        curState = SpindexerState.LOADING;
+        setActiveLocation(activeLocation);
+    }
+
+    public void removeActiveArtifact() {
+        if (activeLocation != null) {
+            ballDetections[activeLocation.index] = false;
+        }
     }
 
     private double getAngle() {

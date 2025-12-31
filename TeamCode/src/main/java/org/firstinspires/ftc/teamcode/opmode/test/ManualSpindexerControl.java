@@ -34,7 +34,7 @@ public class ManualSpindexerControl extends OpMode {
         if (manualPowerControl) {
             telemetry.addLine("Power Control Enabled");
             telemetry.addLine("Use the right joystick to set the raw spindexer power");
-            spindexer.setSpindexerPower(gamepad1.right_stick_x);
+            spindexer.setPower(gamepad1.right_stick_x);
             return;
         }
 
