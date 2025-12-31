@@ -46,9 +46,9 @@ public class Spindexer {
     // TODO tune PIDF values + tolerance
     private final PIDFController spindexerController;
 
-    public static double kP = 0.1;
-    public static double kI = 0.01;
-    public static double kD = 0;
+    public static double kP = 0.005;
+    public static double kI = 0.0;
+    public static double kD = 0.00075;
     public static double kF = 0;
     public static double tolerance = 1;
 
@@ -187,7 +187,6 @@ public class Spindexer {
     }
 
     public void updateSpindexer() {
-        spindexerController.setTolerance(tolerance);
         spindexerController.setPIDF(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
@@ -213,17 +212,14 @@ public class Spindexer {
         rotateLocationToFront(curFrontLocation.getNextLocation());
     }
 
-    public void logAngle() {
-        telemetry.addData("Spindexer Angle (degrees)", getAngle());
-
-    }
-
     private double getAngle() {
         // see https://docs.sensorangerobotics.com/encoder/#analog-usage
         return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
     }
 
     public void logInfo() {
-        telemetry.addData("Current spindexer angle", getAngle());
+        telemetry.addData("Spindexer Angle (degrees)", getAngle());
+        telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getSetPoint());
+        telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES));
     }
 }
