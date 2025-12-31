@@ -15,6 +15,8 @@ public class ManualSpindexerControl extends OpMode {
      */
     public static double MIN_AIM_ACTIVATION_MAGNITUDE = 0.7;
 
+    public static double dashboardAngleDegrees = 0;
+
     private Spindexer spindexer;
 
     private boolean manualPowerControl = false;
@@ -49,6 +51,10 @@ public class ManualSpindexerControl extends OpMode {
         final double magnitude = Math.sqrt((x * x) + (y * y));
         if (magnitude >= MIN_AIM_ACTIVATION_MAGNITUDE) {
             targetAngle = Math.atan2(y, x);
+            dashboardAngleDegrees = Math.toDegrees(targetAngle);
+        }
+        else {
+            targetAngle = Math.toRadians(dashboardAngleDegrees);
         }
 
         spindexer.rotateToAngle(targetAngle);
