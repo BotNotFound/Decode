@@ -222,4 +222,8 @@ public class Spindexer {
         // see https://docs.sensorangerobotics.com/encoder/#analog-usage
         return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
     }
+
+    public void logInfo() {
+        telemetry.addData("Current spindexer angle", getAngle());
+    }
 }

@@ -284,6 +284,8 @@ public class Robot {
             case NONE:
                 break;
         }
+
+        spindexer.logInfo();
     }
 
     public boolean isShotReady() {
