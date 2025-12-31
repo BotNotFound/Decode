@@ -47,7 +47,7 @@ public class TwoPersonTeleOp extends OpMode {
 
     @Override
     public void start() {
-        robot.start();
+        robot.tryLoadPersistentState();
     }
 
     @Override

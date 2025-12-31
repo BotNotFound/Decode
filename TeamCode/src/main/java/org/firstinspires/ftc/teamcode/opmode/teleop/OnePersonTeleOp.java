@@ -58,7 +58,7 @@ public class OnePersonTeleOp extends OpMode {
 
     @Override
     public void start() {
-        robot.start();
+        robot.tryLoadPersistentState();
     }
 
     @Override

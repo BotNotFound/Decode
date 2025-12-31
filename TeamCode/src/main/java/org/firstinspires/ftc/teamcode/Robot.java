@@ -127,10 +127,6 @@ public class Robot {
         Log.i(TAG, "Robot initialized");
     }
 
-    public void start() {
-        tryLoadPersistentState();
-    }
-
     public void setAllianceColor(AllianceColor color) {
         allianceColor = color;
     }
