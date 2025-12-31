@@ -49,6 +49,7 @@ public abstract class RawDeviceController<T extends HardwareDevice> extends OpMo
 
         telemetry.addData("Current Device Index", curDeviceIndex);
         telemetry.addData("Current Device Name", device.getDeviceName());
+        telemetry.addData("Current Device Connection", device.getConnectionInfo());
         telemetry.addLine("[Use D-pad left & right to change device index]");
 
         logDeviceData(device);
