@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.module;
 
+import android.util.Log;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -17,6 +19,8 @@ import java.util.Objects;
 
 @Config
 public class Spindexer {
+    private static final String TAG = "Spindexer";
+
     private enum SpindexerState {
         MANUAL_ROTATION,
         INTAKING,
@@ -64,7 +68,7 @@ public class Spindexer {
             Arrays.fill(artifactDetections, true);
         }
         activeLocation = null;
-        curState = SpindexerState.MANUAL_ROTATION;
+        setCurState(SpindexerState.MANUAL_ROTATION);
 
         spindexerServoOne = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_ONE);
         spindexerServoTwo = hardwareMap.get(CRServo.class, SPINDEXER_SERVO_TWO);
@@ -108,6 +112,13 @@ public class Spindexer {
 
     public ArtifactLocation getActiveLocation() {
         return activeLocation;
+    }
+
+    private void setCurState(SpindexerState newState) {
+        if (newState != curState) {
+            Log.v(TAG, "Set new state: " + newState);
+        }
+        curState = newState;
     }
 
     public boolean hasArtifact(ArtifactLocation location) {
@@ -154,7 +165,7 @@ public class Spindexer {
     }
 
     public void setPower(double power) {
-        curState = SpindexerState.MANUAL_ROTATION;
+        setCurState(SpindexerState.MANUAL_ROTATION);
         activeLocation = null;
         setPowerInternal(power);
     }
@@ -228,7 +239,7 @@ public class Spindexer {
 
     public void rotateToAngle(double angle) {
         activeLocation = null;
-        curState = SpindexerState.MANUAL_ROTATION;
+        setCurState(SpindexerState.MANUAL_ROTATION);
         setTargetAngle(angle);
     }
 
@@ -245,10 +256,15 @@ public class Spindexer {
         if (location == null) {
             location = ArtifactLocation.SLOT_ONE;
         }
+        if (location == activeLocation) {
+            return;
+        }
+        Log.v(TAG, "Moving to " + location);
+
         activeLocation = location;
         switch (curState) {
             case MANUAL_ROTATION:
-                curState = SpindexerState.LOADING;
+                setCurState(SpindexerState.LOADING);
             case LOADING:
                 setTargetAngle(location.angle + LOADING_ANGLE_OFFSET);
                 break;
@@ -259,12 +275,12 @@ public class Spindexer {
     }
 
     public void intakeIntoLocation(ArtifactLocation location) {
-        curState = SpindexerState.INTAKING;
+        setCurState(SpindexerState.INTAKING);
         setActiveLocation(location);
     }
 
     public void loadFromLocation(ArtifactLocation location) {
-        curState = SpindexerState.LOADING;
+        setCurState(SpindexerState.LOADING);
         setActiveLocation(location);
     }
 
