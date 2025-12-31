@@ -61,12 +61,12 @@ public class Robot {
     }
 
     public enum RobotState {
-        INTAKE,
-        REVERSE_INTAKE,
-        PRE_SHOOT,
-        SHOOT,
-        NONE,
-        PARK,
+        INTAKE,             // Robot is collecting artifacts on the field
+        REVERSE_INTAKE,     // Robot is ejecting artifacts
+        PRE_SHOOT,          // Robot is preparing to shoot, but cannot actually launch artifacts
+        SHOOT,              // Robot is shooting artifacts into the goal
+        NONE,               // No special function; robot is just moving
+        PARK,               // Robot has parked (match is about to end)
     }
 
     public static double fallbackRPM = 2900;
