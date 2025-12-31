@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -10,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.SquIDController;
 
 
 @Config
@@ -44,12 +44,9 @@ public class Spindexer {
     public static double offsetAngle = 0;
 
     // TODO tune PIDF values + tolerance
-    private final PIDFController spindexerController;
+    private final SquIDController spindexerController;
 
     public static double kP = 0.005;
-    public static double kI = 0.0;
-    public static double kD = 0.00075;
-    public static double kF = 0;
     public static double tolerance = 1;
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -66,7 +63,7 @@ public class Spindexer {
 
         spindexerEncoder = hardwareMap.get(AnalogInput.class, SENS_ORANGE_ENCODER);
 
-        spindexerController = new PIDFController(kP, kI, kD, kF);
+        spindexerController = new SquIDController(kP);
         spindexerController.setTolerance(tolerance);
 
         // set all servo directions for spindexer to turn counterclockwise
@@ -77,7 +74,7 @@ public class Spindexer {
     }
 
     private void updateDetectionFromSensor() {
-        if (!spindexerController.atSetPoint() || curFrontLocation == null) {
+        if (!spindexerController.atTarget() || curFrontLocation == null) {
             return; // not at an artifact location; color sensor won't give the right data
         }
 
@@ -182,15 +179,15 @@ public class Spindexer {
 
     public void rotateToAngle(double angle) {
         curFrontLocation = null;
-        spindexerController.setSetPoint(angle);
+        spindexerController.setTarget(angle);
         updateSpindexer();
     }
 
     public void updateSpindexer() {
-        spindexerController.setPIDF(kP, kI, kD, kF);
+        spindexerController.setP(kP);
         spindexerController.setTolerance(tolerance);
 
-        final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES);
+        final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES);
         setSpindexerPower(spindexerController.calculate(curEquivAngle));
         updateDetectionFromSensor();
     }
@@ -201,7 +198,7 @@ public class Spindexer {
     }
 
     public boolean atTargetRotation() {
-        return spindexerController.atSetPoint();
+        return spindexerController.atTarget();
     }
 
     public void rotateToNextSlot() {
@@ -219,7 +216,7 @@ public class Spindexer {
 
     public void logInfo() {
         telemetry.addData("Spindexer Angle (degrees)", getAngle());
-        telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getSetPoint());
-        telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES));
+        telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getTarget());
+        telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES));
     }
 }
