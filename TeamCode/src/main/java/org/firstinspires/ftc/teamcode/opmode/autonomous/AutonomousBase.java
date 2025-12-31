@@ -60,7 +60,7 @@ public abstract class AutonomousBase extends OpMode {
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        robot = new Robot(hardwareMap, telemetry, allianceColor);
+        robot = new Robot(hardwareMap, telemetry, allianceColor, true);
         follower = Constants.createFollower(hardwareMap);
         currentStageIndex = 0;
 

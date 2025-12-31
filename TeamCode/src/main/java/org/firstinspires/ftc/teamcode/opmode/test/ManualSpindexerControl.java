@@ -22,7 +22,7 @@ public class ManualSpindexerControl extends OpMode {
 
     @Override
     public void init() {
-        spindexer = new Spindexer(hardwareMap, telemetry);
+        spindexer = new Spindexer(hardwareMap, telemetry, false);
     }
 
     @Override

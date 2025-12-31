@@ -11,6 +11,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.SquIDController;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 
 @Config
 public class Spindexer {
@@ -41,7 +44,7 @@ public class Spindexer {
 
     private final Telemetry telemetry;
 
-    private final boolean[] artifactDetections;
+    private boolean[] artifactDetections;
     private ArtifactLocation activeLocation;
     private SpindexerState curState;
 
@@ -56,9 +59,12 @@ public class Spindexer {
     public static double kP = 0.02;
     public static double tolerance = 1;
 
-    public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
+    public Spindexer(HardwareMap hardwareMap, Telemetry telemetry, boolean preloaded) {
         this.telemetry = telemetry;
         artifactDetections = new boolean[ArtifactLocation.values().length];
+        if (preloaded) {
+            Arrays.fill(artifactDetections, true);
+        }
         activeLocation = null;
         curState = SpindexerState.MANUAL_ROTATION;
 
@@ -79,6 +85,18 @@ public class Spindexer {
         spindexerServoTwo.setDirection(CRServo.Direction.REVERSE);
         spindexerServoThree.setDirection(CRServo.Direction.REVERSE);
         spindexerServoFour.setDirection(CRServo.Direction.FORWARD);
+    }
+
+    public void setArtifactDetections(boolean[] detections) {
+        Objects.requireNonNull(detections, "detections cannot be null!");
+        if (detections.length != ArtifactLocation.values().length) {
+            throw new IllegalArgumentException("detections must be of length " + ArtifactLocation.values().length);
+        }
+        artifactDetections = detections;
+    }
+
+    public boolean[] getArtifactDetections() {
+        return artifactDetections;
     }
 
     private void updateDetectionFromSensor() {

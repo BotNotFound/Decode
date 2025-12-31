@@ -28,9 +28,11 @@ public class Robot {
         private static PersistentState saved = null;
 
         private final Pose2D robotPose;
+        private final boolean[] artifactDetections;
 
-        private PersistentState(Pose2D robotPose) {
+        private PersistentState(Pose2D robotPose, boolean[] artifactDetections) {
             this.robotPose = robotPose;
+            this.artifactDetections = artifactDetections;
         }
 
         public static void saveRobotState(Robot robot) {
@@ -38,7 +40,10 @@ public class Robot {
                 return;
             }
 
-            saved = new PersistentState(robot.driveTrain.getRobotPose());
+            saved = new PersistentState(
+                    robot.driveTrain.getRobotPose(),
+                    robot.spindexer.getArtifactDetections()
+            );
         }
 
         public static void tryLoadRobotState(Robot robot) {
@@ -47,6 +52,7 @@ public class Robot {
             }
 
             robot.driveTrain.setRobotPose(saved.robotPose);
+            robot.spindexer.setArtifactDetections(saved.artifactDetections);
 
             saved = null;
         }
@@ -93,12 +99,16 @@ public class Robot {
     private final ElapsedTime shotPrepTime;
 
     public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color) {
+        this(hardwareMap, telemetry, color, false);
+    }
+
+    public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color, boolean preloadedArtifacts) {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         driveTrain.resetOdometry();
 
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap);
-        spindexer = new Spindexer(hardwareMap, telemetry);
+        spindexer = new Spindexer(hardwareMap, telemetry, preloadedArtifacts);
         turret = new Turret(hardwareMap);
         lift = new RobotLift(hardwareMap, telemetry);
 
