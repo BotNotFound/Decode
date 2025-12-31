@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -20,7 +19,6 @@ import org.firstinspires.ftc.teamcode.module.Shooter;
 import org.firstinspires.ftc.teamcode.module.Spindexer;
 import org.firstinspires.ftc.teamcode.module.Turret;
 
-@Config
 public class Robot {
     public static final String TAG = "Robot";
 
@@ -76,7 +74,7 @@ public class Robot {
         PARK,               // Robot has parked (match is about to end)
     }
 
-    public static double fallbackRPM = 2900;
+    private double fallbackRPM = 2900;
 
     private double moveScale = 1;
     private double headingScale = 1;
@@ -355,6 +353,10 @@ public class Robot {
 
     public double getFallbackShooterRPM() {
         return fallbackRPM;
+    }
+
+    public void setFallbackShooterRPM(double rpm) {
+        fallbackRPM = rpm;
     }
 
     public void setMoveScale(double moveScale) {
