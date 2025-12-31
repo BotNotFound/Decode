@@ -46,7 +46,7 @@ public class Spindexer {
     // TODO tune PIDF values + tolerance
     private final SquIDController spindexerController;
 
-    public static double kP = 0.005;
+    public static double kP = 0.02;
     public static double tolerance = 1;
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry) {
