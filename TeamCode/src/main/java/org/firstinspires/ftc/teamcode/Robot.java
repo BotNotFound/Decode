@@ -75,6 +75,7 @@ public class Robot {
     }
 
     private double fallbackRPM = 2900;
+    private double fallbackHoodPosition = Shooter.HOOD_SERVO_POSITION_LOWER_BOUND;
 
     private double moveScale = 1;
     private double headingScale = 1;
@@ -171,6 +172,7 @@ public class Robot {
 
         if (currentState == RobotState.MANUAL_SHOOT) {
             shooter.setRPM(fallbackRPM);
+            shooter.setHoodPosition(fallbackHoodPosition);
         }
         else {
             shooter.setRPMForGoal(
@@ -179,8 +181,8 @@ public class Robot {
                                     Math.pow(robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY, 2)
                     )
             );
+            shooter.adjustHood();
         }
-        shooter.adjustHood();
     }
 
     public void setState(RobotState newState) {
@@ -357,6 +359,14 @@ public class Robot {
 
     public void setFallbackShooterRPM(double rpm) {
         fallbackRPM = rpm;
+    }
+
+    public double getFallbackHoodPosition() {
+        return fallbackHoodPosition;
+    }
+
+    public void setFallbackHoodPosition(double position) {
+        fallbackHoodPosition = position;
     }
 
     public void setMoveScale(double moveScale) {
