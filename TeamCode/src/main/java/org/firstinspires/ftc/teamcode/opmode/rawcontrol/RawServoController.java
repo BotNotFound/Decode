@@ -17,6 +17,6 @@ public class RawServoController extends RawDeviceController<Servo> {
 
     @Override
     protected void controlDevice(Servo servo) {
-        servo.setPosition(gamepad1.left_stick_y);
+        servo.setPosition(2 - gamepad1.left_stick_y);
     }
 }
