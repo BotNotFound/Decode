@@ -27,6 +27,7 @@ public class ManualSpindexerControl extends OpMode {
 
     @Override
     public void loop() {
+        telemetry.addLine("Toggle control modes with A");
         if (gamepad1.aWasReleased()) {
             manualPowerControl = !manualPowerControl;
         }
