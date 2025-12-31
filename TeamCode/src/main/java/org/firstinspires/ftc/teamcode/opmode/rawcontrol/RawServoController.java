@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.manual;
+package org.firstinspires.ftc.teamcode.opmode.rawcontrol;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
