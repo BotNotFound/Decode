@@ -349,11 +349,28 @@ public class Spindexer {
         return builder.toString();
     }
 
+    private String getDetectionInfo() {
+        assert ArtifactLocation.values().length > 0;
+
+        final StringBuilder builder = new StringBuilder("{ ");
+
+        for (ArtifactLocation location : ArtifactLocation.values()) {
+            builder.append(location)
+                    .append(": ")
+                    .append(hasArtifact(location))
+                    .append(", ");
+        }
+
+        builder.replace(builder.length() - 2, builder.length() - 1, " }");
+
+        return builder.toString();
+    }
+
     public void logInfo() {
         telemetry.addData("Spindexer State", getStateInfo());
         telemetry.addData("Spindexer Angle (degrees)", getAngle());
         telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getTarget());
         telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES));
-        telemetry.addData("Detections", getArtifactCount() + " " + Arrays.toString(artifactDetections));
+        telemetry.addData("Detections", getArtifactCount() + " " + getDetectionInfo());
     }
 }
