@@ -19,8 +19,19 @@ public class OnePersonTeleOp extends OpMode {
      */
     private final boolean allowAllianceSwap;
 
-    protected OnePersonTeleOp(boolean allowAllianceSwap) {
+    /**
+     * If true, use robot states intended for tuning instead of their standard counterparts when
+     * possible
+     */
+    private final boolean tuning;
+
+    protected OnePersonTeleOp(boolean allowAllianceSwap, boolean tuning) {
         this.allowAllianceSwap = allowAllianceSwap;
+        this.tuning = tuning;
+    }
+
+    protected OnePersonTeleOp(boolean allowAllianceSwap) {
+        this(allowAllianceSwap, false);
     }
 
     @SuppressWarnings("unused") // required for opmode annotations to work
@@ -53,7 +64,7 @@ public class OnePersonTeleOp extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.right_trigger > 0.5) {
-            robot.setState(Robot.RobotState.SHOOT);
+            robot.setState(tuning ? Robot.RobotState.MANUAL_SHOOT : Robot.RobotState.SHOOT);
         }
         else if (gamepad1.left_trigger > 0.5) {
             robot.setState(Robot.RobotState.INTAKE);
