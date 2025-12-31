@@ -40,7 +40,6 @@ public class Spindexer {
     //TODO: Tune the artifact distance threshold for the color sensor so it detects reliably
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 2;
 
-    //TODO: Tune the below angles and power values
     public static double offsetAngle = 0;
 
     // TODO tune PIDF values + tolerance
