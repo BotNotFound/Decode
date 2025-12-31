@@ -52,7 +52,8 @@ public class Turret {
     }
 
     public void setTargetHeading(double targetHeadingRadians) {
-        final int targetPosition = (int) ((targetHeadingRadians - TURRET_INITIAL_ROTATION) / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
+        final double safeHeadingRadians = clampToSafeRotation(targetHeadingRadians);
+        final int targetPosition = (int) ((safeHeadingRadians - TURRET_INITIAL_ROTATION) / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
         if (targetPosition != turretMotor.getTargetPosition() || turretMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
             turretMotor.setTargetPosition(targetPosition);
             turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -60,8 +61,7 @@ public class Turret {
     }
 
     public void aimAtGoal(double x, double y, double curRobotHeading) {
-        final double targetHeading = clampToSafeRotation(Math.atan2(y, x) - curRobotHeading);
-        setTargetHeading(targetHeading);
+        setTargetHeading(Math.atan2(y, x) - curRobotHeading);
         update();
     }
 
