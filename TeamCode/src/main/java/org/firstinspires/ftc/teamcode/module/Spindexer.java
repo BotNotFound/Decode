@@ -87,7 +87,7 @@ public class Spindexer {
         }
 
         double dist = frontColorSensor.getDistance(DistanceUnit.CM);
-        ballDetections[activeLocation.index] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+        ballDetections[activeLocation.ordinal()] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
     }
 
     public ArtifactLocation getActiveLocation() {
@@ -96,7 +96,7 @@ public class Spindexer {
 
     public boolean hasArtifact(ArtifactLocation location) {
         updateDetectionFromSensor();
-        return ballDetections[location.index];
+        return ballDetections[location.ordinal()];
     }
 
     public boolean hasAllArtifacts() {
@@ -310,7 +310,7 @@ public class Spindexer {
 
     public void removeActiveArtifact() {
         if (activeLocation != null) {
-            ballDetections[activeLocation.index] = false;
+            ballDetections[activeLocation.ordinal()] = false;
         }
     }
 

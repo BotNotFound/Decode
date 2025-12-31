@@ -2,20 +2,18 @@ package org.firstinspires.ftc.teamcode.module;
 
 
 public enum ArtifactLocation {
-    SLOT_ONE(0, 0, "Slot One"),
-    SLOT_TWO(1, 120, "Slot Two"),
-    SLOT_THREE(2, 240, "Slot Three");
+    SLOT_ONE(0, "Slot One"),
+    SLOT_TWO(120, "Slot Two"),
+    SLOT_THREE(240, "Slot Three");
 
 
-    public final int index;
     public final String hardwareName;
 
     public final double angle;
 
     //check how to store colors for the artifact location, should store either purple or green
 
-    ArtifactLocation(int index, double angle, String hardwareName) {
-        this.index = index;
+    ArtifactLocation(double angle, String hardwareName) {
         this.angle = angle;
         this.hardwareName = hardwareName;
     }
