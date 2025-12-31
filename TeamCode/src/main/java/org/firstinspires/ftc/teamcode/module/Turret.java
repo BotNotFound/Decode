@@ -35,8 +35,9 @@ public class Turret {
 
     /**
      * The number of encoder ticks in a single revolution of the motor We are currently using a
-     * <a href="https://www.gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-5-2-1-ratio-24mm-length-8mm-rex-shaft-1150-rpm-3-3-5v-encoder/">
-     *     5203 goBilda motor
+     * <a
+     * href="https://www.gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-5-2-1-ratio-24mm-length-8mm-rex-shaft-1150-rpm-3-3-5v-encoder/">
+     * 5203 goBilda motor
      * </a>
      * and a 113:12 gear ratio
      */

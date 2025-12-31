@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
@@ -47,10 +46,11 @@ public class AprilTagDetector {
     }
 
     /**
-     * @apiNote Must be called every relevant loop iteration. Otherwise, the AprilTagDetector object will give stale values.
      * @param tagID the ID of the tag that is being detected
+     * @apiNote Must be called every relevant loop iteration. Otherwise, the
+     *         AprilTagDetector object will give stale values.
      */
-    public void update(int tagID){
+    public void update(int tagID) {
         tagDetected = false;
 
         for (AprilTagDetection detection : processor.getDetections()) {
@@ -63,14 +63,14 @@ public class AprilTagDetector {
             }
         }
 
-        if(tagDetected){
+        if (tagDetected) {
             telemetry.addData("AprilTag " + tagID + " ", "not detected");
         }
     }
 
     @Nullable
-    public Pose3D getRobotPose(){
-        if(tagDetected){
+    public Pose3D getRobotPose() {
+        if (tagDetected) {
             return robotPose;
         }
 
@@ -78,8 +78,8 @@ public class AprilTagDetector {
     }
 
     @Nullable
-    public AprilTagPoseFtc getTagPose(){
-        if(tagDetected){
+    public AprilTagPoseFtc getTagPose() {
+        if (tagDetected) {
             return tagPose;
         }
         return null;

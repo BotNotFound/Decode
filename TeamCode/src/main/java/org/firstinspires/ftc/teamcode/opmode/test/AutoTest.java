@@ -18,7 +18,7 @@ public class AutoTest extends AutonomousBase {
 
     @Override
     protected AutonomousStage[] buildStageSequence() {
-        return new AutonomousStage[] {
+        return new AutonomousStage[]{
                 new AutonomousStage(
                         follower.pathBuilder().addPath(
                                 new BezierLine(new Pose(0, 0), new Pose(10, 0))

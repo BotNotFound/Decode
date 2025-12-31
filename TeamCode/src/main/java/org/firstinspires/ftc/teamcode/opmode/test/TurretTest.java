@@ -42,31 +42,30 @@ public class TurretTest extends OpMode {
         telemetry.addLine("Press LB to switch turret rotation direction");
 
 
-
     }
 
     @Override
     public void loop() {
 
-        if(gamepad1.xWasPressed()){
+        if (gamepad1.xWasPressed()) {
             turretMotor.setPower(turretSpinPower);
         }
-        else if(gamepad1.yWasPressed()){
+        else if (gamepad1.yWasPressed()) {
             turretMotor.setPower(0);
         }
-        else if(gamepad1.leftBumperWasPressed()){
+        else if (gamepad1.leftBumperWasPressed()) {
 
-            if(turretMotor.getDirection() == DcMotorSimple.Direction.FORWARD){
+            if (turretMotor.getDirection() == DcMotorSimple.Direction.FORWARD) {
                 turretMotor.setDirection(DcMotorSimple.Direction.REVERSE);
             }
-            if(turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE){
+            if (turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE) {
                 turretMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             }
 
         }
         int ticks = turretMotor.getCurrentPosition();
         double tickPerRev = 145.1 * (113.0 / 12.0);
-        double degrees = (ticks/tickPerRev)*360.0;
+        double degrees = (ticks / tickPerRev) * 360.0;
         telemetry.addData("Heading: ", degrees);
         telemetry.update();
 

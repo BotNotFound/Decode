@@ -10,8 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Represents a step carried out by the robot as part of
- * an autonomous sequence
+ * Represents a step carried out by the robot as part of an autonomous sequence
  */
 @Config
 public class AutonomousStage {

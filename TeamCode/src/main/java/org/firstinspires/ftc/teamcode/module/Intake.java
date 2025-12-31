@@ -19,6 +19,7 @@ public class Intake {
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
+
     public void setPower(double power) {
         intakeMotor.setPower(power);
     }
@@ -31,5 +32,7 @@ public class Intake {
         intakeMotor.setPower(0);
     }
 
-    public void reverseIntake(){ intakeMotor.setPower(-engagePower); }
+    public void reverseIntake() {
+        intakeMotor.setPower(-engagePower);
+    }
 }

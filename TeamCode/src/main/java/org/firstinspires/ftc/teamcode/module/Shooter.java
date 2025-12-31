@@ -115,9 +115,6 @@ public class Shooter {
         hoodPositions.createLUT();
 
 
-
-
-
         timeSinceKickerEngaged = new ElapsedTime();
         kickerEngaged = false;
 

@@ -27,7 +27,7 @@ public abstract class RawDeviceController<T extends HardwareDevice> extends OpMo
 
     @Override
     public void init() {
-        devices = hardwareMap.<T>getAll(deviceClass);
+        devices = hardwareMap.getAll(deviceClass);
         curDeviceIndex = 0;
     }
 
@@ -35,7 +35,7 @@ public abstract class RawDeviceController<T extends HardwareDevice> extends OpMo
     public void loop() {
         if (devices.isEmpty()) {
             telemetry.addLine("No devices available!");
-            devices = hardwareMap.<T>getAll(deviceClass);
+            devices = hardwareMap.getAll(deviceClass);
             return;
         }
 

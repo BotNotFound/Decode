@@ -84,8 +84,10 @@ public abstract class AutonomousBase extends OpMode {
 
     /**
      * Creates the plan for the robot to execute during this autonomous
+     *
      * @return The stage sequence to use
-     * @implNote This method is called in init after {@link #robot} and {@link #follower} are initialized
+     * @implNote This method is called in init after {@link #robot} and {@link #follower}
+     *         are initialized
      */
     protected abstract AutonomousStage[] buildStageSequence();
 
@@ -114,7 +116,8 @@ public abstract class AutonomousBase extends OpMode {
 
         if (isAutoComplete()) {
             Log.i(TAG, "Op mode stopped after sequence was completed");
-        } else {
+        }
+        else {
             Log.i(TAG, "Op mode stopped at stage " + currentStageIndex);
         }
     }

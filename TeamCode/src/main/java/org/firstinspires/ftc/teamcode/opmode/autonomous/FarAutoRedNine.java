@@ -12,11 +12,12 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 
 @Autonomous(name = "far auto red nine artifacts", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
-public class FarAutoRedNine extends AutonomousBase{
+public class FarAutoRedNine extends AutonomousBase {
 
     public FarAutoRedNine() {
         super(new Pose(92.048, 0.355, Math.toRadians(90)), AllianceColor.RED);
     }
+
     @Override
     protected AutonomousStage[] buildStageSequence() {
         Paths autoPath = new Paths(follower);
@@ -43,7 +44,7 @@ public class FarAutoRedNine extends AutonomousBase{
                         .build(),
                         Robot.RobotState.SHOOT
                 ),
-                        new AutonomousStage(autoPath.leaveLaunchZone, Robot.RobotState.INTAKE),
+                new AutonomousStage(autoPath.leaveLaunchZone, Robot.RobotState.INTAKE),
         };
     }
 
