@@ -265,12 +265,13 @@ public class Spindexer {
         activeLocation = location;
         switch (curState) {
             case MANUAL_ROTATION:
-                setCurState(SpindexerState.LOADING);
-            case LOADING:
-                setTargetAngle(location.angle + LOADING_ANGLE_OFFSET);
-                break;
+                setCurState(SpindexerState.INTAKING);
+                // no break because we should mimic the behavior of the state we changed to
             case INTAKING:
                 setTargetAngle(location.angle);
+                break;
+            case LOADING:
+                setTargetAngle(location.angle + LOADING_ANGLE_OFFSET);
                 break;
         }
     }
