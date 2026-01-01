@@ -21,9 +21,8 @@ public class Shooter {
 
     public static final String HOOD_SERVO_NAME = "Hood";
 
-    //TODO: tune these kicker position values using dashboard
-    public static double KICKER_IDLE_POSITION = 0.4;
-    public static double KICKER_LAUNCH_POSITION = 0;
+    public static double KICKER_IDLE_POSITION = 0.1;
+    public static double KICKER_LAUNCH_POSITION = 0.4;
 
 
     //TODO: tune these values using dashboard and for clamping servo positions
