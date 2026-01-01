@@ -53,14 +53,15 @@ public class Spindexer {
     private ArtifactLocation activeLocation;
     private SpindexerState curState;
 
-    public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
+    public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 3;
 
-    public static double offsetAngle = -5;
+    public static double offsetAngle = 10;
 
+    // TODO we are getting tolerance misses on some rotations, should probably retune
     private final SquIDController spindexerController;
 
     public static double kP = 0.02;
-    public static double tolerance = 1;
+    public static double tolerance = 3;
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry, boolean preloaded) {
         this.telemetry = telemetry;
