@@ -152,10 +152,6 @@ public class FieldCentricDriveTrain {
         return (backLeftPower - frontRightPower) / 2;
     }
 
-    public GoBildaPinpointDriver getPinpoint() {
-        return pinpointDriver;
-    }
-
     public void setDrivePower(double power) {
         setPower(power, getStrafePower(), getTurnPower());
     }
