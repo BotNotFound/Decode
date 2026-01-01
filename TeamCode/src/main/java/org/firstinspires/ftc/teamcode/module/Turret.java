@@ -72,11 +72,11 @@ public class Turret {
     }
 
     public double getTargetHeading(AngleUnit angleUnit) {
-        return angleUnit.fromDegrees(aimController.getSetPoint());
+        return angleUnit.getUnnormalized().fromDegrees(aimController.getSetPoint());
     }
 
     public void setTargetHeading(double targetHeading, AngleUnit angleUnit) {
-        final double targetHeadingDegrees = angleUnit.fromDegrees(targetHeading);
+        final double targetHeadingDegrees = angleUnit.getUnnormalized().toDegrees(targetHeading);
         final double safeHeadingDegrees = clampToSafeRotation(targetHeadingDegrees);
         aimController.setSetPoint(safeHeadingDegrees);
     }
