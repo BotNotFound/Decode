@@ -36,7 +36,7 @@ public class Spindexer {
 
     private static final String FRONT_COLOR_SENSOR = "Front Color Sensor";
 
-    public static double LOADING_ANGLE_OFFSET = Math.PI;
+    public static double LOADING_ANGLE_OFFSET = 180.0;
 
     private final CRServo spindexerServoOne;
     private final CRServo spindexerServoTwo;
@@ -54,7 +54,7 @@ public class Spindexer {
 
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
 
-    public static double offsetAngle = Math.toRadians(-5);
+    public static double offsetAngle = -5;
 
     private final SquIDController spindexerController;
 
