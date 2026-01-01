@@ -9,7 +9,7 @@ public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
     private final DcMotor turretMotor;
 
-    public static double TURRET_MOTOR_POWER = 1.0;
+    public static double TURRET_MOTOR_POWER = 0.5;
 
     public static double TURRET_INITIAL_ROTATION = Math.toRadians(70);
     public static double TURRET_MIN_ROTATION = Math.PI / 2;
@@ -67,9 +67,17 @@ public class Turret {
     }
 
     public void update() {
-        if (turretMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
-            turretMotor.setPower(TURRET_MOTOR_POWER);
+        if (turretMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            return;
         }
+
+        if (!turretMotor.isBusy()) {
+            turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            turretMotor.setPower(0);
+            return;
+        }
+
+        turretMotor.setPower(TURRET_MOTOR_POWER);
     }
 
     public void setPower(double power) {
