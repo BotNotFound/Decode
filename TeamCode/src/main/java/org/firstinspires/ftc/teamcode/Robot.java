@@ -125,8 +125,6 @@ public class Robot {
 
         setAllianceColor(color);
 
-        currentState = RobotState.NONE;
-
         stateStopwatch = new ElapsedTime();
         timeSinceShotReady = new ElapsedTime();
         shotPrepTime = new ElapsedTime();
@@ -134,6 +132,8 @@ public class Robot {
         for (LynxModule hub : hardwareMap.getAll(LynxModule.class)) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
+
+        setState(RobotState.NONE);
 
         Log.i(TAG, "Robot initialized");
     }
