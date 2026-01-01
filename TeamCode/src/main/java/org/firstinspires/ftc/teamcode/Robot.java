@@ -343,10 +343,6 @@ public class Robot {
         driveTrain.setPower(drive, strafe, turn);
     }
 
-    public void resetOdometry() {
-        driveTrain.resetOdometry();
-    }
-
     public void resetFieldCentricHeading() {
         driveTrain.resetFieldCentricHeading();
     }
