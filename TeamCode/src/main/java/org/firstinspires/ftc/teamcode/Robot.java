@@ -20,8 +20,10 @@ import org.firstinspires.ftc.teamcode.module.Spindexer;
 import org.firstinspires.ftc.teamcode.module.Turret;
 
 public class Robot {
-    public static final String TAG = "Robot";
-    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 144.0 - (17.5 / 2), 17.5 / 2, AngleUnit.DEGREES, 0);
+    private static final String TAG = "Robot";
+
+    // TODO get correct robot length
+    private static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 144.0 - (17.5 / 2), 17.5 / 2, AngleUnit.DEGREES, 0);
 
     private static final class PersistentState {
         private static PersistentState saved = null;
