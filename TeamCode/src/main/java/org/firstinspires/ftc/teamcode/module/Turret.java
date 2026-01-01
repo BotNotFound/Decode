@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -9,9 +10,15 @@ public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
     private final DcMotor turretMotor;
 
-    public static double TURRET_MOTOR_POWER = 0.5;
+    // TODO tune controller
+    public static double kP = 0.025;
+    public static double kI = 0;
+    public static double kD = 0;
+    public static double kF = 0;
+    public static double tolerance = 1;
+    private final PIDFController aimController;
 
-    public static double TURRET_INITIAL_ROTATION = Math.toRadians(70);
+    public static double TURRET_ROTATION_OFFSET = Math.toRadians(70);
     public static double TURRET_MIN_ROTATION = Math.PI / 2;
     public static double TURRET_MAX_ROTATION = Math.PI * 3 / 2;
 
@@ -47,45 +54,38 @@ public class Turret {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        turretMotor.setTargetPosition(0);
-        turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        aimController = new PIDFController(kP, kI, kD, kF);
+
+
+    }
+
+    public double getCurrentHeading() {
+        final int currentPosition = turretMotor.getCurrentPosition();
+        return (currentPosition / TICKS_PER_REVOLUTION * (2.0 * Math.PI)) + TURRET_ROTATION_OFFSET;
     }
 
     public void setTargetHeading(double targetHeadingRadians) {
         final double safeHeadingRadians = clampToSafeRotation(targetHeadingRadians);
-        final int targetPosition = (int) ((safeHeadingRadians - TURRET_INITIAL_ROTATION) / (2.0 * Math.PI) * TICKS_PER_REVOLUTION);
-        if (targetPosition != turretMotor.getTargetPosition() || turretMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
-            turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            turretMotor.setTargetPosition(targetPosition);
-            turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
+        aimController.setSetPoint(safeHeadingRadians);
     }
 
     public void aimAtGoal(double x, double y, double curRobotHeading) {
         setTargetHeading(Math.atan2(y, x) - curRobotHeading);
-        update();
     }
 
     public void update() {
-        if (turretMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
-            return;
-        }
-
-        if (!turretMotor.isBusy()) {
-            turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            turretMotor.setPower(0);
-            return;
-        }
-
-        turretMotor.setPower(TURRET_MOTOR_POWER);
+        aimController.setPIDF(kP, kI, kD, kF);
+        aimController.setTolerance(tolerance);
+        turretMotor.setPower(aimController.calculate(getCurrentHeading()));
     }
 
     public void setPower(double power) {
-        turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         turretMotor.setPower(power);
     }
 
     public boolean isReady() {
-        return turretMotor.isBusy();
+        return aimController.atSetPoint();
     }
 }
