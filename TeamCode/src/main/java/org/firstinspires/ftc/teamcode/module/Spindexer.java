@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.internal.system.Assert;
 import org.firstinspires.ftc.teamcode.SquIDController;
 
 import java.util.Arrays;
@@ -308,6 +309,8 @@ public class Spindexer {
         while (hasArtifact(location)) {
             location = location.getNextLocation();
         }
+
+        Assert.assertTrue(location != activeLocation && !hasArtifact(location));
 
         intakeIntoLocation(location);
     }
