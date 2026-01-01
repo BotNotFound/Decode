@@ -181,6 +181,7 @@ public class Robot {
                 robotPose.getHeading(AngleUnit.RADIANS),
                 AngleUnit.RADIANS
         );
+        turret.update();
 
         if (currentState == RobotState.MANUAL_SHOOT || currentState == RobotState.MANUAL_PRE_SHOOT) {
             shooter.setRPM(fallbackRPM);
