@@ -345,6 +345,10 @@ public class Robot {
         driveTrain.resetOdometry();
     }
 
+    public void resetFieldCentricHeading() {
+        driveTrain.resetFieldCentricHeading();
+    }
+
     public void increaseFallbackShooterRPM() {
         fallbackRPM += 50;
     }

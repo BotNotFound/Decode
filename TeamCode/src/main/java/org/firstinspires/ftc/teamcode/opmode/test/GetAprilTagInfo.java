@@ -31,7 +31,7 @@ public class GetAprilTagInfo extends OpMode {
     public void loop() {
         driveTrain.setPower(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         if (gamepad1.start) {
-            driveTrain.resetOdometry();
+            driveTrain.resetFieldCentricHeading();
         }
 
         logAprilTagInfo(RED_TARGET_TAG_ID);
