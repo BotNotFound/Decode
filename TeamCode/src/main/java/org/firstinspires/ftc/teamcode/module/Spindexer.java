@@ -293,8 +293,18 @@ public class Spindexer {
         if (activeLocation == null) {
             setActiveLocation(ArtifactLocation.SLOT_ONE);
         }
+        else {
+            setActiveLocation(activeLocation.getNextLocation());
+        }
+    }
 
-        setActiveLocation(activeLocation.getNextLocation());
+    public void rotateToPreviousSlot() {
+        if (activeLocation == null) {
+            setActiveLocation(ArtifactLocation.SLOT_ONE);
+        }
+        else {
+            setActiveLocation(activeLocation.getPreviousLocation());
+        }
     }
 
     public void intakeIntoEmptySlot() {

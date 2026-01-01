@@ -391,4 +391,12 @@ public class Robot {
     public int getHeldArtifactCount() {
         return spindexer.getArtifactCount();
     }
+
+    public void rotateSpindexerToNextSlot() {
+        spindexer.rotateToNextSlot();
+    }
+
+    public void rotateSpirotateToPreviousSlot() {
+        spindexer.rotateToPreviousSlot();
+    }
 }

@@ -92,6 +92,13 @@ public class TwoPersonTeleOp extends OpMode {
             robot.decreaseFallbackShooterRPM();
         }
 
+        if (gamepad2.dpadRightWasPressed()) {
+            robot.rotateSpindexerToNextSlot();
+        }
+        else if (gamepad2.dpadLeftWasPressed()) {
+            robot.rotateSpirotateToPreviousSlot();
+        }
+
         telemetry.addData("default shooter rpm", robot.getFallbackShooterRPM());
 
         if (gamepad1.start && gamepad1.back) {

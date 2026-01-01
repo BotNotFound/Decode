@@ -29,4 +29,16 @@ public enum ArtifactLocation {
         }
         throw new IllegalStateException();
     }
+
+    public ArtifactLocation getPreviousLocation() {
+        switch (this) {
+            case SLOT_ONE:
+                return SLOT_THREE;
+            case SLOT_TWO:
+                return SLOT_ONE;
+            case SLOT_THREE:
+                return SLOT_TWO;
+        }
+        throw new IllegalStateException();
+    }
 }
