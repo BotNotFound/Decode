@@ -256,10 +256,9 @@ public class Spindexer {
         if (location == null) {
             location = ArtifactLocation.SLOT_ONE;
         }
-        if (location == activeLocation) {
-            return;
+        if (location != activeLocation) {
+            Log.v(TAG, "Moving to " + location);
         }
-        Log.v(TAG, "Moving to " + location);
 
         activeLocation = location;
         switch (curState) {
