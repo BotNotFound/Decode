@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.module.Turret;
 
 @TeleOp(group = "test")
@@ -21,7 +22,7 @@ public class ManualTurretControl extends OpMode {
 
     @Override
     public void init() {
-        turret = new Turret(hardwareMap);
+        turret = new Turret(hardwareMap, telemetry);
         manualPowerControl = false;
     }
 
@@ -41,6 +42,7 @@ public class ManualTurretControl extends OpMode {
 
         // auto-aim mode
         telemetry.addData("Current Mode", "Heading Control");
+        telemetry.addData("Current Rotation", turret.getCurrentHeading(AngleUnit.DEGREES));
         telemetry.addLine("Rotate the turret by pointing the left joystick");
 
         final double x = gamepad1.left_stick_x;
@@ -48,7 +50,7 @@ public class ManualTurretControl extends OpMode {
 
         final double magnitude = Math.sqrt((x * x) + (y * y));
         if (magnitude >= MIN_AIM_ACTIVATION_MAGNITUDE) {
-            turret.setTargetHeading(Math.atan2(y, x));
+            turret.setTargetHeading(Math.atan2(y, x), AngleUnit.RADIANS);
         }
 
         turret.update();

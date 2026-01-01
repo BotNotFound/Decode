@@ -5,6 +5,9 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 @Config
 public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
@@ -18,22 +21,22 @@ public class Turret {
     public static double tolerance = 1;
     private final PIDFController aimController;
 
-    public static double TURRET_ROTATION_OFFSET = Math.toRadians(70);
-    public static double TURRET_MIN_ROTATION = Math.PI / 2;
-    public static double TURRET_MAX_ROTATION = Math.PI * 3 / 2;
+    public static double TURRET_ROTATION_OFFSET = 70;
+    public static double TURRET_MIN_ROTATION = 90;
+    public static double TURRET_MAX_ROTATION = 270;
 
-    private static double normalizeRadiansPositive(double angle) {
-        while (angle >= Math.PI * 2) {
-            angle -= Math.PI * 2;
+    private static double normalizeDegreesPositive(double angle) {
+        while (angle >= 360) {
+            angle -= 360;
         }
         while (angle < 0) {
-            angle += Math.PI * 2;
+            angle += 360;
         }
         return angle;
     }
 
     private static double clampToSafeRotation(double angle) {
-        angle = normalizeRadiansPositive(angle);
+        angle = normalizeDegreesPositive(angle);
         if (angle < TURRET_MIN_ROTATION) {
             return TURRET_MIN_ROTATION;
         }
@@ -50,7 +53,9 @@ public class Turret {
      */
     public static final double TICKS_PER_REVOLUTION = 145.1 * (113.0 / 12.0);
 
-    public Turret(HardwareMap hardwareMap) {
+    private final Telemetry telemetry;
+
+    public Turret(HardwareMap hardwareMap, Telemetry telemetry) {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -58,27 +63,32 @@ public class Turret {
 
         aimController = new PIDFController(kP, kI, kD, kF);
 
-
+        this.telemetry = telemetry;
     }
 
-    public double getCurrentHeading() {
+    public double getCurrentHeading(AngleUnit angleUnit) {
         final int currentPosition = turretMotor.getCurrentPosition();
-        return (currentPosition / TICKS_PER_REVOLUTION * (2.0 * Math.PI)) + TURRET_ROTATION_OFFSET;
+        return angleUnit.fromDegrees((currentPosition / TICKS_PER_REVOLUTION * 360) + TURRET_ROTATION_OFFSET);
     }
 
-    public void setTargetHeading(double targetHeadingRadians) {
-        final double safeHeadingRadians = clampToSafeRotation(targetHeadingRadians);
-        aimController.setSetPoint(safeHeadingRadians);
+    public double getTargetHeading(AngleUnit angleUnit) {
+        return angleUnit.fromDegrees(aimController.getSetPoint());
     }
 
-    public void aimAtGoal(double x, double y, double curRobotHeading) {
-        setTargetHeading(Math.atan2(y, x) - curRobotHeading);
+    public void setTargetHeading(double targetHeading, AngleUnit angleUnit) {
+        final double targetHeadingDegrees = angleUnit.fromDegrees(targetHeading);
+        final double safeHeadingDegrees = clampToSafeRotation(targetHeadingDegrees);
+        aimController.setSetPoint(safeHeadingDegrees);
+    }
+
+    public void aimAtGoal(double x, double y, double curRobotHeading, AngleUnit robotHeadingUnit) {
+        setTargetHeading(Math.atan2(y, x) - robotHeadingUnit.toRadians(curRobotHeading), AngleUnit.RADIANS);
     }
 
     public void update() {
         aimController.setPIDF(kP, kI, kD, kF);
         aimController.setTolerance(tolerance);
-        turretMotor.setPower(aimController.calculate(getCurrentHeading()));
+        turretMotor.setPower(aimController.calculate(getCurrentHeading(AngleUnit.DEGREES)));
     }
 
     public void setPower(double power) {
@@ -87,5 +97,10 @@ public class Turret {
 
     public boolean isReady() {
         return aimController.atSetPoint();
+    }
+
+    public void logInfo() {
+        telemetry.addData("Current Turret Heading (degrees)", getCurrentHeading(AngleUnit.DEGREES));
+        telemetry.addData("Target Turret Heading (degrees)", getTargetHeading(AngleUnit.DEGREES));
     }
 }

@@ -120,7 +120,7 @@ public class Robot {
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap);
         spindexer = new Spindexer(hardwareMap, telemetry, preloadedArtifacts);
-        turret = new Turret(hardwareMap);
+        turret = new Turret(hardwareMap, telemetry);
         lift = new RobotLift(hardwareMap, telemetry);
 
         setAllianceColor(color);
@@ -155,10 +155,9 @@ public class Robot {
     }
 
     public void logInfo() {
-        if (currentState == RobotState.SHOOT) {
-            shooter.logInfo();
-        }
         spindexer.logInfo();
+        shooter.logInfo();
+        turret.logInfo();
         lift.logInfo();
     }
 
@@ -179,7 +178,8 @@ public class Robot {
         turret.aimAtGoal(
                 robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX,
                 robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY,
-                robotPose.getHeading(AngleUnit.RADIANS)
+                robotPose.getHeading(AngleUnit.RADIANS),
+                AngleUnit.RADIANS
         );
 
         if (currentState == RobotState.MANUAL_SHOOT || currentState == RobotState.MANUAL_PRE_SHOOT) {
