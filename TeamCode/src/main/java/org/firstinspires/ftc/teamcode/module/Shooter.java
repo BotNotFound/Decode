@@ -25,10 +25,9 @@ public class Shooter {
     public static double KICKER_LAUNCH_POSITION = 0.4;
 
 
-    //TODO: tune these values using dashboard and for clamping servo positions
-    public static double HOOD_SERVO_POSITION_LOWER_BOUND = 0.41;
+    public static double HOOD_SERVO_MIN_POSITION = 0.3;
 
-    public static double HOOD_SERVO_POSITION_UPPER_BOUND = 0.67;
+    public static double HOOD_SERVO_MAX_POSITION = 0.8;
 
 
     private final DcMotorEx leftFlywheelMotor;
@@ -76,7 +75,7 @@ public class Shooter {
         rightFlywheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         kickerServo.setPosition(KICKER_IDLE_POSITION);
-        hoodServo.setPosition(HOOD_SERVO_POSITION_LOWER_BOUND);
+        hoodServo.setPosition(HOOD_SERVO_MIN_POSITION);
 
         velocityPID = new PIDFController(kP, kI, kD, kF);
         velocityPID.setTolerance(tolerance);
@@ -158,10 +157,10 @@ public class Shooter {
     }
 
     public void setHoodPosition(double position) {
-        if (position < HOOD_SERVO_POSITION_LOWER_BOUND) {
-            hoodServo.setPosition(HOOD_SERVO_POSITION_LOWER_BOUND);
+        if (position < HOOD_SERVO_MIN_POSITION) {
+            hoodServo.setPosition(HOOD_SERVO_MIN_POSITION);
         }
-        hoodServo.setPosition(Math.min(position, HOOD_SERVO_POSITION_UPPER_BOUND));
+        hoodServo.setPosition(Math.min(position, HOOD_SERVO_MAX_POSITION));
     }
 
     public void adjustHood() {

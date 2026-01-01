@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.OnePersonTeleOp;
 @TeleOp(group = "test")
 public class ShooterTuningTeleOp extends OnePersonTeleOp {
     public static double shooterRPM = 2900;
-    public static double hoodPosition = Shooter.HOOD_SERVO_POSITION_LOWER_BOUND;
+    public static double hoodPosition = Shooter.HOOD_SERVO_MIN_POSITION;
 
     public ShooterTuningTeleOp() {
         super(true, true);
