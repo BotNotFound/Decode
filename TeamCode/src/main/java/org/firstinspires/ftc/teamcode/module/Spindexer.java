@@ -236,7 +236,6 @@ public class Spindexer {
 
     private void setTargetAngle(double angle) {
         spindexerController.setTarget(angle);
-        updateSpindexer();
     }
 
     public void rotateToAngle(double angle) {

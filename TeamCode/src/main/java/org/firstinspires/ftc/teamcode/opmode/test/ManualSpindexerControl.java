@@ -59,5 +59,6 @@ public class ManualSpindexerControl extends OpMode {
 
         telemetry.addData("Target Angle", Math.toDegrees(targetAngle));
         spindexer.rotateToAngle(targetAngle);
+        spindexer.updateSpindexer();
     }
 }
