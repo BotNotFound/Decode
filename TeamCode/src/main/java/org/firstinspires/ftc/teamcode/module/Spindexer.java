@@ -54,7 +54,7 @@ public class Spindexer {
 
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
 
-    public static double offsetAngle = Math.toRadians(15);
+    public static double offsetAngle = Math.toRadians(-5);
 
     private final SquIDController spindexerController;
 
