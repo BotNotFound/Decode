@@ -388,5 +388,6 @@ public class Spindexer {
         telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getTarget());
         telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES));
         telemetry.addData("Detections", getArtifactCount() + " " + getDetectionInfo());
+        telemetry.addData("Detected Distance", this.frontColorSensor.getDistance(DistanceUnit.CM));
     }
 }
