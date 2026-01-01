@@ -73,7 +73,7 @@ public class OnePersonTeleOp extends OpMode {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
         else if (gamepad1.right_bumper) {
-            robot.setState(Robot.RobotState.PRE_SHOOT);
+            robot.setState(tuning ? Robot.RobotState.MANUAL_PRE_SHOOT : Robot.RobotState.PRE_SHOOT);
         }
         else if (gamepad1.yWasPressed()) {
             if (robot.getState() != Robot.RobotState.PARK) {

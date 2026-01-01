@@ -78,6 +78,7 @@ public class Robot {
         INTAKE,             // Robot is collecting artifacts on the field
         REVERSE_INTAKE,     // Robot is ejecting artifacts
         PRE_SHOOT,          // Robot is preparing to shoot, but cannot actually launch artifacts
+        MANUAL_PRE_SHOOT,   // Robot is preparing to shoot at a hardcoded speed (used for tuning)
         SHOOT,              // Robot is shooting artifacts into the goal
         MANUAL_SHOOT,       // Robot is shooting using hardcoded speeds (used for tuning)
         NONE,               // No special function; robot is just moving
@@ -181,7 +182,7 @@ public class Robot {
                 robotPose.getHeading(AngleUnit.RADIANS)
         );
 
-        if (currentState == RobotState.MANUAL_SHOOT) {
+        if (currentState == RobotState.MANUAL_SHOOT || currentState == RobotState.MANUAL_PRE_SHOOT) {
             shooter.setRPM(fallbackRPM);
             shooter.setHoodPosition(fallbackHoodPosition);
         }
@@ -223,6 +224,7 @@ public class Robot {
 
                 break;
 
+            case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
                 spindexer.loadNextArtifact();
                 intake.startIntake();
@@ -314,6 +316,7 @@ public class Robot {
                 shooter.engageKicker();
                 break;
 
+            case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
                 prepareToShoot();
                 break;
