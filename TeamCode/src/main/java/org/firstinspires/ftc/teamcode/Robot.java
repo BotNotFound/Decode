@@ -247,7 +247,7 @@ public class Robot {
                 break;
 
             case NONE:
-                spindexer.beginLoading();
+                spindexer.beginIntaking();
                 shooter.disengageKicker();
                 shooter.setRPM(0);
                 intake.stopIntake();
