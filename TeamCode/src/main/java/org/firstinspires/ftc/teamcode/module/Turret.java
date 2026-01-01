@@ -100,7 +100,7 @@ public class Turret {
     }
 
     public void logInfo() {
-        telemetry.addData("Current Turret Heading (degrees)", getCurrentHeading(AngleUnit.DEGREES));
-        telemetry.addData("Target Turret Heading (degrees)", getTargetHeading(AngleUnit.DEGREES));
+        telemetry.addData("Turret Current Heading (degrees)", getCurrentHeading(AngleUnit.DEGREES));
+        telemetry.addData("Turret Target Heading (degrees)", getTargetHeading(AngleUnit.DEGREES));
     }
 }
