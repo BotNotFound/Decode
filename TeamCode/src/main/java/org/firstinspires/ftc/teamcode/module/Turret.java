@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.module;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -27,10 +26,8 @@ public class Turret {
     public static double TURRET_MAX_ROTATION = 270;
 
     private static double normalizeDegreesPositive(double angle) {
-        while (angle >= 360) {
-            angle -= 360;
-        }
-        while (angle < 0) {
+        angle %= 360;
+        if (angle < 0) {
             angle += 360;
         }
         return angle;
