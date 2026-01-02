@@ -159,6 +159,7 @@ public class Robot {
         shooter.logInfo();
         turret.logInfo();
         lift.logInfo();
+        driveTrain.logInfo();
     }
 
     public AllianceColor getAllianceColor() {

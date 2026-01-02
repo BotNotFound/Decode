@@ -69,7 +69,7 @@ public class FieldCentricDriveTrain {
         fieldCentricHeadingOffset = pinpointDriver.getHeading(AngleUnit.RADIANS);
     }
 
-    //keep the set power for drivetrain 
+    //keep the set power for drivetrain
     public void setPower(double drive, double strafe, double turn) {
         pinpointDriver.update();
 
@@ -77,13 +77,9 @@ public class FieldCentricDriveTrain {
         strafe = Math.pow(strafe, 3);
 
         double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS) + fieldCentricHeadingOffset;
-        telemetry.addData("Current Angle", curRotation);
 
         double rotDrive = drive * Math.cos(curRotation) - strafe * Math.sin(curRotation);
         double rotStrafe = drive * Math.sin(curRotation) + strafe * Math.cos(curRotation);
-
-        telemetry.addData("Rotated Drive", rotDrive);
-        telemetry.addData("Rotated Strafe", rotDrive);
 
         double leftFrontPower = rotDrive + rotStrafe + turn;
         double leftBackPower = rotDrive - rotStrafe + turn;
@@ -162,5 +158,9 @@ public class FieldCentricDriveTrain {
 
     public void setTurnPower(double power) {
         setPower(getDrivePower(), getStrafePower(), power);
+    }
+
+    public void logInfo() {
+        telemetry.addData("Robot Pose", getRobotPose());
     }
 }
