@@ -119,7 +119,7 @@ public class Shooter {
     }
 
     public double getRPM() {
-        return rightFlywheelMotor.getVelocity() / motorCPS * 60;
+        return leftFlywheelMotor.getVelocity() / motorCPS * 60;
     }
 
     public void setRPM(double rpm) {
