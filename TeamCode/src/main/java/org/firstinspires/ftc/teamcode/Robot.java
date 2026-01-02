@@ -176,8 +176,8 @@ public class Robot {
         spindexer.loadNextArtifact();
         final Pose2D robotPose = driveTrain.getRobotPose();
         turret.aimAtGoal(
-                robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX,
-                robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY,
+                allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH),
+                allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH),
                 robotPose.getHeading(AngleUnit.RADIANS),
                 AngleUnit.RADIANS
         );
