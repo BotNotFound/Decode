@@ -60,7 +60,6 @@ public class Turret {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        turretMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         aimController = new PIDFController(kP, kI, kD, kF);
