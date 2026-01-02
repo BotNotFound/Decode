@@ -22,16 +22,20 @@ public class Turret {
     public static double tolerance = 1;
     private final PIDFController aimController;
 
-    public static double TURRET_ROTATION_OFFSET = -110;
-    public static double TURRET_MIN_ROTATION = -90;
-    public static double TURRET_MAX_ROTATION = 45;
+    public static double TURRET_ROTATION_OFFSET = 70;
+    public static double TURRET_MIN_ROTATION = 90;
+    public static double TURRET_MAX_ROTATION = 270;
 
-    private static double normalizeHeading(double heading) {
-        return AngleUnit.normalizeDegrees(heading);
+    private static double normalizeDegreesPositive(double angle) {
+        angle %= 360;
+        if (angle < 0) {
+            angle += 360;
+        }
+        return angle;
     }
 
     private static double clampToSafeRotation(double angle) {
-        angle = normalizeHeading(angle);
+        angle = normalizeDegreesPositive(angle);
         if (angle < TURRET_MIN_ROTATION) {
             return TURRET_MIN_ROTATION;
         }
@@ -69,7 +73,7 @@ public class Turret {
         final int currentPosition = turretMotor.getCurrentPosition() * (
                 turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE ? -1 : 1
         );
-        final double currentHeadingDegrees = normalizeHeading((currentPosition / TICKS_PER_REVOLUTION * 360) + TURRET_ROTATION_OFFSET);
+        final double currentHeadingDegrees = normalizeDegreesPositive((currentPosition / TICKS_PER_REVOLUTION * 360) + TURRET_ROTATION_OFFSET);
         return angleUnit.getUnnormalized().fromDegrees(currentHeadingDegrees);
     }
 
