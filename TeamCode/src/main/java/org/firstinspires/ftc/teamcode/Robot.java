@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -208,42 +207,6 @@ public class Robot {
             );
             shooter.adjustHood();
         }
-    }
-
-    private void shootingMoving() {
-        GoBildaPinpointDriver pinpoint = driveTrain.getPinpoint();
-        spindexer.loadNextArtifact();
-        final Pose2D robotPose = driveTrain.getRobotPose();
-
-        double deltaX = pinpoint.getVelX(DistanceUnit.INCH) * ballTravelTime;
-        double deltaY = pinpoint.getVelY(DistanceUnit.INCH) * ballTravelTime;
-
-        double newRobotX = robotPose.getX(DistanceUnit.INCH) +deltaX;
-        double newRobotY = robotPose.getY(DistanceUnit.INCH) + deltaY;
-
-        turret.aimAtGoal(
-                allianceColor.goalPositionX - newRobotX,
-                allianceColor.goalPositionY - newRobotY,
-                robotPose.getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS
-        );
-
-        if (currentState == RobotState.MANUAL_SHOOT || currentState == RobotState.MANUAL_PRE_SHOOT) {
-            shooter.setRPM(fallbackRPM);
-            shooter.setHoodPosition(fallbackHoodPosition);
-        }
-
-        else {
-            shooter.setRPMForGoal(
-                    Math.sqrt(
-                            Math.pow(allianceColor.goalPositionX - newRobotX, 2) +
-                                    Math.pow(allianceColor.goalPositionY - newRobotY, 2)
-                    )
-            );
-        }
-        shooter.adjustHood();
-
-
-
     }
 
     public void setState(RobotState newState) {
