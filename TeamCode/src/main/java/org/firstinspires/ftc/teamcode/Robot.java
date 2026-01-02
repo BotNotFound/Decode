@@ -285,6 +285,7 @@ public class Robot {
     public void loopWithoutMovement() {
         if (currentState != RobotState.PARK) {
             spindexer.updateSpindexer();
+            turret.update();
         }
 
         switch (currentState) {
