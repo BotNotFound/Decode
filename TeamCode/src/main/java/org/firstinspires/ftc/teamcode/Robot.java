@@ -54,15 +54,16 @@ public class Robot {
             );
         }
 
-        public static void tryLoadRobotState(Robot robot) {
+        public static boolean tryLoadRobotState(Robot robot) {
             if (saved == null || robot == null) {
-                return;
+                return false;
             }
 
             robot.driveTrain.setRobotPose(saved.robotPose);
             robot.spindexer.setArtifactDetections(saved.artifactDetections);
 
             saved = null;
+            return true;
         }
     }
 
@@ -71,7 +72,13 @@ public class Robot {
     }
 
     public void tryLoadPersistentState() {
-        PersistentState.tryLoadRobotState(this);
+        if (!PersistentState.tryLoadRobotState(this)) {
+            loadDefaultState();
+        }
+    }
+
+    public void loadDefaultState() {
+        driveTrain.setRobotPose(DEFAULT_ROBOT_POSE);
     }
 
     public enum RobotState {
@@ -115,7 +122,6 @@ public class Robot {
     public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color, boolean preloadedArtifacts) {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         driveTrain.resetOdometry();
-        driveTrain.setRobotPose(DEFAULT_ROBOT_POSE);
 
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap);
