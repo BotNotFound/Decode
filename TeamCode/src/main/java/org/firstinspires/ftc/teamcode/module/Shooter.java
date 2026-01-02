@@ -43,7 +43,14 @@ public class Shooter {
     public static double kF = 0.000175;
     public static double tolerance = 200;
 
-    public static int motorCPS = 28;
+    /*
+     * We currently use GoBilda 5203 6000 RPM motors to power our flywheel
+     * (see https://www.gobilda.com/5203-series-yellow-jacket-motor-1-1-ratio-24mm-length-8mm-rex-shaft-6000-rpm-3-3-5v-encoder)
+     */
+    public static final double FLYWHEEL_ENCODER_RESOLUTION = 28;
+    public static final double FLYWHEEL_MOTOR_RPM = 6000;
+    public static final double FLYWHEEL_TICKS_PER_SECOND =
+            (FLYWHEEL_ENCODER_RESOLUTION * FLYWHEEL_MOTOR_RPM) * 60;
 
     private boolean stickyRPM = false;
     private double stickyTargetRPM;
@@ -119,7 +126,7 @@ public class Shooter {
     }
 
     public double getRPM() {
-        return leftFlywheelMotor.getVelocity() / motorCPS * 60;
+        return leftFlywheelMotor.getVelocity() / FLYWHEEL_TICKS_PER_SECOND;
     }
 
     public void setRPM(double rpm) {
