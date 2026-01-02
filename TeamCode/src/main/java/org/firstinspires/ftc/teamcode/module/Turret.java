@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.module;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -57,6 +58,7 @@ public class Turret {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        turretMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         aimController = new PIDFController(kP, kI, kD, kF);
@@ -68,7 +70,9 @@ public class Turret {
     /* heading getters and setters use unnormalized units b/c we do our own normalization */
 
     public double getCurrentHeading(AngleUnit angleUnit) {
-        final int currentPosition = turretMotor.getCurrentPosition();
+        final int currentPosition = turretMotor.getCurrentPosition() * (
+                turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE ? -1 : 1
+        );
         final double currentHeadingDegrees = normalizeDegreesPositive((currentPosition / TICKS_PER_REVOLUTION * 360) + TURRET_ROTATION_OFFSET);
         return angleUnit.getUnnormalized().fromDegrees(currentHeadingDegrees);
     }
