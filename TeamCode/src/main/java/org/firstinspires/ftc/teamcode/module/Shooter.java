@@ -65,8 +65,8 @@ public class Shooter {
         kickerServo = hardwareMap.get(Servo.class, KICKER_SERVO_NAME);
         hoodServo = hardwareMap.get(Servo.class, HOOD_SERVO_NAME);
 
-        leftFlywheelMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFlywheelMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFlywheelMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFlywheelMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         leftFlywheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFlywheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
