@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -20,7 +19,6 @@ import org.firstinspires.ftc.teamcode.module.RobotLift;
 import org.firstinspires.ftc.teamcode.module.Shooter;
 import org.firstinspires.ftc.teamcode.module.Spindexer;
 import org.firstinspires.ftc.teamcode.module.Turret;
-import org.firstinspires.ftc.teamcode.module.Indicator;
 
 public class Robot {
     private static final String TAG = "Robot";
@@ -34,13 +32,6 @@ public class Robot {
             AngleUnit.DEGREES,
             0
     );
-
-    public static double[] INDICATOR_COLORS = {
-            IndicatorColorValues.OFF,
-            IndicatorColorValues.VIOLET,
-            IndicatorColorValues.YELLOW,
-            IndicatorColorValues.GREEN,
-    };
 
     private static final class PersistentState {
         private static PersistentState saved = null;
@@ -121,7 +112,6 @@ public class Robot {
     private final Spindexer spindexer;
     private final Turret turret;
     private final RobotLift lift;
-    private final Indicator indicator;
 
     private AllianceColor allianceColor;
     private RobotState currentState;
@@ -143,7 +133,6 @@ public class Robot {
         spindexer = new Spindexer(hardwareMap, telemetry, preloadedArtifacts);
         turret = new Turret(hardwareMap, telemetry);
         lift = new RobotLift(hardwareMap, telemetry);
-        indicator = new Indicator(hardwareMap);
 
         setAllianceColor(color);
 
@@ -468,11 +457,5 @@ public class Robot {
 
     public void rotateSpirotateToPreviousSlot() {
         spindexer.rotateToPreviousSlot();
-    }
-
-    public void updateLED() {
-        indicator.setPosition(
-                INDICATOR_COLORS[Math.min(getHeldArtifactCount(), INDICATOR_COLORS.length)]
-        );
     }
 }
