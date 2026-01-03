@@ -49,8 +49,7 @@ public class Shooter {
      */
     public static final double FLYWHEEL_ENCODER_RESOLUTION = 28;
     public static final double FLYWHEEL_MOTOR_RPM = 6000;
-    public static final double FLYWHEEL_TICKS_PER_SECOND =
-            (FLYWHEEL_ENCODER_RESOLUTION * FLYWHEEL_MOTOR_RPM) * 60;
+
 
     private boolean stickyRPM = false;
     private double stickyTargetRPM;
@@ -126,7 +125,7 @@ public class Shooter {
     }
 
     public double getRPM() {
-        return leftFlywheelMotor.getVelocity() / FLYWHEEL_TICKS_PER_SECOND;
+        return (leftFlywheelMotor.getVelocity() * 60.0) / FLYWHEEL_ENCODER_RESOLUTION;
     }
 
     public void setRPM(double rpm) {
