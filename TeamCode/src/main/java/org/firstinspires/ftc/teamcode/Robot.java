@@ -282,6 +282,9 @@ public class Robot {
                 break;
 
             case MANUAL_SHOOT:
+                shooter.setRPM(fallbackRPM);
+                shooter.setHoodPosition(fallbackHoodPosition);
+                break;
 
             case SHOOT_MOVE:
 
@@ -342,6 +345,7 @@ public class Robot {
 
         switch (currentState) {
             case MANUAL_SHOOT:
+
             case SHOOT:
                 prepareToShoot();
 
