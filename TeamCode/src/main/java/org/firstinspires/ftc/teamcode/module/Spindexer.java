@@ -388,7 +388,7 @@ public class Spindexer {
                 builder.append(" { location = ").append(activeLocation).append(" }");
                 break;
             case MANUAL_ROTATION:
-                builder.append(" { }");
+                builder.append(" { power = ").append(spindexerServoOne.getPower()).append(" }");
                 break;
         }
         return builder.toString();
