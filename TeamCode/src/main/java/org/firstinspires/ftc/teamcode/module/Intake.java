@@ -37,8 +37,6 @@ public class Intake {
     }
 
     public void idleWithBall() {
-        if (intakeMotor.getPower() > 0 && intakeMotor.getPower() < idlePower) {
-            intakeMotor.setPower(idlePower);
-        }
+        intakeMotor.setPower(idlePower);
     }
 }

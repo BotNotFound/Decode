@@ -330,7 +330,7 @@ public class Robot {
             case INTAKE:
                 spindexer.intakeIntoEmptySlot();
                 if (spindexer.hasAllArtifacts()) {
-                    intake.stopIntake();
+                    intake.idleWithBall();
                 }
                 else {
                     intake.startIntake();
