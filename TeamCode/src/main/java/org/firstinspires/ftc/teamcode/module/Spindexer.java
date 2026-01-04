@@ -7,11 +7,13 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.internal.system.Assert;
+import org.firstinspires.ftc.teamcode.IndicatorColorValues;
 import org.firstinspires.ftc.teamcode.SquIDController;
 
 import java.util.Arrays;
@@ -32,10 +34,9 @@ public class Spindexer {
     private static final String SPINDEXER_SERVO_TWO = "Spindexer 2";
     private static final String SPINDEXER_SERVO_THREE = "Spindexer 3";
     private static final String SPINDEXER_SERVO_FOUR = "Spindexer 4";
-
     private static final String SENS_ORANGE_ENCODER = "Spindexer Encoder";
-
     private static final String FRONT_COLOR_SENSOR = "Front Color Sensor";
+    public static final String INDICATOR_LIGHT_NAME = "LED Light";
 
     public static double LOADING_ANGLE_OFFSET = 180.0;
 
@@ -44,6 +45,7 @@ public class Spindexer {
     private final CRServo spindexerServoThree;
     private final CRServo spindexerServoFour;
     private final RevColorSensorV3 frontColorSensor;
+    private final Servo indicatorLight;
 
     private final AnalogInput spindexerEncoder;
 
@@ -54,8 +56,13 @@ public class Spindexer {
     private SpindexerState curState;
 
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 3;
-
     public static double offsetAngle = 10;
+    public static double[] INDICATOR_COLORS = {
+            IndicatorColorValues.OFF,
+            IndicatorColorValues.VIOLET,
+            IndicatorColorValues.YELLOW,
+            IndicatorColorValues.GREEN,
+    };
 
     // TODO we are getting tolerance misses on some rotations, should probably retune
     private final SquIDController spindexerController;
@@ -80,6 +87,8 @@ public class Spindexer {
         frontColorSensor = hardwareMap.get(RevColorSensorV3.class, FRONT_COLOR_SENSOR);
 
         spindexerEncoder = hardwareMap.get(AnalogInput.class, SENS_ORANGE_ENCODER);
+
+        indicatorLight = hardwareMap.get(Servo.class, INDICATOR_LIGHT_NAME);
 
         spindexerController = new SquIDController(kP);
         spindexerController.setTolerance(tolerance);
@@ -251,6 +260,7 @@ public class Spindexer {
         final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES);
         setPowerInternal(spindexerController.calculate(curEquivAngle));
         updateDetectionFromSensor();
+        indicatorLight.setPosition(INDICATOR_COLORS[Math.min(getArtifactCount(), INDICATOR_COLORS.length)]);
     }
 
     private void setActiveLocation(ArtifactLocation location) {

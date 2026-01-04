@@ -2,12 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -89,7 +87,6 @@ public class Robot {
         PRE_SHOOT,          // Robot is preparing to shoot, but cannot actually launch artifacts
         MANUAL_PRE_SHOOT,   // Robot is preparing to shoot at a hardcoded speed (used for tuning)
         SHOOT,              // Robot is shooting artifacts into the goal
-        SHOOT_MOVE,          //Robot is shooting while moving.
         MANUAL_SHOOT,       // Robot is shooting using hardcoded speeds (used for tuning)
         NONE,               // No special function; robot is just moving
         PARK,               // Robot has parked (match is about to end)
@@ -97,9 +94,6 @@ public class Robot {
 
     private double fallbackRPM = 2900;
     private double fallbackHoodPosition = Shooter.HOOD_SERVO_MIN_POSITION;
-
-    //TODO: Tune ballTravelTime if shooting while moving is needed.
-    public static double ballTravelTime = 0.5;
 
     private double moveScale = 1;
     private double headingScale = 1;
@@ -185,66 +179,17 @@ public class Robot {
         return shotsTaken;
     }
 
-    private void prepareToShoot() {
+    private void prepareToShoot(double goalOffsetX, double goalOffsetY) {
         spindexer.loadNextArtifact();
-        final Pose2D robotPose = driveTrain.getRobotPose();
-        turret.aimAtGoal(
-                allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH),
-                allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH),
-                robotPose.getHeading(AngleUnit.RADIANS),
-                AngleUnit.RADIANS
-        );
-        turret.update();
 
         if (currentState == RobotState.MANUAL_SHOOT || currentState == RobotState.MANUAL_PRE_SHOOT) {
             shooter.setRPM(fallbackRPM);
             shooter.setHoodPosition(fallbackHoodPosition);
         }
         else {
-            shooter.setRPMForGoal(
-                    Math.sqrt(
-                            Math.pow(allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH), 2) +
-                                    Math.pow(allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH), 2)
-                    )
-            );
+            shooter.setRPMForGoal(Math.sqrt(goalOffsetX * goalOffsetX + goalOffsetY * goalOffsetY));
             shooter.adjustHood();
         }
-    }
-
-    private void shootingMoving() {
-        GoBildaPinpointDriver pinpoint = driveTrain.getPinpoint();
-        spindexer.loadNextArtifact();
-        final Pose2D robotPose = driveTrain.getRobotPose();
-
-        double deltaX = pinpoint.getVelX(DistanceUnit.INCH) * ballTravelTime;
-        double deltaY = pinpoint.getVelY(DistanceUnit.INCH) * ballTravelTime;
-
-        double newRobotX = robotPose.getX(DistanceUnit.INCH) +deltaX;
-        double newRobotY = robotPose.getY(DistanceUnit.INCH) + deltaY;
-
-        turret.aimAtGoal(
-                allianceColor.goalPositionX - newRobotX,
-                allianceColor.goalPositionY - newRobotY,
-                robotPose.getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS
-        );
-
-        if (currentState == RobotState.MANUAL_SHOOT || currentState == RobotState.MANUAL_PRE_SHOOT) {
-            shooter.setRPM(fallbackRPM);
-            shooter.setHoodPosition(fallbackHoodPosition);
-        }
-
-        else {
-            shooter.setRPMForGoal(
-                    Math.sqrt(
-                            Math.pow(allianceColor.goalPositionX - newRobotX, 2) +
-                                    Math.pow(allianceColor.goalPositionY - newRobotY, 2)
-                    )
-            );
-        }
-        shooter.adjustHood();
-
-
-
     }
 
     public void setState(RobotState newState) {
@@ -277,21 +222,15 @@ public class Robot {
             case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
                 spindexer.loadNextArtifact();
-                intake.startIntake();
+                intake.stopIntake();
                 shooter.disengageKicker();
                 break;
 
             case MANUAL_SHOOT:
-                shooter.setRPM(fallbackRPM);
-                shooter.setHoodPosition(fallbackHoodPosition);
-                break;
-
-            case SHOOT_MOVE:
-
             case SHOOT:
                 spindexer.loadNextArtifact();
                 intake.stopIntake();
-                shooter.disengageKicker();
+                shooter.engageKicker();
 
                 shotReady = false;
                 shotPrepTime.reset();
@@ -338,20 +277,29 @@ public class Robot {
     }
 
     public void loopWithoutMovement() {
-        if (currentState != RobotState.PARK) {
-            spindexer.updateSpindexer();
-            turret.update();
+        if (currentState == RobotState.PARK) {
+            return;
         }
+
+        final Pose2D robotPose = driveTrain.getRobotPose();
+        final double goalOffsetX = allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH);
+        final double goalOffsetY = allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH);
+        turret.aimAtGoal(
+                goalOffsetX,
+                goalOffsetY,
+                robotPose.getHeading(AngleUnit.RADIANS),
+                AngleUnit.RADIANS
+        );
+
+        spindexer.updateSpindexer();
+        turret.update();
 
         switch (currentState) {
             case MANUAL_SHOOT:
-
             case SHOOT:
-                prepareToShoot();
+                prepareToShoot(goalOffsetX, goalOffsetY);
 
                 if (!isShotReady()) {
-                    intake.stopIntake();
-
                     if (shotReady) {
                         spindexer.removeActiveArtifact();
                         spindexer.rotateToNextSlot();
@@ -360,7 +308,6 @@ public class Robot {
                         Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
                     }
                     shotReady = false;
-
                     break;
                 }
 
@@ -370,16 +317,11 @@ public class Robot {
                     shotReady = true;
                     timeSinceShotReady.reset();
                 }
-
-                shooter.engageKicker();
                 break;
 
             case MANUAL_PRE_SHOOT:
-
-            case SHOOT_MOVE:
-
             case PRE_SHOOT:
-                prepareToShoot();
+                prepareToShoot(goalOffsetX, goalOffsetY);
                 break;
 
             case INTAKE:
