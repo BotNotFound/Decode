@@ -93,7 +93,7 @@ public class Robot {
     }
 
     private double fallbackRPM = 2900;
-    private double fallbackHoodPosition = Shooter.HOOD_SERVO_MIN_POSITION;
+    private double fallbackHoodPosition = 0.5;
 
     private double moveScale = 1;
     private double headingScale = 1;

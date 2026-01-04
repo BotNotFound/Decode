@@ -19,6 +19,12 @@ public class TwoPersonTeleOp extends OpMode {
      */
     private final boolean allowAllianceSwap;
 
+    /**
+     * If true, use robot states intended for manual control instead of their standard counterparts
+     * when possible
+     */
+    public static boolean FORCE_FALLBACK = true;
+
     protected TwoPersonTeleOp(boolean allowAllianceSwap) {
         this.allowAllianceSwap = allowAllianceSwap;
     }
@@ -53,7 +59,7 @@ public class TwoPersonTeleOp extends OpMode {
     @Override
     public void loop() {
         if (gamepad2.right_trigger > 0.5) {
-            robot.setState(Robot.RobotState.SHOOT);
+            robot.setState(FORCE_FALLBACK ? Robot.RobotState.MANUAL_SHOOT : Robot.RobotState.SHOOT);
         }
         else if (gamepad2.left_trigger > 0.5) {
             robot.setState(Robot.RobotState.INTAKE);
@@ -68,7 +74,7 @@ public class TwoPersonTeleOp extends OpMode {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
         else if (gamepad2.right_bumper) {
-            robot.setState(Robot.RobotState.PRE_SHOOT);
+            robot.setState(FORCE_FALLBACK ? Robot.RobotState.MANUAL_PRE_SHOOT : Robot.RobotState.PRE_SHOOT);
         }
         else if (gamepad1.yWasPressed()) {
             if (robot.getState() != Robot.RobotState.PARK) {
