@@ -180,8 +180,6 @@ public class Robot {
     }
 
     private void prepareToShoot(double goalOffsetX, double goalOffsetY) {
-        spindexer.loadNextArtifact();
-
         if (currentState == RobotState.MANUAL_SHOOT || currentState == RobotState.MANUAL_PRE_SHOOT) {
             shooter.setRPM(fallbackRPM);
             shooter.setHoodPosition(fallbackHoodPosition);
@@ -227,7 +225,6 @@ public class Robot {
 
             case MANUAL_SHOOT:
             case SHOOT:
-                spindexer.loadNextArtifact();
                 intake.stopIntake();
                 shooter.engageKicker();
 
@@ -355,11 +352,8 @@ public class Robot {
     }
 
     public boolean isShotReady() {
-        return currentState == RobotState.SHOOT &&
-                shooter.isReady() &&
-                turret.isReady() &&
-                spindexer.atTargetRotation() &&
-                spindexer.hasArtifact(spindexer.getActiveLocation());
+        return shooter.isReady() &&
+                turret.isReady();
     }
 
     /* Module-specific methods */
