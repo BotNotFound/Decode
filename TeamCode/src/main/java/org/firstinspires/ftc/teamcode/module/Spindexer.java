@@ -66,11 +66,13 @@ public class Spindexer {
 
     // TODO we are getting tolerance misses on some rotations, should probably retune
     private final PIDFController spindexerController;
-    public static double kP = 0.02;
-    public static double kI = 0;
+    public static double kP = 0.0019;
+    public static double kI = 0.01;
     public static double kD = 0;
     public static double kF = 0;
-    public static double tolerance = 3;
+    public static double tolerance = 5;
+
+    private double targetAngle = 0;
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry, boolean preloaded) {
         this.telemetry = telemetry;
@@ -245,8 +247,12 @@ public class Spindexer {
         return closeToAngle + getShortestDisplacement(angle, closeToAngle, unit);
     }
 
+    private double getTargetAngle() {
+        return targetAngle;
+    }
+
     private void setTargetAngle(double angle) {
-        spindexerController.setSetPoint(angle);
+        targetAngle = angle;
     }
 
     public void rotateToAngle(double angle) {
@@ -259,8 +265,8 @@ public class Spindexer {
         spindexerController.setPIDF(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
-        final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES);
-        setPowerInternal(spindexerController.calculate(curEquivAngle));
+        final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
+        setPowerInternal(spindexerController.calculate(curError));
         updateDetectionFromSensor();
         indicatorLight.setPosition(INDICATOR_COLORS[Math.min(getArtifactCount(), INDICATOR_COLORS.length)]);
     }
@@ -408,8 +414,8 @@ public class Spindexer {
     public void logInfo() {
         telemetry.addData("Spindexer State", getStateInfo());
         telemetry.addData("Spindexer Angle (degrees)", getAngle());
-        telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getSetPoint());
-        telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES));
+        telemetry.addData("Spindexer Target Angle (degrees)", getTargetAngle());
+        telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), getTargetAngle(), AngleUnit.DEGREES));
         telemetry.addData("Detections", getArtifactCount() + " " + getDetectionInfo());
         telemetry.addData("Detected Distance", this.frontColorSensor.getDistance(DistanceUnit.CM));
     }
