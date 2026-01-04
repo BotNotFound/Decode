@@ -12,9 +12,9 @@ public class RobotLift {
 
     private final Servo liftServo;
 
-    public static double RAISED_ROBOT_POSITION = 0.292;
+    public static double RAISED_ROBOT_POSITION = 1;
 
-    public static double LOWERED_ROBOT_POSITION = 1;
+    public static double LOWERED_ROBOT_POSITION = 0.292;
 
     private final Telemetry telemetry;
 
