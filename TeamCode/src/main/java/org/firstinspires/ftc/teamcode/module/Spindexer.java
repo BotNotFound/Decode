@@ -262,11 +262,14 @@ public class Spindexer {
     }
 
     public void updateSpindexer() {
-        spindexerController.setPIDF(kP, kI, kD, kF);
-        spindexerController.setTolerance(tolerance);
+        if (curState != SpindexerState.MANUAL_ROTATION) {
+            spindexerController.setPIDF(kP, kI, kD, kF);
+            spindexerController.setTolerance(tolerance);
 
-        final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
-        setPowerInternal(spindexerController.calculate(curError));
+            final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
+            setPowerInternal(spindexerController.calculate(curError));
+        }
+
         updateDetectionFromSensor();
         indicatorLight.setPosition(INDICATOR_COLORS[Math.min(getArtifactCount(), INDICATOR_COLORS.length)]);
     }
