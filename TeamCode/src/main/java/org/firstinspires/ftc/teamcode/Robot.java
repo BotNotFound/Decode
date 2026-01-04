@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -22,7 +23,9 @@ import org.firstinspires.ftc.teamcode.module.Turret;
 public class Robot {
     private static final String TAG = "Robot";
 
-    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 125.5, 128, AngleUnit.DEGREES, 35);
+
+    public static final Pose2D DEFAULT_RED_ROBOT_POSE =  new Pose2D(DistanceUnit.INCH, 125.5, 128, AngleUnit.DEGREES, 35);
+    public static final Pose2D DEFAULT_BLUE_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 89.5, 10.1, AngleUnit.DEGREES, 90);
 
     private static final class PersistentState {
         private static PersistentState saved = null;
@@ -63,15 +66,15 @@ public class Robot {
         PersistentState.saveRobotState(this);
     }
 
-    public void tryLoadPersistentState() {
+    /*public void tryLoadPersistentState() {
         if (!PersistentState.tryLoadRobotState(this)) {
             loadDefaultState();
         }
     }
 
     public void loadDefaultState() {
-        driveTrain.setRobotPose(DEFAULT_ROBOT_POSE);
-    }
+        driveTrain.setRobotPose(DEFAULT_RED_ROBOT_POSE);
+    }*/
 
     public enum RobotState {
         INTAKE,             // Robot is collecting artifacts on the field

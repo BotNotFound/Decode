@@ -79,7 +79,11 @@ public abstract class AutonomousBase extends OpMode {
 
     @Override
     public void start() {
-        robot.loadDefaultState();
+        if(robot.getAllianceColor() == AllianceColor.RED){
+            robot.setRobotPose(Robot.DEFAULT_RED_ROBOT_POSE);
+        } else if (robot.getAllianceColor() == AllianceColor.BLUE) {
+            robot.setRobotPose(Robot.DEFAULT_BLUE_ROBOT_POSE);
+        }
 
         if (stageSequence.length > 0) {
             stageSequence[0].enterStage(robot, follower);
