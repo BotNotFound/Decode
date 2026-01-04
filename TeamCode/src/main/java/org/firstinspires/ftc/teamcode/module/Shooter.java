@@ -22,7 +22,7 @@ public class Shooter {
     public static final String HOOD_SERVO_NAME = "Hood";
 
     public static double KICKER_IDLE_POSITION = 0.1;
-    public static double KICKER_LAUNCH_POSITION = 0.3375;
+    public static double KICKER_LAUNCH_POSITION = 0.2825;
 
 
     public static double HOOD_SERVO_MIN_POSITION = 0.3;
