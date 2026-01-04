@@ -14,9 +14,9 @@ public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
     private final DcMotor turretMotor;
 
-    public static double kP = 0.07;
+    public static double kP = 0.1;
     public static double kI = 0;
-    public static double kD = 0.002;
+    public static double kD = 0;
     public static double kF = 0;
     public static double tolerance = 1;
     private final PIDFController aimController;
@@ -57,7 +57,7 @@ public class Turret {
         turretMotor = hardwareMap.get(DcMotor.class, TURRET_MOTOR_NAME);
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        turretMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        turretMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         aimController = new PIDFController(kP, kI, kD, kF);
