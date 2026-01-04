@@ -314,7 +314,7 @@ public class Robot {
                 }
 
                 if (!shotReady) {
-                    spindexer.setPower(1);
+                    spindexer.setPower(-1);
 
                     Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
                     shotPrepTime.reset();
