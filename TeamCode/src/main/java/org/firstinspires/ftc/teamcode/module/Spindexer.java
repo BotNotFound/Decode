@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.module;
 import android.util.Log;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -14,7 +15,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.internal.system.Assert;
 import org.firstinspires.ftc.teamcode.IndicatorColorValues;
-import org.firstinspires.ftc.teamcode.SquIDController;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -65,9 +65,11 @@ public class Spindexer {
     };
 
     // TODO we are getting tolerance misses on some rotations, should probably retune
-    private final SquIDController spindexerController;
-
+    private final PIDFController spindexerController;
     public static double kP = 0.02;
+    public static double kI = 0;
+    public static double kD = 0;
+    public static double kF = 0;
     public static double tolerance = 3;
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry, boolean preloaded) {
@@ -90,7 +92,7 @@ public class Spindexer {
 
         indicatorLight = hardwareMap.get(Servo.class, INDICATOR_LIGHT_NAME);
 
-        spindexerController = new SquIDController(kP);
+        spindexerController = new PIDFController(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
         // set all servo directions for spindexer to turn counterclockwise
@@ -113,7 +115,7 @@ public class Spindexer {
     }
 
     private void updateDetectionFromSensor() {
-        if (!spindexerController.atTarget() || activeLocation == null || curState != SpindexerState.INTAKING) {
+        if (!spindexerController.atSetPoint() || activeLocation == null || curState != SpindexerState.INTAKING) {
             return; // not at an artifact location; color sensor won't give the right data
         }
 
@@ -244,7 +246,7 @@ public class Spindexer {
     }
 
     private void setTargetAngle(double angle) {
-        spindexerController.setTarget(angle);
+        spindexerController.setSetPoint(angle);
     }
 
     public void rotateToAngle(double angle) {
@@ -254,10 +256,10 @@ public class Spindexer {
     }
 
     public void updateSpindexer() {
-        spindexerController.setP(kP);
+        spindexerController.setPIDF(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
 
-        final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES);
+        final double curEquivAngle = closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES);
         setPowerInternal(spindexerController.calculate(curEquivAngle));
         updateDetectionFromSensor();
         indicatorLight.setPosition(INDICATOR_COLORS[Math.min(getArtifactCount(), INDICATOR_COLORS.length)]);
@@ -296,7 +298,7 @@ public class Spindexer {
     }
 
     public boolean atTargetRotation() {
-        return spindexerController.atTarget();
+        return spindexerController.atSetPoint();
     }
 
     public void rotateToNextSlot() {
@@ -406,8 +408,8 @@ public class Spindexer {
     public void logInfo() {
         telemetry.addData("Spindexer State", getStateInfo());
         telemetry.addData("Spindexer Angle (degrees)", getAngle());
-        telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getTarget());
-        telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getTarget(), AngleUnit.DEGREES));
+        telemetry.addData("Spindexer Target Angle (degrees)", spindexerController.getSetPoint());
+        telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), spindexerController.getSetPoint(), AngleUnit.DEGREES));
         telemetry.addData("Detections", getArtifactCount() + " " + getDetectionInfo());
         telemetry.addData("Detected Distance", this.frontColorSensor.getDistance(DistanceUnit.CM));
     }
