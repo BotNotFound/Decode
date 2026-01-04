@@ -56,7 +56,7 @@ public class Spindexer {
     private SpindexerState curState;
 
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 3;
-    public static double offsetAngle = 10;
+    public static double OFFSET_ANGLE = 10;
     public static double[] INDICATOR_COLORS = {
             IndicatorColorValues.OFF,
             IndicatorColorValues.VIOLET,
@@ -369,7 +369,7 @@ public class Spindexer {
 
     private double getAngle() {
         // see https://docs.sensorangerobotics.com/encoder/#analog-usage
-        return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + offsetAngle);
+        return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + OFFSET_ANGLE);
     }
 
     private String getStateInfo() {
