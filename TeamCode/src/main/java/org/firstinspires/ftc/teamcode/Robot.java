@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -19,10 +20,13 @@ import org.firstinspires.ftc.teamcode.module.Shooter;
 import org.firstinspires.ftc.teamcode.module.Spindexer;
 import org.firstinspires.ftc.teamcode.module.Turret;
 
+@Config
 public class Robot {
     private static final String TAG = "Robot";
 
     public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 125.5, 128, AngleUnit.DEGREES, 35);
+
+    public static double SHOOTING_SPINDEXER_POWER = -0.7;
 
     private static final class PersistentState {
         private static PersistentState saved = null;
@@ -303,7 +307,7 @@ public class Robot {
                 }
 
                 if (!shotReady) {
-                    spindexer.setPower(-1);
+                    spindexer.setPower(SHOOTING_SPINDEXER_POWER);
 
                     Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
                     shotPrepTime.reset();
