@@ -64,7 +64,6 @@ public class Spindexer {
             IndicatorColorValues.GREEN,
     };
 
-    // TODO we are getting tolerance misses on some rotations, should probably retune
     private final PIDFController spindexerController;
     public static double kP = 0.0017;
     public static double kI = 0.01;
