@@ -354,6 +354,10 @@ public class Robot {
 
     /* Module-specific methods */
 
+    public Pose2D getRobotPose() {
+        return driveTrain.getRobotPose();
+    }
+
     public void setDrivePowers(double drive, double strafe, double turn) {
         driveTrain.setPower(drive, strafe, turn);
     }
