@@ -42,14 +42,14 @@ public class Turret {
     }
 
     /**
-     * The number of encoder ticks in a single revolution of the motor We are currently using a
+     * The number of encoder ticks in a single revolution of the motor. We are currently using a
      * <a
-     * href="https://www.gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-5-2-1-ratio-24mm-length-8mm-rex-shaft-1150-rpm-3-3-5v-encoder/">
-     * 5203 goBilda motor
+     * href="https://www.gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/">
+     * 5203 312 RPM goBilda motor
      * </a>
      * and a 113:12 gear ratio
      */
-    public static final double TICKS_PER_REVOLUTION = 145.1 * (113.0 / 12.0);
+    public static final double TICKS_PER_REVOLUTION = ((((1 + (46.0 / 17))) * (1 + (46.0 / 11))) * 28) * (113.0 / 12.0);
 
     private final Telemetry telemetry;
 
