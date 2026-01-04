@@ -292,9 +292,6 @@ public class Robot {
 
         spindexer.updateSpindexer();
         turret.update();
-        if (spindexer.hasArtifact(spindexer.getActiveLocation())) {
-            intake.idleWithBall();
-        }
 
         switch (currentState) {
             case MANUAL_SHOOT:
@@ -326,6 +323,7 @@ public class Robot {
             case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
                 prepareToShoot(goalOffsetX, goalOffsetY);
+                holdUpBall();
                 break;
 
             case INTAKE:
@@ -340,11 +338,20 @@ public class Robot {
 
             case REVERSE_INTAKE:
             case PARK:
+                break;
+
             case NONE:
+                holdUpBall();
                 break;
         }
 
         logInfo();
+    }
+
+    private void holdUpBall() {
+        if (spindexer.hasArtifact(spindexer.getActiveLocation())) {
+            intake.idleWithBall();
+        }
     }
 
     public boolean isShotReady() {
