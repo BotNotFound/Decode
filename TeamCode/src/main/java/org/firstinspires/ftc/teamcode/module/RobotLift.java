@@ -39,6 +39,7 @@ public class RobotLift {
     }
 
     public void logInfo() {
+        telemetry.addData("Lift position", liftServo.getPosition());
         if (lifted) {
             telemetry.addLine("Robot is raised");
         }
