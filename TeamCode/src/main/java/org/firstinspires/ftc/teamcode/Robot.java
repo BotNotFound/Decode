@@ -277,7 +277,7 @@ public class Robot {
             case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
                 spindexer.loadNextArtifact();
-                intake.startIntake();
+                intake.stopIntake();
                 shooter.disengageKicker();
                 break;
 
@@ -291,7 +291,7 @@ public class Robot {
             case SHOOT:
                 spindexer.loadNextArtifact();
                 intake.stopIntake();
-                shooter.disengageKicker();
+                shooter.engageKicker();
 
                 shotReady = false;
                 shotPrepTime.reset();
