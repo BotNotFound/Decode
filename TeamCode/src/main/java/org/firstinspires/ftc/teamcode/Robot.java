@@ -214,7 +214,6 @@ public class Robot {
                 spindexer.beginIntaking();
                 shooter.disengageKicker();
                 intake.reverseIntake();
-
                 break;
 
             case MANUAL_PRE_SHOOT:
@@ -347,9 +346,7 @@ public class Robot {
     }
 
     private void holdUpBall() {
-        if (spindexer.hasArtifact(spindexer.getActiveLocation())) {
-            intake.idleWithBall();
-        }
+        intake.idleWithBall();
     }
 
     public boolean isShotReady() {
