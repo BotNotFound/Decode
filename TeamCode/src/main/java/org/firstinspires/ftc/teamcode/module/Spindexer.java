@@ -55,7 +55,7 @@ public class Spindexer {
     private ArtifactLocation activeLocation;
     private SpindexerState curState;
 
-    public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 3;
+    public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
     public static double OFFSET_ANGLE = 10;
     public static double[] INDICATOR_COLORS = {
             IndicatorColorValues.OFF,
@@ -70,7 +70,7 @@ public class Spindexer {
     public static double kI = 0.01;
     public static double kD = 0;
     public static double kF = 0;
-    public static double tolerance = 5;
+    public static double tolerance = 10;
 
     private double targetAngle = 0;
 
