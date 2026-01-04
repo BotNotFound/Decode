@@ -10,7 +10,7 @@ public class Intake {
     public static final String INTAKE_MOTOR_NAME = "Intake";
 
     public static double engagePower = 1;
-    public static double idlePower = 0.45;
+    public static double idlePower = 0;
 
     private final DcMotor intakeMotor;
 
