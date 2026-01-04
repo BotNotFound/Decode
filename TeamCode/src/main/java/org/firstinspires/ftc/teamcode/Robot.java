@@ -284,6 +284,7 @@ public class Robot {
             setDrivePowers(drivePower, strafePower, turnPower);
         }
         loopWithoutMovement();
+        updateLED();
     }
 
     public void loopWithoutMovement() {
