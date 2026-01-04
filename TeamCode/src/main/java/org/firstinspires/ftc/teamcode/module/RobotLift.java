@@ -23,8 +23,6 @@ public class RobotLift {
     public RobotLift(HardwareMap hwMap, Telemetry telemetry) {
         liftServo = hwMap.get(Servo.class, LIFT_SERVO_NAME);
 
-        liftServo.setPosition(LOWERED_ROBOT_POSITION);
-
         this.telemetry = telemetry;
 
         lifted = false;
