@@ -325,12 +325,11 @@ public class Robot {
                 break;
 
             case INTAKE:
+                spindexer.intakeIntoEmptySlot();
                 if (spindexer.hasAllArtifacts()) {
-                    spindexer.beginLoading();
                     intake.stopIntake();
                 }
                 else {
-                    spindexer.intakeIntoEmptySlot();
                     intake.startIntake();
                 }
                 break;
