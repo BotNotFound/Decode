@@ -301,8 +301,6 @@ public class Robot {
                 prepareToShoot();
 
                 if (!isShotReady()) {
-                    intake.stopIntake();
-
                     if (shotReady) {
                         spindexer.removeActiveArtifact();
                         spindexer.rotateToNextSlot();
@@ -311,7 +309,6 @@ public class Robot {
                         Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
                     }
                     shotReady = false;
-
                     break;
                 }
 
@@ -321,8 +318,6 @@ public class Robot {
                     shotReady = true;
                     timeSinceShotReady.reset();
                 }
-
-                shooter.engageKicker();
                 break;
 
             case MANUAL_PRE_SHOOT:
