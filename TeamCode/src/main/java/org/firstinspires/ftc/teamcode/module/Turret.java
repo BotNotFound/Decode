@@ -21,7 +21,9 @@ public class Turret {
     public static double tolerance = 1;
     private final PIDFController aimController;
 
-    public static double TURRET_ROTATION_OFFSET = 70;
+    public static double DEFAULT_TURRET_ROTATION_OFFSET = 70;
+    private double turretRotationOffset;
+
     public static double TURRET_MIN_ROTATION = 90;
     public static double TURRET_MAX_ROTATION = 178;
 
@@ -60,6 +62,8 @@ public class Turret {
         turretMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        turretRotationOffset = DEFAULT_TURRET_ROTATION_OFFSET;
+
         aimController = new PIDFController(kP, kI, kD, kF);
         aimController.setTolerance(tolerance);
         aimController.setSetPoint(getCurrentHeading(AngleUnit.DEGREES));
@@ -73,8 +77,14 @@ public class Turret {
         final int currentPosition = turretMotor.getCurrentPosition() * (
                 turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE ? -1 : 1
         );
-        final double currentHeadingDegrees = normalizeDegreesPositive((currentPosition / TICKS_PER_REVOLUTION * 360) + TURRET_ROTATION_OFFSET);
+        final double currentHeadingDegrees = normalizeDegreesPositive((currentPosition / TICKS_PER_REVOLUTION * 360) + turretRotationOffset);
         return angleUnit.getUnnormalized().fromDegrees(currentHeadingDegrees);
+    }
+
+    public void setCurrentHeading(double heading, AngleUnit unit) {
+        turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        turretRotationOffset = normalizeDegreesPositive(unit.getUnnormalized().toDegrees(heading));
+        turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public double getTargetHeading(AngleUnit angleUnit) {

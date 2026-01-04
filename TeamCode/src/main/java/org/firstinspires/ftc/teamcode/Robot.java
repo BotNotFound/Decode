@@ -33,10 +33,12 @@ public class Robot {
 
         private final Pose2D robotPose;
         private final boolean[] artifactDetections;
+        private final double turretHeading;
 
-        private PersistentState(Pose2D robotPose, boolean[] artifactDetections) {
+        private PersistentState(Pose2D robotPose, boolean[] artifactDetections, double turretHeading) {
             this.robotPose = robotPose;
             this.artifactDetections = artifactDetections;
+            this.turretHeading = turretHeading;
         }
 
         public static void saveRobotState(Robot robot) {
@@ -46,7 +48,8 @@ public class Robot {
 
             saved = new PersistentState(
                     robot.driveTrain.getRobotPose(),
-                    robot.spindexer.getArtifactDetections()
+                    robot.spindexer.getArtifactDetections(),
+                    robot.turret.getCurrentHeading(AngleUnit.DEGREES)
             );
         }
 
@@ -57,6 +60,7 @@ public class Robot {
 
             robot.driveTrain.setRobotPose(saved.robotPose);
             robot.spindexer.setArtifactDetections(saved.artifactDetections);
+            robot.turret.setCurrentHeading(saved.turretHeading, AngleUnit.DEGREES);
 
             saved = null;
             return true;
