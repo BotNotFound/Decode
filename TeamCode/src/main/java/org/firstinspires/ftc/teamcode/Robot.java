@@ -236,17 +236,18 @@ public class Robot {
                 lift.lowerRobot();
                 intake.stopIntake();
                 shooter.engageKicker();
-                spindexer.setArtifactDetections(new boolean[ArtifactLocation.values().length]); // zero artifact detections
 
                 shotReady = false;
                 shotPrepTime.reset();
                 shotsTaken = 0;
 
                 Log.d(TAG, "enter shoot {" +
-                        (spindexer.hasArtifact(ArtifactLocation.SLOT_ONE) ? "front | " : "      | ") +
-                        (spindexer.hasArtifact(ArtifactLocation.SLOT_TWO) ? "middle | " : "       | ") +
-                        (spindexer.hasArtifact(ArtifactLocation.SLOT_THREE) ? "back" : "    ") +
+                        (spindexer.hasArtifact(ArtifactLocation.SLOT_ONE) ? "1 | " : "  | ") +
+                        (spindexer.hasArtifact(ArtifactLocation.SLOT_TWO) ? "2 | " : "  | ") +
+                        (spindexer.hasArtifact(ArtifactLocation.SLOT_THREE) ? "3" : " ") +
                         "}");
+
+                spindexer.setArtifactDetections(new boolean[ArtifactLocation.values().length]); // zero artifact detections
                 break;
 
             case NONE:
