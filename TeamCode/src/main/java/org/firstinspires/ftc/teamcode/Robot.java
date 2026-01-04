@@ -22,15 +22,7 @@ import org.firstinspires.ftc.teamcode.module.Turret;
 public class Robot {
     private static final String TAG = "Robot";
 
-    private static final double ROBOT_LENGTH_IN = 17.3;
-    private static final double ROBOT_WIDTH_IN = 17.5;
-    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(
-            DistanceUnit.INCH,
-            144.0 - (ROBOT_LENGTH_IN / 2),
-            ROBOT_WIDTH_IN / 2,
-            AngleUnit.DEGREES,
-            0
-    );
+    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 125.5, 128, AngleUnit.DEGREES, 35);
 
     private static final class PersistentState {
         private static PersistentState saved = null;
