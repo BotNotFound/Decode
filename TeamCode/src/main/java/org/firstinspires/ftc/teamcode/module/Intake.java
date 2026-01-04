@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Intake {
     public static final String INTAKE_MOTOR_NAME = "Intake";
 
-    //change speed accordingly in auto or teleop classes
     public static double engagePower = 1;
+    public static double idlePower = 0.2;
 
     private final DcMotor intakeMotor;
 
@@ -34,5 +34,11 @@ public class Intake {
 
     public void reverseIntake() {
         intakeMotor.setPower(-engagePower);
+    }
+
+    public void idleWithBall() {
+        if (intakeMotor.getPower() > 0 && intakeMotor.getPower() < idlePower) {
+            intakeMotor.setPower(idlePower);
+        }
     }
 }

@@ -293,6 +293,9 @@ public class Robot {
 
         spindexer.updateSpindexer();
         turret.update();
+        if (spindexer.hasArtifact(spindexer.getActiveLocation())) {
+            intake.idleWithBall();
+        }
 
         switch (currentState) {
             case MANUAL_SHOOT:
