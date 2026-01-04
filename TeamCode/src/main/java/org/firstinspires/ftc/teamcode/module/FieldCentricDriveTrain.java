@@ -69,10 +69,6 @@ public class FieldCentricDriveTrain {
         fieldCentricHeadingOffset = pinpointDriver.getHeading(AngleUnit.RADIANS);
     }
 
-    public GoBildaPinpointDriver getPinpoint(){
-        return pinpointDriver;
-    }
-
     //keep the set power for drivetrain
     public void setPower(double drive, double strafe, double turn) {
         pinpointDriver.update();
