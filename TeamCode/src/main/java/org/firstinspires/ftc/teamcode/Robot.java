@@ -179,28 +179,15 @@ public class Robot {
         return shotsTaken;
     }
 
-    private void prepareToShoot() {
+    private void prepareToShoot(double goalOffsetX, double goalOffsetY) {
         spindexer.loadNextArtifact();
-        final Pose2D robotPose = driveTrain.getRobotPose();
-        turret.aimAtGoal(
-                allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH),
-                allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH),
-                robotPose.getHeading(AngleUnit.RADIANS),
-                AngleUnit.RADIANS
-        );
-        turret.update();
 
         if (currentState == RobotState.MANUAL_SHOOT || currentState == RobotState.MANUAL_PRE_SHOOT) {
             shooter.setRPM(fallbackRPM);
             shooter.setHoodPosition(fallbackHoodPosition);
         }
         else {
-            shooter.setRPMForGoal(
-                    Math.sqrt(
-                            Math.pow(robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX, 2) +
-                                    Math.pow(robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY, 2)
-                    )
-            );
+            shooter.setRPMForGoal(Math.sqrt(goalOffsetX * goalOffsetX + goalOffsetY * goalOffsetY));
             shooter.adjustHood();
         }
     }
@@ -290,15 +277,27 @@ public class Robot {
     }
 
     public void loopWithoutMovement() {
-        if (currentState != RobotState.PARK) {
-            spindexer.updateSpindexer();
-            turret.update();
+        if (currentState == RobotState.PARK) {
+            return;
         }
+
+        final Pose2D robotPose = driveTrain.getRobotPose();
+        final double goalOffsetX = allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH);
+        final double goalOffsetY = allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH);
+        turret.aimAtGoal(
+                goalOffsetX,
+                goalOffsetY,
+                robotPose.getHeading(AngleUnit.RADIANS),
+                AngleUnit.RADIANS
+        );
+
+        spindexer.updateSpindexer();
+        turret.update();
 
         switch (currentState) {
             case MANUAL_SHOOT:
             case SHOOT:
-                prepareToShoot();
+                prepareToShoot(goalOffsetX, goalOffsetY);
 
                 if (!isShotReady()) {
                     if (shotReady) {
@@ -322,7 +321,7 @@ public class Robot {
 
             case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
-                prepareToShoot();
+                prepareToShoot(goalOffsetX, goalOffsetY);
                 break;
 
             case INTAKE:
