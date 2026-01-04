@@ -205,10 +205,6 @@ public class Robot {
             return;
         }
 
-        if (newState != RobotState.PARK) {
-            lift.lowerRobot();
-        }
-
         Log.v(TAG, "State " + currentState + " lasted for " + stateStopwatch.seconds() + " seconds");
         Log.i(TAG, "Switched to new state: " + newState);
         stateStopwatch.reset();
@@ -218,22 +214,26 @@ public class Robot {
                 spindexer.intakeIntoEmptySlot();
                 shooter.disengageKicker();
                 intake.startIntake();
+                lift.lowerRobot();
                 break;
 
             case REVERSE_INTAKE:
                 spindexer.beginIntaking();
                 shooter.disengageKicker();
                 intake.reverseIntake();
+                lift.lowerRobot();
                 break;
 
             case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
                 intake.stopIntake();
                 shooter.disengageKicker();
+                lift.lowerRobot();
                 break;
 
             case MANUAL_SHOOT:
             case SHOOT:
+                lift.lowerRobot();
                 intake.stopIntake();
                 shooter.engageKicker();
                 spindexer.setArtifactDetections(new boolean[ArtifactLocation.values().length]); // zero artifact detections
@@ -254,6 +254,7 @@ public class Robot {
                 shooter.disengageKicker();
                 shooter.setRPM(0);
                 intake.stopIntake();
+                lift.lowerRobot();
                 break;
 
             case PARK:
