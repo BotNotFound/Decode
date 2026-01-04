@@ -108,6 +108,8 @@ public class Robot {
     private final Turret turret;
     private final RobotLift lift;
 
+    private final Telemetry telemetry;
+
     private AllianceColor allianceColor;
     private RobotState currentState;
 
@@ -128,6 +130,8 @@ public class Robot {
         spindexer = new Spindexer(hardwareMap, telemetry, preloadedArtifacts);
         turret = new Turret(hardwareMap, telemetry);
         lift = new RobotLift(hardwareMap, telemetry);
+
+        this.telemetry = telemetry;
 
         setAllianceColor(color);
 
@@ -163,11 +167,14 @@ public class Robot {
     }
 
     public void logInfo() {
-        spindexer.logInfo();
+        telemetry.addData("Fallback Shooter RPM", fallbackRPM);
+        telemetry.addData("Fallback Hood Position", fallbackHoodPosition);
+
+        driveTrain.logInfo();
         shooter.logInfo();
         turret.logInfo();
+        spindexer.logInfo();
         lift.logInfo();
-        driveTrain.logInfo();
     }
 
     public AllianceColor getAllianceColor() {

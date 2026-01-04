@@ -105,8 +105,6 @@ public class TwoPersonTeleOp extends OpMode {
             robot.rotateSpindexerToPreviousSlot();
         }
 
-        telemetry.addData("default shooter rpm", robot.getFallbackShooterRPM());
-
         if (gamepad1.start && gamepad1.back) {
             robot.resetFieldCentricHeading();
         }
