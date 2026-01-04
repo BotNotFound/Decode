@@ -14,7 +14,7 @@ public class RobotLift {
 
     public static double RAISED_ROBOT_POSITION = 1;
 
-    public static double LOWERED_ROBOT_POSITION = 0.292;
+    public static double LOWERED_ROBOT_POSITION = 0.5;
 
     private final Telemetry telemetry;
 
