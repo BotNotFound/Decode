@@ -61,6 +61,7 @@ public class Turret {
         turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         aimController = new PIDFController(kP, kI, kD, kF);
+        aimController.setTolerance(tolerance);
         aimController.setSetPoint(getCurrentHeading(AngleUnit.DEGREES));
 
         this.telemetry = telemetry;
