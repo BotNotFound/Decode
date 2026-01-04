@@ -22,7 +22,7 @@ public class ShooterTuningTeleOp extends OnePersonTeleOp {
     @Override
     public void loop() {
         if (gamepad1.leftStickButtonWasPressed()) {
-            robot.setRobotPose(Robot.DEFAULT_RED_ROBOT_POSE);
+            robot.setRobotPose(Robot.DEFAULT_ROBOT_POSE);
         }
 
         final Pose2D robotPose = robot.getRobotPose();
