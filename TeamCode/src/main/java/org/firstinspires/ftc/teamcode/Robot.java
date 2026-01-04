@@ -131,6 +131,8 @@ public class Robot {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
+
+
         setState(RobotState.NONE);
 
         Log.i(TAG, "Robot initialized");
@@ -181,6 +183,7 @@ public class Robot {
             shooter.adjustHood();
         }
     }
+
 
     public void setState(RobotState newState) {
         if (newState == currentState) {
