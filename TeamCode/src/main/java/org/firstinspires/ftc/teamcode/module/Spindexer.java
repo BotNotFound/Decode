@@ -13,7 +13,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.internal.system.Assert;
 import org.firstinspires.ftc.teamcode.IndicatorColorValues;
 
 import java.util.Arrays;
@@ -340,8 +339,6 @@ public class Spindexer {
         while (hasArtifact(location)) {
             location = location.getNextLocation();
         }
-
-        Assert.assertTrue(location != activeLocation && !hasArtifact(location));
 
         intakeIntoLocation(location);
     }
