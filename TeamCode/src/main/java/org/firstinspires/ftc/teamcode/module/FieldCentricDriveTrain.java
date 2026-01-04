@@ -76,7 +76,7 @@ public class FieldCentricDriveTrain {
         drive = Math.pow(drive, 3);
         strafe = Math.pow(strafe, 3);
 
-        double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS) + fieldCentricHeadingOffset;
+        double curRotation = pinpointDriver.getHeading(AngleUnit.RADIANS) - fieldCentricHeadingOffset;
 
         double rotDrive = drive * Math.cos(curRotation) - strafe * Math.sin(curRotation);
         double rotStrafe = drive * Math.sin(curRotation) + strafe * Math.cos(curRotation);
