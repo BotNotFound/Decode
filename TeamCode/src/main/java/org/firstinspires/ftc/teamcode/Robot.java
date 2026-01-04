@@ -87,7 +87,6 @@ public class Robot {
         PRE_SHOOT,          // Robot is preparing to shoot, but cannot actually launch artifacts
         MANUAL_PRE_SHOOT,   // Robot is preparing to shoot at a hardcoded speed (used for tuning)
         SHOOT,              // Robot is shooting artifacts into the goal
-        SHOOT_MOVE,          //Robot is shooting while moving.
         MANUAL_SHOOT,       // Robot is shooting using hardcoded speeds (used for tuning)
         NONE,               // No special function; robot is just moving
         PARK,               // Robot has parked (match is about to end)
@@ -95,9 +94,6 @@ public class Robot {
 
     private double fallbackRPM = 2900;
     private double fallbackHoodPosition = Shooter.HOOD_SERVO_MIN_POSITION;
-
-    //TODO: Tune ballTravelTime if shooting while moving is needed.
-    public static double ballTravelTime = 0.5;
 
     private double moveScale = 1;
     private double headingScale = 1;
@@ -201,8 +197,8 @@ public class Robot {
         else {
             shooter.setRPMForGoal(
                     Math.sqrt(
-                            Math.pow(allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH), 2) +
-                                    Math.pow(allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH), 2)
+                            Math.pow(robotPose.getX(DistanceUnit.INCH) - allianceColor.goalPositionX, 2) +
+                                    Math.pow(robotPose.getY(DistanceUnit.INCH) - allianceColor.goalPositionY, 2)
                     )
             );
             shooter.adjustHood();
@@ -244,9 +240,6 @@ public class Robot {
                 break;
 
             case MANUAL_SHOOT:
-
-            case SHOOT_MOVE:
-
             case SHOOT:
                 spindexer.loadNextArtifact();
                 intake.stopIntake();
@@ -333,9 +326,6 @@ public class Robot {
                 break;
 
             case MANUAL_PRE_SHOOT:
-
-            case SHOOT_MOVE:
-
             case PRE_SHOOT:
                 prepareToShoot();
                 break;
