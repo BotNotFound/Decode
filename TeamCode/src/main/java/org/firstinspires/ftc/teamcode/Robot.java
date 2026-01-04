@@ -227,6 +227,7 @@ public class Robot {
             case SHOOT:
                 intake.stopIntake();
                 shooter.engageKicker();
+                spindexer.setArtifactDetections(new boolean[ArtifactLocation.values().length]); // zero artifact detections
 
                 shotReady = false;
                 shotPrepTime.reset();
