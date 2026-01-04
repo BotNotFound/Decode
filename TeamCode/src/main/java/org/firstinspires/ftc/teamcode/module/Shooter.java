@@ -35,7 +35,6 @@ public class Shooter {
     private final Servo kickerServo;
     private final Servo hoodServo;
 
-    //TODO: tune velocity PID
     private final PIDFController velocityPID;
     public static double kP = 0.002;
     public static double kI = 0;

@@ -24,7 +24,7 @@ public class Robot {
 
     private static final double ROBOT_LENGTH_IN = 17.3;
     private static final double ROBOT_WIDTH_IN = 17.5;
-    private static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(
+    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(
             DistanceUnit.INCH,
             144.0 - (ROBOT_LENGTH_IN / 2),
             ROBOT_WIDTH_IN / 2,
@@ -221,7 +221,6 @@ public class Robot {
 
             case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
-                spindexer.loadNextArtifact();
                 intake.stopIntake();
                 shooter.disengageKicker();
                 break;
@@ -304,7 +303,7 @@ public class Robot {
 
                 if (!isShotReady()) {
                     if (shotReady) {
-                        spindexer.removeActiveArtifact();
+                        spindexer.setPower(0);
                         spindexer.rotateToNextSlot();
 
                         shotsTaken++;
@@ -315,6 +314,8 @@ public class Robot {
                 }
 
                 if (!shotReady) {
+                    spindexer.setPower(1);
+
                     Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
                     shotPrepTime.reset();
                     shotReady = true;
@@ -358,6 +359,10 @@ public class Robot {
 
     public Pose2D getRobotPose() {
         return driveTrain.getRobotPose();
+    }
+
+    public void setRobotPose(Pose2D pose) {
+        driveTrain.setRobotPose(pose);
     }
 
     public void setDrivePowers(double drive, double strafe, double turn) {
