@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,6 +20,8 @@ import org.firstinspires.ftc.teamcode.module.RobotLift;
 import org.firstinspires.ftc.teamcode.module.Shooter;
 import org.firstinspires.ftc.teamcode.module.Spindexer;
 import org.firstinspires.ftc.teamcode.module.Turret;
+
+import java.util.Arrays;
 
 public class Robot {
     private static final String TAG = "Robot";
@@ -47,6 +51,8 @@ public class Robot {
                     robot.spindexer.getArtifactDetections(),
                     robot.turret.getCurrentHeading(AngleUnit.DEGREES)
             );
+
+            Log.i(TAG, "Saved robot state: " + saved);
         }
 
         public static boolean tryLoadRobotState(Robot robot) {
@@ -54,12 +60,26 @@ public class Robot {
                 return false;
             }
 
+            Log.i(TAG, "Loading robot state: " + saved);
+
             robot.driveTrain.setRobotPose(saved.robotPose);
             robot.spindexer.setArtifactDetections(saved.artifactDetections);
             robot.turret.setCurrentHeading(saved.turretHeading, AngleUnit.DEGREES);
 
             saved = null;
             return true;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return "PersistentState{ pose = " +
+                    robotPose +
+                    ", turret heading = " +
+                    turretHeading +
+                    ", detections = " +
+                    Arrays.toString(artifactDetections) +
+                    " }";
         }
     }
 
