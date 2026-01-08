@@ -368,9 +368,10 @@ public class Spindexer {
         loadFromLocation(activeLocation);
     }
 
-    public void removeActiveArtifact() {
-        if (activeLocation != null) {
+    public void shootLoadedArtifact() {
+        if (curState == SpindexerState.LOADING && activeLocation != null) {
             artifactDetections[activeLocation.ordinal()] = false;
+            rotateToNextSlot();
         }
     }
 
