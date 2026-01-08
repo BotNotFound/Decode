@@ -9,9 +9,6 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
@@ -82,7 +79,7 @@ public abstract class AutonomousBase extends OpMode {
 
     @Override
     public void start() {
-        robot.setRobotPose(new Pose2D(DistanceUnit.INCH, startPose.getX(), startPose.getY(), AngleUnit.DEGREES, startPose.getHeading()));
+        robot.loadDefaultState();
 
         if (stageSequence.length > 0) {
             stageSequence[0].enterStage(robot, follower);
