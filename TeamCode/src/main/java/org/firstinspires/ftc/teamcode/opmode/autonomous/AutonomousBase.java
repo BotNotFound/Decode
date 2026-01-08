@@ -79,8 +79,6 @@ public abstract class AutonomousBase extends OpMode {
 
     @Override
     public void start() {
-        robot.loadDefaultState();
-
         if (stageSequence.length > 0) {
             stageSequence[0].enterStage(robot, follower);
         }
