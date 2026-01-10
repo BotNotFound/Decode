@@ -10,6 +10,7 @@ import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.AllianceColor;
+import org.firstinspires.ftc.teamcode.Motif;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
@@ -24,6 +25,7 @@ public abstract class AutonomousBase extends OpMode {
 
     protected Robot robot;
     protected Follower follower;
+
 
     public AutonomousBase(Pose startPose, AllianceColor allianceColor) {
         this.allianceColor = allianceColor;

@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.Motif;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
@@ -35,6 +36,8 @@ public class AprilTagDetector {
     private Pose3D robotPose;
     private AprilTagPoseFtc tagPose;
     private boolean tagDetected = false;
+    private boolean obeliskTagDetected = false;
+
 
     public AprilTagDetector(HardwareMap hardwareMap, Telemetry telemetry) {
         processor = new AprilTagProcessor.Builder()
@@ -86,6 +89,20 @@ public class AprilTagDetector {
             return tagPose;
         }
         return null;
+    }
+
+    public final void setMotifID() {
+        obeliskTagDetected = false;
+
+        for(AprilTagDetection detection : processor.getDetections()) {
+            if(detection.id == Motif.GPP.motifID) {
+                obeliskTagDetected = true;
+                telemetry.addData("Motif detected", "GPP");
+
+            }
+
+        }
+
     }
 
 }

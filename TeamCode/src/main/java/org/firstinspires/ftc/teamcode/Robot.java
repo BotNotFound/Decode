@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.module.RobotLift;
 import org.firstinspires.ftc.teamcode.module.Shooter;
 import org.firstinspires.ftc.teamcode.module.Spindexer;
 import org.firstinspires.ftc.teamcode.module.Turret;
+import org.firstinspires.ftc.teamcode.module.AprilTagDetector;
 
 import java.util.Arrays;
 
@@ -123,6 +124,7 @@ public class Robot {
     private final Spindexer spindexer;
     private final Turret turret;
     private final RobotLift lift;
+    private final AprilTagDetector detector;
 
     private final Telemetry telemetry;
 
@@ -146,6 +148,7 @@ public class Robot {
         spindexer = new Spindexer(hardwareMap, telemetry, preloadedArtifacts);
         turret = new Turret(hardwareMap, telemetry);
         lift = new RobotLift(hardwareMap, telemetry);
+        detector = new AprilTagDetector(hardwareMap, telemetry);
 
         this.telemetry = telemetry;
 
@@ -181,6 +184,7 @@ public class Robot {
                 break;
         }
     }
+
 
     public void logInfo() {
         telemetry.addData("Fallback Shooter RPM", fallbackRPM);
@@ -440,4 +444,6 @@ public class Robot {
     public void rotateSpindexerToPreviousSlot() {
         spindexer.rotateToPreviousSlot();
     }
+
+    public int getAprilTagID
 }

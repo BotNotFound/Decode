@@ -25,12 +25,13 @@ public enum Motif {
             case PPG:
                 return "Motif ID = 23";
             case GPP:
-                return "GPP ID = 21";
+                return "Motif ID = 21";
             case PGP:
-                return "PGP ID = 22";
+                return "Motif ID = 22";
             default:
                 return super.toString();
         }
+
     }
 
 
