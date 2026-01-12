@@ -261,10 +261,9 @@ public class Spindexer {
 
     public void updateSpindexer() {
         if (curState != SpindexerState.MANUAL_ROTATION) {
-            spindexerController.setPIDF(kP, kI, kD, kF);
-            spindexerController.setTolerance(tolerance);
-
             final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
+            spindexerController.setPIDF(kP, kI, kD, Math.copySign(kF, curError));
+            spindexerController.setTolerance(tolerance);
             setPowerInternal(spindexerController.calculate(curError));
         }
 
