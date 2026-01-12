@@ -47,8 +47,6 @@ public class Shooter {
      * (see https://www.gobilda.com/5203-series-yellow-jacket-motor-1-1-ratio-24mm-length-8mm-rex-shaft-6000-rpm-3-3-5v-encoder)
      */
     public static final double FLYWHEEL_ENCODER_RESOLUTION = 28;
-    public static final double FLYWHEEL_MOTOR_RPM = 6000;
-
 
     private boolean stickyRPM = false;
     private double stickyTargetRPM;

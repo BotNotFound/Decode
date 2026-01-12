@@ -91,17 +91,28 @@ public class AprilTagDetector {
         return null;
     }
 
-    public final void setMotifID() {
-        obeliskTagDetected = false;
+    public Motif getMotifID() {
 
         for(AprilTagDetection detection : processor.getDetections()) {
             if(detection.id == Motif.GPP.motifID) {
                 obeliskTagDetected = true;
-                telemetry.addData("Motif detected", "GPP");
-
+                telemetry.addData("Motif detected: ", "GPP");
+                return Motif.GPP;
             }
-
+            else if(detection.id == Motif.PGP.motifID){
+                obeliskTagDetected = true;
+                telemetry.addData("Motif detected: ", "PGP");
+                return Motif.PGP;
+            }
+            else if(detection.id == Motif.PPG.motifID) {
+                obeliskTagDetected = true;
+                telemetry.addData("Motif detected: ", "PPG");
+                return Motif.PPG;
+            }
         }
+        obeliskTagDetected = false;
+        telemetry.addData("Motif detected: ", "None");
+        return null;
 
     }
 
