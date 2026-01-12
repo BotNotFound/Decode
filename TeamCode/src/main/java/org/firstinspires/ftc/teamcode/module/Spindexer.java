@@ -67,7 +67,7 @@ public class Spindexer {
     public static double kP = 0.0017;
     public static double kI = 0.0;
     public static double kD = 0;
-    public static double kF = 0;
+    public static double kF = 0.08;
     public static double tolerance = 10;
 
     private double targetAngle = 0;
@@ -262,9 +262,13 @@ public class Spindexer {
     public void updateSpindexer() {
         if (curState != SpindexerState.MANUAL_ROTATION) {
             final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
-            spindexerController.setPIDF(kP, kI, kD, Math.copySign(kF, curError));
+
+            double modified_kF = Math.copySign(kF, curError);
+
+            spindexerController.setPIDF(kP, kI, kD,0);
             spindexerController.setTolerance(tolerance);
-            setPowerInternal(spindexerController.calculate(curError));
+
+            setPowerInternal(spindexerController.calculate(curError) + modified_kF);
         }
 
         updateDetectionFromSensor();
