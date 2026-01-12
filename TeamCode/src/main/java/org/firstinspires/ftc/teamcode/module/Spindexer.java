@@ -65,7 +65,7 @@ public class Spindexer {
 
     private final PIDFController spindexerController;
     public static double kP = 0.0017;
-    public static double kI = 0.01;
+    public static double kI = 0.0;
     public static double kD = 0;
     public static double kF = 0;
     public static double tolerance = 10;
