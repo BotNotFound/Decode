@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 
 public class Constants {
     public static final FollowerConstants followerConstants = new FollowerConstants()
-        .mass(9.162566)
+        .mass(11.975)
         .forwardZeroPowerAcceleration(-36.278554120599594)
         .lateralZeroPowerAcceleration(-74.29537018748395)
         .translationalPIDFCoefficients(new PIDFCoefficients(0.066, 0, 0, 0.02))
@@ -50,8 +50,8 @@ public class Constants {
     }
 
     public static final PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(32)
-            .strafePodX(8)
+            .forwardPodY(20)
+            .strafePodX(174)
             .distanceUnit(DistanceUnit.MM)
             .hardwareMapName(FieldCentricDriveTrain.PINPOINT_DRIVER_NAME)
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
