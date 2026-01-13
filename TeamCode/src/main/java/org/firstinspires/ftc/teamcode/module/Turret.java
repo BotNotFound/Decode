@@ -14,7 +14,7 @@ public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
     private final DcMotor turretMotor;
 
-    public static double kP = 0.05;
+    public static double kP = 0.059;
     public static double kI = 0;
     public static double kD = 0.0015;
     public static double kF = 0;
