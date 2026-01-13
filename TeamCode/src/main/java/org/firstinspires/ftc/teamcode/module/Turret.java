@@ -24,8 +24,8 @@ public class Turret {
     public static double DEFAULT_TURRET_ROTATION_OFFSET = 70;
     private double turretRotationOffset;
 
-    public static double TURRET_MIN_ROTATION = 45;
-    public static double TURRET_MAX_ROTATION = 225;
+    public static double TURRET_MIN_ROTATION = 0;
+    public static double TURRET_MAX_ROTATION = 270;
 
     private static double normalizeDegreesPositive(double angle) {
         angle %= 360;
