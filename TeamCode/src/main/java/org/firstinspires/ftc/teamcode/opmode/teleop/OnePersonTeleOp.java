@@ -107,4 +107,9 @@ public class OnePersonTeleOp extends OpMode {
             robot.resetFieldCentricHeading();
         }
     }
+
+    @Override
+    public void stop() {
+        robot.savePersistentState();
+    }
 }

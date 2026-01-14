@@ -70,6 +70,11 @@ public class Robot {
             return true;
         }
 
+        public static void clearPersistentState() {
+            Log.i(TAG, "Cleared robot state");
+            saved = null;
+        }
+
         @NonNull
         @Override
         public String toString() {
@@ -81,6 +86,10 @@ public class Robot {
                     Arrays.toString(artifactDetections) +
                     " }";
         }
+    }
+
+    public static void clearPersistentState() {
+        PersistentState.clearPersistentState();
     }
 
     public void savePersistentState() {
@@ -300,75 +309,80 @@ public class Robot {
     }
 
     public void loopWithoutMovement() {
-        if (currentState == RobotState.PARK) {
-            return;
-        }
+        try {
+            if (currentState == RobotState.PARK) {
+                return;
+            }
 
-        final Pose2D robotPose = driveTrain.getRobotPose();
-        final double goalOffsetX = allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH);
-        final double goalOffsetY = allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH);
-        turret.aimAtGoal(
-                goalOffsetX,
-                goalOffsetY,
-                robotPose.getHeading(AngleUnit.RADIANS),
-                AngleUnit.RADIANS
-        );
+            final Pose2D robotPose = driveTrain.getRobotPose();
+            final double goalOffsetX = allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH);
+            final double goalOffsetY = allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH);
+            turret.aimAtGoal(
+                    goalOffsetX,
+                    goalOffsetY,
+                    robotPose.getHeading(AngleUnit.RADIANS),
+                    AngleUnit.RADIANS
+            );
 
-        spindexer.updateSpindexer();
-        turret.update();
+            spindexer.updateSpindexer();
+            turret.update();
 
-        switch (currentState) {
-            case MANUAL_SHOOT:
-            case SHOOT:
-                prepareToShoot(goalOffsetX, goalOffsetY);
+            switch (currentState) {
+                case MANUAL_SHOOT:
+                case SHOOT:
+                    prepareToShoot(goalOffsetX, goalOffsetY);
 
-                if (!isShotReady()) {
-                    spindexer.loadNextArtifact();
-                    if (shotReady) {
-                        shotsTaken++;
-                        Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
+                    if (!isShotReady()) {
+                        spindexer.loadNextArtifact();
+                        if (shotReady) {
+                            shotsTaken++;
+                            Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
 
+                        }
+                        shotReady = false;
+                        break;
                     }
-                    shotReady = false;
+
+                    shooter.engageKicker();
+                    if (!shotReady) {
+                        spindexer.shootLoadedArtifact();
+                        Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
+                        shotPrepTime.reset();
+                        shotReady = true;
+                        timeSinceShotReady.reset();
+                    }
                     break;
-                }
 
-                shooter.engageKicker();
-                if (!shotReady) {
-                    spindexer.shootLoadedArtifact();
-                    Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
-                    shotPrepTime.reset();
-                    shotReady = true;
-                    timeSinceShotReady.reset();
-                }
-                break;
+                case MANUAL_PRE_SHOOT:
+                case PRE_SHOOT:
+                    prepareToShoot(goalOffsetX, goalOffsetY);
+                    holdUpBall();
+                    break;
 
-            case MANUAL_PRE_SHOOT:
-            case PRE_SHOOT:
-                prepareToShoot(goalOffsetX, goalOffsetY);
-                holdUpBall();
-                break;
+                case INTAKE:
+                    spindexer.intakeIntoEmptySlot();
+                    if (spindexer.hasAllArtifacts()) {
+                        intake.idleWithBall();
+                    }
+                    else {
+                        intake.startIntake();
+                    }
+                    break;
 
-            case INTAKE:
-                spindexer.intakeIntoEmptySlot();
-                if (spindexer.hasAllArtifacts()) {
-                    intake.idleWithBall();
-                }
-                else {
-                    intake.startIntake();
-                }
-                break;
+                case REVERSE_INTAKE:
+                case PARK:
+                    break;
 
-            case REVERSE_INTAKE:
-            case PARK:
-                break;
+                case NONE:
+                    holdUpBall();
+                    break;
+            }
 
-            case NONE:
-                holdUpBall();
-                break;
+            logInfo();
+        } catch (RuntimeException e) {
+            // save state on a crash to (hopefully) recover on next run
+            savePersistentState();
         }
-
-        logInfo();
     }
 
     private void holdUpBall() {

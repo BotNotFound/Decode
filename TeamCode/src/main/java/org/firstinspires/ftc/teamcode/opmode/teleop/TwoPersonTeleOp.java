@@ -109,4 +109,9 @@ public class TwoPersonTeleOp extends OpMode {
             robot.resetFieldCentricHeading();
         }
     }
+
+    @Override
+    public void stop() {
+        robot.savePersistentState();
+    }
 }
