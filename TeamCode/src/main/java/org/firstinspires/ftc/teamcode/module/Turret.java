@@ -27,16 +27,16 @@ public class Turret {
     public static double TURRET_MIN_ROTATION = 0;
     public static double TURRET_MAX_ROTATION = 270;
 
-    private static double normalizeDegreesPositive(double angle) {
+    private static double normalizeDegrees(double angle) {
         angle %= 360;
-        if (angle < 0) {
+        if (angle < (TURRET_MAX_ROTATION - 360) / 2) {
             angle += 360;
         }
         return angle;
     }
 
     private static double clampToSafeRotation(double angle) {
-        angle = normalizeDegreesPositive(angle);
+        angle = normalizeDegrees(angle);
         if (angle < TURRET_MIN_ROTATION) {
             return TURRET_MIN_ROTATION;
         }
@@ -77,13 +77,13 @@ public class Turret {
         final int currentPosition = turretMotor.getCurrentPosition() * (
                 turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE ? -1 : 1
         );
-        final double currentHeadingDegrees = normalizeDegreesPositive((currentPosition / TICKS_PER_REVOLUTION * 360) + turretRotationOffset);
+        final double currentHeadingDegrees = normalizeDegrees((currentPosition / TICKS_PER_REVOLUTION * 360) + turretRotationOffset);
         return angleUnit.getUnnormalized().fromDegrees(currentHeadingDegrees);
     }
 
     public void setCurrentHeading(double heading, AngleUnit unit) {
         turretMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        turretRotationOffset = normalizeDegreesPositive(unit.getUnnormalized().toDegrees(heading));
+        turretRotationOffset = normalizeDegrees(unit.getUnnormalized().toDegrees(heading));
         turretMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
