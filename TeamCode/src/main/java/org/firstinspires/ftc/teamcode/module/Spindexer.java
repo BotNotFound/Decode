@@ -329,8 +329,10 @@ public class Spindexer {
 
     public void intakeIntoEmptySlot() {
         if (hasAllArtifacts()) {
+            Log.v(TAG, "Couldn't find an empty slot to intake into");
             return;
         }
+        Log.v(TAG, "Looking for empty slot...");
 
         ArtifactLocation location = activeLocation;
         if (location == null) {
@@ -342,10 +344,12 @@ public class Spindexer {
         }
 
         intakeIntoLocation(location);
+        Log.v(TAG, "Found empty slot " + location + " to intake into");
     }
 
     public void loadNextArtifact() {
         if (hasNoArtifacts()) {
+            Log.v(TAG, "Couldn't find an artifact to load");
             return;
         }
 
@@ -353,12 +357,14 @@ public class Spindexer {
         if (location == null) {
             location = ArtifactLocation.SLOT_ONE;
         }
+        Log.v(TAG, "Looking for artifact...");
 
         while (!hasArtifact(location)) {
             location = location.getNextLocation();
         }
 
         loadFromLocation(location);
+        Log.v(TAG, "Found artifact " + location + " to load");
     }
 
     public void beginIntaking() {
@@ -370,6 +376,7 @@ public class Spindexer {
     }
 
     public void shootLoadedArtifact() {
+        Log.v(TAG, "Shooting artifact + " + activeLocation + "...");
         if (curState == SpindexerState.LOADING && activeLocation != null) {
             artifactDetections[activeLocation.ordinal()] = false;
             rotateToNextSlot();
