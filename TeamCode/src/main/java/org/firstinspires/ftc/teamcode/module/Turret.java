@@ -64,7 +64,7 @@ public class Turret {
 
         turretRotationOffset = DEFAULT_TURRET_ROTATION_OFFSET;
 
-        aimController = new PIDFController(kP, kI, kD, kF);
+        aimController = new PIDFController(kP, kI, kD, 0);
         aimController.setTolerance(tolerance);
         aimController.setSetPoint(getCurrentHeading(AngleUnit.DEGREES));
 
@@ -102,9 +102,9 @@ public class Turret {
     }
 
     public void update() {
-        aimController.setPIDF(kP, kI, kD, kF);
+        aimController.setPIDF(kP, kI, kD, 0);
         aimController.setTolerance(tolerance);
-        turretMotor.setPower(aimController.calculate(getCurrentHeading(AngleUnit.DEGREES)));
+        turretMotor.setPower(aimController.calculate(getCurrentHeading(AngleUnit.DEGREES)) + kF * Math.signum(aimController.getPositionError()));
     }
 
     public void setPower(double power) {
