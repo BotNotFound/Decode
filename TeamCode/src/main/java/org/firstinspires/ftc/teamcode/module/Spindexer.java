@@ -139,12 +139,10 @@ public class Spindexer {
     }
 
     public boolean hasArtifact(ArtifactLocation location) {
-        updateDetectionFromSensor();
         return artifactDetections[location.ordinal()];
     }
 
     public boolean hasAllArtifacts() {
-        updateDetectionFromSensor();
         for (boolean ballDetection : artifactDetections) {
             if (!ballDetection) {
                 return false;
@@ -154,7 +152,6 @@ public class Spindexer {
     }
 
     public boolean hasNoArtifacts() {
-        updateDetectionFromSensor();
         for (boolean detection : artifactDetections) {
             if (detection) {
                 return false;
@@ -164,7 +161,6 @@ public class Spindexer {
     }
 
     public int getArtifactCount() {
-        updateDetectionFromSensor();
         int artifacts = 0;
         for (boolean detection : artifactDetections) {
             if (detection) {
