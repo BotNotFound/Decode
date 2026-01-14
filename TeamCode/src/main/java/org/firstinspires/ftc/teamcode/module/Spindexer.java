@@ -64,7 +64,7 @@ public class Spindexer {
     };
 
     private final PIDFController spindexerController;
-    public static double kP = 0.0016;
+    public static double kP = 0.002;
     public static double kI = 0.00025;
     public static double kD = 0;
     public static double kF = 0.045;
@@ -262,6 +262,7 @@ public class Spindexer {
     public void updateSpindexer() {
         if (curState != SpindexerState.MANUAL_ROTATION) {
             final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
+
 
             spindexerController.setPIDF(kP, kI, kD, 0);
             spindexerController.setTolerance(tolerance);

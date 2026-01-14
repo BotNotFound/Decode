@@ -25,7 +25,7 @@ public class Shooter {
     public static double KICKER_LAUNCH_POSITION = 0.15;
 
 
-    public static double HOOD_SERVO_MIN_POSITION = 0.3;
+    public static double HOOD_SERVO_MIN_POSITION = 0.32;
 
     public static double HOOD_SERVO_MAX_POSITION = 0.8;
 

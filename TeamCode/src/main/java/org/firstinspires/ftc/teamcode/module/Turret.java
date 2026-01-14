@@ -18,7 +18,7 @@ public class Turret {
     public static double kI = 0;
     public static double kD = 0.0015;
     public static double kF = 0;
-    public static double tolerance = 1;
+    public static double tolerance = 5;
     private final PIDFController aimController;
 
     public static double DEFAULT_TURRET_ROTATION_OFFSET = 70;
