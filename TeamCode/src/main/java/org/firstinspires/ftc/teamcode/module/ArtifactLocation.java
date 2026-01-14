@@ -21,11 +21,11 @@ public enum ArtifactLocation {
     public ArtifactLocation getNextLocation() {
         switch (this) {
             case SLOT_ONE:
-                return SLOT_TWO;
-            case SLOT_TWO:
                 return SLOT_THREE;
-            case SLOT_THREE:
+            case SLOT_TWO:
                 return SLOT_ONE;
+            case SLOT_THREE:
+                return SLOT_TWO;
         }
         throw new IllegalStateException();
     }
@@ -33,11 +33,11 @@ public enum ArtifactLocation {
     public ArtifactLocation getPreviousLocation() {
         switch (this) {
             case SLOT_ONE:
-                return SLOT_THREE;
-            case SLOT_TWO:
-                return SLOT_ONE;
-            case SLOT_THREE:
                 return SLOT_TWO;
+            case SLOT_TWO:
+                return SLOT_THREE;
+            case SLOT_THREE:
+                return SLOT_ONE;
         }
         throw new IllegalStateException();
     }
