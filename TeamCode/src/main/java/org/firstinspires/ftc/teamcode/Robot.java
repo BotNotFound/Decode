@@ -261,6 +261,7 @@ public class Robot {
             case SHOOT:
                 lift.lowerRobot();
                 intake.stopIntake();
+                shooter.engageKicker();
 
                 shotReady = false;
                 shotPrepTime.reset();
@@ -344,7 +345,6 @@ public class Robot {
                         break;
                     }
 
-                    shooter.engageKicker();
                     spindexer.setPower(-1);
                     if (!shotReady) {
                         Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
