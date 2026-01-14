@@ -10,6 +10,7 @@ public class ClearRobotState extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addLine("!THIS WILL CLEAR ROBOT STATE!");
+        telemetry.update();
         waitForStart();
         Robot.clearPersistentState();
     }
