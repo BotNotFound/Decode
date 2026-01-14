@@ -64,11 +64,11 @@ public class Spindexer {
     };
 
     private final PIDFController spindexerController;
-    public static double kP = 0.0017;
-    public static double kI = 0.0;
+    public static double kP = 0.0016;
+    public static double kI = 0.00025;
     public static double kD = 0;
-    public static double kF = 0.08;
-    public static double tolerance = 10;
+    public static double kF = 0.045;
+    public static double tolerance = 8;
 
     private double targetAngle = 0;
 
