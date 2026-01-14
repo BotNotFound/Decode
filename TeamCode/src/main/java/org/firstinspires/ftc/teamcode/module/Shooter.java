@@ -107,10 +107,8 @@ public class Shooter {
         /*idea behind hoodPositions interplut is so that we adjust the hood so we always hit the back of the goal at a low height.
         We map the rpm(x) to a hood position(y)
          */
-        hoodPositions.add(41, 0.41);
-        hoodPositions.add(61, 0.61);
-        hoodPositions.add(67, 0.67);
-        hoodPositions.add(69, 0.69);
+        hoodPositions.add(Double.NEGATIVE_INFINITY, (HOOD_SERVO_MAX_POSITION + HOOD_SERVO_MIN_POSITION) / 2);
+        hoodPositions.add(Double.POSITIVE_INFINITY, (HOOD_SERVO_MAX_POSITION + HOOD_SERVO_MIN_POSITION) / 2);
         hoodPositions.createLUT();
 
 
