@@ -345,7 +345,7 @@ public class Robot {
                     }
 
                     shooter.engageKicker();
-                    spindexer.setPower(1);
+                    spindexer.setPower(-1);
                     if (!shotReady) {
                         Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
                         shotPrepTime.reset();
