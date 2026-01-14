@@ -379,9 +379,13 @@ public class Robot {
             }
 
             logInfo();
-        } catch (RuntimeException e) {
+        } catch (Throwable e) {
+            Log.e(TAG, "An exception was encountered; saving state", e);
             // save state on a crash to (hopefully) recover on next run
             savePersistentState();
+
+            // actually crash
+            throw e;
         }
     }
 
