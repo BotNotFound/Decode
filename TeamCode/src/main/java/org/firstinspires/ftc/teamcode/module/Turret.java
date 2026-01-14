@@ -104,7 +104,13 @@ public class Turret {
     public void update() {
         aimController.setPIDF(kP, kI, kD, 0);
         aimController.setTolerance(tolerance);
-        turretMotor.setPower(aimController.calculate(getCurrentHeading(AngleUnit.DEGREES)) + kF * Math.signum(aimController.getPositionError()));
+
+        double power = aimController.calculate(getCurrentHeading(AngleUnit.DEGREES));
+        if (!aimController.atSetPoint()) {
+            power += kF * Math.signum(aimController.getPositionError());
+        }
+
+        turretMotor.setPower(power);
     }
 
     public void setPower(double power) {
