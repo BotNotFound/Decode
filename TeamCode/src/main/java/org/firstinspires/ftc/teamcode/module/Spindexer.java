@@ -120,7 +120,11 @@ public class Spindexer {
         }
 
         double dist = frontColorSensor.getDistance(DistanceUnit.CM);
-        artifactDetections[activeLocation.ordinal()] = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+        boolean detected = dist <= ARTIFACT_DISTANCE_THRESHOLD_CM;
+        if (detected != artifactDetections[activeLocation.ordinal()]) {
+            Log.v(TAG, "Detection update: " + activeLocation + " = " + detected);
+        }
+        artifactDetections[activeLocation.ordinal()] = detected;
     }
 
     public ArtifactLocation getActiveLocation() {
