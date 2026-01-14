@@ -261,7 +261,6 @@ public class Robot {
             case SHOOT:
                 lift.lowerRobot();
                 intake.stopIntake();
-                spindexer.loadNextArtifact();
 
                 shotReady = false;
                 shotPrepTime.reset();
@@ -272,6 +271,8 @@ public class Robot {
                         (spindexer.hasArtifact(ArtifactLocation.SLOT_TWO) ? "2 | " : "  | ") +
                         (spindexer.hasArtifact(ArtifactLocation.SLOT_THREE) ? "3" : " ") +
                         "}");
+
+                spindexer.setArtifactDetections(new boolean[ArtifactLocation.values().length]);
                 break;
 
             case NONE:
@@ -333,7 +334,7 @@ public class Robot {
                     prepareToShoot(goalOffsetX, goalOffsetY);
 
                     if (!isShotReady()) {
-                        spindexer.loadNextArtifact();
+                        spindexer.setPower(0);
                         if (shotReady) {
                             shotsTaken++;
                             Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
@@ -344,8 +345,8 @@ public class Robot {
                     }
 
                     shooter.engageKicker();
+                    spindexer.setPower(1);
                     if (!shotReady) {
-                        spindexer.shootLoadedArtifact();
                         Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
                         shotPrepTime.reset();
                         shotReady = true;
