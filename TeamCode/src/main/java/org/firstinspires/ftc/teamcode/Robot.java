@@ -26,7 +26,7 @@ import java.util.Arrays;
 public class Robot {
     private static final String TAG = "Robot";
 
-    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 125.5, 128, AngleUnit.DEGREES, 35);
+    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 117.5, 130.9, AngleUnit.DEGREES, 36);
 
     private static final class PersistentState {
         private static PersistentState saved = null;
