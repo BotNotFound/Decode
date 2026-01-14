@@ -265,11 +265,11 @@ public class Spindexer {
 
             double modified_kF = 0;
 
-            if(! spindexerController.atSetPoint()){
+            if (!spindexerController.atSetPoint()) {
                 modified_kF = Math.copySign(kF, curError);
             }
 
-            spindexerController.setPIDF(kP, kI, kD,0);
+            spindexerController.setPIDF(kP, kI, kD, 0);
             spindexerController.setTolerance(tolerance);
 
             setPowerInternal(spindexerController.calculate(curError) + modified_kF);
