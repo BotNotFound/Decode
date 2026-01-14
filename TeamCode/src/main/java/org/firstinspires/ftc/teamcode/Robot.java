@@ -89,11 +89,7 @@ public class Robot {
 
     public void tryLoadPersistentState() {
         if (!PersistentState.tryLoadRobotState(this)) {
-            telemetry.addData("Persistent State Attempt", "Loading default state");
             loadDefaultState();
-        }
-        else{
-            telemetry.addData("Persistent State Attempt", "Loading saved state");
         }
     }
 
@@ -301,11 +297,9 @@ public class Robot {
             setDrivePowers(drivePower, strafePower, turnPower);
         }
         loopWithoutMovement();
-        savePersistentState();
     }
 
     public void loopWithoutMovement() {
-
         if (currentState == RobotState.PARK) {
             return;
         }
