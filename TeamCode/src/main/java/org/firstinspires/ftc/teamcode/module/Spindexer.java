@@ -265,15 +265,20 @@ public class Spindexer {
         if (curState != SpindexerState.MANUAL_ROTATION) {
             final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
 
-
             spindexerController.setPIDF(kP, kI, kD, kF);
             spindexerController.setTolerance(tolerance);
             spindexerController.setFeedforwardThreshold(feedForwardThreshold);
 
-            setPowerInternal(spindexerController.calculate(curError));
+            final double power = spindexerController.calculate(curError);
+
+            // we need to update detections after power is calculated (so spindexerController
+            // will check if we're in tolerance using our updated current position) but before
+            // power is applied (so time delay won't cause a false detection)
+            updateDetectionFromSensor();
+
+            setPowerInternal(power);
         }
 
-        updateDetectionFromSensor();
         indicatorLight.setPosition(INDICATOR_COLORS[Math.min(getArtifactCount(), INDICATOR_COLORS.length)]);
     }
 
