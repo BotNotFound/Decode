@@ -19,6 +19,9 @@ public class FieldCentricDriveTrain {
     public static double ROBOT_HEIGHT = 18.0;
     public static double FIELD_WIDTH = 144.0;
     public static double FIELD_HEIGHT = 144.0;
+    public static double PINPOINT_X_OFFSET = -301.5;
+    public static double PINPOINT_Y_OFFSET = 16;
+    public static DistanceUnit PINPOINT_OFFSET_UNIT = DistanceUnit.MM;
 
     public static final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "Front Right";
     public static final String FRONT_LEFT_DRIVE_MOTOR_NAME = "Front Left";
@@ -62,7 +65,7 @@ public class FieldCentricDriveTrain {
         this.telemetry = telemetry;
 
         pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class, PINPOINT_DRIVER_NAME);
-        pinpointDriver.setOffsets(-301.5, 16, DistanceUnit.MM);
+        pinpointDriver.setOffsets(PINPOINT_X_OFFSET, PINPOINT_Y_OFFSET, PINPOINT_OFFSET_UNIT);
         pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpointDriver.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpointDriver.resetPosAndIMU();

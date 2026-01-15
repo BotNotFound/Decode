@@ -12,7 +12,6 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 
 public class Constants {
@@ -50,9 +49,9 @@ public class Constants {
     }
 
     public static final PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(20)
-            .strafePodX(174)
-            .distanceUnit(DistanceUnit.MM)
+            .forwardPodY(FieldCentricDriveTrain.PINPOINT_Y_OFFSET)
+            .strafePodX(FieldCentricDriveTrain.PINPOINT_X_OFFSET)
+            .distanceUnit(FieldCentricDriveTrain.PINPOINT_OFFSET_UNIT)
             .hardwareMapName(FieldCentricDriveTrain.PINPOINT_DRIVER_NAME)
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
             // adjust these in the encoder tests
