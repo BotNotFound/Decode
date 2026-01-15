@@ -109,6 +109,7 @@ public class Robot {
     public enum RobotState {
         INTAKE,             // Robot is collecting artifacts on the field
         REVERSE_INTAKE,     // Robot is ejecting artifacts
+        GATE_INTAKE,        // Robot is intaking during auto at the gate
         PRE_SHOOT,          // Robot is preparing to shoot, but cannot actually launch artifacts
         MANUAL_PRE_SHOOT,   // Robot is preparing to shoot at a hardcoded speed (used for tuning)
         SHOOT,              // Robot is shooting artifacts into the goal
@@ -236,6 +237,7 @@ public class Robot {
         stateStopwatch.reset();
 
         switch (newState) {
+            case GATE_INTAKE:
             case INTAKE:
                 spindexer.intakeIntoEmptySlot();
                 shooter.disengageKicker();
@@ -371,6 +373,7 @@ public class Robot {
                     break;
 
                 case REVERSE_INTAKE:
+                case GATE_INTAKE:
                 case PARK:
                     break;
 

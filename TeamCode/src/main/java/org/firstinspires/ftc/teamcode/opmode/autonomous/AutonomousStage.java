@@ -19,11 +19,13 @@ public class AutonomousStage {
      */
     public static long MIN_SHOT_DURATION_MILLIS = 2500;
     public static long MAX_SHOT_DURATION_MILLIS = 4000;
+    public static long TIME_TO_INTAKE_FROM_GATE = 1800;
 
     private final PathChain path;
     private final Robot.RobotState robotState;
     private final Timing.Timer minShotTimer;
     private final Timing.Timer maxShotTimer;
+    private final Timing.Timer gateIntakeTimer;
 
     private boolean complete;
     private int ballsHeldAtStart;
@@ -39,6 +41,7 @@ public class AutonomousStage {
         this.robotState = robotState;
         minShotTimer = new Timing.Timer(MIN_SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
         maxShotTimer = new Timing.Timer(MAX_SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
+        gateIntakeTimer = new Timing.Timer(TIME_TO_INTAKE_FROM_GATE, TimeUnit.MILLISECONDS);
         complete = false;
     }
 
@@ -60,6 +63,14 @@ public class AutonomousStage {
                 // this state does nothing other than movement, we are complete
                 return true;
             case INTAKE:
+
+            case GATE_INTAKE:
+                gateIntakeTimer.start();
+                if(gateIntakeTimer.done() || (robot.getHeldArtifactCount() == 3)){
+                    return true;
+                }
+                return false;
+
             case REVERSE_INTAKE:
                 // these states are only useful when the robot is moving
                 return true;
