@@ -14,11 +14,12 @@ public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
     private final DcMotor turretMotor;
 
-    public static double kP = 0.059;
+    public static double kP = 0.07;
     public static double kI = 0;
-    public static double kD = 0.0015;
-    public static double kF = 0;
+    public static double kD = 0.001;
+    public static double kF = 0.1;
     public static double tolerance = 5;
+    public static double ENGAGED_KF_MIN_ERROR = 1.5;
     private final PIDFController aimController;
 
     public static double DEFAULT_TURRET_ROTATION_OFFSET = 70;
@@ -106,8 +107,9 @@ public class Turret {
         aimController.setTolerance(tolerance);
 
         double power = aimController.calculate(getCurrentHeading(AngleUnit.DEGREES));
-        if (!aimController.atSetPoint()) {
-            power += kF * Math.signum(aimController.getPositionError());
+        final double error = aimController.getPositionError();
+        if (Math.abs(error) >= ENGAGED_KF_MIN_ERROR) {
+            power += kF * Math.signum(error);
         }
 
         turretMotor.setPower(power);
