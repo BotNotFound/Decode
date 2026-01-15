@@ -19,8 +19,10 @@ public class FieldCentricDriveTrain {
     public static double ROBOT_HEIGHT = 18.0;
     public static double FIELD_WIDTH = 144.0;
     public static double FIELD_HEIGHT = 144.0;
-    public static double PINPOINT_X_OFFSET = -301.5;
-    public static double PINPOINT_Y_OFFSET = 16;
+
+    // Offsets are based on center of turret, not center of robot
+    public static double PINPOINT_X_OFFSET = -194;
+    public static double PINPOINT_Y_OFFSET = 96;
     public static DistanceUnit PINPOINT_OFFSET_UNIT = DistanceUnit.MM;
 
     public static final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "Front Right";

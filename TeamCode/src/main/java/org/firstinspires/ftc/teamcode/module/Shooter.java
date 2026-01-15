@@ -88,18 +88,16 @@ public class Shooter {
         //TODO: tune table (probably)
         flywheelSpeeds = new InterpLUT();
         // the control points have to be in increasing order
-        flywheelSpeeds.add(28.0, 2500); // extrapolated lower bound
-        flywheelSpeeds.add(31.3, 2600);
-        flywheelSpeeds.add(36.1, 2675);
-        flywheelSpeeds.add(47.0, 2825);
-        flywheelSpeeds.add(55, 2900);
-        flywheelSpeeds.add(62.3, 3050);
-        flywheelSpeeds.add(74.5, 3125);
-        flywheelSpeeds.add(84, 3400);
-        flywheelSpeeds.add(93.4, 3525);
-        flywheelSpeeds.add(101.3, 3675);
-        flywheelSpeeds.add(121.5, 3950);
-        flywheelSpeeds.add(130, 4050); // extrapolated upper bound
+        flywheelSpeeds.add(0, 2000); // extrapolated lower bound
+        flywheelSpeeds.add(46.79854459800701, 2425);
+        flywheelSpeeds.add(68.78117471395568, 2500);
+        flywheelSpeeds.add(86, 2750);
+
+        flywheelSpeeds.add(103.68588631116245, 2975);
+        flywheelSpeeds.add(106.47453701719283, 3100);
+        flywheelSpeeds.add(139.90391077047641, 3700);
+        flywheelSpeeds.add(152.20077845265857, 3900);
+        flywheelSpeeds.add(160, 4030); // extrapolated upper bound
         flywheelSpeeds.createLUT();
 
         //TODO: tune hood interplut
@@ -107,8 +105,16 @@ public class Shooter {
         /*idea behind hoodPositions interplut is so that we adjust the hood so we always hit the back of the goal at a low height.
         We map the rpm(x) to a hood position(y)
          */
-        hoodPositions.add(Double.NEGATIVE_INFINITY, (HOOD_SERVO_MAX_POSITION + HOOD_SERVO_MIN_POSITION) / 2);
-        hoodPositions.add(Double.POSITIVE_INFINITY, (HOOD_SERVO_MAX_POSITION + HOOD_SERVO_MIN_POSITION) / 2);
+        hoodPositions.add(-6000, 0.1);
+        hoodPositions.add(0, HOOD_SERVO_MIN_POSITION);
+        hoodPositions.add(2425, 0.151);
+        hoodPositions.add(2500, 0.25);
+        hoodPositions.add(2650, 0.3);
+        hoodPositions.add(2975, 0.35);
+        hoodPositions.add(3100, 0.4);
+        hoodPositions.add(3700, 0.55);
+        hoodPositions.add(3900, 0.575);
+        hoodPositions.add(6000, HOOD_SERVO_MAX_POSITION); // extended max position
         hoodPositions.createLUT();
 
 
@@ -158,10 +164,7 @@ public class Shooter {
     }
 
     public void setHoodPosition(double position) {
-        if (position < HOOD_SERVO_MIN_POSITION) {
-            hoodServo.setPosition(HOOD_SERVO_MIN_POSITION);
-        }
-        hoodServo.setPosition(Math.min(position, HOOD_SERVO_MAX_POSITION));
+        hoodServo.setPosition(Math.min(Math.max(position, HOOD_SERVO_MIN_POSITION), HOOD_SERVO_MAX_POSITION));
     }
 
     public void adjustHood() {

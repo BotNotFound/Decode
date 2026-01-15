@@ -26,7 +26,8 @@ import java.util.Arrays;
 public class Robot {
     private static final String TAG = "Robot";
 
-    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 117.5, 130.9, AngleUnit.DEGREES, 36);
+    // again, based on the turret position, not the center of the robot (because the turret is what matters)
+    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 115.5, 129.4, AngleUnit.DEGREES, 36);
 
     private static final class PersistentState {
         private static PersistentState saved = null;
@@ -255,7 +256,7 @@ public class Robot {
             case MANUAL_PRE_SHOOT:
             case PRE_SHOOT:
                 intake.stopIntake();
-                shooter.disengageKicker();
+                shooter.engageKicker();
                 lift.lowerRobot();
                 break;
 
