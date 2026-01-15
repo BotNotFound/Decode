@@ -208,12 +208,14 @@ public class FieldCentricDriveTrain {
                                 robotY + rotY(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading)
                         }
                 )
-                .strokeText(
+                .setFill("black")
+                .fillText(
                         "Robot",
                         robotX,
                         robotY,
-                        "8px Arial",
-                        robotHeading
+                        "4px Arial",
+                        robotHeading,
+                        false
                 );
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
