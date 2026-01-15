@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.module;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -13,6 +15,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 @Config
 public class FieldCentricDriveTrain {
+    public static double ROBOT_WIDTH = 18.0;
+    public static double ROBOT_HEIGHT = 18.0;
+    public static double FIELD_WIDTH = 144.0;
+    public static double FIELD_HEIGHT = 144.0;
+
     public static final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "Front Right";
     public static final String FRONT_LEFT_DRIVE_MOTOR_NAME = "Front Left";
     public static final String BACK_RIGHT_DRIVE_MOTOR_NAME = "Back Right";
@@ -82,8 +89,8 @@ public class FieldCentricDriveTrain {
 
         double curRotation = getFieldCentricHeading();
 
-        double rotDrive = drive * Math.cos(curRotation) - strafe * Math.sin(curRotation);
-        double rotStrafe = drive * Math.sin(curRotation) + strafe * Math.cos(curRotation);
+        double rotDrive = rotX(drive, strafe, curRotation);
+        double rotStrafe = rotY(drive, strafe, curRotation);
 
         double leftFrontPower = rotDrive + rotStrafe + turn;
         double leftBackPower = rotDrive - rotStrafe + turn;
@@ -164,8 +171,50 @@ public class FieldCentricDriveTrain {
         setPower(getDrivePower(), getStrafePower(), power);
     }
 
+    private static double rotX(double x, double y, double angle) {
+        return x * Math.cos(angle) - y * Math.sin(angle);
+    }
+
+    private static double rotY(double x, double y, double angle) {
+        return x * Math.sin(angle) + y * Math.cos(angle);
+    }
+
     public void logInfo() {
-        telemetry.addData("Robot Pose", getRobotPose());
+        final Pose2D robotPose = getRobotPose();
+        telemetry.addData("Robot Pose", robotPose);
         telemetry.addData("Field Centric Heading", getFieldCentricHeading());
+
+        if (!FtcDashboard.getInstance().isEnabled()) {
+            return;
+        }
+
+        final double robotX = -robotPose.getX(DistanceUnit.INCH) + (FIELD_WIDTH / 2);
+        final double robotY = robotPose.getX(DistanceUnit.INCH) - (FIELD_HEIGHT / 2);
+        final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
+        final TelemetryPacket packet = new TelemetryPacket();
+        packet.fieldOverlay()
+                .setFill("red")
+                .fillPolygon(
+                        new double[]{
+                                robotX + rotX(ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading),
+                                robotX + rotX(ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
+                                robotX + rotX(-ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
+                                robotX + rotX(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading)
+                        },
+                        new double[]{
+                                robotY + rotY(ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading),
+                                robotY + rotY(ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
+                                robotY + rotY(-ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
+                                robotY + rotY(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading)
+                        }
+                )
+                .strokeText(
+                        "Robot",
+                        robotX,
+                        robotY,
+                        "8px Arial",
+                        robotHeading
+                );
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 }
