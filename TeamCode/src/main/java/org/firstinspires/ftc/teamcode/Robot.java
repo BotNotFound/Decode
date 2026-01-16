@@ -207,12 +207,12 @@ public class Robot {
         }
         final Pose2D robotPose = getRobotPose();
 
-        final double robotX = -robotPose.getX(DistanceUnit.INCH) + (FIELD_WIDTH / 2);
-        final double robotY = robotPose.getY(DistanceUnit.INCH) - (FIELD_LENGTH / 2);
+        final double robotX = -robotPose.getY(DistanceUnit.INCH) + (FIELD_WIDTH / 2);
+        final double robotY = -robotPose.getX(DistanceUnit.INCH) - (FIELD_LENGTH / 2);
         final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
 
         final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS) + robotHeading;
-        final double turretLength = Math.sqrt(ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH);
+        final double turretLength = Math.sqrt(ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH) / 2;
         final double turretOffsetX = turretLength * Math.cos(turretHeading);
         final double turretOffsetY = turretLength * Math.sin(turretHeading);
 
@@ -249,7 +249,7 @@ public class Robot {
                 robotX,
                 robotY,
                 "4px Arial",
-                -robotHeading + Math.PI / 2,
+                -robotHeading - Math.PI / 2,
                 false
             )
             .setStroke("black")
