@@ -13,9 +13,9 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.OnePersonTeleOp;
 @Config
 @TeleOp(group = "test")
 public class PositionLogger extends OnePersonTeleOp {
-    public static double START_X = 125.5;
-    public static double START_Y = 128;
-    public static double START_HEADING = 35;
+    public static double START_X = 115.5;
+    public static double START_Y = 129.4;
+    public static double START_HEADING = 36;
 
     private GoBildaPinpointDriver pinpoint;
 
