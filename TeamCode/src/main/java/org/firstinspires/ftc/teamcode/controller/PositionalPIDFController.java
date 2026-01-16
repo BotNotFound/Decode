@@ -12,7 +12,7 @@ public class PositionalPIDFController extends PIDController {
 
     @Override
     public double calculate(double pv) {
-        final double pidPower = super.calculate();
+        final double pidPower = super.calculate(pv);
         final double error = getPositionError();
         if (Math.abs(error) < feedforwardThreshold) {
             return pidPower;
