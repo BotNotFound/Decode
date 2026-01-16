@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 public class FifteenArtifactAutoRed extends AutonomousBase{
 
     public FifteenArtifactAutoRed() {
-        super(new Pose(118.890, 127.724, Math.toRadians(44)), AllianceColor.RED);
+        super(new Pose(115.5, 129.4, 36), AllianceColor.RED);
 
     }
 

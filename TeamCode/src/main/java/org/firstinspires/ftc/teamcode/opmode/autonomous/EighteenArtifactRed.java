@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 //TODO: Please tune the  positions and headings using PositionLogger, do not remove this TODO unless done so.
 public class EighteenArtifactRed extends AutonomousBase{
     public EighteenArtifactRed() {
-        super(new Pose(118.890, 127.724, Math.toRadians(44)), AllianceColor.RED);
+        super(new Pose(115.5, 129.4, 36), AllianceColor.RED);
     }
 
     @Override
