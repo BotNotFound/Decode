@@ -201,7 +201,8 @@ public class Robot {
     }
 
     private void drawRobot() {
-        if (!FtcDashboard.getInstance().isEnabled()) {
+        final FtcDashboard dashboard = FtcDashboard.getInstance();
+        if (!dashboard.isEnabled()) {
             return;
         }
         final Pose2D robotPose = getRobotPose();
@@ -210,7 +211,7 @@ public class Robot {
         final double robotY = robotPose.getY(DistanceUnit.INCH) - (FIELD_LENGTH / 2);
         final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
 
-        final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS);
+        final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS) + robotHeading;
         final double turretLength = Math.sqrt(ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH);
         final double turretOffsetX = turretLength * Math.cos(turretHeading);
         final double turretOffsetY = turretLength * Math.sin(turretHeading);
@@ -253,7 +254,7 @@ public class Robot {
             )
             .setStroke("black")
             .strokeLine(robotX, robotY, robotX + turretOffsetX, robotY + turretOffsetY);
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+        dashboard.sendTelemetryPacket(packet);
     }
 
     public void logInfo() {
