@@ -55,7 +55,7 @@ public class Spindexer {
     private SpindexerState curState;
 
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
-    public static double OFFSET_ANGLE = 170;
+    public static double OFFSET_ANGLE = 30;
     public static double[] INDICATOR_COLORS = {
             IndicatorColorValues.OFF,
             IndicatorColorValues.VIOLET,
@@ -64,10 +64,10 @@ public class Spindexer {
     };
 
     private final PositionalPIDFController spindexerController;
-    public static double kP = 0.003;
-    public static double kI = 0.0002;
-    public static double kD = 0.00025;
-    public static double kF = 0.045;
+    public static double kP = 0.0013;
+    public static double kI = 0;
+    public static double kD = 0.0002;
+    public static double kF = 0.0445;
     public static double tolerance = 8;
     public static double feedForwardThreshold = 1;
 
