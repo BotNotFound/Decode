@@ -38,4 +38,10 @@ public class PositionalPIDFController extends PIDController {
     public double getF() {
         return posF;
     }
+
+    @Override
+    public void setPIDF(double kp, double ki, double kd, double kf) {
+        super.setPIDF(kp, ki, kd, 0);
+        setF(kf);
+    }
 }
