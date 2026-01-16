@@ -18,7 +18,7 @@ public class PositionalPIDFController extends PIDController {
         if (Math.abs(error) < feedforwardThreshold) {
             return pidPower;
         }
-        return pidPower + getF() * Math.signum(error);
+        return pidPower + getF() * -Math.signum(error);
     }
 
     public double getFeedforwardThreshold() {
