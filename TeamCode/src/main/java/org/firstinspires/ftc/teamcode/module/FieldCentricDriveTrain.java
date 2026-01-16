@@ -219,7 +219,7 @@ public class FieldCentricDriveTrain {
                         robotX,
                         robotY,
                         "4px Arial",
-                        robotHeading,
+                    -robotHeading,
                         false
                 );
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
