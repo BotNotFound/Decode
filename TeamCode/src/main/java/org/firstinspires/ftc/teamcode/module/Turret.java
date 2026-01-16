@@ -15,12 +15,12 @@ public class Turret {
     private final DcMotor turretMotor;
 
     // any higher of a kP (at least with the other constants the same) and it vibrates like crazy at start
-    public static double kP = 0.06;
+    public static double kP = 0.05;
     public static double kI = 0;
     public static double kD = 0.001;
     public static double kF = 0.1;
-    public static double tolerance = 5;
-    public static double feedforwardThreshold = 1.5;
+    public static double tolerance = 1;
+    public static double feedforwardThreshold = 1;
     private final PositionalPIDFController aimController;
 
     public static double DEFAULT_TURRET_ROTATION_OFFSET = 70;
