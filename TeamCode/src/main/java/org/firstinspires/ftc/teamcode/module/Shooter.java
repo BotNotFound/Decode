@@ -168,7 +168,7 @@ public class Shooter {
     }
 
     public void adjustHood() {
-        setHoodPosition(hoodPositions.get(getRPM()));
+        setHoodPosition(hoodPositions.get(stickyTargetRPM));
     }
 
     public void setRPMForAprilTag(AprilTagPoseFtc tagPose, double fallbackRPM) {

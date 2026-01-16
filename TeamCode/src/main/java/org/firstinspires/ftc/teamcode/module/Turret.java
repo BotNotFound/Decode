@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.module;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.controller.PositionalPIDFController;
 
 @Config
 public class Turret {
@@ -15,13 +15,13 @@ public class Turret {
     private final DcMotor turretMotor;
 
     // any higher of a kP (at least with the other constants the same) and it vibrates like crazy at start
-    public static double kP = 0.06;
+    public static double kP = 0.05;
     public static double kI = 0;
     public static double kD = 0.001;
     public static double kF = 0.1;
-    public static double tolerance = 5;
-    public static double ENGAGED_KF_MIN_ERROR = 1.5;
-    private final PIDFController aimController;
+    public static double tolerance = 1;
+    public static double feedforwardThreshold = 1;
+    private final PositionalPIDFController aimController;
 
     public static double DEFAULT_TURRET_ROTATION_OFFSET = 70;
     private double turretRotationOffset;
@@ -66,8 +66,9 @@ public class Turret {
 
         turretRotationOffset = DEFAULT_TURRET_ROTATION_OFFSET;
 
-        aimController = new PIDFController(kP, kI, kD, 0);
+        aimController = new PositionalPIDFController(kP, kI, kD, kF);
         aimController.setTolerance(tolerance);
+        aimController.setFeedforwardThreshold(feedforwardThreshold);
         aimController.setSetPoint(getCurrentHeading(AngleUnit.DEGREES));
 
         this.telemetry = telemetry;
@@ -104,16 +105,10 @@ public class Turret {
     }
 
     public void update() {
-        aimController.setPIDF(kP, kI, kD, 0);
+        aimController.setPIDF(kP, kI, kD, kF);
         aimController.setTolerance(tolerance);
-
-        double power = aimController.calculate(getCurrentHeading(AngleUnit.DEGREES));
-        final double error = aimController.getPositionError();
-        if (Math.abs(error) >= ENGAGED_KF_MIN_ERROR) {
-            power += kF * Math.signum(error);
-        }
-
-        turretMotor.setPower(power);
+        aimController.setFeedforwardThreshold(feedforwardThreshold);
+        turretMotor.setPower(aimController.calculate(getCurrentHeading(AngleUnit.DEGREES)));
     }
 
     public void setPower(double power) {

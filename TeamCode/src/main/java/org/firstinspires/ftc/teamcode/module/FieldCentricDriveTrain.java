@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.module;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -15,11 +13,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 @Config
 public class FieldCentricDriveTrain {
-    public static double ROBOT_WIDTH = 18.0;
-    public static double ROBOT_HEIGHT = 18.0;
-    public static double FIELD_WIDTH = 144.0;
-    public static double FIELD_HEIGHT = 144.0;
-
     // Offsets are based on center of turret, not center of robot
     public static double PINPOINT_X_OFFSET = -194;
     public static double PINPOINT_Y_OFFSET = 96;
@@ -83,6 +76,14 @@ public class FieldCentricDriveTrain {
 
     private double getFieldCentricHeading() {
         return pinpointDriver.getHeading(AngleUnit.RADIANS) - fieldCentricHeadingOffset;
+    }
+
+    public static double rotX(double x, double y, double angle) {
+        return x * Math.cos(angle) - y * Math.sin(angle);
+    }
+
+    public static double rotY(double x, double y, double angle) {
+        return x * Math.sin(angle) + y * Math.cos(angle);
     }
 
     //keep the set power for drivetrain
@@ -176,52 +177,13 @@ public class FieldCentricDriveTrain {
         setPower(getDrivePower(), getStrafePower(), power);
     }
 
-    private static double rotX(double x, double y, double angle) {
-        return x * Math.cos(angle) - y * Math.sin(angle);
-    }
-
-    private static double rotY(double x, double y, double angle) {
-        return x * Math.sin(angle) + y * Math.cos(angle);
-    }
-
     public void logInfo() {
         final Pose2D robotPose = getRobotPose();
-        telemetry.addData("Robot Pose", robotPose);
+        final double robotX = robotPose.getX(DistanceUnit.INCH);
+        final double robotY = robotPose.getY(DistanceUnit.INCH);
+        telemetry.addData("Robot X", robotX);
+        telemetry.addData("Robot Y", robotY);
+        telemetry.addData("Robot Heading", robotPose.getHeading(AngleUnit.DEGREES));
         telemetry.addData("Field Centric Heading", getFieldCentricHeading());
-
-        if (!FtcDashboard.getInstance().isEnabled()) {
-            return;
-        }
-
-        final double robotX = -robotPose.getX(DistanceUnit.INCH) + (FIELD_WIDTH / 2);
-        final double robotY = robotPose.getX(DistanceUnit.INCH) - (FIELD_HEIGHT / 2);
-        final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
-        final TelemetryPacket packet = new TelemetryPacket();
-        packet.fieldOverlay()
-                .setFill("red")
-                .fillPolygon(
-                        new double[]{
-                                robotX + rotX(ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading),
-                                robotX + rotX(ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
-                                robotX + rotX(-ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
-                                robotX + rotX(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading)
-                        },
-                        new double[]{
-                                robotY + rotY(ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading),
-                                robotY + rotY(ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
-                                robotY + rotY(-ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
-                                robotY + rotY(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading)
-                        }
-                )
-                .setFill("black")
-                .fillText(
-                        "Robot",
-                        robotX,
-                        robotY,
-                        "4px Arial",
-                        robotHeading,
-                        false
-                );
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 }
