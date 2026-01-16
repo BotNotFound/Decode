@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -25,6 +27,11 @@ import java.util.Arrays;
 
 public class Robot {
     private static final String TAG = "Robot";
+
+    public static double ROBOT_LENGTH = 18.0;
+    public static double ROBOT_WIDTH = 18.0;
+    public static double FIELD_LENGTH = 144.0;
+    public static double FIELD_WIDTH = 144.0;
 
     // again, based on the turret position, not the center of the robot (because the turret is what matters)
     public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 115.5, 129.4, AngleUnit.DEGREES, 36);
@@ -193,6 +200,61 @@ public class Robot {
         }
     }
 
+    private void drawRobot() {
+        if (!FtcDashboard.getInstance().isEnabled()) {
+            return;
+        }
+        final Pose2D robotPose = getRobotPose();
+
+        final double robotX = -robotPose.getX(DistanceUnit.INCH) + (FIELD_WIDTH / 2);
+        final double robotY = robotPose.getY(DistanceUnit.INCH) - (FIELD_LENGTH / 2);
+        final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
+
+        final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS);
+        final double turretLength = Math.sqrt(ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH);
+        final double turretOffsetX = turretLength * Math.cos(turretHeading);
+        final double turretOffsetY = turretLength * Math.sin(turretHeading);
+
+        final TelemetryPacket packet = new TelemetryPacket();
+        packet.fieldOverlay()
+            .setFill("red")
+            .fillPolygon(
+                new double[]{
+                    robotX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
+                    robotX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                    robotX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                    robotX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading)
+                },
+                new double[]{
+                    robotY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
+                    robotY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                    robotY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                    robotY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading)
+                }
+            )
+            .setFill("black")
+            .fillText(
+                "Robot",
+                robotX,
+                robotY,
+                "4px Arial",
+                -robotHeading,
+                false
+            )
+            .setStroke("green")
+            .setFill("green")
+            .fillText(
+                "-->",
+                robotX,
+                robotY,
+                "4px Arial",
+                -robotHeading + Math.PI / 2,
+                false
+            )
+            .setStroke("black")
+            .strokeLine(robotX, robotY, robotX + turretOffsetX, robotY + turretOffsetY);
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+    }
 
     public void logInfo() {
         telemetry.addData("Fallback Shooter RPM", fallbackRPM);
@@ -203,6 +265,8 @@ public class Robot {
         turret.logInfo();
         spindexer.logInfo();
         lift.logInfo();
+
+        drawRobot();
     }
 
     public AllianceColor getAllianceColor() {
