@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 public class StandardTwelveArtifactRed extends AutonomousBase {
     public StandardTwelveArtifactRed() {
         super(new Pose(115.5, 129.4, 36), AllianceColor.RED);
-    } 
+    }
 
     @Override
     protected AutonomousStage[] buildStageSequence() {
