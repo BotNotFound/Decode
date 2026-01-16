@@ -186,40 +186,44 @@ public class FieldCentricDriveTrain {
 
     public void logInfo() {
         final Pose2D robotPose = getRobotPose();
-        telemetry.addData("Robot Pose", robotPose);
+        final double robotX = robotPose.getX(DistanceUnit.INCH);
+        final double robotY = robotPose.getY(DistanceUnit.INCH);
+        telemetry.addData("Robot X", robotX);
+        telemetry.addData("Robot Y", robotY);
+        telemetry.addData("Robot Heading", robotPose.getHeading(AngleUnit.DEGREES));
         telemetry.addData("Field Centric Heading", getFieldCentricHeading());
 
         if (!FtcDashboard.getInstance().isEnabled()) {
             return;
         }
 
-        final double robotX = -robotPose.getX(DistanceUnit.INCH) + (FIELD_WIDTH / 2);
-        final double robotY = robotPose.getX(DistanceUnit.INCH) - (FIELD_HEIGHT / 2);
-        final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
+        final double fieldX = -robotX + (FIELD_WIDTH / 2);
+        final double fieldY = robotY - (FIELD_HEIGHT / 2);
+        final double fieldHeading = robotPose.getHeading(AngleUnit.RADIANS);
         final TelemetryPacket packet = new TelemetryPacket();
         packet.fieldOverlay()
                 .setFill("red")
                 .fillPolygon(
                         new double[]{
-                                robotX + rotX(ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading),
-                                robotX + rotX(ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
-                                robotX + rotX(-ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
-                                robotX + rotX(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading)
+                            fieldX + rotX(ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, fieldHeading),
+                            fieldX + rotX(ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, fieldHeading),
+                            fieldX + rotX(-ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, fieldHeading),
+                            fieldX + rotX(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, fieldHeading)
                         },
                         new double[]{
-                                robotY + rotY(ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading),
-                                robotY + rotY(ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
-                                robotY + rotY(-ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, robotHeading),
-                                robotY + rotY(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, robotHeading)
+                            fieldY + rotY(ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, fieldHeading),
+                            fieldY + rotY(ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, fieldHeading),
+                            fieldY + rotY(-ROBOT_WIDTH / 2, -ROBOT_HEIGHT / 2, fieldHeading),
+                            fieldY + rotY(-ROBOT_WIDTH / 2, ROBOT_HEIGHT / 2, fieldHeading)
                         }
                 )
                 .setFill("black")
                 .fillText(
                         "Robot",
-                        robotX,
-                        robotY,
+                    fieldX,
+                    fieldY,
                         "4px Arial",
-                    -robotHeading,
+                    -fieldHeading,
                         false
                 );
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
