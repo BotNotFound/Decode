@@ -13,10 +13,10 @@ import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 
-@Autonomous(name = "21 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
+@Autonomous(name = "18 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 //TODO: Please tune the  positions and headings using PositionLogger, do not remove this TODO unless done so.
-public class TwentyOneArtifactRed extends AutonomousBase{
-    public TwentyOneArtifactRed() {
+public class EighteenArtifactRed extends AutonomousBase{
+    public EighteenArtifactRed() {
         super(new Pose(118.890, 127.724, Math.toRadians(44)), AllianceColor.RED);
     }
 
