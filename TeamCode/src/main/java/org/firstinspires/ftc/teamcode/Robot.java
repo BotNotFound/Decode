@@ -329,9 +329,6 @@ public class Robot {
                     AngleUnit.RADIANS
             );
 
-            spindexer.updateSpindexer();
-            turret.update();
-
             switch (currentState) {
                 case MANUAL_SHOOT:
                 case SHOOT:
@@ -382,6 +379,9 @@ public class Robot {
                     holdUpBall();
                     break;
             }
+
+            spindexer.updateSpindexer();
+            turret.update();
 
             logInfo();
         } catch (Throwable e) {
