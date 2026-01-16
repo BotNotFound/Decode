@@ -19,42 +19,42 @@ public class Constants {
         .mass(11.975)
         .forwardZeroPowerAcceleration(-37.132714179943896)
         .lateralZeroPowerAcceleration(-76.01161208193545)
-        .translationalPIDFCoefficients(new PIDFCoefficients(0.066, 0, 0, 0.02))
+        .translationalPIDFCoefficients(new PIDFCoefficients(0.1, 0, 0.01, 0.045))
         .headingPIDFCoefficients(new PIDFCoefficients(0.866, 0, 0, 0.03))
         .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.01, 0, 0, 0, 0.01))
         .centripetalScaling(0.0009);
 
     public static final MecanumConstants driveConstants = new MecanumConstants()
-            .maxPower(1)
-            .rightFrontMotorName(FieldCentricDriveTrain.FRONT_RIGHT_DRIVE_MOTOR_NAME)
-            .rightRearMotorName(FieldCentricDriveTrain.BACK_RIGHT_DRIVE_MOTOR_NAME)
-            .leftRearMotorName(FieldCentricDriveTrain.BACK_LEFT_DRIVE_MOTOR_NAME)
-            .leftFrontMotorName(FieldCentricDriveTrain.FRONT_LEFT_DRIVE_MOTOR_NAME)
-            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .xVelocity(79.27496049535556)
-            .yVelocity(61.312163105161176);
+        .maxPower(1)
+        .rightFrontMotorName(FieldCentricDriveTrain.FRONT_RIGHT_DRIVE_MOTOR_NAME)
+        .rightRearMotorName(FieldCentricDriveTrain.BACK_RIGHT_DRIVE_MOTOR_NAME)
+        .leftRearMotorName(FieldCentricDriveTrain.BACK_LEFT_DRIVE_MOTOR_NAME)
+        .leftFrontMotorName(FieldCentricDriveTrain.FRONT_LEFT_DRIVE_MOTOR_NAME)
+        .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
+        .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
+        .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
+        .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+        .xVelocity(79.27496049535556)
+        .yVelocity(61.312163105161176);
 
     public static final PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
 
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
-                .pathConstraints(pathConstraints)
-                .mecanumDrivetrain(driveConstants)
-                .pinpointLocalizer(localizerConstants)
-                .build();
+            .pathConstraints(pathConstraints)
+            .mecanumDrivetrain(driveConstants)
+            .pinpointLocalizer(localizerConstants)
+            .build();
     }
 
     public static final PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(FieldCentricDriveTrain.PINPOINT_Y_OFFSET)
-            .strafePodX(FieldCentricDriveTrain.PINPOINT_X_OFFSET)
-            .distanceUnit(FieldCentricDriveTrain.PINPOINT_OFFSET_UNIT)
-            .hardwareMapName(FieldCentricDriveTrain.PINPOINT_DRIVER_NAME)
-            .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
-            // adjust these in the encoder tests
-            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
-            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        .forwardPodY(FieldCentricDriveTrain.PINPOINT_Y_OFFSET)
+        .strafePodX(FieldCentricDriveTrain.PINPOINT_X_OFFSET)
+        .distanceUnit(FieldCentricDriveTrain.PINPOINT_OFFSET_UNIT)
+        .hardwareMapName(FieldCentricDriveTrain.PINPOINT_DRIVER_NAME)
+        .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
+        // adjust these in the encoder tests
+        .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
+        .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
 }
