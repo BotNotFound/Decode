@@ -3,18 +3,15 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous;
 import android.util.Log;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.AllianceColor;
-import org.firstinspires.ftc.teamcode.Motif;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Config
 public abstract class AutonomousBase extends OpMode {
     private static final String TAG = "AutonomousBase";
 
@@ -114,6 +111,7 @@ public abstract class AutonomousBase extends OpMode {
         }
 
         telemetry.addData("Autonomous Stage", currentStageIndex);
+        robot.logInfo();
     }
 
     @Override
