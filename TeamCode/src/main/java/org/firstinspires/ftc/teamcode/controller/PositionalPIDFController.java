@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 
 public class PositionalPIDFController extends PIDController {
     private double feedforwardThreshold = 1;
+    private double posF;
 
     public PositionalPIDFController(double kp, double ki, double kd, double kf) {
         super(kp, ki, kd);
@@ -26,5 +27,15 @@ public class PositionalPIDFController extends PIDController {
 
     public void setFeedforwardThreshold(double kfErrorThreshold) {
         this.feedforwardThreshold = kfErrorThreshold;
+    }
+
+    @Override
+    public void setF(double kf) {
+        posF = kf;
+    }
+
+    @Override
+    public double getF() {
+        return posF;
     }
 }
