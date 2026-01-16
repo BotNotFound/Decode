@@ -17,9 +17,12 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 
 @Autonomous(name = "12 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 public class StandardTwelveArtifactRed extends AutonomousBase {
+
+    public static Pose startPosition = new Pose(115.5, 129.4, 36);
+
     public StandardTwelveArtifactRed() {
-        super(new Pose(115.5, 129.4, 36), AllianceColor.RED);
-    } 
+        super(startPosition, AllianceColor.RED);
+    }
 
     @Override
     protected AutonomousStage[] buildStageSequence() {
@@ -79,7 +82,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                     .pathBuilder()
                     .addPath(
                             new BezierLine(
-                                    new Pose(125.5, 128),
+                                    startPosition,
                                     new Pose(94, 86.5)
                             )
                     )
