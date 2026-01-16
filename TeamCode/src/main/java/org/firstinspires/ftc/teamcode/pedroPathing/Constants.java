@@ -17,8 +17,8 @@ import org.firstinspires.ftc.teamcode.module.FieldCentricDriveTrain;
 public class Constants {
     public static final FollowerConstants followerConstants = new FollowerConstants()
         .mass(11.975)
-        .forwardZeroPowerAcceleration(-36.278554120599594)
-        .lateralZeroPowerAcceleration(-74.29537018748395)
+        .forwardZeroPowerAcceleration(-37.132714179943896)
+        .lateralZeroPowerAcceleration(-76.01161208193545)
         .translationalPIDFCoefficients(new PIDFCoefficients(0.066, 0, 0, 0.02))
         .headingPIDFCoefficients(new PIDFCoefficients(0.866, 0, 0, 0.03))
         .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.01, 0, 0, 0, 0.01))
@@ -34,8 +34,8 @@ public class Constants {
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
             .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
             .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .xVelocity(61.33050344872662)
-            .yVelocity(50.51176969272884);
+            .xVelocity(79.27496049535556)
+            .yVelocity(61.312163105161176);
 
     public static final PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
