@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.module;
 import android.util.Log;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -14,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.IndicatorColorValues;
+import org.firstinspires.ftc.teamcode.controller.PositionalPIDFController;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -63,12 +63,13 @@ public class Spindexer {
             IndicatorColorValues.GREEN,
     };
 
-    private final PIDFController spindexerController;
+    private final PositionalPIDFController spindexerController;
     public static double kP = 0.003;
     public static double kI = 0.0002;
     public static double kD = 0.00025;
     public static double kF = 0.045;
     public static double tolerance = 8;
+    public static double feedForwardThreshold = 1;
 
     private double targetAngle = 0;
 
@@ -92,8 +93,9 @@ public class Spindexer {
 
         indicatorLight = hardwareMap.get(Servo.class, INDICATOR_LIGHT_NAME);
 
-        spindexerController = new PIDFController(kP, kI, kD, kF);
+        spindexerController = new PositionalPIDFController(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
+        spindexerController.setFeedforwardThreshold(feedForwardThreshold);
 
         // set all servo directions for spindexer to turn counterclockwise
         spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
@@ -263,11 +265,11 @@ public class Spindexer {
         if (curState != SpindexerState.MANUAL_ROTATION) {
             final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
 
-
-            spindexerController.setPIDF(kP, kI, kD, 0);
+            spindexerController.setPIDF(kP, kI, kD, kF);
             spindexerController.setTolerance(tolerance);
+            spindexerController.setFeedforwardThreshold(feedForwardThreshold);
 
-            setPowerInternal(spindexerController.calculate(curError) + kF * Math.signum(-curError));
+            setPowerInternal(spindexerController.calculate(curError));
         }
 
         updateDetectionFromSensor();
