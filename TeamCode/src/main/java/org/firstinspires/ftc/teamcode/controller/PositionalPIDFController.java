@@ -8,7 +8,7 @@ public class PositionalPIDFController extends PIDController {
 
     public PositionalPIDFController(double kp, double ki, double kd, double kf) {
         super(kp, ki, kd);
-        setF(kf);
+        posF = kf;
     }
 
     @Override
@@ -18,7 +18,7 @@ public class PositionalPIDFController extends PIDController {
         if (Math.abs(error) < feedforwardThreshold) {
             return pidPower;
         }
-        return pidPower + getF() * -Math.signum(error);
+        return pidPower + posF * -Math.signum(error);
     }
 
     public double getFeedforwardThreshold() {
