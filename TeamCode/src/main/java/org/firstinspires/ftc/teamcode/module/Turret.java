@@ -20,11 +20,10 @@ public class Turret {
     public static double TURRET_OFFSET_Y = 0;
     public static DistanceUnit TURRET_OFFSET_UNIT = DistanceUnit.MM;
 
-    // any higher of a kP (at least with the other constants the same) and it vibrates like crazy at start
-    public static double kP = 0.05;
+    public static double kP = 0.03;
     public static double kI = 0;
-    public static double kD = 0.001;
-    public static double kF = 0.1;
+    public static double kD = 0.00125;
+    public static double kF = 0.12;
     public static double tolerance = 1;
     public static double feedforwardThreshold = 1;
     private final PositionalPIDFController aimController;
