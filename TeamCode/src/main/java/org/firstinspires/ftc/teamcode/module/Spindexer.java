@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -71,6 +72,14 @@ public class Spindexer {
     public static double tolerance = 8;
     public static double feedForwardThreshold = 1;
 
+    private boolean couldBeJammed;
+    private double jamAngle;
+    private final ElapsedTime timeInJam;
+    public static double JAM_MOVEMENT_POWER_THRESHOLD = 0.55;
+    public static double JAM_ANGLE_THRESHOLD = 2;
+    public static double JAM_TIME_THRESHOLD = 1;
+    public static double JAM_EXIT_POWER = 1;
+
     private double targetAngle = 0;
 
     public Spindexer(HardwareMap hardwareMap, Telemetry telemetry, boolean preloaded) {
@@ -96,6 +105,10 @@ public class Spindexer {
         spindexerController = new PositionalPIDFController(kP, kI, kD, kF);
         spindexerController.setTolerance(tolerance);
         spindexerController.setFeedforwardThreshold(feedForwardThreshold);
+
+        timeInJam = new ElapsedTime();
+        jamAngle = 0;
+        couldBeJammed = false;
 
         // set all servo directions for spindexer to turn counterclockwise
         spindexerServoOne.setDirection(CRServo.Direction.FORWARD);
@@ -186,6 +199,10 @@ public class Spindexer {
         setPowerInternal(power);
     }
 
+    public double getPower() {
+        return spindexerServoOne.getPower();
+    }
+
     /**
      * Given 3 values, returns the one with the lowest magnitude.
      *
@@ -266,6 +283,36 @@ public class Spindexer {
         setTargetAngle(angle);
     }
 
+    private void checkForJam() {
+        if (getPower() < JAM_MOVEMENT_POWER_THRESHOLD) {
+            couldBeJammed = false;
+            return;
+        }
+
+        if (!couldBeJammed) {
+            couldBeJammed = true;
+            jamAngle = getAngle();
+            timeInJam.reset();
+        }
+
+        final double curAngle = getAngle();
+        if (Math.abs(curAngle - jamAngle) > JAM_ANGLE_THRESHOLD) {
+            couldBeJammed = false;
+        }
+    }
+
+    private boolean isJammed() {
+        return couldBeJammed && timeInJam.seconds() >= JAM_TIME_THRESHOLD;
+    }
+
+    private void handleJams() {
+        checkForJam();
+        if (JAM_EXIT_POWER != 0 && isJammed()) {
+            setPower(JAM_EXIT_POWER * -Math.signum(getPower()));
+            couldBeJammed = false;
+        }
+    }
+
     public void updateSpindexer() {
         if (curState != SpindexerState.MANUAL_ROTATION) {
             final double curError = getShortestDisplacement(
@@ -277,6 +324,8 @@ public class Spindexer {
 
             setPowerInternal(spindexerController.calculate(curError));
         }
+
+        handleJams();
 
         updateDetectionFromSensor();
         indicatorLight.setPosition(
