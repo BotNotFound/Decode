@@ -213,8 +213,9 @@ public class Robot {
 
         final double fieldX = FieldCentricDriveTrain.rotX(robotX, robotY, Math.PI / 2);
         final double fieldY = FieldCentricDriveTrain.rotY(robotX, robotY, Math.PI / 2);
+        final double fieldHeading = robotHeading + Math.PI / 2;
 
-        final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS) + robotHeading;
+        final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS) + fieldHeading;
         final double turretLength = Math.sqrt(ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH) / 2;
         final double turretOffsetX = turretLength * Math.cos(turretHeading);
         final double turretOffsetY = turretLength * Math.sin(turretHeading);
@@ -224,30 +225,30 @@ public class Robot {
             .setFill("red")
             .fillPolygon(
                 new double[]{
-                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading)
+                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading)
                 },
                 new double[]{
-                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading)
+                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading)
                 }
             )
             .setStroke("black")
             .strokeLine(
-                fieldX + FieldCentricDriveTrain.rotX(0, 0, robotHeading),
-                fieldY + FieldCentricDriveTrain.rotY(0, 0, robotHeading),
-                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, 0, robotHeading),
-                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, 0, robotHeading)
+                fieldX + FieldCentricDriveTrain.rotX(0, 0, fieldHeading),
+                fieldY + FieldCentricDriveTrain.rotY(0, 0, fieldHeading),
+                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, 0, fieldHeading),
+                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, 0, fieldHeading)
             )
             .strokeLine(
-                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
-                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
-                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
-                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading)
+                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
+                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
+                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading)
             )
             .strokeLine(fieldX, fieldY, fieldX + turretOffsetX, fieldY + turretOffsetY);
         dashboard.sendTelemetryPacket(packet);
