@@ -432,14 +432,15 @@ public class Robot {
     }
 
     public void loop(double drivePower, double strafePower, double turnPower) {
+        loopWithoutMovement();
         if (currentState != RobotState.PARK) {
             setDrivePowers(drivePower, strafePower, turnPower);
         }
-        loopWithoutMovement();
     }
 
     public void loopWithoutMovement() {
         try {
+            driveTrain.updatePinpoint();
             if (currentState == RobotState.PARK) {
                 return;
             }

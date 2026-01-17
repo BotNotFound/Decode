@@ -100,10 +100,12 @@ public class FieldCentricDriveTrain {
         return x * Math.sin(angle) + y * Math.cos(angle);
     }
 
+    public void updatePinpoint() {
+        pinpointDriver.update();
+    }
+
     //keep the set power for drivetrain
     public void setPower(double drive, double strafe, double turn) {
-        pinpointDriver.update();
-
         drive = Math.pow(drive, 3);
         strafe = Math.pow(strafe, 3);
 
