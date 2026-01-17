@@ -108,6 +108,8 @@ public class AutonomousStage {
         robot.setState(robotState);
         intakeTimer.start();
 
+        follower.followPath(path);
+        
         if (robotState == Robot.RobotState.INTAKE) {
             follower.setMaxPower(INTAKE_POWER);
         }
