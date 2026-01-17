@@ -72,6 +72,10 @@ public class AutonomousStage {
                 // we can end it
                 return true;
             case SHOOT:
+                if (!shotTimer.isTimerOn()) {
+                    shotTimer.start();
+                    return false;
+                }
                 return shotTimer.done();
         }
 
@@ -102,7 +106,6 @@ public class AutonomousStage {
      */
     public void enterStage(Robot robot, Follower follower) {
         robot.setState(robotState);
-        shotTimer.start();
         intakeTimer.start();
 
         if (robotState == Robot.RobotState.INTAKE) {
