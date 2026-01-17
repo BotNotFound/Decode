@@ -85,7 +85,6 @@ public class Shooter {
 
         this.telemetry = telemetry;
 
-        //TODO: tune table (probably)
         flywheelSpeeds = new InterpLUT();
         // the control points have to be in increasing order
         flywheelSpeeds.add(0, 2000); // extrapolated lower bound
@@ -100,7 +99,6 @@ public class Shooter {
         flywheelSpeeds.add(160, 4030); // extrapolated upper bound
         flywheelSpeeds.createLUT();
 
-        //TODO: tune hood interplut
         hoodPositions = new InterpLUT();
         /*idea behind hoodPositions interplut is so that we adjust the hood so we always hit the back of the goal at a low height.
         We map the rpm(x) to a hood position(y)
