@@ -17,8 +17,7 @@ public class FieldCentricDriveTrain {
     public static double PINPOINT_X_OFFSET = -194;
     public static double PINPOINT_Y_OFFSET = 96;
     public static DistanceUnit PINPOINT_OFFSET_UNIT = DistanceUnit.MM;
-
-    public static double PINPOINT_ENCODER_RESOLUTION = 19.89436789f;
+    public static double PINPOINT_ENCODER_RESOLUTION = 19.89436789f * (2435.0 / 2446.20483398438);
     public static DistanceUnit PINPOINT_ENCODER_RESOLUTION_UNIT = DistanceUnit.MM;
 
     public static final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "Front Right";
