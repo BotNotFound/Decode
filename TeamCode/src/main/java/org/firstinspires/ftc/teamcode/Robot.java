@@ -343,6 +343,7 @@ public class Robot {
                 shooter.disengageKicker();
                 intake.startIntake();
                 lift.lowerRobot();
+                shooter.setRPM(0);
                 break;
 
             case REVERSE_INTAKE:
@@ -350,6 +351,7 @@ public class Robot {
                 shooter.disengageKicker();
                 intake.reverseIntake();
                 lift.lowerRobot();
+                shooter.setRPM(0);
                 break;
 
             case MANUAL_PRE_SHOOT:
