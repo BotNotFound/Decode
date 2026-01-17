@@ -529,6 +529,10 @@ public class Robot {
         driveTrain.setPower(drive, strafe, turn);
     }
 
+    public void stopRobotMovement() {
+        driveTrain.stopRobotMovement();
+    }
+
     public void resetFieldCentricHeading() {
         driveTrain.resetFieldCentricHeading();
     }

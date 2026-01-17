@@ -71,6 +71,14 @@ public class FieldCentricDriveTrain {
         pinpointDriver.resetPosAndIMU();
     }
 
+    public void stopRobotMovement() {
+        frontRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        setPower(0, 0, 0);
+    }
+
     public void resetOdometry() {
         pinpointDriver.resetPosAndIMU();
     }

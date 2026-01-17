@@ -102,7 +102,13 @@ public abstract class AutonomousBase extends OpMode {
 
     @Override
     public void loop() {
-        follower.update();
+        if (robot.getState() == Robot.RobotState.SHOOT
+            || robot.getState() == Robot.RobotState.MANUAL_SHOOT) {
+            robot.stopRobotMovement();
+        }
+        else {
+            follower.update();
+        }
         robot.loopWithoutMovement(); // called last so auto aim turning isn't eaten by the follower
 
         if (isAutoComplete()) {
