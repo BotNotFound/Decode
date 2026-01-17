@@ -18,8 +18,9 @@ public class AutonomousStage {
     /**
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
-    public static long SHOT_DURATION_MILLIS = 2500;
-    public static long TIME_TO_INTAKE_FROM_GATE = 1800;
+    public static long SHOT_DURATION_MILLIS = 1200;
+    public static long INTAKE_DURATION_MILLIS = Long.MAX_VALUE;
+    public static double INTAKE_POWER = 0.5;
 
     private final PathChain path;
     private final Robot.RobotState robotState;
@@ -38,7 +39,7 @@ public class AutonomousStage {
         this.path = path;
         this.robotState = robotState;
         shotTimer = new Timing.Timer(SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
-        intakeTimer = new Timing.Timer(TIME_TO_INTAKE_FROM_GATE, TimeUnit.MILLISECONDS);
+        intakeTimer = new Timing.Timer(INTAKE_DURATION_MILLIS, TimeUnit.MILLISECONDS);
         complete = false;
     }
 
@@ -105,7 +106,7 @@ public class AutonomousStage {
         intakeTimer.start();
 
         if (robotState == Robot.RobotState.INTAKE) {
-            follower.setMaxPower(0.2);
+            follower.setMaxPower(INTAKE_POWER);
         }
         else {
             follower.setMaxPower(Constants.driveConstants.getMaxPower());
