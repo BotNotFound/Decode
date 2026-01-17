@@ -18,7 +18,9 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 @Autonomous(name = "12 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 public class StandardTwelveArtifactRed extends AutonomousBase {
 
-    public static Pose startPosition = new Pose(115.5, 129.4, 36);
+    public static Pose startPosition = new Pose(115.5, 129.4, Math.toRadians(36));
+
+    public static double headingToShoot = Math.toRadians(-60);
 
     public StandardTwelveArtifactRed() {
         super(startPosition, AllianceColor.RED);
@@ -31,7 +33,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(35))
+                                .setConstantHeadingInterpolation(headingToShoot)
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -40,7 +42,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.PRE_SHOOT),
                 new AutonomousStage(
                         follower.pathBuilder().addPath(new BezierPoint(autoPath.shootFirstRow.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(35))
+                                .setConstantHeadingInterpolation(headingToShoot)
                                 .build(),
                         Robot.RobotState.SHOOT
                 ),
@@ -86,7 +88,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(94, 86.5)
                             )
                     )
-                    .setConstantHeadingInterpolation(Math.toRadians(35))
+                    .setLinearHeadingInterpolation(startPosition.getHeading(), headingToShoot)
                     .build();
 
             intakeFirstRow = follower
@@ -125,7 +127,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(94, 86.5)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(35))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), headingToShoot)
                     .build();
 
             intakeSecondRow = follower
@@ -137,7 +139,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(96, 58.5)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
+                    .setLinearHeadingInterpolation(headingToShoot, Math.toRadians(0))
                     .addPath(
                             new BezierCurve(new Pose(96, 58.5), new Pose(138.5, 58.5), new Pose(135, 55))
                     )
@@ -152,7 +154,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(94, 86.5)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(35))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), headingToShoot)
                     .build();
 
             intakeThirdRow = follower
@@ -164,7 +166,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(96, 35)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(35), Math.toRadians(0))
+                    .setLinearHeadingInterpolation(headingToShoot, Math.toRadians(0))
                     .addPath(
                             new BezierLine(new Pose(96, 35), new Pose(135, 35))
                     )
@@ -179,7 +181,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                                     new Pose(94, 86.5)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(35))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), headingToShoot)
                     .build();
 
             leaveLaunchZone = follower
