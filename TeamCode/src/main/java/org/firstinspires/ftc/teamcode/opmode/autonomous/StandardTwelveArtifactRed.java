@@ -18,7 +18,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
     public static Pose startPosition = new Pose(
         117.9, 131.3, Math.toRadians(-54));
 
-    public static double headingToShoot = Math.toRadians(-60);
+    public static double headingToShoot = Math.toRadians(-40);
 
     public StandardTwelveArtifactRed() {
         super(startPosition, AllianceColor.RED);
@@ -83,7 +83,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .addPath(
                     new BezierLine(
                         startPosition,
-                        new Pose(94, 86.5)
+                        new Pose(88.6617, 97.5312)
                     )
                 )
                 .setLinearHeadingInterpolation(startPosition.getHeading(), headingToShoot)
@@ -93,15 +93,15 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .pathBuilder()
                 .addPath(
                     new BezierCurve(
-                        new Pose(94, 86.5),
-                        new Pose(94, 82),
-                        new Pose(96, 82)
+                        new Pose(88.6617, 97.5312),
+                        new Pose(98, 87),
+                        new Pose(100.9081, 87.3834)
                     )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .addPath(
 
-                    new BezierLine(new Pose(96, 82), new Pose(132.5, 82))
+                    new BezierLine(new Pose(100.9081, 87.3834), new Pose(123.83, 87.267))
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
@@ -109,9 +109,9 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .pathBuilder()
                 .addPath(
                     new BezierCurve(
-                        new Pose(132.5, 82),
-                        new Pose(115, 77),
-                        new Pose(128, 72)
+                        new Pose(123.83, 87.267),
+                        new Pose(115, 79),
+                        new Pose(124.897, 78)
                     )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -121,8 +121,8 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .pathBuilder()
                 .addPath(
                     new BezierLine(
-                        new Pose(128, 72),
-                        new Pose(94, 86.5)
+                        new Pose(124.897, 78),
+                        new Pose(92.3, 99.48)
                     )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(0), headingToShoot)
@@ -132,14 +132,14 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .pathBuilder()
                 .addPath(
                     new BezierCurve(
-                        new Pose(94, 86.5),
-                        new Pose(94, 58.5),
-                        new Pose(96, 58.5)
+                        new Pose(92.3, 99.48),
+                        new Pose(96.42, 64.07),
+                        new Pose(96.42, 64.07)
                     )
                 )
                 .setLinearHeadingInterpolation(headingToShoot, Math.toRadians(0))
                 .addPath(
-                    new BezierCurve(new Pose(96, 58.5), new Pose(138.5, 58.5), new Pose(135, 55))
+                    new BezierLine(new Pose(96.42, 64.07), new Pose(120.25, 62.08))
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
@@ -147,9 +147,9 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .pathBuilder()
                 .addPath(
                     new BezierCurve(
-                        new Pose(135, 58.5),
-                        new Pose(111, 53),
-                        new Pose(94, 86.5)
+                        new Pose(120.25, 62.08),
+                        new Pose(86.95, 95),
+                        new Pose(86.95, 95.18)
                     )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(0), headingToShoot)
@@ -159,14 +159,14 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .pathBuilder()
                 .addPath(
                     new BezierCurve(
-                        new Pose(94, 86.5),
-                        new Pose(94, 35),
-                        new Pose(96, 35)
+                        new Pose(86.95, 95.18),
+                        new Pose(97.06, 41),
+                        new Pose(97.06, 41.13)
                     )
                 )
                 .setLinearHeadingInterpolation(headingToShoot, Math.toRadians(0))
                 .addPath(
-                    new BezierLine(new Pose(96, 35), new Pose(135, 35))
+                    new BezierLine(new Pose(97.06, 41.13), new Pose(125.18, 39.93))
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                 .build();
@@ -175,8 +175,8 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .pathBuilder()
                 .addPath(
                     new BezierLine(
-                        new Pose(135, 35),
-                        new Pose(94, 86.5)
+                        new Pose(125.18, 39.93),
+                        new Pose(86.95, 95.18)
                     )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(0), headingToShoot)
@@ -186,9 +186,9 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .pathBuilder()
                 .addPath(
                     new BezierCurve(
-                        new Pose(94, 86.5),
-                        new Pose(114.091, 71.748),
-                        new Pose(114.091, 71.748)
+                        new Pose(86.95, 95.18),
+                        new Pose(111.52, 78.55),
+                        new Pose(111.52, 78.55)
                     )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
