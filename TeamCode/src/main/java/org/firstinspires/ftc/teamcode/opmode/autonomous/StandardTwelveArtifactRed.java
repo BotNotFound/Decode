@@ -99,14 +99,14 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
 
             intakeFirstRow = follower.pathBuilder()
                 .addPath(
-                    new BezierLine(new Pose(100.9081, 87.3834), new Pose(123.83, 87.267))
+                    new BezierLine(new Pose(100.9081, 87.3834), new Pose(128, 87.267))
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
             hitGate = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                    new Pose(123.83, 87.267),
+                    new Pose(128, 87.267),
                     new Pose(115, 79),
                     new Pose(128, 78)
                 ))
@@ -128,13 +128,13 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .build();
 
             intakeSecondRow = follower.pathBuilder()
-                .addPath(new BezierLine(new Pose(96.42, 64.07), new Pose(120.25, 62.08)))
+                .addPath(new BezierLine(new Pose(96.42, 64.07), new Pose(134, 62.08)))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
             shootSecondRow = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                    new Pose(120.25, 62.08),
+                    new Pose(134, 62.08),
                     new Pose(86.95, 95),
                     new Pose(86.95, 95.18)
                 ))
@@ -151,12 +151,12 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
                 .build();
 
             intakeThirdRow = follower.pathBuilder()
-                .addPath(new BezierLine(new Pose(97.06, 41.13), new Pose(125.18, 39.93)))
+                .addPath(new BezierLine(new Pose(97.06, 41.13), new Pose(134, 39.93)))
                 .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                 .build();
 
             shootThirdRow = follower.pathBuilder()
-                .addPath(new BezierLine(new Pose(125.18, 39.93), new Pose(86.95, 95.18)))
+                .addPath(new BezierLine(new Pose(134, 39.93), new Pose(86.95, 95.18)))
                 .setLinearHeadingInterpolation(Math.toRadians(0), headingToShoot)
                 .build();
 
