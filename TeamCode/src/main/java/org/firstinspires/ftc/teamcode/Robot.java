@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -25,6 +26,7 @@ import org.firstinspires.ftc.teamcode.module.Turret;
 
 import java.util.Arrays;
 
+@Config
 public class Robot {
     private static final String TAG = "Robot";
 
@@ -33,8 +35,15 @@ public class Robot {
     public static double FIELD_LENGTH = 144.0;
     public static double FIELD_WIDTH = 144.0;
 
-    // again, based on the turret position, not the center of the robot (because the turret is what matters)
-    public static final Pose2D DEFAULT_ROBOT_POSE = new Pose2D(DistanceUnit.INCH, 115.5, 129.4, AngleUnit.DEGREES, 36);
+    public static double DEFAULT_ROBOT_X = 115.5;
+    public static double DEFAULT_ROBOT_Y = 129.4;
+    public static DistanceUnit DEFAULT_ROBOT_POSITION_UNIT = DistanceUnit.INCH;
+    public static double DEFAULT_ROBOT_HEADING = 36;
+    public static AngleUnit DEFAULT_ROBOT_HEADING_UNIT = AngleUnit.DEGREES;
+
+    public static Pose2D getDefaultRobotPose() {
+        return new Pose2D(DEFAULT_ROBOT_POSITION_UNIT, DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_HEADING_UNIT, DEFAULT_ROBOT_HEADING);
+    }
 
     private static final class PersistentState {
         private static PersistentState saved = null;
@@ -111,7 +120,7 @@ public class Robot {
     }
 
     public void loadDefaultState() {
-        driveTrain.setRobotPose(DEFAULT_ROBOT_POSE);
+        driveTrain.setRobotPose(getDefaultRobotPose());
     }
 
     public enum RobotState {
