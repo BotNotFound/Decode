@@ -15,7 +15,7 @@ public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
     private final DcMotor turretMotor;
 
-    public static double TURRET_OFFSET_X = 76;
+    public static double TURRET_OFFSET_X = -76;
     public static double TURRET_OFFSET_Y = 0;
     public static DistanceUnit TURRET_OFFSET_UNIT = DistanceUnit.MM;
 
