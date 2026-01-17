@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.util.Timing;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.BezierPoint;
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.teamcode.Robot;
@@ -41,6 +45,18 @@ public class AutonomousStage {
         shotTimer = new Timing.Timer(SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
         intakeTimer = new Timing.Timer(INTAKE_DURATION_MILLIS, TimeUnit.MILLISECONDS);
         complete = false;
+    }
+
+    public static AutonomousStage line(Pose start, Pose end, Robot.RobotState robotState) {
+        final Path path = new Path(new BezierLine(start, end), Constants.pathConstraints);
+        path.setLinearHeadingInterpolation(start.getHeading(), end.getHeading());
+        return new AutonomousStage(new PathChain(path), robotState);
+    }
+
+    public static AutonomousStage shootFromPoint(Pose point) {
+        final Path path = new Path(new BezierPoint(point));
+        path.setConstantHeadingInterpolation(point.getHeading());
+        return new AutonomousStage(new PathChain(path), Robot.RobotState.SHOOT);
     }
 
     /**
@@ -109,15 +125,13 @@ public class AutonomousStage {
         intakeTimer.start();
 
         follower.followPath(path);
-        
+
         if (robotState == Robot.RobotState.INTAKE) {
             follower.setMaxPower(INTAKE_POWER);
         }
         else {
             follower.setMaxPower(Constants.driveConstants.getMaxPower());
         }
-
-        follower.followPath(path);
 
         complete = false;
     }
