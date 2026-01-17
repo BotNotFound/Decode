@@ -205,5 +205,11 @@ public class FieldCentricDriveTrain {
         telemetry.addData("Robot Y", robotY);
         telemetry.addData("Robot Heading", robotPose.getHeading(AngleUnit.DEGREES));
         telemetry.addData("Field Centric Heading", getFieldCentricHeading());
+        telemetry.addData("Pinpoint Ticks (X)", pinpointDriver.getEncoderX());
+        telemetry.addData("Pinpoint Ticks (Y)", pinpointDriver.getEncoderY());
+        telemetry.addData(
+            "Pinpoint Frequency (should be between 900 and 2000 Hz)",
+            pinpointDriver.getFrequency()
+        );
     }
 }
