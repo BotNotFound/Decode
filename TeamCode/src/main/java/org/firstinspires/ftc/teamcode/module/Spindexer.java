@@ -308,7 +308,7 @@ public class Spindexer {
     private void handleJams() {
         checkForJam();
         if (JAM_EXIT_POWER != 0 && isJammed()) {
-            setPower(JAM_EXIT_POWER * -Math.signum(getPower()));
+            setPowerInternal(JAM_EXIT_POWER * -Math.signum(getPower()));
         }
     }
 
