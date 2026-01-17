@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.pedropathing.ftc.PoseConverter;
+import com.pedropathing.geometry.PedroCoordinates;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -41,11 +44,25 @@ public class Robot {
     public static double DEFAULT_ROBOT_HEADING = -54;
     public static AngleUnit DEFAULT_ROBOT_HEADING_UNIT = AngleUnit.DEGREES;
 
-    public static Pose2D getDefaultRobotPose() {
+    private static Pose2D getDefaultRedPose() {
         return new Pose2D(
             DEFAULT_ROBOT_POSITION_UNIT, DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y,
             DEFAULT_ROBOT_HEADING_UNIT, DEFAULT_ROBOT_HEADING
         );
+    }
+
+    public Pose2D getDefaultRobotPose() {
+        final Pose2D redDefault2D = getDefaultRedPose();
+        if (allianceColor == AllianceColor.BLUE) {
+            final Pose defaultPoseRed = PoseConverter.pose2DToPose(
+                redDefault2D,
+                PedroCoordinates.INSTANCE
+            );
+            return PoseConverter.poseToPose2D(defaultPoseRed.mirror(), PedroCoordinates.INSTANCE);
+        }
+        else {
+            return redDefault2D;
+        }
     }
 
     private static final class PersistentState {
@@ -508,6 +525,10 @@ public class Robot {
 
     private void holdUpBall() {
         intake.idleWithBall();
+    }
+
+    public void resetRobotPosition() {
+        driveTrain.setRobotPose(getDefaultRobotPose());
     }
 
     public boolean isShotReady() {

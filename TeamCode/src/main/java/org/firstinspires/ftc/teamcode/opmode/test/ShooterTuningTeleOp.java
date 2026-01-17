@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.module.Shooter;
 import org.firstinspires.ftc.teamcode.opmode.teleop.OnePersonTeleOp;
 
@@ -21,10 +20,6 @@ public class ShooterTuningTeleOp extends OnePersonTeleOp {
 
     @Override
     public void loop() {
-        if (gamepad1.leftStickButtonWasPressed()) {
-            robot.setRobotPose(Robot.getDefaultRobotPose());
-        }
-
         final Pose2D robotPose = robot.getRobotPose();
         final double goalX = robot.getAllianceColor().goalPositionX;
         final double goalY = robot.getAllianceColor().goalPositionY;

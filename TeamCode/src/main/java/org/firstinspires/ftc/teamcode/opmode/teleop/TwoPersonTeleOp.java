@@ -111,6 +111,10 @@ public class TwoPersonTeleOp extends OpMode {
         if (gamepad1.start && gamepad1.back) {
             robot.resetFieldCentricHeading();
         }
+
+        if (gamepad1.guideWasReleased()) {
+            robot.resetRobotPosition();
+        }
     }
 
     @Override
