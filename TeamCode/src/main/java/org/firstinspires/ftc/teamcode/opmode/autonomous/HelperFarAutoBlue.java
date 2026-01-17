@@ -22,15 +22,15 @@ public class HelperFarAutoBlue extends AutonomousBase {
     @Override
     protected AutonomousStage[] buildStageSequence() {
         return new AutonomousStage[]{
-            AutonomousStage.line(start, shoot, Robot.RobotState.PRE_SHOOT),
+            AutonomousStage.line(start, shoot, Robot.RobotState.NONE),
             AutonomousStage.shootFromPoint(shoot),
             AutonomousStage.line(shoot, preIntake, Robot.RobotState.NONE),
             AutonomousStage.line(preIntake, intakePreset, Robot.RobotState.INTAKE),
-            AutonomousStage.line(intakePreset, shoot, Robot.RobotState.PRE_SHOOT),
+            AutonomousStage.line(intakePreset, shoot, Robot.RobotState.NONE),
             AutonomousStage.shootFromPoint(shoot),
             AutonomousStage.line(shoot, preIntake, Robot.RobotState.NONE),
             AutonomousStage.line(preIntake, intakePartner, Robot.RobotState.INTAKE),
-            AutonomousStage.line(intakePartner, shoot, Robot.RobotState.PRE_SHOOT),
+            AutonomousStage.line(intakePartner, shoot, Robot.RobotState.NONE),
             AutonomousStage.shootFromPoint(shoot),
             AutonomousStage.line(shoot, preIntake, Robot.RobotState.NONE)
         };
