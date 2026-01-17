@@ -74,7 +74,8 @@ public class TwoPersonTeleOp extends OpMode {
             robot.setState(Robot.RobotState.REVERSE_INTAKE);
         }
         else if (gamepad2.right_bumper) {
-            robot.setState(FORCE_FALLBACK ? Robot.RobotState.MANUAL_PRE_SHOOT : Robot.RobotState.PRE_SHOOT);
+            robot.setState(
+                FORCE_FALLBACK ? Robot.RobotState.MANUAL_PRE_SHOOT : Robot.RobotState.PRE_SHOOT);
         }
         else if (gamepad1.yWasPressed()) {
             if (robot.getState() != Robot.RobotState.PARK) {

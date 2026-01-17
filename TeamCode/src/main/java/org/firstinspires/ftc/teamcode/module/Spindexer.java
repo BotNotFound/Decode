@@ -57,10 +57,10 @@ public class Spindexer {
     public static double ARTIFACT_DISTANCE_THRESHOLD_CM = 5;
     public static double OFFSET_ANGLE = -3;
     public static double[] INDICATOR_COLORS = {
-            IndicatorColorValues.OFF,
-            IndicatorColorValues.VIOLET,
-            IndicatorColorValues.YELLOW,
-            IndicatorColorValues.GREEN,
+        IndicatorColorValues.OFF,
+        IndicatorColorValues.VIOLET,
+        IndicatorColorValues.YELLOW,
+        IndicatorColorValues.GREEN,
     };
 
     private final PositionalPIDFController spindexerController;
@@ -107,7 +107,8 @@ public class Spindexer {
     public void setArtifactDetections(boolean[] detections) {
         Objects.requireNonNull(detections, "detections cannot be null!");
         if (detections.length != ArtifactLocation.values().length) {
-            throw new IllegalArgumentException("detections must be of length " + ArtifactLocation.values().length);
+            throw new IllegalArgumentException(
+                "detections must be of length " + ArtifactLocation.values().length);
         }
         artifactDetections = detections;
     }
@@ -228,9 +229,9 @@ public class Spindexer {
         angle2 = unit.normalize(angle2);
 
         return signedMin(
-                angle1 - angle2,
-                angle1 + ROTATION - angle2,
-                angle1 - angle2 - ROTATION
+            angle1 - angle2,
+            angle1 + ROTATION - angle2,
+            angle1 - angle2 - ROTATION
         );
     }
 
@@ -243,7 +244,11 @@ public class Spindexer {
      * @param unit         The unit both angles are in
      * @return The closest angle to {@code closeToAngle} that is equivalent to {@code angle}
      */
-    private static double closestEquivalentAngle(double angle, double closeToAngle, AngleUnit unit) {
+    private static double closestEquivalentAngle(
+        double angle,
+        double closeToAngle,
+        AngleUnit unit
+    ) {
         return closeToAngle + getShortestDisplacement(angle, closeToAngle, unit);
     }
 
@@ -263,7 +268,8 @@ public class Spindexer {
 
     public void updateSpindexer() {
         if (curState != SpindexerState.MANUAL_ROTATION) {
-            final double curError = getShortestDisplacement(getAngle(), getTargetAngle(), AngleUnit.DEGREES);
+            final double curError = getShortestDisplacement(
+                getAngle(), getTargetAngle(), AngleUnit.DEGREES);
 
             spindexerController.setPIDF(kP, kI, kD, kF);
             spindexerController.setTolerance(tolerance);
@@ -273,7 +279,8 @@ public class Spindexer {
         }
 
         updateDetectionFromSensor();
-        indicatorLight.setPosition(INDICATOR_COLORS[Math.min(getArtifactCount(), INDICATOR_COLORS.length)]);
+        indicatorLight.setPosition(
+            INDICATOR_COLORS[Math.min(getArtifactCount(), INDICATOR_COLORS.length)]);
     }
 
     private void setActiveLocation(ArtifactLocation location) {
@@ -381,7 +388,8 @@ public class Spindexer {
 
     private double getAngle() {
         // see https://docs.sensorangerobotics.com/encoder/#analog-usage
-        return AngleUnit.normalizeDegrees((spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + OFFSET_ANGLE);
+        return AngleUnit.normalizeDegrees(
+            (spindexerEncoder.getVoltage() - 0.043) / 3.1 * 360 + OFFSET_ANGLE);
     }
 
     private String getStateInfo() {
@@ -405,9 +413,9 @@ public class Spindexer {
 
         for (ArtifactLocation location : ArtifactLocation.values()) {
             builder.append(location)
-                    .append(": ")
-                    .append(hasArtifact(location))
-                    .append(", ");
+                .append(": ")
+                .append(hasArtifact(location))
+                .append(", ");
         }
 
         builder.replace(builder.length() - 2, builder.length() - 1, " }");
@@ -419,7 +427,10 @@ public class Spindexer {
         telemetry.addData("Spindexer State", getStateInfo());
         telemetry.addData("Spindexer Angle (degrees)", getAngle());
         telemetry.addData("Spindexer Target Angle (degrees)", getTargetAngle());
-        telemetry.addData("Spindexer Close Angle (degrees)", closestEquivalentAngle(getAngle(), getTargetAngle(), AngleUnit.DEGREES));
+        telemetry.addData(
+            "Spindexer Close Angle (degrees)",
+            closestEquivalentAngle(getAngle(), getTargetAngle(), AngleUnit.DEGREES)
+        );
         telemetry.addData("Detections", getArtifactCount() + " " + getDetectionInfo());
         telemetry.addData("Detected Distance", this.frontColorSensor.getDistance(DistanceUnit.CM));
     }

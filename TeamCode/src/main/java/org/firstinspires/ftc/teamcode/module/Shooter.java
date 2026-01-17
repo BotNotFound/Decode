@@ -162,7 +162,8 @@ public class Shooter {
     }
 
     public void setHoodPosition(double position) {
-        hoodServo.setPosition(Math.min(Math.max(position, HOOD_SERVO_MIN_POSITION), HOOD_SERVO_MAX_POSITION));
+        hoodServo.setPosition(
+            Math.min(Math.max(position, HOOD_SERVO_MIN_POSITION), HOOD_SERVO_MAX_POSITION));
     }
 
     public void adjustHood() {

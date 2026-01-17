@@ -20,10 +20,14 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 public class AprilTagDetector {
     public static final String WEBCAM_NAME = "Webcam 1";
 
-    private static final Position CAMERA_POSITION = new Position(DistanceUnit.INCH,
-            0, 0, 0, 0);
-    private static final YawPitchRollAngles CAMERA_ORIENTATION = new YawPitchRollAngles(AngleUnit.DEGREES,
-            0, -90 + 30, 0, 0);
+    private static final Position CAMERA_POSITION = new Position(
+        DistanceUnit.INCH,
+        0, 0, 0, 0
+    );
+    private static final YawPitchRollAngles CAMERA_ORIENTATION = new YawPitchRollAngles(
+        AngleUnit.DEGREES,
+        0, -90 + 30, 0, 0
+    );
 
     private final AprilTagProcessor processor;
 
@@ -41,20 +45,20 @@ public class AprilTagDetector {
 
     public AprilTagDetector(HardwareMap hardwareMap, Telemetry telemetry) {
         processor = new AprilTagProcessor.Builder()
-                .setCameraPose(CAMERA_POSITION, CAMERA_ORIENTATION)
-                .build();
+            .setCameraPose(CAMERA_POSITION, CAMERA_ORIENTATION)
+            .build();
         visionPortal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, WEBCAM_NAME))
-                .addProcessor(processor)
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .build();
+            .setCamera(hardwareMap.get(WebcamName.class, WEBCAM_NAME))
+            .addProcessor(processor)
+            .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+            .build();
         this.telemetry = telemetry;
     }
 
     /**
      * @param tagID the ID of the tag that is being detected
-     * @apiNote Must be called every relevant loop iteration. Otherwise, the
-     *         AprilTagDetector object will give stale values.
+     * @apiNote Must be called every relevant loop iteration. Otherwise, the AprilTagDetector
+     *     object will give stale values.
      */
     public void update(int tagID) {
         tagDetected = false;
@@ -92,19 +96,18 @@ public class AprilTagDetector {
     }
 
     public Motif getMotifID() {
-
-        for(AprilTagDetection detection : processor.getDetections()) {
-            if(detection.id == Motif.GPP.motifID) {
+        for (AprilTagDetection detection : processor.getDetections()) {
+            if (detection.id == Motif.GPP.motifID) {
                 obeliskTagDetected = true;
                 telemetry.addData("Motif detected: ", "GPP");
                 return Motif.GPP;
             }
-            else if(detection.id == Motif.PGP.motifID){
+            else if (detection.id == Motif.PGP.motifID) {
                 obeliskTagDetected = true;
                 telemetry.addData("Motif detected: ", "PGP");
                 return Motif.PGP;
             }
-            else if(detection.id == Motif.PPG.motifID) {
+            else if (detection.id == Motif.PPG.motifID) {
                 obeliskTagDetected = true;
                 telemetry.addData("Motif detected: ", "PPG");
                 return Motif.PPG;
@@ -113,7 +116,5 @@ public class AprilTagDetector {
         obeliskTagDetected = false;
         telemetry.addData("Motif detected: ", "None");
         return null;
-
     }
-
 }

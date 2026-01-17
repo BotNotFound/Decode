@@ -53,7 +53,10 @@ public class Robot {
     }
 
     public static Pose2D getDefaultRobotPose() {
-        return new Pose2D(DEFAULT_ROBOT_POSITION_UNIT, DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_HEADING_UNIT, DEFAULT_ROBOT_HEADING);
+        return new Pose2D(
+            DEFAULT_ROBOT_POSITION_UNIT, DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y,
+            DEFAULT_ROBOT_HEADING_UNIT, DEFAULT_ROBOT_HEADING
+        );
     }
 
     private static final class PersistentState {
@@ -63,7 +66,11 @@ public class Robot {
         private final boolean[] artifactDetections;
         private final double turretHeading;
 
-        private PersistentState(Pose2D robotPose, boolean[] artifactDetections, double turretHeading) {
+        private PersistentState(
+            Pose2D robotPose,
+            boolean[] artifactDetections,
+            double turretHeading
+        ) {
             this.robotPose = robotPose;
             this.artifactDetections = artifactDetections;
             this.turretHeading = turretHeading;
@@ -75,9 +82,9 @@ public class Robot {
             }
 
             saved = new PersistentState(
-                    robot.driveTrain.getRobotPose(),
-                    robot.spindexer.getArtifactDetections(),
-                    robot.turret.getCurrentHeading(AngleUnit.DEGREES)
+                robot.driveTrain.getRobotPose(),
+                robot.spindexer.getArtifactDetections(),
+                robot.turret.getCurrentHeading(AngleUnit.DEGREES)
             );
 
             Log.i(TAG, "Saved robot state: " + saved);
@@ -107,12 +114,12 @@ public class Robot {
         @Override
         public String toString() {
             return "PersistentState{ pose = " +
-                    robotPose +
-                    ", turret heading = " +
-                    turretHeading +
-                    ", detections = " +
-                    Arrays.toString(artifactDetections) +
-                    " }";
+                robotPose +
+                ", turret heading = " +
+                turretHeading +
+                ", detections = " +
+                Arrays.toString(artifactDetections) +
+                " }";
         }
     }
 
@@ -175,7 +182,12 @@ public class Robot {
         this(hardwareMap, telemetry, color, false);
     }
 
-    public Robot(HardwareMap hardwareMap, Telemetry telemetry, AllianceColor color, boolean preloadedArtifacts) {
+    public Robot(
+        HardwareMap hardwareMap,
+        Telemetry telemetry,
+        AllianceColor color,
+        boolean preloadedArtifacts
+    ) {
         driveTrain = new FieldCentricDriveTrain(hardwareMap, telemetry);
         driveTrain.resetOdometry();
 
@@ -196,7 +208,6 @@ public class Robot {
         for (LynxModule hub : hardwareMap.getAll(LynxModule.class)) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
-
 
 
         setState(RobotState.NONE);
@@ -239,7 +250,8 @@ public class Robot {
         final double fieldHeading = robotHeading + Math.PI / 2;
 
         final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS) + fieldHeading;
-        final double turretLength = Math.sqrt(ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH) / 2;
+        final double turretLength = Math.sqrt(
+            ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH) / 2;
         final double turretStartX = FieldCentricDriveTrain.rotX(turretX, turretY, Math.PI / 2);
         final double turretStartY = FieldCentricDriveTrain.rotY(turretX, turretY, Math.PI / 2);
         final double turretEndX = turretStartX + turretLength * Math.cos(turretHeading);
@@ -250,16 +262,24 @@ public class Robot {
             .setFill("red")
             .fillPolygon(
                 new double[]{
-                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading)
+                    fieldX + FieldCentricDriveTrain.rotX(
+                        ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(
+                        ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(
+                        -ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(
+                        -ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading)
                 },
                 new double[]{
-                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading)
+                    fieldY + FieldCentricDriveTrain.rotY(
+                        ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(
+                        ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(
+                        -ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(
+                        -ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading)
                 }
             )
             .setStroke("black")
@@ -270,10 +290,14 @@ public class Robot {
                 fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, 0, fieldHeading)
             )
             .strokeLine(
-                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
-                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
-                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading)
+                fieldX + FieldCentricDriveTrain.rotX(
+                    ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
+                fieldY + FieldCentricDriveTrain.rotY(
+                    ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
+                fieldX + FieldCentricDriveTrain.rotX(
+                    ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
+                fieldY + FieldCentricDriveTrain.rotY(
+                    ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading)
             )
             .strokeLine(turretStartX, turretStartY, turretEndX, turretEndY);
         dashboard.sendTelemetryPacket(packet);
@@ -320,7 +344,8 @@ public class Robot {
             return;
         }
 
-        Log.v(TAG, "State " + currentState + " lasted for " + stateStopwatch.seconds() + " seconds");
+        Log.v(
+            TAG, "State " + currentState + " lasted for " + stateStopwatch.seconds() + " seconds");
         Log.i(TAG, "Switched to new state: " + newState);
         stateStopwatch.reset();
 
@@ -357,11 +382,13 @@ public class Robot {
                 shotPrepTime.reset();
                 shotsTaken = 0;
 
-                Log.d(TAG, "enter shoot {" +
+                Log.d(
+                    TAG, "enter shoot {" +
                         (spindexer.hasArtifact(ArtifactLocation.SLOT_ONE) ? "1 | " : "  | ") +
                         (spindexer.hasArtifact(ArtifactLocation.SLOT_TWO) ? "2 | " : "  | ") +
                         (spindexer.hasArtifact(ArtifactLocation.SLOT_THREE) ? "3" : " ") +
-                        "}");
+                        "}"
+                );
 
                 spindexer.setArtifactDetections(new boolean[ArtifactLocation.values().length]);
                 break;
@@ -390,7 +417,10 @@ public class Robot {
     }
 
     public void loop(Gamepad gamepad1) {
-        loop(-gamepad1.left_stick_y * moveScale, gamepad1.left_stick_x * moveScale, gamepad1.right_stick_x * headingScale);
+        loop(
+            -gamepad1.left_stick_y * moveScale, gamepad1.left_stick_x * moveScale,
+            gamepad1.right_stick_x * headingScale
+        );
     }
 
     public void loop(double drivePower, double strafePower, double turnPower) {
@@ -408,13 +438,15 @@ public class Robot {
 
             final Pose2D robotPose = driveTrain.getRobotPose();
             final Pose2D turretPose = turret.getTurretPose(robotPose);
-            final double goalOffsetX = allianceColor.goalPositionX - turretPose.getX(DistanceUnit.INCH);
-            final double goalOffsetY = allianceColor.goalPositionY - turretPose.getY(DistanceUnit.INCH);
+            final double goalOffsetX = allianceColor.goalPositionX - turretPose.getX(
+                DistanceUnit.INCH);
+            final double goalOffsetY = allianceColor.goalPositionY - turretPose.getY(
+                DistanceUnit.INCH);
             turret.aimAtGoal(
-                    goalOffsetX,
-                    goalOffsetY,
-                    robotPose.getHeading(AngleUnit.RADIANS),
-                    AngleUnit.RADIANS
+                goalOffsetX,
+                goalOffsetY,
+                robotPose.getHeading(AngleUnit.RADIANS),
+                AngleUnit.RADIANS
             );
 
             switch (currentState) {
@@ -426,7 +458,10 @@ public class Robot {
                         spindexer.setPower(0);
                         if (shotReady) {
                             shotsTaken++;
-                            Log.d(TAG, "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis");
+                            Log.d(
+                                TAG,
+                                "Shot #" + shotsTaken + " completed in " + timeSinceShotReady.milliseconds() + " millis"
+                            );
 
                         }
                         shotReady = false;
@@ -435,7 +470,8 @@ public class Robot {
 
                     spindexer.setPower(-1);
                     if (!shotReady) {
-                        Log.d(TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
+                        Log.d(
+                            TAG, "Ready to shoot after " + shotPrepTime.milliseconds() + " millis");
                         shotPrepTime.reset();
                         shotReady = true;
                         timeSinceShotReady.reset();
@@ -488,7 +524,7 @@ public class Robot {
 
     public boolean isShotReady() {
         return shooter.isReady() &&
-                turret.isReady();
+            turret.isReady();
     }
 
     /* Module-specific methods */

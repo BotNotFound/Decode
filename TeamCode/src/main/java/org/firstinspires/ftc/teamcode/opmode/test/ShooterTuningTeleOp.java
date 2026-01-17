@@ -28,10 +28,12 @@ public class ShooterTuningTeleOp extends OnePersonTeleOp {
         final Pose2D robotPose = robot.getRobotPose();
         final double goalX = robot.getAllianceColor().goalPositionX;
         final double goalY = robot.getAllianceColor().goalPositionY;
-        telemetry.addData("Distance to goal", Math.sqrt(
+        telemetry.addData(
+            "Distance to goal", Math.sqrt(
                 Math.pow(goalX - robotPose.getX(DistanceUnit.INCH), 2) +
-                        Math.pow(goalY - robotPose.getY(DistanceUnit.INCH), 2)
-        ));
+                    Math.pow(goalY - robotPose.getY(DistanceUnit.INCH), 2)
+            )
+        );
         robot.setFallbackShooterRPM(shooterRPM);
         robot.setFallbackHoodPosition(hoodPosition);
         super.loop();

@@ -19,18 +19,18 @@ public class AutoTest extends AutonomousBase {
     @Override
     protected AutonomousStage[] buildStageSequence() {
         return new AutonomousStage[]{
-                new AutonomousStage(
-                        follower.pathBuilder().addPath(
-                                new BezierLine(new Pose(0, 0), new Pose(10, 0))
-                        ).build(),
-                        Robot.RobotState.NONE
-                ),
-                new AutonomousStage(
-                        follower.pathBuilder()
-                                .addPath(new BezierPoint(new Pose(10, 0)))
-                                .build(),
-                        Robot.RobotState.SHOOT
-                )
+            new AutonomousStage(
+                follower.pathBuilder().addPath(
+                    new BezierLine(new Pose(0, 0), new Pose(10, 0))
+                ).build(),
+                Robot.RobotState.NONE
+            ),
+            new AutonomousStage(
+                follower.pathBuilder()
+                    .addPath(new BezierPoint(new Pose(10, 0)))
+                    .build(),
+                Robot.RobotState.SHOOT
+            )
         };
     }
 }

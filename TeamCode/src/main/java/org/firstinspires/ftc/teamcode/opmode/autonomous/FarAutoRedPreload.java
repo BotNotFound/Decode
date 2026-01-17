@@ -22,14 +22,14 @@ public class FarAutoRedPreload extends AutonomousBase {
     protected AutonomousStage[] buildStageSequence() {
         Paths autoPath = new Paths(follower);
         return new AutonomousStage[]{
-                new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
-                new AutonomousStage(
-                        follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
-                                .setConstantHeadingInterpolation(Math.toRadians(64.7))
-                                .build(),
-                        Robot.RobotState.SHOOT
-                ),
-                new AutonomousStage(autoPath.leavingLaunchZone, Robot.RobotState.NONE)
+            new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.NONE),
+            new AutonomousStage(
+                follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
+                    .setConstantHeadingInterpolation(Math.toRadians(64.7))
+                    .build(),
+                Robot.RobotState.SHOOT
+            ),
+            new AutonomousStage(autoPath.leavingLaunchZone, Robot.RobotState.NONE)
         };
     }
 
@@ -40,23 +40,23 @@ public class FarAutoRedPreload extends AutonomousBase {
 
         public Paths(Follower follower) {
             shootPreloads = follower
-                    .pathBuilder()
-                    .addPath(
-                            new BezierLine(
-                                    new Pose(89.5, 10.1),
-                                    new Pose(86.7, 18.03)
-                            )
+                .pathBuilder()
+                .addPath(
+                    new BezierLine(
+                        new Pose(89.5, 10.1),
+                        new Pose(86.7, 18.03)
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(64.7))
-                    .build();
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(64.7))
+                .build();
 
             leavingLaunchZone = follower
-                    .pathBuilder()
-                    .addPath(
-                            new BezierLine(new Pose(86.7, 18.03), new Pose(108.9, 8.53))
-                    )
-                    .setLinearHeadingInterpolation(Math.toRadians(64.7), Math.toRadians(0))
-                    .build();
+                .pathBuilder()
+                .addPath(
+                    new BezierLine(new Pose(86.7, 18.03), new Pose(108.9, 8.53))
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(64.7), Math.toRadians(0))
+                .build();
         }
     }
 }

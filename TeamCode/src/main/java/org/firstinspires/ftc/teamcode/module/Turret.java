@@ -52,8 +52,7 @@ public class Turret {
     }
 
     /**
-     * The number of encoder ticks in a single revolution of the motor. We are currently using a
-     * <a
+     * The number of encoder ticks in a single revolution of the motor. We are currently using a <a
      * href="https://www.gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-5-2-1-ratio-24mm-length-8mm-rex-shaft-1150-rpm-3-3-5v-encoder/">
      * 5203 1150 RPM goBilda motor
      * </a>
@@ -93,8 +92,10 @@ public class Turret {
         final double turretOffsetX = TURRET_OFFSET_UNIT.toInches(TURRET_OFFSET_X);
         final double turretOffsetY = TURRET_OFFSET_UNIT.toInches(TURRET_OFFSET_Y);
         final double turretOffsetHeading = getCurrentHeading(AngleUnit.RADIANS);
-        final double turretX = robotX + FieldCentricDriveTrain.rotX(turretOffsetX, turretOffsetY, robotHeading);
-        final double turretY = robotY + FieldCentricDriveTrain.rotY(turretOffsetX, turretOffsetY, robotHeading);
+        final double turretX = robotX + FieldCentricDriveTrain.rotX(
+            turretOffsetX, turretOffsetY, robotHeading);
+        final double turretY = robotY + FieldCentricDriveTrain.rotY(
+            turretOffsetX, turretOffsetY, robotHeading);
         final double turretHeading = robotHeading + turretOffsetHeading;
         return new Pose2D(
             DistanceUnit.INCH,
@@ -109,9 +110,10 @@ public class Turret {
 
     public double getCurrentHeading(AngleUnit angleUnit) {
         final int currentPosition = turretMotor.getCurrentPosition() * (
-                turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE ? -1 : 1
+            turretMotor.getDirection() == DcMotorSimple.Direction.REVERSE ? -1 : 1
         );
-        final double currentHeadingDegrees = normalizeDegrees((currentPosition / TICKS_PER_REVOLUTION * 360) + turretRotationOffset);
+        final double currentHeadingDegrees = normalizeDegrees(
+            (currentPosition / TICKS_PER_REVOLUTION * 360) + turretRotationOffset);
         return angleUnit.getUnnormalized().fromDegrees(currentHeadingDegrees);
     }
 
@@ -132,7 +134,8 @@ public class Turret {
     }
 
     public void aimAtGoal(double x, double y, double curRobotHeading, AngleUnit robotHeadingUnit) {
-        setTargetHeading(Math.atan2(y, x) - robotHeadingUnit.toRadians(curRobotHeading), AngleUnit.RADIANS);
+        setTargetHeading(
+            Math.atan2(y, x) - robotHeadingUnit.toRadians(curRobotHeading), AngleUnit.RADIANS);
     }
 
     public void update() {

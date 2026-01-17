@@ -60,8 +60,13 @@ public class GetAprilTagInfo extends OpMode {
         telemetry.addData("Tag " + tagID + " Robot X", robotPose.getPosition().x);
         telemetry.addData("Tag " + tagID + " Robot Y", robotPose.getPosition().y);
         telemetry.addData("Tag " + tagID + " Robot Z", robotPose.getPosition().z);
-        telemetry.addData("Tag " + tagID + " Robot Pitch", robotPose.getOrientation().getPitch(AngleUnit.DEGREES));
-        telemetry.addData("Tag " + tagID + " Robot Yaw", robotPose.getOrientation().getYaw(AngleUnit.DEGREES));
-        telemetry.addData("Tag " + tagID + " Robot Roll", robotPose.getOrientation().getRoll(AngleUnit.DEGREES));
+        telemetry.addData(
+            "Tag " + tagID + " Robot Pitch",
+            robotPose.getOrientation().getPitch(AngleUnit.DEGREES)
+        );
+        telemetry.addData(
+            "Tag " + tagID + " Robot Yaw", robotPose.getOrientation().getYaw(AngleUnit.DEGREES));
+        telemetry.addData(
+            "Tag " + tagID + " Robot Roll", robotPose.getOrientation().getRoll(AngleUnit.DEGREES));
     }
 }

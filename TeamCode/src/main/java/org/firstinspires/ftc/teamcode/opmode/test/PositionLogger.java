@@ -22,8 +22,10 @@ public class PositionLogger extends OnePersonTeleOp {
     @Override
     public void start() {
         super.start();
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, FieldCentricDriveTrain.PINPOINT_DRIVER_NAME);
-        pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, START_X, START_Y, AngleUnit.DEGREES, START_HEADING));
+        pinpoint = hardwareMap.get(
+            GoBildaPinpointDriver.class, FieldCentricDriveTrain.PINPOINT_DRIVER_NAME);
+        pinpoint.setPosition(
+            new Pose2D(DistanceUnit.INCH, START_X, START_Y, AngleUnit.DEGREES, START_HEADING));
     }
 
     @Override

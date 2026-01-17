@@ -15,14 +15,15 @@ public class IdentifyCameras extends OpMode {
 
     private void logCameraInfo(WebcamName camera) {
         telemetry.addLine(camera.getDeviceName()
-                + "\n\tConnection info: " + camera.getConnectionInfo()
-                + "\n\tManufacturer: " + camera.getManufacturer().name()
-                + "\n\tCamera Modes:"
+            + "\n\tConnection info: " + camera.getConnectionInfo()
+            + "\n\tManufacturer: " + camera.getManufacturer().name()
+            + "\n\tCamera Modes:"
         );
-        for (CameraCharacteristics.CameraMode mode : camera.getCameraCharacteristics().getAllCameraModes()) {
+        for (CameraCharacteristics.CameraMode mode : camera.getCameraCharacteristics()
+            .getAllCameraModes()) {
             telemetry.addLine("\t "
-                    + (mode.isDefaultSize ? "[default] " : "")
-                    + mode
+                + (mode.isDefaultSize ? "[default] " : "")
+                + mode
             );
         }
     }

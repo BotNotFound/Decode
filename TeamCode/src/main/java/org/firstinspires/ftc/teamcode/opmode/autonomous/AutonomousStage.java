@@ -66,7 +66,7 @@ public class AutonomousStage {
 
             case GATE_INTAKE:
                 gateIntakeTimer.start();
-                if(gateIntakeTimer.done() || (robot.getHeldArtifactCount() == 3)){
+                if (gateIntakeTimer.done() || (robot.getHeldArtifactCount() == 3)) {
                     return true;
                 }
                 return false;
