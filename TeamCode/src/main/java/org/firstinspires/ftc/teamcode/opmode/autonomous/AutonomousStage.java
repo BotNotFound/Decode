@@ -63,10 +63,7 @@ public class AutonomousStage {
 
             case GATE_INTAKE:
                 gateIntakeTimer.start();
-                if (gateIntakeTimer.done() || (robot.getHeldArtifactCount() == 3)) {
-                    return true;
-                }
-                return false;
+                return gateIntakeTimer.done() || (robot.getHeldArtifactCount() == 3);
 
             case REVERSE_INTAKE:
                 // these states are only useful when the robot is moving
