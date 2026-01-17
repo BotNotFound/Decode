@@ -23,7 +23,7 @@ public class AutonomousStage {
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
     public static long SHOT_DURATION_MILLIS = 1200;
-    public static long INTAKE_DURATION_MILLIS = Long.MAX_VALUE;
+    public static long INTAKE_DURATION_MILLIS = 1500;
     public static double INTAKE_POWER = 0.5;
 
     private final PathChain path;
