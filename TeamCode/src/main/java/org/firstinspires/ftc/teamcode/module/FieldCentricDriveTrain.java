@@ -68,7 +68,7 @@ public class FieldCentricDriveTrain {
             GoBildaPinpointDriver.EncoderDirection.FORWARD,
             GoBildaPinpointDriver.EncoderDirection.FORWARD
         );
-        pinpointDriver.resetPosAndIMU();
+        resetOdometry();
     }
 
     public void stopRobotMovement() {
@@ -81,6 +81,7 @@ public class FieldCentricDriveTrain {
 
     public void resetOdometry() {
         pinpointDriver.resetPosAndIMU();
+        pinpointDriver.recalibrateIMU();
     }
 
     public void resetFieldCentricHeading() {
