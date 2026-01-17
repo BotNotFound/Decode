@@ -97,6 +97,7 @@ public class Shooter {
         flywheelSpeeds.add(139.90391077047641, 3700);
         flywheelSpeeds.add(152.20077845265857, 3900);
         flywheelSpeeds.add(160, 4030); // extrapolated upper bound
+        flywheelSpeeds.add(203.646752982, 4589.09856718); // extrapolation
         flywheelSpeeds.createLUT();
 
         hoodPositions = new InterpLUT();
@@ -162,8 +163,10 @@ public class Shooter {
     }
 
     public void setHoodPosition(double position) {
-        hoodServo.setPosition(
-            Math.min(Math.max(position, HOOD_SERVO_MIN_POSITION), HOOD_SERVO_MAX_POSITION));
+        hoodServo.setPosition(Math.min(
+            Math.max(position, HOOD_SERVO_MIN_POSITION),
+            HOOD_SERVO_MAX_POSITION
+        ));
     }
 
     public void adjustHood() {
