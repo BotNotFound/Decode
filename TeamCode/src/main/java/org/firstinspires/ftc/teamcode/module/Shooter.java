@@ -94,12 +94,12 @@ public class Shooter {
         flywheelSpeeds.add(68.78117471395568, 2510);
         flywheelSpeeds.add(86, 2750);
 
-        flywheelSpeeds.add(103.68588631116245, 2985);
-        flywheelSpeeds.add(106.47453701719283, 3110);
-        flywheelSpeeds.add(139.90391077047641, 3710);
-        flywheelSpeeds.add(152.20077845265857, 3910);
-        flywheelSpeeds.add(160, 4040); // extrapolated upper bound
-        flywheelSpeeds.add(203.646752982, 4599.09856718); // extrapolation
+        flywheelSpeeds.add(103.68588631116245, 2995);
+        flywheelSpeeds.add(106.47453701719283, 3120);
+        flywheelSpeeds.add(139.90391077047641, 3720);
+        flywheelSpeeds.add(152.20077845265857, 3920);
+        flywheelSpeeds.add(160, 4050); // extrapolated upper bound
+        flywheelSpeeds.add(203.646752982, 4609.09856718); // extrapolation
         flywheelSpeeds.createLUT();
 
         hoodPositions = new InterpLUT();
