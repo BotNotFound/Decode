@@ -211,9 +211,8 @@ public class Robot {
         final double robotY = robotPose.getY(DistanceUnit.INCH) - (FIELD_LENGTH / 2);
         final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
 
-        final double fieldX = FieldCentricDriveTrain.rotX(robotX, robotY, -Math.PI);
-        final double fieldY = FieldCentricDriveTrain.rotY(robotX, robotY, -Math.PI);
-        final double fieldHeading = robotHeading - Math.PI;
+        final double fieldX = FieldCentricDriveTrain.rotX(robotX, robotY, Math.PI / 2);
+        final double fieldY = FieldCentricDriveTrain.rotY(robotX, robotY, Math.PI / 2);
 
         final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS) + robotHeading;
         final double turretLength = Math.sqrt(ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH) / 2;
@@ -225,16 +224,16 @@ public class Robot {
             .setFill("red")
             .fillPolygon(
                 new double[]{
-                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading)
+                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                    fieldX + FieldCentricDriveTrain.rotX(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading)
                 },
                 new double[]{
-                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, fieldHeading),
-                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, fieldHeading)
+                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                    fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading)
                 }
             )
             .setFill("black")
@@ -243,7 +242,7 @@ public class Robot {
                 fieldX,
                 fieldY,
                 "4px Arial",
-                fieldHeading,
+                robotHeading,
                 false
             )
             .setStroke("black")
