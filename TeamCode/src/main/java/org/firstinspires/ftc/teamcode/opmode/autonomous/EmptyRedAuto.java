@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 @Autonomous(name = "Empty Red Auto", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 public class EmptyRedAuto extends AutonomousBase {
     public EmptyRedAuto() {
-        super(new Pose(125.5, 128, Math.toRadians(35)), AllianceColor.RED);
+        super(new Pose(117.9, 131.3, Math.toRadians(-54)), AllianceColor.RED);
     }
 
     @Override
