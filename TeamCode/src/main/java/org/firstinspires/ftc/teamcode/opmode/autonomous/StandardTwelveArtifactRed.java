@@ -15,7 +15,8 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
 @Autonomous(name = "12 Artifact Red", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
 public class StandardTwelveArtifactRed extends AutonomousBase {
 
-    public static Pose startPosition = new Pose(115.5, 129.4, Math.toRadians(36));
+    public static Pose startPosition = new Pose(
+        117.92068077057071, 131.15872752654442, Math.toRadians(36));
 
     public static double headingToShoot = Math.toRadians(-60);
 
