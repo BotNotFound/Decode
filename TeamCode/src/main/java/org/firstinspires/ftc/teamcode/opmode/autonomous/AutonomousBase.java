@@ -5,6 +5,8 @@ import android.util.Log;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.ftc.PoseConverter;
+import com.pedropathing.geometry.PedroCoordinates;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -61,6 +63,10 @@ public abstract class AutonomousBase extends OpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         robot = new Robot(hardwareMap, telemetry, allianceColor, true);
         follower = Constants.createFollower(hardwareMap);
+        // set raw pose here to allow for easy start pose verification
+        // this does not affect auto behavior because we have to set starting pose
+        // on opmode start for the follower to function
+        robot.setRobotPose(PoseConverter.poseToPose2D(startPose, PedroCoordinates.INSTANCE));
         currentStageIndex = 0;
 
         stageSequence = buildStageSequence();
