@@ -40,7 +40,7 @@ public class Shooter {
     public static double kI = 0;
     public static double kD = 0;
     public static double kF = 0.000175;
-    public static double tolerance = 200;
+    public static double tolerance = 100;
 
     /*
      * We currently use GoBilda 5203 6000 RPM motors to power our flywheel
