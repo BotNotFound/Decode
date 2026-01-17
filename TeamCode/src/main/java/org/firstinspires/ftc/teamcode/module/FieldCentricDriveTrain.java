@@ -18,6 +18,9 @@ public class FieldCentricDriveTrain {
     public static double PINPOINT_Y_OFFSET = 96;
     public static DistanceUnit PINPOINT_OFFSET_UNIT = DistanceUnit.MM;
 
+    public static double PINPOINT_ENCODER_RESOLUTION = 19.89436789f;
+    public static DistanceUnit PINPOINT_ENCODER_RESOLUTION_UNIT = DistanceUnit.MM;
+
     public static final String FRONT_RIGHT_DRIVE_MOTOR_NAME = "Front Right";
     public static final String FRONT_LEFT_DRIVE_MOTOR_NAME = "Front Left";
     public static final String BACK_RIGHT_DRIVE_MOTOR_NAME = "Back Right";
@@ -61,7 +64,7 @@ public class FieldCentricDriveTrain {
 
         pinpointDriver = hardwareMap.get(GoBildaPinpointDriver.class, PINPOINT_DRIVER_NAME);
         pinpointDriver.setOffsets(PINPOINT_X_OFFSET, PINPOINT_Y_OFFSET, PINPOINT_OFFSET_UNIT);
-        pinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        pinpointDriver.setEncoderResolution(PINPOINT_ENCODER_RESOLUTION, PINPOINT_ENCODER_RESOLUTION_UNIT);
         pinpointDriver.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpointDriver.resetPosAndIMU();
     }
