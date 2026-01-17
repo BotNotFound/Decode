@@ -7,12 +7,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.controller.PositionalPIDFController;
 
 @Config
 public class Turret {
     public static final String TURRET_MOTOR_NAME = "Turret";
     private final DcMotor turretMotor;
+
+    public static double TURRET_OFFSET_X = 76;
+    public static double TURRET_OFFSET_Y = 0;
+    public static DistanceUnit TURRET_OFFSET_UNIT = DistanceUnit.MM;
 
     // any higher of a kP (at least with the other constants the same) and it vibrates like crazy at start
     public static double kP = 0.05;
