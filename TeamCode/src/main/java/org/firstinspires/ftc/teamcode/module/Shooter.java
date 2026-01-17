@@ -24,6 +24,8 @@ public class Shooter {
     public static double KICKER_IDLE_POSITION = 0.3;
     public static double KICKER_LAUNCH_POSITION = 0.15;
 
+    public static double FLYWHEEL_RPM_MULTIPLIER = 1;
+
 
     public static double HOOD_SERVO_MIN_POSITION = 0.15;
 
@@ -141,7 +143,7 @@ public class Shooter {
         double actualRPM = getRPM();
 
         if (rpm > 0) {
-            double power = velocityPID.calculate(actualRPM, rpm);
+            double power = velocityPID.calculate(actualRPM, rpm * FLYWHEEL_RPM_MULTIPLIER);
 
             leftFlywheelMotor.setPower(power);
             rightFlywheelMotor.setPower(power);
