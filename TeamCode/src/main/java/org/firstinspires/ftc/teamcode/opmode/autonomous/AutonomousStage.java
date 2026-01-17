@@ -17,14 +17,12 @@ public class AutonomousStage {
     /**
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
-    public static long MIN_SHOT_DURATION_MILLIS = 2500;
-    public static long MAX_SHOT_DURATION_MILLIS = 4000;
+    public static long SHOT_DURATION_MILLIS = 2500;
     public static long TIME_TO_INTAKE_FROM_GATE = 1800;
 
     private final PathChain path;
     private final Robot.RobotState robotState;
-    private final Timing.Timer minShotTimer;
-    private final Timing.Timer maxShotTimer;
+    private final Timing.Timer shotTimer;
     private final Timing.Timer gateIntakeTimer;
 
     private boolean complete;
@@ -39,8 +37,7 @@ public class AutonomousStage {
     public AutonomousStage(PathChain path, Robot.RobotState robotState) {
         this.path = path;
         this.robotState = robotState;
-        minShotTimer = new Timing.Timer(MIN_SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
-        maxShotTimer = new Timing.Timer(MAX_SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
+        shotTimer = new Timing.Timer(SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
         gateIntakeTimer = new Timing.Timer(TIME_TO_INTAKE_FROM_GATE, TimeUnit.MILLISECONDS);
         complete = false;
     }
@@ -79,17 +76,7 @@ public class AutonomousStage {
                 // we can end it
                 return true;
             case SHOOT:
-                if (minShotTimer.isTimerOn()) {
-                    // we are currently shooting, wait until we're done
-                    return maxShotTimer.done() || (minShotTimer.done() && (robot.getShotsTaken() >= ballsHeldAtStart));
-                }
-
-                if (robot.isShotReady()) {
-                    // we are ready to shoot, start the timer
-                    minShotTimer.start();
-                    maxShotTimer.start();
-                }
-                return false;
+                return shotTimer.done();
         }
 
         throw new IllegalStateException(); // should never be reached
@@ -120,6 +107,7 @@ public class AutonomousStage {
     public void enterStage(Robot robot, Follower follower) {
         ballsHeldAtStart = robot.getHeldArtifactCount();
         robot.setState(robotState);
+        shotTimer.start();
 
         follower.followPath(path);
 
