@@ -309,7 +309,6 @@ public class Spindexer {
         checkForJam();
         if (JAM_EXIT_POWER != 0 && isJammed()) {
             setPower(JAM_EXIT_POWER * -Math.signum(getPower()));
-            couldBeJammed = false;
         }
     }
 
