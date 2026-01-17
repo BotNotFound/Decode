@@ -23,10 +23,9 @@ public class AutonomousStage {
     private final PathChain path;
     private final Robot.RobotState robotState;
     private final Timing.Timer shotTimer;
-    private final Timing.Timer gateIntakeTimer;
+    private final Timing.Timer intakeTimer;
 
     private boolean complete;
-    private int ballsHeldAtStart;
 
     /**
      * Creates an autonomous stage
@@ -38,7 +37,7 @@ public class AutonomousStage {
         this.path = path;
         this.robotState = robotState;
         shotTimer = new Timing.Timer(SHOT_DURATION_MILLIS, TimeUnit.MILLISECONDS);
-        gateIntakeTimer = new Timing.Timer(TIME_TO_INTAKE_FROM_GATE, TimeUnit.MILLISECONDS);
+        intakeTimer = new Timing.Timer(TIME_TO_INTAKE_FROM_GATE, TimeUnit.MILLISECONDS);
         complete = false;
     }
 
@@ -59,11 +58,9 @@ public class AutonomousStage {
             case NONE:
                 // this state does nothing other than movement, we are complete
                 return true;
-            case INTAKE:
 
-            case GATE_INTAKE:
-                gateIntakeTimer.start();
-                return gateIntakeTimer.done() || (robot.getHeldArtifactCount() == 3);
+            case INTAKE:
+                return intakeTimer.done() || (robot.getHeldArtifactCount() == 3);
 
             case REVERSE_INTAKE:
                 // these states are only useful when the robot is moving
@@ -102,9 +99,9 @@ public class AutonomousStage {
      * @param follower The follower moving the robot
      */
     public void enterStage(Robot robot, Follower follower) {
-        ballsHeldAtStart = robot.getHeldArtifactCount();
         robot.setState(robotState);
         shotTimer.start();
+        intakeTimer.start();
 
         follower.followPath(path);
 

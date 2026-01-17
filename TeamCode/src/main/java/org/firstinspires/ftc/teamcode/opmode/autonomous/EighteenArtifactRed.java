@@ -46,7 +46,7 @@ public class EighteenArtifactRed extends AutonomousBase {
                     .addPath(new BezierPoint(autoPath.firstCycleGateIntake.endPose()))
                     .setConstantHeadingInterpolation(Math.toRadians(20))
                     .build(),
-                Robot.RobotState.GATE_INTAKE
+                Robot.RobotState.INTAKE
             ),
             new AutonomousStage(autoPath.firstCycleGateIntakeShoot, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
@@ -62,7 +62,7 @@ public class EighteenArtifactRed extends AutonomousBase {
                     .addPath(new BezierPoint(autoPath.secondCycleGateIntake.endPose()))
                     .setConstantHeadingInterpolation(20)
                     .build(),
-                Robot.RobotState.GATE_INTAKE
+                Robot.RobotState.INTAKE
             ),
             new AutonomousStage(autoPath.secondCycleGateIntakeShoot, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(

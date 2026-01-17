@@ -48,7 +48,7 @@ public class FifteenArtifactAutoRed extends AutonomousBase {
                     .build()
                 , Robot.RobotState.SHOOT
             ),
-            new AutonomousStage(autoPaths.firstGateCycleIntake, Robot.RobotState.GATE_INTAKE),
+            new AutonomousStage(autoPaths.firstGateCycleIntake, Robot.RobotState.INTAKE),
             new AutonomousStage(autoPaths.firstGateCycleShoot, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
                 follower.pathBuilder()
@@ -57,7 +57,7 @@ public class FifteenArtifactAutoRed extends AutonomousBase {
                     .build()
                 , Robot.RobotState.SHOOT
             ),
-            new AutonomousStage(autoPaths.secondGateCycleIntake, Robot.RobotState.GATE_INTAKE),
+            new AutonomousStage(autoPaths.secondGateCycleIntake, Robot.RobotState.INTAKE),
             new AutonomousStage(autoPaths.secondGateCycleShoot, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
                 follower.pathBuilder()
