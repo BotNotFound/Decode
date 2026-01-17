@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 
 @Autonomous(name = "Helper Far Auto (blue)", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
 public class HelperFarAutoBlue extends AutonomousBase {
-    private static final Pose start = new Pose(89.5, 8.9, Math.toRadians(0)).mirror();
+    private static final Pose start = new Pose(89.5, 8.9, Math.toRadians(180)).mirror();
     private static final Pose shoot = new Pose(85, 16.2, Math.toRadians(-60)).mirror();
     private static final Pose preIntake = new Pose(120, 9, Math.toRadians(0)).mirror();
     private static final Pose intakePreset = new Pose(135, 9, Math.toRadians(0)).mirror();
