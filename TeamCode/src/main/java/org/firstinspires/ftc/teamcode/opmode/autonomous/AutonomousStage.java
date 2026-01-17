@@ -88,10 +88,17 @@ public class AutonomousStage {
                 // we can end it
                 return true;
             case SHOOT:
-                if (!shotTimer.isTimerOn()) {
-                    shotTimer.start();
+                if (!robot.isShotReady()) {
+                    shotTimer.pause();
                     return false;
                 }
+                if (shotTimer.elapsedTime() > 0) {
+                    shotTimer.resume();
+                }
+                else if (!shotTimer.isTimerOn()) {
+                    shotTimer.start();
+                }
+
                 return shotTimer.done();
         }
 
