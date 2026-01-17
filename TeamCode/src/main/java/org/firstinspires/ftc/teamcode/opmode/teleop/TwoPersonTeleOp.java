@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 @TeleOp(name = "2-Driver Teleop", group = "2driver")
 @Disabled
+@Config
 public class TwoPersonTeleOp extends OpMode {
     protected Robot robot;
 
@@ -23,7 +25,7 @@ public class TwoPersonTeleOp extends OpMode {
      * If true, use robot states intended for manual control instead of their standard counterparts
      * when possible
      */
-    public static boolean FORCE_FALLBACK = true;
+    public static boolean FORCE_FALLBACK = false;
 
     protected TwoPersonTeleOp(boolean allowAllianceSwap) {
         this.allowAllianceSwap = allowAllianceSwap;
