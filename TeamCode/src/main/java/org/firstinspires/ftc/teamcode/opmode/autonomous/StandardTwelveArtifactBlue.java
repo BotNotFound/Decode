@@ -32,35 +32,38 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
         return new AutonomousStage[]{
             new AutonomousStage(autoPath.shootPreloads, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
-                follower.pathBuilder().addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
+                follower.pathBuilder()
+                    .addPath(new BezierPoint(autoPath.shootPreloads.endPose()))
                     .setConstantHeadingInterpolation(headingToShoot)
-                    .build(),
-                Robot.RobotState.SHOOT
+                    .build(), Robot.RobotState.SHOOT
             ),
+            new AutonomousStage(autoPath.moveToFirstRow, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.intakeFirstRow, Robot.RobotState.INTAKE),
             new AutonomousStage(autoPath.hitGate, Robot.RobotState.INTAKE),
             new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
-                follower.pathBuilder().addPath(new BezierPoint(autoPath.shootFirstRow.endPose()))
+                follower.pathBuilder()
+                    .addPath(new BezierPoint(autoPath.shootFirstRow.endPose()))
                     .setConstantHeadingInterpolation(headingToShoot)
-                    .build(),
-                Robot.RobotState.SHOOT
+                    .build(), Robot.RobotState.SHOOT
             ),
+            new AutonomousStage(autoPath.moveToSecondRow, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.intakeSecondRow, Robot.RobotState.INTAKE),
             new AutonomousStage(autoPath.shootSecondRow, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
-                follower.pathBuilder().addPath(new BezierPoint(autoPath.shootSecondRow.endPose()))
+                follower.pathBuilder()
+                    .addPath(new BezierPoint(autoPath.shootSecondRow.endPose()))
                     .setConstantHeadingInterpolation(Math.toRadians(180 - 35))
-                    .build(),
-                Robot.RobotState.SHOOT
+                    .build(), Robot.RobotState.SHOOT
             ),
+            new AutonomousStage(autoPath.moveToThirdRow, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.intakeThirdRow, Robot.RobotState.INTAKE),
             new AutonomousStage(autoPath.shootThirdRow, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
-                follower.pathBuilder().addPath(new BezierPoint(autoPath.shootThirdRow.endPose()))
+                follower.pathBuilder()
+                    .addPath(new BezierPoint(autoPath.shootThirdRow.endPose()))
                     .setConstantHeadingInterpolation(Math.toRadians(180 - 35))
-                    .build(),
-                Robot.RobotState.SHOOT
+                    .build(), Robot.RobotState.SHOOT
             ),
             new AutonomousStage(autoPath.leaveLaunchZone, Robot.RobotState.NONE),
 
@@ -70,138 +73,114 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
     public static class Paths {
 
         public PathChain shootPreloads;
+        public PathChain moveToFirstRow;
         public PathChain intakeFirstRow;
         public PathChain hitGate;
         public PathChain shootFirstRow;
+        public PathChain moveToSecondRow;
         public PathChain intakeSecondRow;
         public PathChain shootSecondRow;
+        public PathChain moveToThirdRow;
         public PathChain intakeThirdRow;
         public PathChain shootThirdRow;
         public PathChain leaveLaunchZone;
 
         public Paths(Follower follower) {
-            shootPreloads = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierLine(
-                        startPosition,
-                        new Pose(88.6617, 97.5312).mirror()
-                    )
-                )
+            shootPreloads = follower.pathBuilder()
+                .addPath(new BezierLine(startPosition, new Pose(88.6617, 97.5312).mirror()))
                 .setLinearHeadingInterpolation(startPosition.getHeading(), headingToShoot)
                 .build();
 
-            intakeFirstRow = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierCurve(
-                        new Pose(88.6617, 97.5312).mirror(),
-                        new Pose(98, 87).mirror(),
-                        new Pose(100.9081, 87.3834).mirror()
-                    )
-                )
+            moveToFirstRow = follower.pathBuilder()
+                .addPath(new BezierCurve(
+                    new Pose(88.6617, 97.5312).mirror(),
+                    new Pose(98, 87).mirror(),
+                    new Pose(100.9081, 87.3834).mirror()
+                ))
                 .setConstantHeadingInterpolation(Math.toRadians(180 - 0))
-                .addPath(
+                .build();
 
+            intakeFirstRow = follower.pathBuilder()
+                .addPath(
                     new BezierLine(
                         new Pose(100.9081, 87.3834).mirror(),
-                        new Pose(123.83, 87.267).mirror()
-                    )
-                )
-                .setConstantHeadingInterpolation(Math.toRadians(180 - 0))
-                .build();
-            hitGate = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierCurve(
-                        new Pose(123.83, 87.267).mirror(),
-                        new Pose(115, 79).mirror(),
-                        new Pose(128, 78).mirror()
+                        new Pose(128, 87.267).mirror()
                     )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(180 - 0))
                 .build();
 
-            shootFirstRow = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierLine(
-                        new Pose(128, 78).mirror(),
-                        new Pose(92.3, 99.48).mirror()
-                    )
-                )
+            hitGate = follower.pathBuilder()
+                .addPath(new BezierCurve(
+                    new Pose(128, 87.267).mirror(),
+                    new Pose(115, 79).mirror(),
+                    new Pose(128, 78).mirror()
+                ))
+                .setConstantHeadingInterpolation(Math.toRadians(180 - 0))
+                .build();
+
+            shootFirstRow = follower.pathBuilder()
+                .addPath(new BezierLine(new Pose(128, 78).mirror(), new Pose(92.3, 99.48).mirror()))
                 .setLinearHeadingInterpolation(Math.toRadians(180 - 0), headingToShoot)
                 .build();
 
-            intakeSecondRow = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierCurve(
-                        new Pose(92.3, 99.48).mirror(),
-                        new Pose(96.42, 64.07).mirror(),
-                        new Pose(96.42, 64.07).mirror()
-                    )
-                )
+            moveToSecondRow = follower.pathBuilder()
+                .addPath(new BezierCurve(
+                    new Pose(92.3, 99.48).mirror(),
+                    new Pose(96.42, 64.07).mirror(),
+                    new Pose(96.42, 64.07).mirror()
+                ))
                 .setLinearHeadingInterpolation(headingToShoot, Math.toRadians(180 - 0))
-                .addPath(
-                    new BezierLine(
-                        new Pose(96.42, 64.07).mirror(),
-                        new Pose(120.25, 62.08).mirror()
-                    )
-                )
+                .build();
+
+            intakeSecondRow = follower.pathBuilder()
+                .addPath(new BezierLine(
+                    new Pose(96.42, 64.07).mirror(),
+                    new Pose(134, 62.08).mirror()
+                ))
                 .setConstantHeadingInterpolation(Math.toRadians(180 - 0))
                 .build();
-            shootSecondRow = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierCurve(
-                        new Pose(120.25, 62.08).mirror(),
-                        new Pose(86.95, 95).mirror(),
-                        new Pose(86.95, 95.18).mirror()
-                    )
-                )
+
+            shootSecondRow = follower.pathBuilder()
+                .addPath(new BezierCurve(
+                    new Pose(134, 62.08).mirror(),
+                    new Pose(86.95, 95).mirror(),
+                    new Pose(86.95, 95.18).mirror()
+                ))
                 .setLinearHeadingInterpolation(Math.toRadians(180 - 0), headingToShoot)
                 .build();
 
-            intakeThirdRow = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierCurve(
-                        new Pose(86.95, 95.18).mirror(),
-                        new Pose(97.06, 41).mirror(),
-                        new Pose(97.06, 41.13).mirror()
-                    )
-                )
+            moveToThirdRow = follower.pathBuilder()
+                .addPath(new BezierCurve(
+                    new Pose(86.95, 95.18).mirror(),
+                    new Pose(97.06, 41).mirror(),
+                    new Pose(97.06, 41.13).mirror()
+                ))
                 .setLinearHeadingInterpolation(headingToShoot, Math.toRadians(180 - 0))
-                .addPath(
-                    new BezierLine(
-                        new Pose(97.06, 41.13).mirror(),
-                        new Pose(125.18, 39.93).mirror()
-                    )
-                )
+                .build();
+
+            intakeThirdRow = follower.pathBuilder()
+                .addPath(new BezierLine(
+                    new Pose(97.06, 41.13).mirror(),
+                    new Pose(134, 39.93).mirror()
+                ))
                 .setLinearHeadingInterpolation(Math.toRadians(180 - 0), Math.toRadians(180 - 0))
                 .build();
 
-            shootThirdRow = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierLine(
-                        new Pose(125.18, 39.93).mirror(),
-                        new Pose(86.95, 95.18).mirror()
-                    )
-                )
+            shootThirdRow = follower.pathBuilder()
+                .addPath(new BezierLine(
+                    new Pose(134, 39.93).mirror(),
+                    new Pose(86.95, 95.18).mirror()
+                ))
                 .setLinearHeadingInterpolation(Math.toRadians(180 - 0), headingToShoot)
                 .build();
 
-            leaveLaunchZone = follower
-                .pathBuilder()
-                .addPath(
-                    new BezierCurve(
-                        new Pose(86.95, 95.18).mirror(),
-                        new Pose(111.52, 78.55).mirror(),
-                        new Pose(111.52, 78.55).mirror()
-                    )
-                )
+            leaveLaunchZone = follower.pathBuilder()
+                .addPath(new BezierCurve(
+                    new Pose(86.95, 95.18).mirror(),
+                    new Pose(111.52, 78.55).mirror(),
+                    new Pose(111.52, 78.55).mirror()
+                ))
                 .setConstantHeadingInterpolation(Math.toRadians(180 - 0))
                 .build();
         }
