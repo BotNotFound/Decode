@@ -6,6 +6,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 import java.util.concurrent.TimeUnit;
 
@@ -102,6 +103,13 @@ public class AutonomousStage {
         robot.setState(robotState);
         shotTimer.start();
         intakeTimer.start();
+
+        if (robotState == Robot.RobotState.INTAKE) {
+            follower.setMaxPower(0.2);
+        }
+        else {
+            follower.setMaxPower(Constants.driveConstants.getMaxPower());
+        }
 
         follower.followPath(path);
 
