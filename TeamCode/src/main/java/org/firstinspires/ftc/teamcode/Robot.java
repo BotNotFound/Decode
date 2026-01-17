@@ -601,5 +601,4 @@ public class Robot {
     public void rotateSpindexerToPreviousSlot() {
         spindexer.rotateToPreviousSlot();
     }
-
 }
