@@ -22,7 +22,8 @@ public class HelperFarAutoRed extends AutonomousBase {
     @Override
     protected AutonomousStage[] buildStageSequence() {
         return new AutonomousStage[]{
-            AutonomousStage.line(start, shoot, Robot.RobotState.SHOOT),
+            AutonomousStage.line(start, shoot, Robot.RobotState.PRE_SHOOT),
+            AutonomousStage.shootFromPoint(shoot),
             AutonomousStage.line(start, preIntake, Robot.RobotState.NONE),
             AutonomousStage.line(preIntake, intakePreset, Robot.RobotState.INTAKE),
             AutonomousStage.line(intakePreset, shoot, Robot.RobotState.PRE_SHOOT),
