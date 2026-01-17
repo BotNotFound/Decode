@@ -39,7 +39,7 @@ public class StandardTwelveArtifactBlue extends AutonomousBase {
             ),
             new AutonomousStage(autoPath.moveToFirstRow, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.intakeFirstRow, Robot.RobotState.INTAKE),
-            new AutonomousStage(autoPath.hitGate, Robot.RobotState.INTAKE),
+            new AutonomousStage(autoPath.hitGate, Robot.RobotState.NONE),
             new AutonomousStage(autoPath.shootFirstRow, Robot.RobotState.PRE_SHOOT),
             new AutonomousStage(
                 follower.pathBuilder()
