@@ -75,7 +75,7 @@ public class Spindexer {
     private boolean couldBeJammed;
     private double jamAngle;
     private final ElapsedTime timeInJam;
-    public static double JAM_MOVEMENT_POWER_THRESHOLD = 0.55;
+    public static double JAM_MOVEMENT_POWER_THRESHOLD = 0.8;
     public static double JAM_ANGLE_THRESHOLD = 2;
     public static double JAM_TIME_THRESHOLD = 1;
     public static double JAM_EXIT_POWER = 1;
