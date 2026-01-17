@@ -5,18 +5,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.AllianceColor;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpRed;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TwoPersonTeleOpBlue;
 
-@Autonomous(name = "Helper Far Auto (red)", group = "red", preselectTeleOp = TwoPersonTeleOpRed.OP_MODE_NAME)
-public class HelperFarAutoRed extends AutonomousBase {
-    private static final Pose start = new Pose(89.5, 8.9, Math.toRadians(0));
-    private static final Pose shoot = new Pose(85, 16.2, Math.toRadians(-60));
-    private static final Pose preIntake = new Pose(120, 9, Math.toRadians(0));
-    private static final Pose intakePreset = new Pose(135, 9, Math.toRadians(0));
-    private static final Pose intakePartner = new Pose(135, 12, Math.toRadians(90));
+@Autonomous(name = "Helper Far Auto (blue)", group = "blue", preselectTeleOp = TwoPersonTeleOpBlue.OP_MODE_NAME)
+public class HelperFarAutoBlue extends AutonomousBase {
+    private static final Pose start = new Pose(89.5, 8.9, Math.toRadians(0)).mirror();
+    private static final Pose shoot = new Pose(85, 16.2, Math.toRadians(-60)).mirror();
+    private static final Pose preIntake = new Pose(120, 9, Math.toRadians(0)).mirror();
+    private static final Pose intakePreset = new Pose(135, 9, Math.toRadians(0)).mirror();
+    private static final Pose intakePartner = new Pose(135, 12, Math.toRadians(90)).mirror();
 
-    public HelperFarAutoRed() {
-        super(start, AllianceColor.RED);
+    public HelperFarAutoBlue() {
+        super(start, AllianceColor.BLUE);
     }
 
     @Override
