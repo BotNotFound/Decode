@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class TwoPersonTeleOp extends OpMode {
     protected Robot robot;
 
-    public static double TURRET_OFFSET_SCALE = 3;
+    public static double TURRET_OFFSET_SCALE = 5;
 
     /**
      * Should we allow the driver to swap alliance colors in init?
