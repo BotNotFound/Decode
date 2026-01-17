@@ -23,7 +23,7 @@ public class AutonomousStage {
      * How long the robot typically takes to shoot every ball it can carry, in milliseconds
      */
     public static long SHOT_DURATION_MILLIS = 1200;
-    public static long INTAKE_DURATION_MILLIS = 2000;
+    public static long INTAKE_DURATION_MILLIS = 1000;
     public static double INTAKE_POWER = 0.4;
 
     private final PathChain path;
@@ -78,6 +78,9 @@ public class AutonomousStage {
                 return true;
 
             case INTAKE:
+                if (!intakeTimer.isTimerOn()) {
+                    intakeTimer.start();
+                }
                 return intakeTimer.done() || (robot.getHeldArtifactCount() == 3);
 
             case REVERSE_INTAKE:
@@ -129,7 +132,6 @@ public class AutonomousStage {
      */
     public void enterStage(Robot robot, Follower follower) {
         robot.setState(robotState);
-        intakeTimer.start();
 
         follower.followPath(path);
 
