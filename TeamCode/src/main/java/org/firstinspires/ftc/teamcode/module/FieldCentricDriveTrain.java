@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 @Config
 public class FieldCentricDriveTrain {
     // Offsets are based on center of turret, not center of robot
-    public static double PINPOINT_X_OFFSET = -194;
+    public static double PINPOINT_X_OFFSET = -118;
     public static double PINPOINT_Y_OFFSET = 96;
     public static DistanceUnit PINPOINT_OFFSET_UNIT = DistanceUnit.MM;
     public static double PINPOINT_ENCODER_RESOLUTION = 19.89436789f * (2435.0 / 2446.20483398438);
