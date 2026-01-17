@@ -236,16 +236,19 @@ public class Robot {
                     fieldY + FieldCentricDriveTrain.rotY(-ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading)
                 }
             )
-            .setFill("black")
-            .fillText(
-                "Robot",
-                fieldX,
-                fieldY,
-                "4px Arial",
-                robotHeading,
-                false
-            )
             .setStroke("black")
+            .strokeLine(
+                fieldX + FieldCentricDriveTrain.rotX(0, 0, robotHeading),
+                fieldY + FieldCentricDriveTrain.rotY(0, 0, robotHeading),
+                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, 0, robotHeading),
+                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, 0, robotHeading)
+            )
+            .strokeLine(
+                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
+                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, ROBOT_LENGTH / 2, robotHeading),
+                fieldX + FieldCentricDriveTrain.rotX(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading),
+                fieldY + FieldCentricDriveTrain.rotY(ROBOT_WIDTH / 2, -ROBOT_LENGTH / 2, robotHeading)
+            )
             .strokeLine(fieldX, fieldY, fieldX + turretOffsetX, fieldY + turretOffsetY);
         dashboard.sendTelemetryPacket(packet);
     }
