@@ -163,6 +163,8 @@ public class Robot {
 
     private double moveScale = 1;
     private double headingScale = 1;
+    private double turretAimOffset = 0;
+
     private boolean shotReady = false;
     private int shotsTaken = 0;
 
@@ -451,7 +453,7 @@ public class Robot {
             turret.aimAtGoal(
                 goalOffsetX,
                 goalOffsetY,
-                robotPose.getHeading(AngleUnit.RADIANS),
+                robotPose.getHeading(AngleUnit.RADIANS) + turretAimOffset,
                 AngleUnit.RADIANS
             );
 
@@ -525,6 +527,10 @@ public class Robot {
 
     private void holdUpBall() {
         intake.idleWithBall();
+    }
+
+    public void setTurretAimOffset(double offset) {
+        turretAimOffset = offset;
     }
 
     public void resetRobotPosition() {

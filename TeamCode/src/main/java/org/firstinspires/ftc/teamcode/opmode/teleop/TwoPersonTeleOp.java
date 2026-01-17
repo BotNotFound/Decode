@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class TwoPersonTeleOp extends OpMode {
     protected Robot robot;
 
+    public static double TURRET_OFFSET_SCALE = 3;
+
     /**
      * Should we allow the driver to swap alliance colors in init?
      */
@@ -60,6 +62,8 @@ public class TwoPersonTeleOp extends OpMode {
 
     @Override
     public void loop() {
+        robot.setTurretAimOffset(gamepad2.right_stick_x * TURRET_OFFSET_SCALE);
+
         if (gamepad2.right_trigger > 0.5) {
             robot.setState(FORCE_FALLBACK ? Robot.RobotState.MANUAL_SHOOT : Robot.RobotState.SHOOT);
         }
