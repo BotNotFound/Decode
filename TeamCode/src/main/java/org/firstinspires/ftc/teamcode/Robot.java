@@ -42,12 +42,14 @@ public class Robot {
     public static AngleUnit DEFAULT_ROBOT_HEADING_UNIT = AngleUnit.DEGREES;
 
     static {
-        DEFAULT_ROBOT_X = 115.5 - FieldCentricDriveTrain.rotX(
-            Turret.TURRET_OFFSET_X, Turret.TURRET_OFFSET_Y,
+        final double turretOffsetX = Turret.TURRET_OFFSET_UNIT.toInches(Turret.TURRET_OFFSET_X);
+        final double turretOffsetY = Turret.TURRET_OFFSET_UNIT.toInches(Turret.TURRET_OFFSET_Y);
+        DEFAULT_ROBOT_X = 115.5 + FieldCentricDriveTrain.rotX(
+            -turretOffsetX, -turretOffsetY,
             DEFAULT_ROBOT_HEADING_UNIT.toRadians(DEFAULT_ROBOT_HEADING)
         );
-        DEFAULT_ROBOT_Y = 129.4 - FieldCentricDriveTrain.rotY(
-            Turret.TURRET_OFFSET_X, Turret.TURRET_OFFSET_Y,
+        DEFAULT_ROBOT_Y = 129.4 + FieldCentricDriveTrain.rotY(
+            -turretOffsetX, -turretOffsetY,
             DEFAULT_ROBOT_HEADING_UNIT.toRadians(DEFAULT_ROBOT_HEADING)
         );
     }

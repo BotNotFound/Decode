@@ -29,7 +29,7 @@ public class Turret {
     public static double feedforwardThreshold = 1;
     private final PositionalPIDFController aimController;
 
-    public static double DEFAULT_TURRET_ROTATION_OFFSET = -5;
+    public static double DEFAULT_TURRET_ROTATION_OFFSET = 70;
     private double turretRotationOffset;
 
     public static double TURRET_MIN_ROTATION = 0;
