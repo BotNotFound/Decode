@@ -107,7 +107,7 @@ public class StandardTwelveArtifactRed extends AutonomousBase {
             hitGate = follower.pathBuilder()
                 .addPath(new BezierCurve(
                     new Pose(128, 87.267),
-                    new Pose(115, 79),
+                    new Pose(115, 82),
                     new Pose(128, 78)
                 ))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
