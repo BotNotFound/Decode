@@ -35,24 +35,11 @@ public class Robot {
     public static double FIELD_LENGTH = 144.0;
     public static double FIELD_WIDTH = 144.0;
 
-    public static double DEFAULT_ROBOT_X;
-    public static double DEFAULT_ROBOT_Y;
+    public static double DEFAULT_ROBOT_X = 117.9;
+    public static double DEFAULT_ROBOT_Y = 131.3;
     public static DistanceUnit DEFAULT_ROBOT_POSITION_UNIT = DistanceUnit.INCH;
-    public static double DEFAULT_ROBOT_HEADING = 36;
+    public static double DEFAULT_ROBOT_HEADING = -54;
     public static AngleUnit DEFAULT_ROBOT_HEADING_UNIT = AngleUnit.DEGREES;
-
-    static {
-        final double turretOffsetX = Turret.TURRET_OFFSET_UNIT.toInches(Turret.TURRET_OFFSET_X);
-        final double turretOffsetY = Turret.TURRET_OFFSET_UNIT.toInches(Turret.TURRET_OFFSET_Y);
-        DEFAULT_ROBOT_X = 115.5 + FieldCentricDriveTrain.rotX(
-            -turretOffsetX, -turretOffsetY,
-            DEFAULT_ROBOT_HEADING_UNIT.toRadians(DEFAULT_ROBOT_HEADING)
-        );
-        DEFAULT_ROBOT_Y = 129.4 + FieldCentricDriveTrain.rotY(
-            -turretOffsetX, -turretOffsetY,
-            DEFAULT_ROBOT_HEADING_UNIT.toRadians(DEFAULT_ROBOT_HEADING)
-        );
-    }
 
     public static Pose2D getDefaultRobotPose() {
         return new Pose2D(
