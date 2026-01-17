@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.controller.PositionalPIDFController;
 
 @Config
@@ -77,6 +78,31 @@ public class Turret {
         aimController.setSetPoint(getCurrentHeading(AngleUnit.DEGREES));
 
         this.telemetry = telemetry;
+    }
+
+    /**
+     * Gets the absolute pose of the turret in the field
+     *
+     * @param robotPose The robot's current position and heading
+     * @return The turret's absolute position and heading
+     */
+    public Pose2D getTurretPose(Pose2D robotPose) {
+        final double robotX = robotPose.getX(DistanceUnit.INCH);
+        final double robotY = robotPose.getY(DistanceUnit.INCH);
+        final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
+        final double turretOffsetX = TURRET_OFFSET_UNIT.toInches(TURRET_OFFSET_X);
+        final double turretOffsetY = TURRET_OFFSET_UNIT.toInches(TURRET_OFFSET_Y);
+        final double turretOffsetHeading = getCurrentHeading(AngleUnit.RADIANS);
+        final double turretX = robotX + FieldCentricDriveTrain.rotX(turretOffsetX, turretOffsetY, robotHeading);
+        final double turretY = robotY + FieldCentricDriveTrain.rotY(turretOffsetX, turretOffsetY, robotHeading);
+        final double turretHeading = robotHeading + turretOffsetHeading;
+        return new Pose2D(
+            DistanceUnit.INCH,
+            turretX,
+            turretY,
+            AngleUnit.RADIANS,
+            turretHeading
+        );
     }
 
     /* heading getters and setters use unnormalized units b/c we do our own normalization */

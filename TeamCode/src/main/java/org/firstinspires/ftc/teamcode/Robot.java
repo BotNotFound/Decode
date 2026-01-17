@@ -35,11 +35,22 @@ public class Robot {
     public static double FIELD_LENGTH = 144.0;
     public static double FIELD_WIDTH = 144.0;
 
-    public static double DEFAULT_ROBOT_X = 115.5;
-    public static double DEFAULT_ROBOT_Y = 129.4;
+    public static double DEFAULT_ROBOT_X;
+    public static double DEFAULT_ROBOT_Y;
     public static DistanceUnit DEFAULT_ROBOT_POSITION_UNIT = DistanceUnit.INCH;
     public static double DEFAULT_ROBOT_HEADING = 36;
     public static AngleUnit DEFAULT_ROBOT_HEADING_UNIT = AngleUnit.DEGREES;
+
+    static {
+        DEFAULT_ROBOT_X = 115.5 - FieldCentricDriveTrain.rotX(
+            Turret.TURRET_OFFSET_X, Turret.TURRET_OFFSET_Y,
+            DEFAULT_ROBOT_HEADING_UNIT.toRadians(DEFAULT_ROBOT_HEADING)
+        );
+        DEFAULT_ROBOT_Y = 129.4 - FieldCentricDriveTrain.rotY(
+            Turret.TURRET_OFFSET_X, Turret.TURRET_OFFSET_Y,
+            DEFAULT_ROBOT_HEADING_UNIT.toRadians(DEFAULT_ROBOT_HEADING)
+        );
+    }
 
     public static Pose2D getDefaultRobotPose() {
         return new Pose2D(DEFAULT_ROBOT_POSITION_UNIT, DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_HEADING_UNIT, DEFAULT_ROBOT_HEADING);
@@ -215,14 +226,13 @@ public class Robot {
             return;
         }
         final Pose2D robotPose = getRobotPose();
+        final Pose2D turretPose = turret.getTurretPose(robotPose);
 
         final double robotHeading = robotPose.getHeading(AngleUnit.RADIANS);
-        final double turretOffsetX = Turret.TURRET_OFFSET_UNIT.toInches(Turret.TURRET_OFFSET_X);
-        final double turretOffsetY = Turret.TURRET_OFFSET_UNIT.toInches(Turret.TURRET_OFFSET_Y);
-        final double rotatedTurretX = FieldCentricDriveTrain.rotX(turretOffsetX, turretOffsetY, robotHeading);
-        final double rotatedTurretY = FieldCentricDriveTrain.rotY(turretOffsetX, turretOffsetY, robotHeading);
-        final double robotX = robotPose.getX(DistanceUnit.INCH) - rotatedTurretX - (FIELD_WIDTH / 2);
-        final double robotY = robotPose.getY(DistanceUnit.INCH) - rotatedTurretY - (FIELD_LENGTH / 2);
+        final double robotX = robotPose.getX(DistanceUnit.INCH) - (FIELD_WIDTH / 2);
+        final double robotY = robotPose.getY(DistanceUnit.INCH) - (FIELD_LENGTH / 2);
+        final double turretX = turretPose.getX(DistanceUnit.INCH) - (FIELD_WIDTH / 2);
+        final double turretY = turretPose.getY(DistanceUnit.INCH) - (FIELD_LENGTH / 2);
 
         final double fieldX = FieldCentricDriveTrain.rotX(robotX, robotY, Math.PI / 2);
         final double fieldY = FieldCentricDriveTrain.rotY(robotX, robotY, Math.PI / 2);
@@ -230,8 +240,8 @@ public class Robot {
 
         final double turretHeading = turret.getCurrentHeading(AngleUnit.RADIANS) + fieldHeading;
         final double turretLength = Math.sqrt(ROBOT_LENGTH * ROBOT_LENGTH + ROBOT_WIDTH * ROBOT_WIDTH) / 2;
-        final double turretStartX = fieldX + FieldCentricDriveTrain.rotX(rotatedTurretX, rotatedTurretY, Math.PI / 2);
-        final double turretStartY = fieldY + FieldCentricDriveTrain.rotY(rotatedTurretX, rotatedTurretY, Math.PI / 2);
+        final double turretStartX = FieldCentricDriveTrain.rotX(turretX, turretY, Math.PI / 2);
+        final double turretStartY = FieldCentricDriveTrain.rotY(turretX, turretY, Math.PI / 2);
         final double turretEndX = turretStartX + turretLength * Math.cos(turretHeading);
         final double turretEndY = turretStartY + turretLength * Math.sin(turretHeading);
 
@@ -397,8 +407,9 @@ public class Robot {
             }
 
             final Pose2D robotPose = driveTrain.getRobotPose();
-            final double goalOffsetX = allianceColor.goalPositionX - robotPose.getX(DistanceUnit.INCH);
-            final double goalOffsetY = allianceColor.goalPositionY - robotPose.getY(DistanceUnit.INCH);
+            final Pose2D turretPose = turret.getTurretPose(robotPose);
+            final double goalOffsetX = allianceColor.goalPositionX - turretPose.getX(DistanceUnit.INCH);
+            final double goalOffsetY = allianceColor.goalPositionY - turretPose.getY(DistanceUnit.INCH);
             turret.aimAtGoal(
                     goalOffsetX,
                     goalOffsetY,
